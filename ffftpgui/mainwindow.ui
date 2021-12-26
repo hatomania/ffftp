@@ -1,10 +1,8 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>MainWindowClass</class>
- <widget class="QMainWindow" name="MainWindowClass" >
-  <property name="objectName" >
-   <string notr="true">MainWindowClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QMainWindow" name="MainWindowClass">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -12,17 +10,274 @@
     <height>400</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>MainWindow</string>
-  </property>  <widget class="QMenuBar" name="menuBar" />
-  <widget class="QToolBar" name="mainToolBar" />
-  <widget class="QWidget" name="centralWidget" />
-  <widget class="QStatusBar" name="statusBar" />
+  </property>
+  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_Connect">
+    <property name="title">
+     <string>接続(&amp;F)</string>
+    </property>
+    <widget class="QMenu" name="menu_Settings">
+     <property name="title">
+      <string>設定(&amp;S)</string>
+     </property>
+     <addaction name="actionImportFromWS_FTP"/>
+     <addaction name="actionSaveSettingsToFile"/>
+     <addaction name="actionLoadSettingsFromFile"/>
+     <addaction name="actionModifyMasterPassword"/>
+     <addaction name="actionExportFileZillaXML"/>
+     <addaction name="actionExportWinSCPINI"/>
+     <addaction name="separator"/>
+     <addaction name="actionResetSettings"/>
+    </widget>
+    <addaction name="actionConnect"/>
+    <addaction name="actionQuickConnect"/>
+    <addaction name="actionDisconnect"/>
+    <addaction name="separator"/>
+    <addaction name="actionHostSettings"/>
+    <addaction name="menu_Settings"/>
+    <addaction name="separator"/>
+    <addaction name="actionExit"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menu_Command">
+    <property name="title">
+     <string>コマンド(&amp;C)</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Bookmark">
+    <property name="title">
+     <string>ブックマーク(&amp;B)</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>表示(&amp;V)</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Tools">
+    <property name="title">
+     <string>ツール(&amp;T)</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Option">
+    <property name="title">
+     <string>オプション(&amp;O)</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>ヘルプ(&amp;H)</string>
+    </property>
+   </widget>
+   <addaction name="menu_Connect"/>
+   <addaction name="menu_Command"/>
+   <addaction name="menu_Bookmark"/>
+   <addaction name="menu_View"/>
+   <addaction name="menu_Tools"/>
+   <addaction name="menu_Option"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <property name="iconSize">
+    <size>
+     <width>16</width>
+     <height>16</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionConnect"/>
+   <addaction name="actionQuickConnect"/>
+   <addaction name="actionDisconnect"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionConnect">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/connect.png</normaloff>:/resource/connect.png</iconset>
+   </property>
+   <property name="text">
+    <string>接続(&amp;C)...</string>
+   </property>
+   <property name="iconText">
+    <string>接続</string>
+   </property>
+   <property name="toolTip">
+    <string>接続</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionQuickConnect">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/quickconnect.png</normaloff>:/resource/quickconnect.png</iconset>
+   </property>
+   <property name="text">
+    <string>クイック接続(&amp;Q)...</string>
+   </property>
+   <property name="iconText">
+    <string>クイック接続</string>
+   </property>
+   <property name="toolTip">
+    <string>クイック接続</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionDisconnect">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/disconnect.png</normaloff>:/resource/disconnect.png</iconset>
+   </property>
+   <property name="text">
+    <string>切断(&amp;R)</string>
+   </property>
+   <property name="iconText">
+    <string>切断</string>
+   </property>
+   <property name="toolTip">
+    <string>切断</string>
+   </property>
+  </action>
+  <action name="actionHostSettings">
+   <property name="text">
+    <string>ホストの設定(&amp;H)...</string>
+   </property>
+   <property name="iconText">
+    <string>ホストの設定</string>
+   </property>
+   <property name="toolTip">
+    <string>ホストの設定</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>終了(&amp;X)</string>
+   </property>
+   <property name="iconText">
+    <string>終了</string>
+   </property>
+   <property name="toolTip">
+    <string>終了</string>
+   </property>
+  </action>
+  <action name="actionImportFromWS_FTP">
+   <property name="text">
+    <string>WS_FTPから設定をインポート(&amp;W)...</string>
+   </property>
+   <property name="iconText">
+    <string>WS_FTPから設定をインポート</string>
+   </property>
+   <property name="toolTip">
+    <string>WS_FTPから設定をインポート</string>
+   </property>
+  </action>
+  <action name="actionSaveSettingsToFile">
+   <property name="text">
+    <string>設定をファイルに保存(&amp;S)...</string>
+   </property>
+   <property name="iconText">
+    <string>設定をファイルに保存</string>
+   </property>
+   <property name="toolTip">
+    <string>設定をファイルに保存</string>
+   </property>
+  </action>
+  <action name="actionLoadSettingsFromFile">
+   <property name="text">
+    <string>設定をファイルから復元(&amp;L)...</string>
+   </property>
+   <property name="iconText">
+    <string>設定をファイルから復元</string>
+   </property>
+   <property name="toolTip">
+    <string>設定をファイルから復元</string>
+   </property>
+  </action>
+  <action name="actionModifyMasterPassword">
+   <property name="text">
+    <string>マスターパスワードの変更(&amp;M)...</string>
+   </property>
+   <property name="iconText">
+    <string>マスターパスワードの変更</string>
+   </property>
+   <property name="toolTip">
+    <string>マスターパスワードの変更</string>
+   </property>
+  </action>
+  <action name="actionExportFileZillaXML">
+   <property name="text">
+    <string>FileZilla XMLに設定をエクスポート...</string>
+   </property>
+  </action>
+  <action name="actionExportWinSCPINI">
+   <property name="text">
+    <string>WinSCP INIに設定をエクスポート...</string>
+   </property>
+  </action>
+  <action name="actionResetSettings">
+   <property name="text">
+    <string>全設定の消去...</string>
+   </property>
+  </action>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources>
-   <include location="ffftpgui.qrc"/>
+  <include location="ffftpgui.qrc"/>
  </resources>
- <connections/>
-</UI>
+ <connections>
+  <connection>
+   <sender>actionConnect</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>connect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>299</x>
+     <y>199</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>connect()</slot>
+ </slots>
+</ui>

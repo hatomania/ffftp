@@ -83,7 +83,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <QtMoc>
@@ -101,7 +101,7 @@
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
     <QtMoc>
@@ -110,10 +110,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="ffftpgui.qrc" />
+    <QtUic Include="hostslistdialog.ui" />
     <QtUic Include="mainwindow.ui" />
-    <QtMoc Include="mainwindow.h" />
+    <QtMoc Include="mainwindow.hpp" />
+    <ClCompile Include="hostslistdialog.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtMoc Include="hostslistdialog.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

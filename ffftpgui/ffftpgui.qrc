@@ -1,4 +1,7 @@
 <RCC>
-    <qresource prefix="MainWindow">
-    </qresource>
+  <qresource prefix="/">
+    <file>resource/quickconnect.png</file>
+    <file>resource/disconnect.png</file>
+    <file>resource/connect.png</file>
+  </qresource>
 </RCC>

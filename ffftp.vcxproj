@@ -22,7 +22,7 @@
     <ProjectGuid>{5D9496DB-45AF-4389-8FEE-27C9A2FA207A}</ProjectGuid>
     <RootNamespace>ffftp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>libffftp</ProjectName>
+    <ProjectName>ffftp</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">

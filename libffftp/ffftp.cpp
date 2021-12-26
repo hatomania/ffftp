@@ -29,14 +29,68 @@
 #include "common.h"
 #include "ffftp.h"
 
+extern int InitApp(int cmdShow);
+extern DWORD MainThreadId;
+
 class FFFTP {
-    int pepe_;
+public:
+    explicit FFFTP();
+    bool isOk() const { return isok_; }
+private:
+    bool isok_;
 };
 
-LIBFFFTP_DECLSPEC HFFFTP LIBFFFTP_CALLCONV ffftp_create() {
-    return new FFFTP();
+FFFTP::FFFTP() : isok_(false) {
+    Sound::Register();
+
+    // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
+#ifdef DISABLE_MULTI_CPUS
+    SetProcessAffinityMask(GetCurrentProcess(), 1);
+#endif
+    MainThreadId = GetCurrentThreadId();
+
+    if (OleInitialize(nullptr) != S_OK) {
+        Message(IDS_FAIL_TO_INIT_OLE, MB_OK | MB_ICONERROR);
+        isok_ = false;
+    }
+
+    LoadUPnP();
+    LoadTaskbarList3();
+    LoadZoneID();
+
+    if (!LoadSSL()) {
+        Message(IDS_ERR_SSL, MB_OK | MB_ICONERROR);
+        isok_ = false;
+    }
+
+    if (InitApp(SW_SHOWDEFAULT) != FFFTP_SUCCESS) {
+        isok_ = false;
+    }
+
+    isok_ = true;
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_delete(HFFFTP* hffftp) {
-    delete reinterpret_cast<FFFTP*>(*hffftp);
+static FFFTP* _ffftp = nullptr;
+
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
+    _ffftp = new FFFTP();
+    bool isok = _ffftp->isOk();
+    if (!isok) { ffftp_finalize(); }
+    return isok;
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
+    delete _ffftp;
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected() {
+    Sound::Connected.Play();
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred() {
+    Sound::Transferred.Play();
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
+    Sound::Error.Play();
 }

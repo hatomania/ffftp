@@ -1,6 +1,5 @@
 #include "mainwindow.hpp"
 #include "hostslistdialog.hpp"
-#include <QDebug>
 #include "stdafx.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -11,9 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::connect()
 {
-	qDebug() << __FUNCTION__ << " called.";
-	//qDebug() << HostsListDialog(this).exec() == QDialog::DialogCode::Rejected ? "Rejected" : "";
-	if (HostsListDialog(this).exec() == QDialog::Rejected) {
-		qDebug() << "Rejected.";
-	}
+    qDebug() << __FUNCTION__ << " called.";
+    if (HostsListDialog(this).exec() == QDialog::Rejected) {
+        qDebug() << "Rejected.";
+    }
 }

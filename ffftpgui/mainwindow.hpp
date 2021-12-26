@@ -10,6 +10,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = Q_NULLPTR);
 
+protected:
+
 private slots:
     void connect();
 

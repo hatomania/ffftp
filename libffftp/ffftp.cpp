@@ -35,45 +35,31 @@ extern DWORD MainThreadId;
 class FFFTP {
 public:
     explicit FFFTP();
+    virtual ~FFFTP();
     bool isOk() const { return isok_; }
+    const wchar_t* getWindowTitle() const;
 private:
     bool isok_;
 };
 
 FFFTP::FFFTP() : isok_(false) {
-    Sound::Register();
+    isok_ = libffftp::initialize();
+}
 
-    // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
-#ifdef DISABLE_MULTI_CPUS
-    SetProcessAffinityMask(GetCurrentProcess(), 1);
-#endif
-    MainThreadId = GetCurrentThreadId();
+FFFTP::~FFFTP() {
+    libffftp::finalize();
+}
 
-    if (OleInitialize(nullptr) != S_OK) {
-        Message(IDS_FAIL_TO_INIT_OLE, MB_OK | MB_ICONERROR);
-        isok_ = false;
-    }
-
-    LoadUPnP();
-    LoadTaskbarList3();
-    LoadZoneID();
-
-    if (!LoadSSL()) {
-        Message(IDS_ERR_SSL, MB_OK | MB_ICONERROR);
-        isok_ = false;
-    }
-
-    if (InitApp(SW_SHOWDEFAULT) != FFFTP_SUCCESS) {
-        isok_ = false;
-    }
-
-    isok_ = true;
+const wchar_t* FFFTP::getWindowTitle() const {
+    static std::wstring windowtitle{};
+    libffftp::getWindowTitle(windowtitle);
+    return windowtitle.c_str();
 }
 
 static FFFTP* _ffftp = nullptr;
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
-    _ffftp = new FFFTP();
+    if (!_ffftp) { _ffftp = new FFFTP(); }
     bool isok = _ffftp->isOk();
     if (!isok) { ffftp_finalize(); }
     return isok;
@@ -81,6 +67,7 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
     delete _ffftp;
+    _ffftp = nullptr;
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected() {
@@ -93,4 +80,8 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred() {
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
     Sound::Error.Play();
+}
+
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_window_title() {
+    return _ffftp->getWindowTitle();
 }

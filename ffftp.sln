@@ -14,6 +14,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test", "test\test.vcxproj", "{45C0D655-6CFE-4C6D-AD46-4E21D487CCC3}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ffftpgui", "ffftpgui\ffftpgui.vcxproj", "{6A73D506-C2D0-4912-B2C2-408F2BC027FD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D443029-07BF-4AFC-A51E-A43A017022C1} = {7D443029-07BF-4AFC-A51E-A43A017022C1}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libffftp", "libffftp\libffftp.vcxproj", "{7D443029-07BF-4AFC-A51E-A43A017022C1}"
 EndProject

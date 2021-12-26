@@ -98,6 +98,8 @@
     <ClInclude Include="..\filelist.h" />
     <ClInclude Include="..\helpid.h" />
     <ClInclude Include="..\OleDragDrop.h" />
+    <ClInclude Include="..\Resource\resource.en-US.h" />
+    <ClInclude Include="..\Resource\resource.ja-JP.h" />
     <ClInclude Include="ffftp.h" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +125,25 @@
     <ClCompile Include="..\toolmenu.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ffftp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resource\bitmap1.bmp" />
+    <Image Include="..\Resource\icon1.ico" />
+    <Image Include="..\Resource\icon2.ico" />
+    <Image Include="..\Resource\list_16.bmp" />
+    <Image Include="..\Resource\list_bmp.bmp" />
+    <Image Include="..\Resource\main_too.bmp" />
+    <Image Include="..\Resource\toolbar1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Resource\ffftp.en-US.rc" />
+    <ResourceCompile Include="..\Resource\ffftp.ja-JP.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="..\Resource\ffftp.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\ffftp.rcconfig" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

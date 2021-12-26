@@ -1475,3 +1475,10 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
+
+// libffftpのために用意されたインターフェース
+namespace libffftp {
+extern bool initialize();
+extern void finalize();
+extern void getWindowTitle(std::wstring& title);
+}

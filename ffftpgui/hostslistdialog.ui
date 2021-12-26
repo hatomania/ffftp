@@ -20,7 +20,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QListView" name="listView_Host"/>
+      <widget class="QTreeView" name="treeView_Host"/>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -85,21 +85,21 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_ModHost">
+      <widget class="QPushButton" name="pushButton_Mod">
        <property name="text">
         <string>設定変更(&amp;M)...</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_CopyHost">
+      <widget class="QPushButton" name="pushButton_Copy">
        <property name="text">
         <string>コピー(&amp;C)</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_DelHost">
+      <widget class="QPushButton" name="pushButton_Del">
        <property name="text">
         <string>削除(&amp;D)...</string>
        </property>
@@ -155,14 +155,14 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>listView_Host</tabstop>
+  <tabstop>treeView_Host</tabstop>
   <tabstop>pushButton_Connect</tabstop>
   <tabstop>pushButton_Close</tabstop>
   <tabstop>pushButton_NewHost</tabstop>
   <tabstop>pushButton_NewGroup</tabstop>
-  <tabstop>pushButton_ModHost</tabstop>
-  <tabstop>pushButton_CopyHost</tabstop>
-  <tabstop>pushButton_DelHost</tabstop>
+  <tabstop>pushButton_Mod</tabstop>
+  <tabstop>pushButton_Copy</tabstop>
+  <tabstop>pushButton_Del</tabstop>
   <tabstop>pushButton_Up</tabstop>
   <tabstop>pushButton_Down</tabstop>
   <tabstop>pushButton_Default</tabstop>

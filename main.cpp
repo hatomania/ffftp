@@ -68,6 +68,7 @@
 
 static int InitApp(int cmdShow);
 static bool MakeAllWindows(int cmdShow);
+static std::wstring GetWindowTitle();
 static void DeleteAllObject(void);
 static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static void StartupProc(std::vector<std::wstring_view> const& args);
@@ -137,7 +138,7 @@ fs::path const& systemDirectory() {
 static auto const& moduleFileName() {
 	static fs::path const filename = [] {
 		std::wstring filename(32768, L'\0');
-		auto const length = GetModuleFileNameW(0, data(filename), size_as<DWORD>(filename));
+		auto const length = GetModuleFileNameW(GetFtpInst(), data(filename), size_as<DWORD>(filename));
 		assert(0 < length);
 		filename.resize(length);
 		return filename;
@@ -517,10 +518,15 @@ static bool MakeAllWindows(int cmdShow) {
 }
 
 
+// ウインドウのタイトルを取得する
+static std::wstring GetWindowTitle() {
+	return std::format(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, TitleHostName, FilterStr);
+}
+
+
 // ウインドウのタイトルを表示する
 void DispWindowTitle() {
-	auto const text = std::format(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, TitleHostName, FilterStr);
-	SetWindowTextW(GetMainHwnd(), text.c_str());
+	SetWindowTextW(GetMainHwnd(), GetWindowTitle().c_str());
 }
 
 
@@ -1527,7 +1533,7 @@ static void StartupProc(std::vector<std::wstring_view> const& args) {
 		if (opt & OPT_SAVEON)
 			SuppressSave = NO;
 		if (empty(hostname) && empty(unc)) {
-			if (ConnectOnStart == YES)
+			if (ConnectOnStart == YES && IsWindowVisible(GetMainHwnd()))
 				PostMessageW(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_CONNECT, 0), 0);
 		} else if (empty(hostname) && !empty(unc)) {
 			DirectConnectProc(std::move(unc), Kanji, Kana, FnameKanji, TrMode);
@@ -2181,4 +2187,63 @@ int AskToolWinHeight(void)
 
 int MainThreadRunner::Run() {
 	return IsMainThread() ? DoWork() : (int)SendMessageW(GetMainHwnd(), WM_MAINTHREADRUNNER, 0, (LPARAM)this);
+}
+
+// libffftpのために用意されたインターフェース
+namespace libffftp {
+
+static const wchar_t* const kModuleName = L"libffftp";
+
+bool initialize() {
+	hInstFtp = GetModuleHandleW(kModuleName);
+
+	Sound::Register();
+
+	// マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
+#ifdef DISABLE_MULTI_CPUS
+	SetProcessAffinityMask(GetCurrentProcess(), 1);
+#endif
+	MainThreadId = GetCurrentThreadId();
+
+	// S_FALSEはすでに初期化済みの意
+	// ffftpguiから呼び出すとS_FALSEが返る。Qtが自身の初期化ですでに内部的に呼び出してるかもしれない
+	// なのでS_FALSEは失敗扱いにしない
+	if (HRESULT hres = OleInitialize(nullptr); hres != S_OK && hres != S_FALSE) {
+		Message(IDS_FAIL_TO_INIT_OLE, MB_OK | MB_ICONERROR);
+		return false;
+	}
+
+	LoadUPnP();
+	LoadTaskbarList3();
+	LoadZoneID();
+
+	if (!LoadSSL()) {
+		Message(IDS_ERR_SSL, MB_OK | MB_ICONERROR);
+		return false;
+	}
+
+	if (InitApp(SW_HIDE) != FFFTP_SUCCESS) {
+		return false;
+	}
+
+	return true;
+}
+
+void finalize() {
+	// TODO: グローバルに保持されているSocketContextの解放。遅延させると各種エラーが発生するため明示的にここで行う。
+	MainTransPkt.ctrl_skt.reset();
+	DisconnectSet();
+
+	//UnregisterClassW(FtpClass, GetFtpInst());
+	FreeSSL();
+	FreeZoneID();
+	FreeTaskbarList3();
+	FreeUPnP();
+	OleUninitialize();
+}
+
+void getWindowTitle(std::wstring& title) {
+	title = GetWindowTitle();
+}
+
 }

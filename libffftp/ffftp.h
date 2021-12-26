@@ -48,6 +48,8 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
 
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_window_title();
+
 #ifdef __cplusplus
 }
 #endif

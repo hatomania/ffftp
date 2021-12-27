@@ -20,7 +20,14 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QTreeView" name="treeView_Host"/>
+      <widget class="QTreeView" name="treeView_Host">
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="headerHidden">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -188,5 +195,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeView_Host</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>selectedHost(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>116</x>
+     <y>133</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
+ <slots>
+  <slot>selectedHost(QModelIndex)</slot>
+ </slots>
 </ui>

@@ -29,9 +29,6 @@
 #include "common.h"
 #include "ffftp.h"
 
-extern int InitApp(int cmdShow);
-extern DWORD MainThreadId;
-
 class FFFTP {
 public:
     explicit FFFTP();
@@ -84,4 +81,26 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_window_title() {
     return _ffftp->getWindowTitle();
+}
+
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first() {
+    return (const hostcontext_t)libffftp::hostContextFirst();
+}
+
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc) {
+    return (const hostcontext_t)libffftp::hostContextNext(hc);
+}
+
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_getname(const hostcontext_t hc) {
+    static HOSTDATA hdata;
+    hdata = libffftp::getHostContext(hc);
+    return hdata.HostName.c_str();
+}
+
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getlevel(const hostcontext_t hc) {
+    return libffftp::getHostContextLevel(hc);
+}
+
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcontext_t hc) {
+    return libffftp::getHostContext(hc).Level & SET_LEVEL_GROUP;
 }

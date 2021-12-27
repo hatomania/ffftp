@@ -1217,3 +1217,21 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 	Pos->UseSFTP = UseSFTP;
 	return FFFTP_SUCCESS;
 }
+
+namespace libffftp {
+
+const void* hostContextFirst() {
+	return HostListTop.get();
+}
+const void* hostContextNext(const void* hc) {
+	return ((HOSTLISTDATA*)hc)->GetNext().get();
+
+}
+HOSTDATA getHostContext(const void* hc) {
+	return *reinterpret_cast<const HOSTLISTDATA*>(hc);
+}
+int getHostContextLevel(const void* hc) {
+	return ((HOSTLISTDATA*)hc)->GetLevel();
+}
+
+}

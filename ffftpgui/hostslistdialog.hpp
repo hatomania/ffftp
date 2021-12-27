@@ -1,15 +1,19 @@
 #pragma once
 
 #include <QtWidgets/QDialog>
-#include "ui_hostslistdialog.h"
 
 class HostsListDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-	HostsListDialog(QWidget *parent = Q_NULLPTR);
+	explicit HostsListDialog(QWidget *parent = Q_NULLPTR);
+
+public slots:
+	void selectedHost(const QModelIndex& index);
 
 private:
-    Ui::HostsListDialogClass ui;
+	class Private;
+	Private* d_;
+	Q_DISABLE_COPY(HostsListDialog)
 };

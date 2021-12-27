@@ -1481,4 +1481,8 @@ namespace libffftp {
 extern bool initialize();
 extern void finalize();
 extern void getWindowTitle(std::wstring& title);
+extern const void* hostContextFirst();
+extern const void* hostContextNext(const void* hc);
+extern HOSTDATA getHostContext(const void* hc);
+extern int getHostContextLevel(const void* hc);
 }

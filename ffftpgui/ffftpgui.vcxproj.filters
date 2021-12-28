@@ -49,14 +49,32 @@
     <ClCompile Include="hostslistdialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="hostsettingsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="hostsettingbasicform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="hostslistdialog.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="hostsettingsdialog.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="hostsettingbasicform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="hostslistdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="hostsettingsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="hostsettingbasicform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

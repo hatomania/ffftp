@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HostSettingBasicForm</class>
+ <widget class="QWidget" name="HostSettingBasicForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>377</width>
+    <height>294</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QGridLayout" name="gridLayout_1">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_1">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>ホストの設定名(&amp;T):</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_SettingName</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="lineEdit_SettingName"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_HostAddr"/>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>ホスト名(アドレス)(&amp;N):</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_HostAddr</cstring>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="0" column="1">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>パスワード/パスフレーズ(&amp;P):</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_Password</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_Password">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_3">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>ユーザー名(&amp;U):</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_Username</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="lineEdit_Username"/>
+     </item>
+     <item row="1" column="2">
+      <widget class="QCheckBox" name="checkBox_Anonymous">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>an&amp;onymous</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_3">
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="lineEdit_LocalDir"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_SelectLocalDir">
+       <property name="text">
+        <string>...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>ローカルの初期フォルダ(&amp;L):</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_LocalDir</cstring>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="lineEdit_RemoteDir"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>ホストの初期フォルダ(&amp;R):</string>
+       </property>
+       <property name="buddy">
+        <cstring>lineEdit_RemoteDir</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_NowDir">
+       <property name="text">
+        <string>現在のフォルダ</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_LastDir">
+     <property name="text">
+      <string>最後にアクセスしたフォルダを次回の初期フォルダとする(&amp;F)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>lineEdit_SettingName</tabstop>
+  <tabstop>lineEdit_HostAddr</tabstop>
+  <tabstop>lineEdit_Username</tabstop>
+  <tabstop>lineEdit_Password</tabstop>
+  <tabstop>checkBox_Anonymous</tabstop>
+  <tabstop>lineEdit_LocalDir</tabstop>
+  <tabstop>pushButton_SelectLocalDir</tabstop>
+  <tabstop>lineEdit_RemoteDir</tabstop>
+  <tabstop>pushButton_NowDir</tabstop>
+  <tabstop>checkBox_LastDir</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_SelectLocalDir</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingBasicForm</receiver>
+   <slot>onClick_pushButton_SelectLocalDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>329</x>
+     <y>145</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_NowDir</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingBasicForm</receiver>
+   <slot>onClick_pushButton_NowDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>199</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onClick_pushButton_SelectLocalDir()</slot>
+  <slot>onClick_pushButton_NowDir()</slot>
+ </slots>
+</ui>

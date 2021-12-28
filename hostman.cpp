@@ -1224,8 +1224,12 @@ const void* hostContextFirst() {
 	return HostListTop.get();
 }
 const void* hostContextNext(const void* hc) {
+// ダングリング状態エラー(error C26815)の回避
+#ifdef LIBFFFTP_EXPORTS
 	return ((HOSTLISTDATA*)hc)->GetNext().get();
-
+#else
+	return nullptr;
+#endif
 }
 HOSTDATA getHostContext(const void* hc) {
 	return *reinterpret_cast<const HOSTLISTDATA*>(hc);

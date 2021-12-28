@@ -49,6 +49,12 @@
          <property name="text">
           <string>接続(&amp;S)</string>
          </property>
+         <property name="autoDefault">
+          <bool>false</bool>
+         </property>
+         <property name="default">
+          <bool>true</bool>
+         </property>
         </widget>
        </item>
        <item>
@@ -211,8 +217,178 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pushButton_NewHost</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_NewHost()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>21</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_NewGroup</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_NewGroup()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>51</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Mod</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Mod()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Copy</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Copy()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>111</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Del</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Del()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>141</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Up</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Up()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>270</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Down</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Down()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>351</x>
+     <y>172</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Default</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Default()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Help</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Help()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>310</x>
+     <y>233</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Connect</sender>
+   <signal>clicked()</signal>
+   <receiver>HostsListDialogClass</receiver>
+   <slot>onClick_pushButton_Connect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>76</x>
+     <y>276</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>selectedHost(QModelIndex)</slot>
+  <slot>onClick_pushButton_NewHost()</slot>
+  <slot>onClick_pushButton_NewGroup()</slot>
+  <slot>onClick_pushButton_Mod()</slot>
+  <slot>onClick_pushButton_Copy()</slot>
+  <slot>onClick_pushButton_Del()</slot>
+  <slot>onClick_pushButton_Up()</slot>
+  <slot>onClick_pushButton_Down()</slot>
+  <slot>onClick_pushButton_Default()</slot>
+  <slot>onClick_pushButton_Help()</slot>
+  <slot>onClick_pushButton_Connect()</slot>
  </slots>
 </ui>

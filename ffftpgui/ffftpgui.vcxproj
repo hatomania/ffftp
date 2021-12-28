@@ -64,7 +64,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libffftp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -75,7 +75,7 @@
     <ClCompile>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libffftp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -120,13 +120,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="ffftpgui.qrc" />
+    <QtUic Include="hostsettingbasicform.ui" />
+    <QtUic Include="hostsettingsdialog.ui" />
     <QtUic Include="hostslistdialog.ui" />
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.hpp" />
+    <ClCompile Include="hostsettingbasicform.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="hostsettingsdialog.cpp" />
     <ClCompile Include="hostslistdialog.cpp" />
     <ClCompile Include="mainwindow.cpp" />
     <ClCompile Include="main.cpp" />
     <QtMoc Include="hostslistdialog.hpp" />
+    <QtMoc Include="hostsettingsdialog.hpp" />
+    <QtMoc Include="hostsettingbasicform.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

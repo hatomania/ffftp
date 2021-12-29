@@ -120,11 +120,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtRcc Include="ffftpgui.qrc" />
+    <QtUic Include="dirsandtaskmsgform.ui" />
     <QtUic Include="hostsettingbasicform.ui" />
     <QtUic Include="hostsettingsdialog.ui" />
     <QtUic Include="hostslistdialog.ui" />
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.hpp" />
+    <ClCompile Include="dirsandtaskmsgform.cpp" />
     <ClCompile Include="hostsettingbasicform.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
@@ -138,6 +140,7 @@
     <QtMoc Include="hostslistdialog.hpp" />
     <QtMoc Include="hostsettingsdialog.hpp" />
     <QtMoc Include="hostsettingbasicform.hpp" />
+    <QtMoc Include="dirsandtaskmsgform.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

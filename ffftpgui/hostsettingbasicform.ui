@@ -108,16 +108,6 @@
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit_LocalDir"/>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_SelectLocalDir">
-       <property name="text">
-        <string>...</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_5">
        <property name="sizePolicy">
@@ -131,6 +121,16 @@
        </property>
        <property name="buddy">
         <cstring>lineEdit_LocalDir</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="lineEdit_LocalDir"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QToolButton" name="toolButton_SelectLocalDir">
+       <property name="text">
+        <string>...</string>
        </property>
       </widget>
      </item>
@@ -195,29 +195,13 @@
   <tabstop>lineEdit_Password</tabstop>
   <tabstop>checkBox_Anonymous</tabstop>
   <tabstop>lineEdit_LocalDir</tabstop>
-  <tabstop>pushButton_SelectLocalDir</tabstop>
+  <tabstop>toolButton_SelectLocalDir</tabstop>
   <tabstop>lineEdit_RemoteDir</tabstop>
   <tabstop>pushButton_NowDir</tabstop>
   <tabstop>checkBox_LastDir</tabstop>
  </tabstops>
  <resources/>
  <connections>
-  <connection>
-   <sender>pushButton_SelectLocalDir</sender>
-   <signal>clicked()</signal>
-   <receiver>HostSettingBasicForm</receiver>
-   <slot>onClick_pushButton_SelectLocalDir()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>329</x>
-     <y>145</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>188</x>
-     <y>146</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>pushButton_NowDir</sender>
    <signal>clicked()</signal>
@@ -234,9 +218,25 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>toolButton_SelectLocalDir</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingBasicForm</receiver>
+   <slot>onClick_toolButton_SelectLocalDir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>356</x>
+     <y>144</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>188</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>onClick_pushButton_SelectLocalDir()</slot>
+  <slot>onClick_toolButton_SelectLocalDir()</slot>
   <slot>onClick_pushButton_NowDir()</slot>
  </slots>
 </ui>

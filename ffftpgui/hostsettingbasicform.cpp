@@ -87,7 +87,7 @@ void HostSettingBasicForm::setDataAsDefault() const {
     this->setData(Data());
 }
 
-void HostSettingBasicForm::onClick_pushButton_SelectLocalDir() {
+void HostSettingBasicForm::onClick_toolButton_SelectLocalDir() {
     qDebug() << __FUNCTION__ << "called!";
 }
 

@@ -24,7 +24,7 @@ public:
     void setDataAsDefault() const;
 
 private slots:
-    void onClick_pushButton_SelectLocalDir();
+    void onClick_toolButton_SelectLocalDir();
     void onClick_pushButton_NowDir();
 
 private:

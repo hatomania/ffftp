@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <QtWidgets/QMainWindow>
-#include "ui_mainwindow.h"
 
 class MainWindow : public QMainWindow
 {
@@ -13,8 +12,11 @@ public:
 protected:
 
 private slots:
+    void timerEvent(QTimerEvent* event) override;
     void connect();
 
 private:
-    Ui::MainWindowClass ui;
+    class Private;
+    Private* d_;
+    Q_DISABLE_COPY(MainWindow)
 };

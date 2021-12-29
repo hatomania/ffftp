@@ -122,8 +122,10 @@ void HostsListDialog::Private::buildHostTreeView(int current) {
     //d_->ui.treeView_Host->expandAll();
 
     // 選択状態を復元
+    // 他に開いていたグループは閉じてしまう。開いたままのグループは開いたままにする処理を追加するには
+    // UP-DOWNで変化するindexで頑張るより、グループ作成時に一意のIDを割り振ってそのIDを使ったほうが堅実
     if (current >= 0) {
-        // TreeViewを作り直しても選択状態を維持するため適切なindex(=current )を探す
+        // TreeViewを作り直しても選択状態を維持するため適切なindex(=current)を探す
         _FindModelIndexRet r = _findModelIndex(model, QModelIndex(), current);
         Q_ASSERT(r.b); // indexが見つからないはずはない
         ui.treeView_Host->setCurrentIndex(r.m);

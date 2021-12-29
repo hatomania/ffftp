@@ -65,6 +65,8 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_getname(con
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getlevel(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcontext_t hc);
 
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
+
 #ifdef __cplusplus
 }
 #endif

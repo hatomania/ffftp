@@ -117,3 +117,9 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getlevel(const hostcon
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcontext_t hc) {
     return libffftp::getHostContext(hc).Level & SET_LEVEL_GROUP;
 }
+
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage() {
+    static std::wstring msg{};
+    msg = libffftp::getTaskMessage();
+    return msg.c_str();
+}

@@ -86,6 +86,174 @@ struct HostList {
 	~HostList() {
 		ImageList_Destroy(hImage);
 	}
+	static int HostUp(int _CurrentHost) {
+		int _newCurrentHost = _CurrentHost;
+		if (_CurrentHost > 0) {
+			auto Data1 = GetNode(_CurrentHost);
+			int Level1 = Data1->GetLevel();
+			auto Data2 = GetNode(_CurrentHost - 1);
+			int Level2 = Data2->GetLevel();
+			if (Level1 == Level2 && (Data2->Level & SET_LEVEL_GROUP)) {
+				//Data2のchildへ
+				if (Data1->Next != NULL)
+					Data1->Next->Prev = Data1->Prev;
+				if (Data1->Prev != NULL)
+					Data1->Prev->Next = Data1->Next;
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+					Data1->Parent->Child = Data1->Next;
+				if (Data1->Parent == NULL && HostListTop == Data1)
+					HostListTop = Data1->Next;
+
+				Data1->Next = Data2->Child;
+				Data1->Prev = NULL;
+				Data1->Parent = Data2;
+				Data2->Child = Data1;
+			}
+			else if (Level1 < Level2) {
+				//Data1のPrevのChildのNextの末尾へ
+				Data2 = Data1->Prev->Child;
+				while (Data2->Next != NULL)
+					Data2 = Data2->Next;
+
+				if (Data1->Next != NULL)
+					Data1->Next->Prev = Data1->Prev;
+				if (Data1->Prev != NULL)
+					Data1->Prev->Next = Data1->Next;
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+					Data1->Parent->Child = Data1->Next;
+				if (Data1->Parent == NULL && HostListTop == Data1)
+					HostListTop = Data1->Next;
+
+				Data2->Next = Data1;
+				Data1->Prev = Data2;
+				Data1->Next = NULL;
+				Data1->Parent = Data2->Parent;
+			}
+			else {
+				//Data2のprevへ
+				if (Data1->Next != NULL)
+					Data1->Next->Prev = Data1->Prev;
+				if (Data1->Prev != NULL)
+					Data1->Prev->Next = Data1->Next;
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+					Data1->Parent->Child = Data1->Next;
+				if (Data1->Parent == NULL && HostListTop == Data1)
+					HostListTop = Data1->Next;
+
+				if (Data2->Prev != NULL)
+					Data2->Prev->Next = Data1;
+				Data1->Prev = Data2->Prev;
+				Data2->Prev = Data1;
+				Data1->Next = Data2;
+				Data1->Parent = Data2->Parent;
+
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data2)
+					Data1->Parent->Child = Data1;
+				if (Data1->Parent == NULL && HostListTop == Data2)
+					HostListTop = Data1;
+			}
+			_newCurrentHost = GetNum(Data1);
+		}
+		return _newCurrentHost;
+	}
+	static int HostDown(int _CurrentHost) {
+		int _newCurrentHost = _CurrentHost;
+		auto Data1 = GetNode(_CurrentHost);
+		int Level1 = Data1->GetLevel();
+		std::shared_ptr<HOSTLISTDATA> Data2;
+		int Level2 = SET_LEVEL_SAME;
+		if (_CurrentHost < Hosts - 1) {
+			Data2 = GetNode(_CurrentHost + 1);
+			Level2 = Data2->GetLevel();
+
+			if (Level1 < Level2) {
+				if (Data1->Next != NULL) {
+					//Data2 = Data1のNext
+					Data2 = Data1->Next;
+					Level2 = Data2->GetLevel();
+				}
+				else if (Data1->Parent != NULL) {
+					Data2 = NULL;
+					Level2 = SET_LEVEL_SAME;
+				}
+			}
+		}
+
+		__assume(Data1);
+		if (Data2 == NULL && Level1 > 0 || Level1 > Level2) {
+			__assume(Data1->Parent);
+			//Data1のParentのNextへ
+			Data2 = Data1->Parent;
+
+			if (Data1->Next != NULL)
+				Data1->Next->Prev = Data1->Prev;
+			if (Data1->Prev != NULL)
+				Data1->Prev->Next = Data1->Next;
+			if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+				Data1->Parent->Child = Data1->Next;
+			if (Data1->Parent == NULL && HostListTop == Data1)
+				HostListTop = Data1->Next;
+
+			if (Data2->Next != NULL)
+				Data2->Next->Prev = Data1;
+			Data1->Next = Data2->Next;
+			Data2->Next = Data1;
+			Data1->Prev = Data2;
+			Data1->Parent = Data2->Parent;
+
+			if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+				Data1->Parent->Child = Data2;
+			if (Data1->Parent == NULL && HostListTop == Data1)
+				HostListTop = Data2;
+		}
+		else if (Level1 == Level2) {
+			__assume(Data2);
+			if (Data2->Level & SET_LEVEL_GROUP) {
+				//Data2のChildへ
+				if (Data1->Next != NULL)
+					Data1->Next->Prev = Data1->Prev;
+				if (Data1->Prev != NULL)
+					Data1->Prev->Next = Data1->Next;
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+					Data1->Parent->Child = Data1->Next;
+				if (Data1->Parent == NULL && HostListTop == Data1)
+					HostListTop = Data1->Next;
+
+				if (Data2->Child != NULL)
+					Data2->Child->Prev = Data1;
+				Data1->Next = Data2->Child;
+				Data1->Prev = NULL;
+				Data1->Parent = Data2;
+				Data2->Child = Data1;
+			}
+			else {
+				//Data2のNextへ
+				if (Data1->Next != NULL)
+					Data1->Next->Prev = Data1->Prev;
+				if (Data1->Prev != NULL)
+					Data1->Prev->Next = Data1->Next;
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+					Data1->Parent->Child = Data1->Next;
+				if (Data1->Parent == NULL && HostListTop == Data1)
+					HostListTop = Data1->Next;
+
+				if (Data2->Next != NULL)
+					Data2->Next->Prev = Data1;
+				Data1->Next = Data2->Next;
+				Data2->Next = Data1;
+				Data1->Prev = Data2;
+				Data1->Parent = Data2->Parent;
+
+				if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+					Data1->Parent->Child = Data2;
+				if (Data1->Parent == NULL && HostListTop == Data1)
+					HostListTop = Data2;
+			}
+		}
+		_newCurrentHost = GetNum(Data1);
+
+		return _newCurrentHost;
+	}
 	INT_PTR OnInit(HWND hDlg) {
 		if (AskConnecting() == YES) {
 			/* 接続中は「変更」のみ許可 */
@@ -205,69 +373,7 @@ struct HostList {
 				CurrentHost = (int)Item.lParam;
 
 				if (CurrentHost > 0) {
-					auto Data1 = GetNode(CurrentHost);
-					int Level1 = Data1->GetLevel();
-					auto Data2 = GetNode(CurrentHost - 1);
-					int Level2 = Data2->GetLevel();
-					if (Level1 == Level2 && (Data2->Level & SET_LEVEL_GROUP)) {
-						//Data2のchildへ
-						if (Data1->Next != NULL)
-							Data1->Next->Prev = Data1->Prev;
-						if (Data1->Prev != NULL)
-							Data1->Prev->Next = Data1->Next;
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-							Data1->Parent->Child = Data1->Next;
-						if (Data1->Parent == NULL && HostListTop == Data1)
-							HostListTop = Data1->Next;
-
-						Data1->Next = Data2->Child;
-						Data1->Prev = NULL;
-						Data1->Parent = Data2;
-						Data2->Child = Data1;
-					} else if (Level1 < Level2) {
-						//Data1のPrevのChildのNextの末尾へ
-						Data2 = Data1->Prev->Child;
-						while (Data2->Next != NULL)
-							Data2 = Data2->Next;
-
-						if (Data1->Next != NULL)
-							Data1->Next->Prev = Data1->Prev;
-						if (Data1->Prev != NULL)
-							Data1->Prev->Next = Data1->Next;
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-							Data1->Parent->Child = Data1->Next;
-						if (Data1->Parent == NULL && HostListTop == Data1)
-							HostListTop = Data1->Next;
-
-						Data2->Next = Data1;
-						Data1->Prev = Data2;
-						Data1->Next = NULL;
-						Data1->Parent = Data2->Parent;
-					} else {
-						//Data2のprevへ
-						if (Data1->Next != NULL)
-							Data1->Next->Prev = Data1->Prev;
-						if (Data1->Prev != NULL)
-							Data1->Prev->Next = Data1->Next;
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-							Data1->Parent->Child = Data1->Next;
-						if (Data1->Parent == NULL && HostListTop == Data1)
-							HostListTop = Data1->Next;
-
-						if (Data2->Prev != NULL)
-							Data2->Prev->Next = Data1;
-						Data1->Prev = Data2->Prev;
-						Data2->Prev = Data1;
-						Data1->Next = Data2;
-						Data1->Parent = Data2->Parent;
-
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data2)
-							Data1->Parent->Child = Data1;
-						if (Data1->Parent == NULL && HostListTop == Data2)
-							HostListTop = Data1;
-					}
-
-					CurrentHost = GetNum(Data1);
+					CurrentHost = HostUp(CurrentHost);
 					SendAllHostNames(GetDlgItem(hDlg, HOST_LIST), CurrentHost);
 				}
 			}
@@ -278,97 +384,7 @@ struct HostList {
 				SendDlgItemMessageW(hDlg, HOST_LIST, TVM_GETITEMW, TVGN_CARET, (LPARAM)&Item);
 				CurrentHost = (int)Item.lParam;
 
-				auto Data1 = GetNode(CurrentHost);
-				int Level1 = Data1->GetLevel();
-				std::shared_ptr<HOSTLISTDATA> Data2;
-				int Level2 = SET_LEVEL_SAME;
-				if (CurrentHost < Hosts - 1) {
-					Data2 = GetNode(CurrentHost + 1);
-					Level2 = Data2->GetLevel();
-
-					if (Level1 < Level2) {
-						if (Data1->Next != NULL) {
-							//Data2 = Data1のNext
-							Data2 = Data1->Next;
-							Level2 = Data2->GetLevel();
-						} else if (Data1->Parent != NULL) {
-							Data2 = NULL;
-							Level2 = SET_LEVEL_SAME;
-						}
-					}
-				}
-
-				__assume(Data1);
-				if (Data2 == NULL && Level1 > 0 || Level1 > Level2) {
-					__assume(Data1->Parent);
-					//Data1のParentのNextへ
-					Data2 = Data1->Parent;
-
-					if (Data1->Next != NULL)
-						Data1->Next->Prev = Data1->Prev;
-					if (Data1->Prev != NULL)
-						Data1->Prev->Next = Data1->Next;
-					if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-						Data1->Parent->Child = Data1->Next;
-					if (Data1->Parent == NULL && HostListTop == Data1)
-						HostListTop = Data1->Next;
-
-					if (Data2->Next != NULL)
-						Data2->Next->Prev = Data1;
-					Data1->Next = Data2->Next;
-					Data2->Next = Data1;
-					Data1->Prev = Data2;
-					Data1->Parent = Data2->Parent;
-
-					if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-						Data1->Parent->Child = Data2;
-					if (Data1->Parent == NULL && HostListTop == Data1)
-						HostListTop = Data2;
-				} else if (Level1 == Level2) {
-					__assume(Data2);
-					if (Data2->Level & SET_LEVEL_GROUP) {
-						//Data2のChildへ
-						if (Data1->Next != NULL)
-							Data1->Next->Prev = Data1->Prev;
-						if (Data1->Prev != NULL)
-							Data1->Prev->Next = Data1->Next;
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-							Data1->Parent->Child = Data1->Next;
-						if (Data1->Parent == NULL && HostListTop == Data1)
-							HostListTop = Data1->Next;
-
-						if (Data2->Child != NULL)
-							Data2->Child->Prev = Data1;
-						Data1->Next = Data2->Child;
-						Data1->Prev = NULL;
-						Data1->Parent = Data2;
-						Data2->Child = Data1;
-					} else {
-						//Data2のNextへ
-						if (Data1->Next != NULL)
-							Data1->Next->Prev = Data1->Prev;
-						if (Data1->Prev != NULL)
-							Data1->Prev->Next = Data1->Next;
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-							Data1->Parent->Child = Data1->Next;
-						if (Data1->Parent == NULL && HostListTop == Data1)
-							HostListTop = Data1->Next;
-
-						if (Data2->Next != NULL)
-							Data2->Next->Prev = Data1;
-						Data1->Next = Data2->Next;
-						Data2->Next = Data1;
-						Data1->Prev = Data2;
-						Data1->Parent = Data2->Parent;
-
-						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
-							Data1->Parent->Child = Data2;
-						if (Data1->Parent == NULL && HostListTop == Data1)
-							HostListTop = Data2;
-					}
-				}
-
-				CurrentHost = GetNum(Data1);
+				CurrentHost = HostDown(CurrentHost);
 				SendAllHostNames(GetDlgItem(hDlg, HOST_LIST), CurrentHost);
 			}
 			break;
@@ -1220,15 +1236,36 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 
 namespace libffftp {
 
-const void* hostContextFirst() {
+const void* hostContextFirst(int* index/*=常に0だと思うがライブラリに任せたほうがいい*/) {
+	if (index) *index = GetNum(HostListTop);
 	return HostListTop.get();
 }
-const void* hostContextNext(const void* hc) {
+const void* hostContextNext(const void* hc, int* index/*=先頭から何番目か*/) {
 // ダングリング状態エラー(error C26815)の回避
 #ifdef LIBFFFTP_EXPORTS
-	return ((HOSTLISTDATA*)hc)->GetNext().get();
+	std::shared_ptr<HOSTLISTDATA> s = ((HOSTLISTDATA*)hc)->GetNext();
+	HOSTLISTDATA* _p = s.get();
+	if (index && _p) { *index = GetNum(s); }
+	return _p;
 #else
 	return nullptr;
+#endif
+}
+int hostContextUp(int index) {
+	return HostList::HostUp(index);
+}
+int hostContextDown(int index) {
+	return HostList::HostDown(index);
+}
+int getHostIndex(const void* hc) {
+#ifdef LIBFFFTP_EXPORTS
+	auto data = reinterpret_cast<const HOSTLISTDATA*>(hc);
+	int _n = 0;
+	for (auto p = HostListTop.get(); p != data; p = p->GetNext().get())
+		++_n;
+	return _n;
+#else
+	return -1;
 #endif
 }
 HOSTDATA getHostContext(const void* hc) {

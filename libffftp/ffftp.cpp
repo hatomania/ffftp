@@ -83,12 +83,24 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_window_title() {
     return _ffftp->getWindowTitle();
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first() {
-    return (const hostcontext_t)libffftp::hostContextFirst();
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first(int* index) {
+    return (const hostcontext_t)libffftp::hostContextFirst(index);
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc) {
-    return (const hostcontext_t)libffftp::hostContextNext(hc);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc, int* index) {
+    return (const hostcontext_t)libffftp::hostContextNext(hc, index);
+}
+
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index) {
+    return libffftp::hostContextUp(index);
+}
+
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index) {
+    return libffftp::hostContextDown(index);
+}
+
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getindex(const hostcontext_t hc) {
+    return libffftp::getHostIndex(hc);
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_getname(const hostcontext_t hc) {

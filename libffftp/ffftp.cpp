@@ -27,6 +27,7 @@
 /============================================================================*/
 
 #include "common.h"
+#include "libffftp.hpp"
 #include "ffftp.h"
 
 class FFFTP {

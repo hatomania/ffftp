@@ -101,10 +101,12 @@
     <ClInclude Include="..\Resource\resource.en-US.h" />
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
     <ClInclude Include="ffftp.h" />
+    <ClInclude Include="libffftp.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\bookmark.cpp" />
     <ClCompile Include="..\codecnv.cpp" />
+    <ClCompile Include="..\common.cpp" />
     <ClCompile Include="..\connect.cpp" />
     <ClCompile Include="..\filelist.cpp" />
     <ClCompile Include="..\ftpproc.cpp" />

@@ -225,6 +225,7 @@
   <ItemGroup>
     <ClCompile Include="bookmark.cpp" />
     <ClCompile Include="codecnv.cpp" />
+    <ClCompile Include="common.cpp" />
     <ClCompile Include="connect.cpp" />
     <ClCompile Include="filelist.cpp" />
     <ClCompile Include="ftpproc.cpp" />

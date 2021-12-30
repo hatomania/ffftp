@@ -127,6 +127,7 @@
     <QtUic Include="mainwindow.ui" />
     <QtMoc Include="mainwindow.hpp" />
     <ClCompile Include="dirsandtaskmsgform.cpp" />
+    <ClCompile Include="ffftpthread.cpp" />
     <ClCompile Include="hostsettingbasicform.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
@@ -141,6 +142,7 @@
     <QtMoc Include="hostsettingsdialog.hpp" />
     <QtMoc Include="hostsettingbasicform.hpp" />
     <QtMoc Include="dirsandtaskmsgform.hpp" />
+    <QtMoc Include="ffftpthread.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>

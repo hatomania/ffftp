@@ -7,7 +7,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = Q_NULLPTR);
+    explicit MainWindow(QWidget *parent = Q_NULLPTR);
+    virtual ~MainWindow();
 
 protected:
 

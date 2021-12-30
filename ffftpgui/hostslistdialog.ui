@@ -365,7 +365,7 @@
    <sender>pushButton_Connect</sender>
    <signal>clicked()</signal>
    <receiver>HostsListDialogClass</receiver>
-   <slot>onClick_pushButton_Connect()</slot>
+   <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>76</x>

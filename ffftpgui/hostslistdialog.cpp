@@ -12,12 +12,16 @@ private:
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class HostsListDialog::Private {
 public:
-    Private() : rootnode(nullptr), model(new QStandardItemModel()) {}
+    Private()
+        : rootnode(nullptr)
+        , model(new QStandardItemModel())
+        , connecting_host_index(-1) {}
     ~Private() { delete model; }
     void buildHostTreeView(int current = -1);
     Ui::HostsListDialogClass ui;
     QStandardItem* rootnode;
     QStandardItemModel* model;
+    int connecting_host_index;
 };
 
 static QStandardItem* _createHostTreeViewItem(const hostcontext_t hc) {
@@ -139,6 +143,16 @@ HostsListDialog::HostsListDialog(QWidget* parent)
     d_->buildHostTreeView();
 }
 
+void HostsListDialog::accept() {
+    qDebug() << __FUNCTION__ << "called! index=" << d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())->data();
+    d_->connecting_host_index = d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())->data().toInt();
+    QDialog::accept();
+}
+
+int HostsListDialog::connectingHostIndex() {
+    return d_->connecting_host_index;
+}
+
 void HostsListDialog::onClick_pushButton_NewHost() {
     qDebug() << __FUNCTION__ << "called!";
     HostSettingsDialog(this).exec();
@@ -179,10 +193,6 @@ void HostsListDialog::onClick_pushButton_Default() {
 }
 
 void HostsListDialog::onClick_pushButton_Help() {
-    qDebug() << __FUNCTION__ << "called!";
-}
-
-void HostsListDialog::onClick_pushButton_Connect() {
     qDebug() << __FUNCTION__ << "called!";
 }
 

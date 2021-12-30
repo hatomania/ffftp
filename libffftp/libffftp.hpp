@@ -18,4 +18,7 @@ extern HOSTDATA getHostContext(const void* hc);
 extern int getHostContextLevel(const void* hc);
 // taskwin.cpp
 extern std::wstring getTaskMessage();
+// connect.cpp
+extern bool connect(int index);
+extern void setAskSaveCryptCallback(bool (*func)());
 }

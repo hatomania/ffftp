@@ -58,6 +58,9 @@
     <ClCompile Include="dirsandtaskmsgform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ffftpthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="hostslistdialog.hpp">
@@ -70,6 +73,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="dirsandtaskmsgform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ffftpthread.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

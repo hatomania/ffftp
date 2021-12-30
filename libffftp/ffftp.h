@@ -67,6 +67,9 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcon
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
 
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*func)());
+
 #ifdef __cplusplus
 }
 #endif

@@ -8,8 +8,10 @@ class HostsListDialog : public QDialog
 
 public:
     explicit HostsListDialog(QWidget *parent = Q_NULLPTR);
+    int connectingHostIndex();
 
 public slots:
+    void accept() override;
     void onClick_pushButton_NewHost();
     void onClick_pushButton_NewGroup();
     void onClick_pushButton_Mod();
@@ -19,7 +21,6 @@ public slots:
     void onClick_pushButton_Down();
     void onClick_pushButton_Default();
     void onClick_pushButton_Help();
-    void onClick_pushButton_Connect();
     void selectedHost(const QModelIndex& index);
 
 private:

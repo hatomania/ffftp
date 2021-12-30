@@ -123,3 +123,11 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage() {
     msg = libffftp::getTaskMessage();
     return msg.c_str();
 }
+
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index) {
+    return libffftp::connect(index);
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*func)()) {
+    libffftp::setAskSaveCryptCallback(func);
+}

@@ -80,6 +80,13 @@ static bool SplitUNCpath(std::wstring&& unc, std::wstring& Host, std::wstring& P
 	return false;
 }
 
+// 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
+// libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
+static bool AskSaveCryptDefaultCallback () {
+	return (bool)Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd());
+}
+typedef bool (*AskSaveCryptFunc)();
+static AskSaveCryptFunc asksavecrypt_func = AskSaveCryptDefaultCallback;
 
 /*----- ホスト一覧を使ってホストへ接続 ----------------------------------------
 *
@@ -135,28 +142,28 @@ void ConnectProc(int Type, int Num)
 				case CRYPT_NONE:
 					if(CurHost.UseFTPIS != NO || CurHost.UseSFTP != NO)
 					{
-						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
+						if (asksavecrypt_func())
 							SetHostEncryption(AskCurrentHost(), CurHost.UseNoEncryption, CurHost.UseFTPES, NO, NO);
 					}
 					break;
 				case CRYPT_FTPES:
 					if(CurHost.UseNoEncryption != NO || CurHost.UseFTPIS != NO || CurHost.UseSFTP != NO)
 					{
-						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
+						if (asksavecrypt_func())
 							SetHostEncryption(AskCurrentHost(), NO, CurHost.UseFTPES, NO, NO);
 					}
 					break;
 				case CRYPT_FTPIS:
 					if(CurHost.UseNoEncryption != NO || CurHost.UseFTPES != NO || CurHost.UseSFTP != NO)
 					{
-						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
+						if (asksavecrypt_func())
 							SetHostEncryption(AskCurrentHost(), NO, NO, CurHost.UseFTPIS, NO);
 					}
 					break;
 				case CRYPT_SFTP:
 					if(CurHost.UseNoEncryption != NO || CurHost.UseFTPES != NO || CurHost.UseFTPIS != NO)
 					{
-						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
+						if (asksavecrypt_func())
 							SetHostEncryption(AskCurrentHost(), NO, NO, NO, CurHost.UseSFTP);
 					}
 					break;
@@ -1728,4 +1735,17 @@ std::shared_ptr<SocketContext> GetFTPListenSocket(std::shared_ptr<SocketContext>
 int AskTryingConnect(void)
 {
 	return(TryConnect);
+}
+
+// libffftpのために用意されたインターフェース
+namespace libffftp {
+
+bool connect(int index) {
+	ConnectProc(DLG_TYPE_CON, index);
+	return true; // TODO: 接続失敗判定
+}
+void setAskSaveCryptCallback(bool (*func)()) {
+	asksavecrypt_func = func;
+}
+
 }

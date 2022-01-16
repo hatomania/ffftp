@@ -37,6 +37,10 @@
 
 #define LIBFFFTP_CALLCONV __cdecl
 
+#ifndef __cplusplus
+#include <wchar.h>
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -48,7 +52,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_window_title();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle();
 
 typedef void* hostcontext_t;
 #ifdef __cplusplus

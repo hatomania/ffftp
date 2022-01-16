@@ -30,42 +30,12 @@
 #include "libffftp.hpp"
 #include "ffftp.h"
 
-class FFFTP {
-public:
-    explicit FFFTP();
-    virtual ~FFFTP();
-    bool isOk() const { return isok_; }
-    const wchar_t* getWindowTitle() const;
-private:
-    bool isok_;
-};
-
-FFFTP::FFFTP() : isok_(false) {
-    isok_ = libffftp::initialize();
-}
-
-FFFTP::~FFFTP() {
-    libffftp::finalize();
-}
-
-const wchar_t* FFFTP::getWindowTitle() const {
-    static std::wstring windowtitle{};
-    libffftp::getWindowTitle(windowtitle);
-    return windowtitle.c_str();
-}
-
-static FFFTP* _ffftp = nullptr;
-
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
-    if (!_ffftp) { _ffftp = new FFFTP(); }
-    bool isok = _ffftp->isOk();
-    if (!isok) { ffftp_finalize(); }
-    return isok;
+    return libffftp::initialize();
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
-    delete _ffftp;
-    _ffftp = nullptr;
+    libffftp::finalize();
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected() {
@@ -80,8 +50,10 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
     Sound::Error.Play();
 }
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_window_title() {
-    return _ffftp->getWindowTitle();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle() {
+    static std::wstring windowtitle{};
+    libffftp::getWindowTitle(windowtitle);
+    return windowtitle.c_str();
 }
 
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first(int* index) {

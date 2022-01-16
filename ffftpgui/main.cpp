@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     ffftp_initialize();
     MainWindow w;
-    w.setWindowTitle(QString::fromWCharArray(ffftp_get_window_title()));
+    w.setWindowTitle(QString::fromWCharArray(ffftp_getwindowtitle()));
     w.show();
     QMetaObject::invokeMethod(&w, "connect");
     int ret = a.exec();

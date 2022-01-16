@@ -11,10 +11,11 @@ public:
     virtual ~MainWindow();
 
 protected:
+    void timerEvent(QTimerEvent* event) override;
 
 private slots:
-    void timerEvent(QTimerEvent* event) override;
     void connect();
+    bool askSaveCryptFunc();
 
 private:
     class Private;

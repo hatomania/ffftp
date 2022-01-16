@@ -13,11 +13,13 @@ public:
     FFFTPThread* ffftpt;
 };
 
-static MainWindow* _mainwindow;
+static MainWindow* _mainwindow = nullptr;
 static bool _AskSaveCryptFunc() {
-    if (QMessageBox::question(_mainwindow, kAskSaveCryptTitle, kAskSaveCryptBody) == QMessageBox::Yes)
-        return true;
-    return false;
+    bool _r = false;
+    // Qt::BlockingQueuedConnectionは、他のスレッドからinvokeMethodする場合に必要
+    // see https://stackoverflow.com/questions/18725727/how-to-get-a-return-value-from-qmetaobjectinvokemethod
+    QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, _r));
+    return _r;
 }
 
 MainWindow::MainWindow(QWidget *parent)
@@ -27,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent)
     startTimer(500);
     emit timerEvent(nullptr);
 
-    d_->ffftpt = new FFFTPThread(this);
+    d_->ffftpt = new FFFTPThread(); // スレッド化するためにはコンストラクタにparentを渡してはいけない
     d_->ffftpt->moveToThread(d_->ffftpt);
+    //d_->ffftpt = new FFFTPThread(this); // これはNG
     d_->ffftpt->start();
-    //QObject::connect();
 
     _mainwindow = this;
     ffftp_setcallback_asksavecrypt(_AskSaveCryptFunc);
@@ -46,6 +48,10 @@ void MainWindow::timerEvent(QTimerEvent* event) {
     QString msg = QString::fromWCharArray(ffftp_gettaskmessage());
     if (!msg.isEmpty()) {
         d_->ui.widget->addTaskMessage(msg);
+    }
+    QString title = QString::fromWCharArray(ffftp_getwindowtitle());
+    if (this->windowTitle() != title) {
+        this->setWindowTitle(title);
     }
 }
 
@@ -72,4 +78,10 @@ void MainWindow::connect() {
         }
     }
     delete d;
+}
+
+bool MainWindow::askSaveCryptFunc() {
+    if (QMessageBox::question(this, kAskSaveCryptTitle, kAskSaveCryptBody) == QMessageBox::Yes)
+        return true;
+    return false;
 }

@@ -1,6 +1,6 @@
 ﻿#include "ffftp.h"
-#include <QtWidgets>
-#include <QDebug>
+#include <QtWidgets/QtWidgets>
+#include <QtCore/QDebug>
 #include <QtGui/QStandardItemModel>
 #include <vector>
 
@@ -13,3 +13,10 @@ DECLARE_CONSTANT_CHAR(kResImage_desktop16x16)
 
 DECLARE_CONSTANT_QSTRING(kAskSaveCryptTitle)
 DECLARE_CONSTANT_QSTRING(kAskSaveCryptBody)
+
+DECLARE_CONSTANT_QSTRING(kStringName)
+DECLARE_CONSTANT_QSTRING(kStringDate)
+DECLARE_CONSTANT_QSTRING(kStringSize)
+DECLARE_CONSTANT_QSTRING(kStringExtension)
+DECLARE_CONSTANT_QSTRING(kStringPermission)
+DECLARE_CONSTANT_QSTRING(kStringOwner)

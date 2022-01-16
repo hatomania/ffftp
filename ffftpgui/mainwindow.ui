@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -37,7 +37,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>800</width>
      <height>22</height>
     </rect>
    </property>
@@ -105,21 +105,52 @@
     <property name="title">
      <string>表示(&amp;V)</string>
     </property>
+    <widget class="QMenu" name="menu_ViewFormat">
+     <property name="title">
+      <string>形式(&amp;T)</string>
+     </property>
+     <addaction name="actionViewFList"/>
+     <addaction name="actionViewFDetail"/>
+    </widget>
+    <addaction name="actionFilter"/>
+    <addaction name="separator"/>
+    <addaction name="actionFind"/>
+    <addaction name="actionFindNext"/>
+    <addaction name="separator"/>
+    <addaction name="actionSelect"/>
+    <addaction name="actionSelectAll"/>
+    <addaction name="separator"/>
+    <addaction name="menu_ViewFormat"/>
+    <addaction name="actionSort"/>
+    <addaction name="actionViewDot"/>
+    <addaction name="separator"/>
+    <addaction name="actionListWithViewer"/>
+    <addaction name="actionTaskWithViewer"/>
+    <addaction name="separator"/>
+    <addaction name="actionReflesh"/>
    </widget>
    <widget class="QMenu" name="menu_Tools">
     <property name="title">
      <string>ツール(&amp;T)</string>
     </property>
+    <addaction name="actionCalcOnetimePasswd"/>
+    <addaction name="actionWindowsFWSetting"/>
    </widget>
    <widget class="QMenu" name="menu_Option">
     <property name="title">
      <string>オプション(&amp;O)</string>
     </property>
+    <addaction name="actionPreference"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
      <string>ヘルプ(&amp;H)</string>
     </property>
+    <addaction name="actionContents"/>
+    <addaction name="actionOpenWebsite"/>
+    <addaction name="separator"/>
+    <addaction name="actionAbout"/>
+    <addaction name="actionAboutQt"/>
    </widget>
    <addaction name="menu_Connect"/>
    <addaction name="menu_Command"/>
@@ -145,6 +176,43 @@
    <addaction name="actionConnect"/>
    <addaction name="actionQuickConnect"/>
    <addaction name="actionDisconnect"/>
+   <addaction name="separator"/>
+   <addaction name="actionDownload"/>
+   <addaction name="actionUpload"/>
+   <addaction name="separator"/>
+   <addaction name="actionUploadMirroring"/>
+   <addaction name="separator"/>
+   <addaction name="actionCmdRm"/>
+   <addaction name="actionCmdRename"/>
+   <addaction name="actionCmdMkdir"/>
+   <addaction name="separator"/>
+   <addaction name="actionModeAscii"/>
+   <addaction name="actionModeBinary"/>
+   <addaction name="actionModeAuto"/>
+   <addaction name="separator"/>
+   <addaction name="actionLocalSJIS"/>
+   <addaction name="actionLocalEUC"/>
+   <addaction name="actionLocalJIS"/>
+   <addaction name="actionLocalUTF8"/>
+   <addaction name="actionLocalUTF8BOM"/>
+   <addaction name="separator"/>
+   <addaction name="actionHostSJIS"/>
+   <addaction name="actionHostEUC"/>
+   <addaction name="actionHostJIS"/>
+   <addaction name="actionHostUTF8"/>
+   <addaction name="actionHostUTF8BOM"/>
+   <addaction name="actionHostNocode"/>
+   <addaction name="separator"/>
+   <addaction name="actionHalfKana2Full"/>
+   <addaction name="separator"/>
+   <addaction name="actionReflesh"/>
+   <addaction name="separator"/>
+   <addaction name="actionViewFList"/>
+   <addaction name="actionViewFDetail"/>
+   <addaction name="separator"/>
+   <addaction name="actionDirSync"/>
+   <addaction name="separator"/>
+   <addaction name="actionStopReceiving"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect">
@@ -280,6 +348,10 @@
    </property>
   </action>
   <action name="actionDownload">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/arrowdown.png</normaloff>:/resource/arrowdown.png</iconset>
+   </property>
    <property name="text">
     <string>ダウンロード(&amp;D)</string>
    </property>
@@ -294,6 +366,10 @@
    </property>
   </action>
   <action name="actionUpload">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/arrowup.png</normaloff>:/resource/arrowup.png</iconset>
+   </property>
    <property name="text">
     <string>アップロード(&amp;U)</string>
    </property>
@@ -352,6 +428,10 @@
    </property>
   </action>
   <action name="actionUploadMirroring">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/doublearrowup.png</normaloff>:/resource/doublearrowup.png</iconset>
+   </property>
    <property name="text">
     <string>ミラーリングアップロード(&amp;M)...</string>
    </property>
@@ -391,6 +471,10 @@
    </property>
   </action>
   <action name="actionCmdRm">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/cross.png</normaloff>:/resource/cross.png</iconset>
+   </property>
    <property name="text">
     <string>削除(&amp;R)...</string>
    </property>
@@ -405,6 +489,10 @@
    </property>
   </action>
   <action name="actionCmdRename">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/tag.png</normaloff>:/resource/tag.png</iconset>
+   </property>
    <property name="text">
     <string>名前変更(&amp;N)...</string>
    </property>
@@ -433,6 +521,10 @@
    </property>
   </action>
   <action name="actionCmdMkdir">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/folderwithlight.png</normaloff>:/resource/folderwithlight.png</iconset>
+   </property>
    <property name="text">
     <string>フォルダ作成(&amp;K)...</string>
    </property>
@@ -460,6 +552,10 @@
   <action name="actionDirSync">
    <property name="checkable">
     <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/tagandtag.png</normaloff>:/resource/tagandtag.png</iconset>
    </property>
    <property name="text">
     <string>フォルダ同時移動(&amp;S)</string>
@@ -518,6 +614,488 @@
     <string>Ctrl+B</string>
    </property>
   </action>
+  <action name="actionFilter">
+   <property name="text">
+    <string>フィルタ(&amp;L)...</string>
+   </property>
+   <property name="iconText">
+    <string>フィルタ</string>
+   </property>
+   <property name="toolTip">
+    <string>フィルタ</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="actionFind">
+   <property name="text">
+    <string>検索(&amp;F)...</string>
+   </property>
+   <property name="iconText">
+    <string>検索</string>
+   </property>
+   <property name="toolTip">
+    <string>検索</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionFindNext">
+   <property name="text">
+    <string>次を検索(&amp;N)</string>
+   </property>
+   <property name="iconText">
+    <string>次を検索</string>
+   </property>
+   <property name="toolTip">
+    <string>次を検索</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
+   </property>
+  </action>
+  <action name="actionSelect">
+   <property name="text">
+    <string>選択(&amp;U)...</string>
+   </property>
+   <property name="iconText">
+    <string>選択</string>
+   </property>
+   <property name="toolTip">
+    <string>選択</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSelectAll">
+   <property name="text">
+    <string>全選択/解除(&amp;A)</string>
+   </property>
+   <property name="iconText">
+    <string>全選択/解除</string>
+   </property>
+   <property name="toolTip">
+    <string>全選択/解除</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+A</string>
+   </property>
+  </action>
+  <action name="actionViewFList">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/mosaic1.png</normaloff>:/resource/mosaic1.png</iconset>
+   </property>
+   <property name="text">
+    <string>一覧(&amp;L)</string>
+   </property>
+   <property name="iconText">
+    <string>一覧</string>
+   </property>
+   <property name="toolTip">
+    <string>一覧</string>
+   </property>
+  </action>
+  <action name="actionViewFDetail">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/mosaic2.png</normaloff>:/resource/mosaic2.png</iconset>
+   </property>
+   <property name="text">
+    <string>詳細(&amp;D)</string>
+   </property>
+   <property name="iconText">
+    <string>詳細</string>
+   </property>
+   <property name="toolTip">
+    <string>詳細</string>
+   </property>
+  </action>
+  <action name="actionSort">
+   <property name="text">
+    <string>ソート(&amp;S)...</string>
+   </property>
+   <property name="iconText">
+    <string>ソート</string>
+   </property>
+   <property name="toolTip">
+    <string>ソート</string>
+   </property>
+  </action>
+  <action name="actionViewDot">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>.で始まるファイルを表示(&amp;D)</string>
+   </property>
+   <property name="iconText">
+    <string>.で始まるファイルを表示</string>
+   </property>
+   <property name="toolTip">
+    <string>.で始まるファイルを表示</string>
+   </property>
+  </action>
+  <action name="actionListWithViewer">
+   <property name="text">
+    <string>ファイル一覧をビューアで表示(&amp;I)</string>
+   </property>
+   <property name="iconText">
+    <string>ファイル一覧をビューアで表示</string>
+   </property>
+   <property name="toolTip">
+    <string>ファイル一覧をビューアで表示</string>
+   </property>
+  </action>
+  <action name="actionTaskWithViewer">
+   <property name="text">
+    <string>処理内容をビューアで表示(&amp;W)</string>
+   </property>
+   <property name="iconText">
+    <string>処理内容をビューアで表示</string>
+   </property>
+   <property name="toolTip">
+    <string>処理内容をビューアで表示</string>
+   </property>
+  </action>
+  <action name="actionReflesh">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/arrowcircle.png</normaloff>:/resource/arrowcircle.png</iconset>
+   </property>
+   <property name="text">
+    <string>最新の情報に更新(&amp;R)</string>
+   </property>
+   <property name="iconText">
+    <string>最新の情報に更新</string>
+   </property>
+   <property name="toolTip">
+    <string>最新の情報に更新</string>
+   </property>
+   <property name="shortcut">
+    <string>F5</string>
+   </property>
+  </action>
+  <action name="actionCalcOnetimePasswd">
+   <property name="text">
+    <string>ワンタイムパスワードの計算(&amp;O)...</string>
+   </property>
+   <property name="iconText">
+    <string>ワンタイムパスワードの計算</string>
+   </property>
+   <property name="toolTip">
+    <string>ワンタイムパスワードの計算</string>
+   </property>
+  </action>
+  <action name="actionWindowsFWSetting">
+   <property name="text">
+    <string>WindowsファイアウォールのステートフルFTPフィルタの設定(&amp;F)...</string>
+   </property>
+   <property name="iconText">
+    <string>WindowsファイアウォールのステートフルFTPフィルタの設定</string>
+   </property>
+   <property name="toolTip">
+    <string>WindowsファイアウォールのステートフルFTPフィルタの設定</string>
+   </property>
+  </action>
+  <action name="actionPreference">
+   <property name="text">
+    <string>環境設定(S)...</string>
+   </property>
+   <property name="iconText">
+    <string>環境設定</string>
+   </property>
+   <property name="toolTip">
+    <string>環境設定</string>
+   </property>
+  </action>
+  <action name="actionContents">
+   <property name="text">
+    <string>目次(&amp;C)...</string>
+   </property>
+   <property name="iconText">
+    <string>目次</string>
+   </property>
+   <property name="toolTip">
+    <string>目次</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="actionOpenWebsite">
+   <property name="text">
+    <string>ウェブサイトを開く(&amp;W)</string>
+   </property>
+   <property name="iconText">
+    <string>ウェブサイトを開く</string>
+   </property>
+   <property name="toolTip">
+    <string>ウェブサイトを開く</string>
+   </property>
+  </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>FFFTPについて(&amp;A)...</string>
+   </property>
+   <property name="iconText">
+    <string>FFFTPについて</string>
+   </property>
+   <property name="toolTip">
+    <string>FFFTPについて</string>
+   </property>
+  </action>
+  <action name="actionAboutQt">
+   <property name="text">
+    <string>Qtについて...</string>
+   </property>
+  </action>
+  <action name="actionModeAscii">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/a.png</normaloff>:/resource/a.png</iconset>
+   </property>
+   <property name="text">
+    <string>アスキー転送モード</string>
+   </property>
+   <property name="toolTip">
+    <string>アスキー転送モード</string>
+   </property>
+  </action>
+  <action name="actionModeBinary">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/b.png</normaloff>:/resource/b.png</iconset>
+   </property>
+   <property name="text">
+    <string>バイナリ転送モード</string>
+   </property>
+   <property name="toolTip">
+    <string>バイナリ転送モード</string>
+   </property>
+  </action>
+  <action name="actionModeAuto">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/ab.png</normaloff>:/resource/ab.png</iconset>
+   </property>
+   <property name="text">
+    <string>ファイル名で転送モード切替え</string>
+   </property>
+   <property name="toolTip">
+    <string>ファイル名で転送モード切替え</string>
+   </property>
+  </action>
+  <action name="actionLocalSJIS">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/sjis.png</normaloff>:/resource/sjis.png</iconset>
+   </property>
+   <property name="text">
+    <string>ローカルの漢字コードはShift_JIS</string>
+   </property>
+   <property name="toolTip">
+    <string>ローカルの漢字コードはShift_JIS</string>
+   </property>
+  </action>
+  <action name="actionLocalEUC">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/euc.png</normaloff>:/resource/euc.png</iconset>
+   </property>
+   <property name="text">
+    <string>ローカルの漢字コードはEUC</string>
+   </property>
+   <property name="toolTip">
+    <string>ローカルの漢字コードはEUC</string>
+   </property>
+  </action>
+  <action name="actionLocalJIS">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/jis.png</normaloff>:/resource/jis.png</iconset>
+   </property>
+   <property name="text">
+    <string>ローカルの漢字コードはJIS</string>
+   </property>
+   <property name="toolTip">
+    <string>ローカルの漢字コードはJIS</string>
+   </property>
+  </action>
+  <action name="actionLocalUTF8">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/utf8.png</normaloff>:/resource/utf8.png</iconset>
+   </property>
+   <property name="text">
+    <string>ローカルの漢字コードはUTF-8</string>
+   </property>
+   <property name="toolTip">
+    <string>ローカルの漢字コードはUTF-8</string>
+   </property>
+  </action>
+  <action name="actionLocalUTF8BOM">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/u8b.png</normaloff>:/resource/u8b.png</iconset>
+   </property>
+   <property name="text">
+    <string>ローカルの漢字コードはUTF-8 BOM</string>
+   </property>
+   <property name="toolTip">
+    <string>ローカルの漢字コードはUTF-8 BOM</string>
+   </property>
+  </action>
+  <action name="actionHostSJIS">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/sjis.png</normaloff>:/resource/sjis.png</iconset>
+   </property>
+   <property name="text">
+    <string>ホストの漢字コードはShift_JIS</string>
+   </property>
+   <property name="toolTip">
+    <string>ホストの漢字コードはShift_JIS</string>
+   </property>
+  </action>
+  <action name="actionHostEUC">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/euc.png</normaloff>:/resource/euc.png</iconset>
+   </property>
+   <property name="text">
+    <string>ホストの漢字コードはEUC</string>
+   </property>
+   <property name="toolTip">
+    <string>ホストの漢字コードはEUC</string>
+   </property>
+  </action>
+  <action name="actionHostJIS">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/jis.png</normaloff>:/resource/jis.png</iconset>
+   </property>
+   <property name="text">
+    <string>ホストの漢字コードはJIS</string>
+   </property>
+   <property name="toolTip">
+    <string>ホストの漢字コードはJIS</string>
+   </property>
+  </action>
+  <action name="actionHostUTF8">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/utf8.png</normaloff>:/resource/utf8.png</iconset>
+   </property>
+   <property name="text">
+    <string>ホストの漢字コードはUTF-8</string>
+   </property>
+   <property name="toolTip">
+    <string>ホストの漢字コードはUTF-8</string>
+   </property>
+  </action>
+  <action name="actionHostUTF8BOM">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/u8b.png</normaloff>:/resource/u8b.png</iconset>
+   </property>
+   <property name="text">
+    <string>ホストの漢字コードはUTF-8 BOM</string>
+   </property>
+   <property name="toolTip">
+    <string>ホストの漢字コードはUTF-8 BOM</string>
+   </property>
+  </action>
+  <action name="actionHostNocode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/mu.png</normaloff>:/resource/mu.png</iconset>
+   </property>
+   <property name="text">
+    <string>漢字コードの変換なし</string>
+   </property>
+   <property name="toolTip">
+    <string>漢字コードの変換なし</string>
+   </property>
+  </action>
+  <action name="actionHalfKana2Full">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/kana.png</normaloff>:/resource/kana.png</iconset>
+   </property>
+   <property name="text">
+    <string>半角カナを全角に変換</string>
+   </property>
+   <property name="toolTip">
+    <string>半角カナを全角に変換</string>
+   </property>
+  </action>
+  <action name="actionStopReceiving">
+   <property name="icon">
+    <iconset resource="ffftpgui.qrc">
+     <normaloff>:/resource/roadclosedsign.png</normaloff>:/resource/roadclosedsign.png</iconset>
+   </property>
+   <property name="text">
+    <string>受信中止</string>
+   </property>
+   <property name="toolTip">
+    <string>受信中止</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -536,15 +1114,63 @@
    <sender>actionConnect</sender>
    <signal>triggered()</signal>
    <receiver>MainWindowClass</receiver>
-   <slot>connect()</slot>
+   <slot>actionConnect()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>299</x>
-     <y>199</y>
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionQuickConnect</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionQuickConnect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDisconnect</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDisconnect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostSettings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
@@ -552,20 +1178,1061 @@
    <sender>actionExit</sender>
    <signal>triggered()</signal>
    <receiver>MainWindowClass</receiver>
-   <slot>close()</slot>
+   <slot>actionExit()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
      <y>-1</y>
     </hint>
     <hint type="destinationlabel">
-     <x>299</x>
-     <y>199</y>
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionImportFromWS_FTP</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionImportFromWS_FTP()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSaveSettingsToFile</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionSaveSettingsToFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLoadSettingsFromFile</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionLoadSettingsFromFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionModifyMasterPassword</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionModifyMasterPassword()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExportFileZillaXML</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionExportFileZillaXML()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionExportWinSCPINI</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionExportWinSCPINI()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionResetSettings</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionResetSettings()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDownload</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDownload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionUpload</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionUpload()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDownloadRename</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDownloadRename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionUploadRename</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionUploadRename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDownloadRespecify</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDownloadRespecify()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDownloadAsFile</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDownloadAsFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionUploadMirroring</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionUploadMirroring()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCalcFilesSize</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCalcFilesSize()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDownloadMirroring</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDownloadMirroring()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCmdRm</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCmdRm()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCmdRename</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCmdRename()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCmdReattribute</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCmdReattribute()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCmdMkdir</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCmdMkdir()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCommand</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCommand()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDirSync</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionDirSync(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBmarkAddHost</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionBmarkAddHost()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBmarkAddLocal</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionBmarkAddLocal()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBmarkAddBoth</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionBmarkAddBoth()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionBmarkEdit</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionBmarkEdit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFilter</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionFilter()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFind</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionFind()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionFindNext</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionFindNext()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelect</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionSelect()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSelectAll</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionSelectAll()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionViewFList</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionViewFList(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionViewFDetail</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionViewFDetail(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSort</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionSort()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionViewDot</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionViewDot(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionListWithViewer</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionListWithViewer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionTaskWithViewer</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionTaskWithViewer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionReflesh</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionReflesh()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionCalcOnetimePasswd</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionCalcOnetimePasswd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionWindowsFWSetting</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionWindowsFWSetting()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionPreference</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionPreference()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionContents</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionContents()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpenWebsite</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionOpenWebsite()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAbout</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionAbout()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionAboutQt</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionAboutQt()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionModeAscii</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionModeAscii(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionModeBinary</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionModeBinary(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionModeAuto</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionModeAuto(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLocalSJIS</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionLocalSJIS(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLocalEUC</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionLocalEUC(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLocalJIS</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionLocalJIS(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLocalUTF8</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionLocalUTF8(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLocalUTF8BOM</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionLocalUTF8BOM(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostSJIS</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostSJIS(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostEUC</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostEUC(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostJIS</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostJIS(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostUTF8</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostUTF8(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostUTF8BOM</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostUTF8BOM(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHostNocode</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHostNocode(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionHalfKana2Full</sender>
+   <signal>triggered(bool)</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionHalfKana2Full(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionStopReceiving</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindowClass</receiver>
+   <slot>actionStopReceiving()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>0</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>connect()</slot>
+  <slot>actionConnect()</slot>
+  <slot>actionQuickConnect()</slot>
+  <slot>actionDisconnect()</slot>
+  <slot>actionHostSettings()</slot>
+  <slot>actionExit()</slot>
+  <slot>actionImportFromWS_FTP()</slot>
+  <slot>actionSaveSettingsToFile()</slot>
+  <slot>actionLoadSettingsFromFile()</slot>
+  <slot>actionModifyMasterPassword()</slot>
+  <slot>actionExportFileZillaXML()</slot>
+  <slot>actionExportWinSCPINI()</slot>
+  <slot>actionResetSettings()</slot>
+  <slot>actionDownload()</slot>
+  <slot>actionUpload()</slot>
+  <slot>actionDownloadRename()</slot>
+  <slot>actionUploadRename()</slot>
+  <slot>actionDownloadRespecify()</slot>
+  <slot>actionDownloadAsFile()</slot>
+  <slot>actionUploadMirroring()</slot>
+  <slot>actionCalcFilesSize()</slot>
+  <slot>actionDownloadMirroring()</slot>
+  <slot>actionCmdRm()</slot>
+  <slot>actionCmdRename()</slot>
+  <slot>actionCmdReattribute()</slot>
+  <slot>actionCmdMkdir()</slot>
+  <slot>actionCommand()</slot>
+  <slot>actionDirSync(bool)</slot>
+  <slot>actionBmarkAddHost()</slot>
+  <slot>actionBmarkAddLocal()</slot>
+  <slot>actionBmarkAddBoth()</slot>
+  <slot>actionBmarkEdit()</slot>
+  <slot>actionFilter()</slot>
+  <slot>actionFind()</slot>
+  <slot>actionFindNext()</slot>
+  <slot>actionSelect()</slot>
+  <slot>actionSelectAll()</slot>
+  <slot>actionViewFList(bool)</slot>
+  <slot>actionViewFDetail(bool)</slot>
+  <slot>actionSort()</slot>
+  <slot>actionViewDot(bool)</slot>
+  <slot>actionListWithViewer()</slot>
+  <slot>actionTaskWithViewer()</slot>
+  <slot>actionReflesh()</slot>
+  <slot>actionCalcOnetimePasswd()</slot>
+  <slot>actionWindowsFWSetting()</slot>
+  <slot>actionPreference()</slot>
+  <slot>actionContents()</slot>
+  <slot>actionOpenWebsite()</slot>
+  <slot>actionAbout()</slot>
+  <slot>actionAboutQt()</slot>
+  <slot>actionModeAscii(bool)</slot>
+  <slot>actionModeBinary(bool)</slot>
+  <slot>actionModeAuto(bool)</slot>
+  <slot>actionLocalSJIS(bool)</slot>
+  <slot>actionLocalEUC(bool)</slot>
+  <slot>actionLocalJIS(bool)</slot>
+  <slot>actionLocalUTF8(bool)</slot>
+  <slot>actionLocalUTF8BOM(bool)</slot>
+  <slot>actionHostSJIS(bool)</slot>
+  <slot>actionHostEUC(bool)</slot>
+  <slot>actionHostJIS(bool)</slot>
+  <slot>actionHostUTF8(bool)</slot>
+  <slot>actionHostUTF8BOM(bool)</slot>
+  <slot>actionHostNocode(bool)</slot>
+  <slot>actionHalfKana2Full(bool)</slot>
+  <slot>actionStopReceiving()</slot>
  </slots>
 </ui>

@@ -5,11 +5,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //qDebug() << QStyleFactory::keys();
+    //QApplication::setStyle(QStyleFactory::create("Fusion"));
     ffftp_initialize();
     MainWindow w;
-    w.setWindowTitle(QString::fromWCharArray(ffftp_getwindowtitle()));
     w.show();
-    QMetaObject::invokeMethod(&w, "connect");
+    QMetaObject::invokeMethod(&w, &MainWindow::actionConnect);
     int ret = a.exec();
     ffftp_finalize();
     return ret;

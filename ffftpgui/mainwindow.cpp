@@ -26,12 +26,38 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), d_(new MainWindow::Private())
 {
     d_->ui.setupUi(this);
+    // QActionGroupをDesignerから編集する方法が分からなかったので手動で実装
+    QActionGroup* ag1 = new QActionGroup(this);
+    ag1->addAction(d_->ui.actionViewFList);
+    ag1->addAction(d_->ui.actionViewFDetail);
+    ag1->setExclusive(true);
+    QActionGroup* ag2 = new QActionGroup(this);
+    ag2->addAction(d_->ui.actionModeAscii);
+    ag2->addAction(d_->ui.actionModeBinary);
+    ag2->addAction(d_->ui.actionModeAuto);
+    ag2->setExclusive(true);
+    QActionGroup* ag3 = new QActionGroup(this);
+    ag3->addAction(d_->ui.actionLocalSJIS);
+    ag3->addAction(d_->ui.actionLocalEUC);
+    ag3->addAction(d_->ui.actionLocalJIS);
+    ag3->addAction(d_->ui.actionLocalUTF8);
+    ag3->addAction(d_->ui.actionLocalUTF8BOM);
+    ag3->setExclusive(true);
+    QActionGroup* ag4 = new QActionGroup(this);
+    ag4->addAction(d_->ui.actionHostSJIS);
+    ag4->addAction(d_->ui.actionHostEUC);
+    ag4->addAction(d_->ui.actionHostJIS);
+    ag4->addAction(d_->ui.actionHostUTF8);
+    ag4->addAction(d_->ui.actionHostUTF8BOM);
+    ag4->addAction(d_->ui.actionHostNocode);
+    ag4->setExclusive(true);
+
     startTimer(500);
     emit timerEvent(nullptr);
 
     d_->ffftpt = new FFFTPThread(); // スレッド化するためにはコンストラクタにparentを渡してはいけない
-    d_->ffftpt->moveToThread(d_->ffftpt);
     //d_->ffftpt = new FFFTPThread(this); // これはNG
+    d_->ffftpt->moveToThread(d_->ffftpt);
     d_->ffftpt->start();
 
     _mainwindow = this;
@@ -55,7 +81,7 @@ void MainWindow::timerEvent(QTimerEvent* event) {
     }
 }
 
-void MainWindow::connect() {
+void MainWindow::actionConnect() {
     qDebug() << __FUNCTION__ << " called.";
     HostsListDialog* d = new HostsListDialog(this);
     if (d->exec() == QDialog::Accepted) {
@@ -79,6 +105,78 @@ void MainWindow::connect() {
     }
     delete d;
 }
+
+void MainWindow::actionQuickConnect() {}
+void MainWindow::actionDisconnect() {}
+void MainWindow::actionHostSettings() {}
+void MainWindow::actionExit() {
+    qDebug() << __FUNCTION__ << " called.";
+    QMainWindow::close();
+}
+void MainWindow::actionImportFromWS_FTP() {}
+void MainWindow::actionSaveSettingsToFile() {}
+void MainWindow::actionLoadSettingsFromFile() {}
+void MainWindow::actionModifyMasterPassword() {}
+void MainWindow::actionExportFileZillaXML() {}
+void MainWindow::actionExportWinSCPINI() {}
+void MainWindow::actionResetSettings() {}
+void MainWindow::actionDownload() {}
+void MainWindow::actionUpload() {}
+void MainWindow::actionDownloadRename() {}
+void MainWindow::actionUploadRename() {}
+void MainWindow::actionDownloadRespecify() {}
+void MainWindow::actionDownloadAsFile() {}
+void MainWindow::actionUploadMirroring() {}
+void MainWindow::actionCalcFilesSize() {}
+void MainWindow::actionDownloadMirroring() {}
+void MainWindow::actionCmdRm() {}
+void MainWindow::actionCmdRename() {}
+void MainWindow::actionCmdReattribute() {}
+void MainWindow::actionCmdMkdir() {}
+void MainWindow::actionCommand() {}
+void MainWindow::actionDirSync(bool toggle) {}
+void MainWindow::actionBmarkAddHost() {}
+void MainWindow::actionBmarkAddLocal() {}
+void MainWindow::actionBmarkAddBoth() {}
+void MainWindow::actionBmarkEdit() {}
+void MainWindow::actionFilter() {}
+void MainWindow::actionFind() {}
+void MainWindow::actionFindNext() {}
+void MainWindow::actionSelect() {}
+void MainWindow::actionSelectAll() {}
+void MainWindow::actionViewFList(bool toggle) {}
+void MainWindow::actionViewFDetail(bool toggle) {}
+void MainWindow::actionSort() {}
+void MainWindow::actionViewDot(bool toggle) {}
+void MainWindow::actionListWithViewer() {}
+void MainWindow::actionTaskWithViewer() {}
+void MainWindow::actionReflesh() {}
+void MainWindow::actionCalcOnetimePasswd() {}
+void MainWindow::actionWindowsFWSetting() {}
+void MainWindow::actionPreference() {}
+void MainWindow::actionContents() {}
+void MainWindow::actionOpenWebsite() {}
+void MainWindow::actionAbout() {}
+void MainWindow::actionAboutQt() {
+    qDebug() << __FUNCTION__ << " called.";
+    QMessageBox::aboutQt(this, "FFFTP");
+}
+void MainWindow::actionModeAscii(bool toggle) { qDebug() << __FUNCTION__ << " called. toggled=" << toggle; }
+void MainWindow::actionModeBinary(bool toggle) {}
+void MainWindow::actionModeAuto(bool toggle) {}
+void MainWindow::actionLocalSJIS(bool toggle) {}
+void MainWindow::actionLocalEUC(bool toggle) {}
+void MainWindow::actionLocalJIS(bool toggle) {}
+void MainWindow::actionLocalUTF8(bool toggle) {}
+void MainWindow::actionLocalUTF8BOM(bool toggle) {}
+void MainWindow::actionHostSJIS(bool toggle) {}
+void MainWindow::actionHostEUC(bool toggle) {}
+void MainWindow::actionHostJIS(bool toggle) {}
+void MainWindow::actionHostUTF8(bool toggle) {}
+void MainWindow::actionHostUTF8BOM(bool toggle) {}
+void MainWindow::actionHostNocode(bool toggle) {}
+void MainWindow::actionHalfKana2Full(bool toggle) {}
+void MainWindow::actionStopReceiving() {}
 
 bool MainWindow::askSaveCryptFunc() {
     if (QMessageBox::question(this, kAskSaveCryptTitle, kAskSaveCryptBody) == QMessageBox::Yes)

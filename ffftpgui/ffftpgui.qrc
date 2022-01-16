@@ -1,5 +1,7 @@
 <RCC>
   <qresource prefix="/">
+    <file>resource/folderopen.png</file>
+    <file>resource/folderup.png</file>
     <file>resource/closedfolder16x16.png</file>
     <file>resource/desktop16x16.png</file>
     <file>resource/quickconnect.png</file>

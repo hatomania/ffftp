@@ -61,6 +61,9 @@
     <ClCompile Include="ffftpthread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="myfilesystemmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="hostslistdialog.hpp">
@@ -76,6 +79,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="ffftpthread.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="myfilesystemmodel.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

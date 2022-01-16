@@ -143,7 +143,9 @@
     <QtMoc Include="hostsettingbasicform.hpp" />
     <QtMoc Include="dirsandtaskmsgform.hpp" />
     <QtMoc Include="ffftpthread.hpp" />
+    <QtMoc Include="myfilesystemmodel.hpp" />
     <ClInclude Include="stdafx.h" />
+    <ClCompile Include="myfilesystemmodel.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>

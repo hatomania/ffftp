@@ -16,6 +16,7 @@
 
 IMPLEMENT_CONSTANT_CHAR(kEmptyString, "")
 IMPLEMENT_CONSTANT_CHAR(kResImage_closedfolder16x16, ":/resource/closedfolder16x16.png")
+IMPLEMENT_CONSTANT_CHAR(kResImage_cleanfile16x16, ":/resource/cleanfile16x16.png")
 IMPLEMENT_CONSTANT_CHAR(kResImage_desktop16x16, ":/resource/desktop16x16.png")
 
 // ユーザーに表示する文字列には必ずQObject::tr()で囲ってください

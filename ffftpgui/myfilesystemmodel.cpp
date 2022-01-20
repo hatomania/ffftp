@@ -1,27 +1,49 @@
 ﻿#include "myfilesystemmodel.hpp"
 #include "stdafx.h"
 
+class MyDir::Private {
+public:
+    Private() {}
+    ~Private() {}
+};
+
+MyDir::MyDir(const QString& path, bool isshowndot)
+    : path_(path), isshowndot_(isshowndot), d_(new MyDir::Private()) {
+}
+void MyDir::setShowDot(bool isshowndot) {
+    isshowndot_ = isshowndot;
+}
+void MyDir::setSorting(int flags) {
+    sortflags_ = flags;
+}
+
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class MyFileSystemModel::Private {
 public:
     Private() {}
     ~Private() {}
-    QFileInfoList ifinfo;
+    //QDir* dir;
+    //QFileInfoList ifinfo;
 };
 
-static const QVector<QString> _headerdata = {
-    kStringName,
-    kStringDate,
-    kStringSize,
-    kStringExtension,
-    kStringPermission,
-    kStringOwner,
-};
+//static const QVector<QString> _headerdata = {
+//    kStringName,
+//    kStringDate,
+//    kStringSize,
+//    kStringExtension,
+//    kStringPermission,
+//    kStringOwner,
+//};
 
-MyFileSystemModel::MyFileSystemModel(QWidget* parent)
+MyFileSystemModel::MyFileSystemModel(QWidget* parent, const QString& path, bool isshowndot)
     : QAbstractItemModel(parent), d_(new MyFileSystemModel::Private()) {
-    QDir dir(QDir::homePath());
-    d_->ifinfo = dir.entryInfoList();
+}
+
+void MyFileSystemModel::setShowDot(bool isshowndot) {
+    dir_->setShowDot(isshowndot);
+    fl_ = dir_->fileList();
+    emit dataChanged(QModelIndex(), QModelIndex());
+    emit layoutChanged();
 }
 
 // ↓なぜか各種純粋仮想関数の実装が何度もコールされる
@@ -33,28 +55,15 @@ MyFileSystemModel::MyFileSystemModel(QWidget* parent)
 int MyFileSystemModel::columnCount(const QModelIndex& parent) const {
     //qDebug() << __FUNCTION__ << " called. _headerdata.size()=" << _headerdata.size();
     if (parent != QModelIndex()) return 0; // ルートでなければ0
-    return _headerdata.size();
+    return headerList().size();
 }
 
 QVariant MyFileSystemModel::data(const QModelIndex& index, int role) const {
     //qDebug() << __FUNCTION__ << " called. index=" << index << " role = " << role;
     QVariant _r = QVariant();
-    QFileInfo* info = static_cast<QFileInfo*>(index.internalPointer());
+    QVector<QVariant>* info = static_cast<QVector<QVariant>*>(index.internalPointer());
     if (index.isValid() && index != QModelIndex()) {
-        if (role == Qt::TextAlignmentRole && index.column() == 2) _r = Qt::AlignRight;
-        else if (role == Qt::DecorationRole && index.column() == 0) {
-            _r = info->isDir() ? QIcon(kResImage_closedfolder16x16) : QIcon(kResImage_desktop16x16);
-        }
-        else if (role == Qt::DisplayRole) {
-            switch (index.column()) {
-            case 0: _r = info->fileName(); break;
-            case 1: _r = info->fileTime(QFileDevice::FileModificationTime); break;
-            case 2: _r = info->isDir() ? QVariant("<DIR>") : QVariant(info->size()); break;
-            case 3: _r = info->suffix(); break;
-            case 4: _r = kEmptyString; break;
-            case 5: _r = kEmptyString; break;
-            }
-        }
+        _r = data(*info, index.column(), role);
     }
     return _r;
 }
@@ -62,13 +71,14 @@ QVariant MyFileSystemModel::data(const QModelIndex& index, int role) const {
 QVariant MyFileSystemModel::headerData(int section, Qt::Orientation orientation, int role) const {
     //qDebug() << __FUNCTION__ << " called. section=" << section << " orientation=" << orientation << " role=" << role;
     if (orientation != Qt::Horizontal || role != Qt::DisplayRole) return QVariant();
-    Q_ASSERT(_headerdata.size() >= section);
-    return QVariant(_headerdata[section]);
+    Q_ASSERT(headerList().size() >= section);
+    return QVariant(headerList()[section]);
 }
 
 QModelIndex MyFileSystemModel::index(int row, int column, const QModelIndex& parent) const {
     if (parent.isValid()) return QModelIndex();
-    return createIndex(row, column, &d_->ifinfo[row]);
+    Q_ASSERT(fl_.size() > row);
+    return createIndex(row, column, &fl_[row]);
 }
 
 QModelIndex MyFileSystemModel::parent(const QModelIndex& index) const {
@@ -77,5 +87,5 @@ QModelIndex MyFileSystemModel::parent(const QModelIndex& index) const {
 
 int MyFileSystemModel::rowCount(const QModelIndex& parent) const {
     if (parent != QModelIndex()) return 0; // ルートでなければ0
-    return d_->ifinfo.size();
+    return fl_.size();
 }

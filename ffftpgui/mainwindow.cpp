@@ -134,7 +134,7 @@ void MainWindow::actionCmdRename() {}
 void MainWindow::actionCmdReattribute() {}
 void MainWindow::actionCmdMkdir() {}
 void MainWindow::actionCommand() {}
-void MainWindow::actionDirSync(bool toggle) {}
+void MainWindow::actionDirSync(bool checked) {}
 void MainWindow::actionBmarkAddHost() {}
 void MainWindow::actionBmarkAddLocal() {}
 void MainWindow::actionBmarkAddBoth() {}
@@ -144,10 +144,12 @@ void MainWindow::actionFind() {}
 void MainWindow::actionFindNext() {}
 void MainWindow::actionSelect() {}
 void MainWindow::actionSelectAll() {}
-void MainWindow::actionViewFList(bool toggle) {}
-void MainWindow::actionViewFDetail(bool toggle) {}
+void MainWindow::actionViewFList(bool checked) {}
+void MainWindow::actionViewFDetail(bool checked) {}
 void MainWindow::actionSort() {}
-void MainWindow::actionViewDot(bool toggle) {}
+void MainWindow::actionViewDot(bool checked) {
+    d_->ui.widget->setDotFileShown(checked);
+}
 void MainWindow::actionListWithViewer() {}
 void MainWindow::actionTaskWithViewer() {}
 void MainWindow::actionReflesh() {}
@@ -161,21 +163,21 @@ void MainWindow::actionAboutQt() {
     qDebug() << __FUNCTION__ << " called.";
     QMessageBox::aboutQt(this, "FFFTP");
 }
-void MainWindow::actionModeAscii(bool toggle) { qDebug() << __FUNCTION__ << " called. toggled=" << toggle; }
-void MainWindow::actionModeBinary(bool toggle) {}
-void MainWindow::actionModeAuto(bool toggle) {}
-void MainWindow::actionLocalSJIS(bool toggle) {}
-void MainWindow::actionLocalEUC(bool toggle) {}
-void MainWindow::actionLocalJIS(bool toggle) {}
-void MainWindow::actionLocalUTF8(bool toggle) {}
-void MainWindow::actionLocalUTF8BOM(bool toggle) {}
-void MainWindow::actionHostSJIS(bool toggle) {}
-void MainWindow::actionHostEUC(bool toggle) {}
-void MainWindow::actionHostJIS(bool toggle) {}
-void MainWindow::actionHostUTF8(bool toggle) {}
-void MainWindow::actionHostUTF8BOM(bool toggle) {}
-void MainWindow::actionHostNocode(bool toggle) {}
-void MainWindow::actionHalfKana2Full(bool toggle) {}
+void MainWindow::actionModeAscii(bool checked) { qDebug() << __FUNCTION__ << " called. toggled=" << checked; }
+void MainWindow::actionModeBinary(bool checked) {}
+void MainWindow::actionModeAuto(bool checked) {}
+void MainWindow::actionLocalSJIS(bool checked) {}
+void MainWindow::actionLocalEUC(bool checked) {}
+void MainWindow::actionLocalJIS(bool checked) {}
+void MainWindow::actionLocalUTF8(bool checked) {}
+void MainWindow::actionLocalUTF8BOM(bool checked) {}
+void MainWindow::actionHostSJIS(bool checked) {}
+void MainWindow::actionHostEUC(bool checked) {}
+void MainWindow::actionHostJIS(bool checked) {}
+void MainWindow::actionHostUTF8(bool checked) {}
+void MainWindow::actionHostUTF8BOM(bool checked) {}
+void MainWindow::actionHostNocode(bool checked) {}
+void MainWindow::actionHalfKana2Full(bool checked) {}
 void MainWindow::actionStopReceiving() {}
 
 bool MainWindow::askSaveCryptFunc() {

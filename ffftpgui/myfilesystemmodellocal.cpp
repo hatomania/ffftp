@@ -1,6 +1,9 @@
 ﻿#include "myfilesystemmodellocal.hpp"
 #include "stdafx.h"
 
+MyDirListLocal::MyDirListLocal(const QString& fullpath, const QString& filename, const QDateTime& time, const qint64& size, const QString& ext)
+    : MyDirList(), fullpath(fullpath), filename(filename), time(time), size(size), ext(ext) {}
+
 enum SortFlag {
     Ascending = 0x00,
     Descending = 0xF0,
@@ -21,7 +24,15 @@ MyDirLocal::MyDirLocal(const QString& path, bool isshowndot)
     d_->dir = new QDir(path, "*", QDir::Name | QDir::DirsFirst, QDir::AllEntries | QDir::NoDotAndDotDot | QDir::Hidden | QDir::System);
     d_->ifinfo = d_->dir->entryInfoList();
 }
-QVector<QVector<QVariant>> MyDirLocal::fileList() const {
+QString MyDirLocal::oneUpPath() {
+    d_->dir->cdUp();
+    return path_ = d_->dir->absolutePath();
+}
+const QVector<MyDirList*>& MyDirLocal::fileList() const {
+    static QVector<MyDirList*> dirlist = QVector<MyDirList*>{};
+    for (MyDirList* p : dirlist) { delete p; }
+    dirlist.clear();
+
     QDir::SortFlags sflags = QDir::DirsFirst;
     if ((sortflags_ & Descending) > 0) sflags |= QDir::Reversed;
     if ((sortflags_ & Name) > 0) sflags |= QDir::Name;
@@ -29,20 +40,20 @@ QVector<QVector<QVariant>> MyDirLocal::fileList() const {
     else if ((sortflags_ & Size) > 0) sflags |= QDir::Size;
     else if ((sortflags_ & Type) > 0) sflags |= QDir::Type;
     d_->dir->setSorting(sflags);
-    QVector<QVector<QVariant>> _r;
     d_->ifinfo = d_->dir->entryInfoList();
 
     for (QFileInfo& f : d_->ifinfo) {
         Q_ASSERT(f.fileName().size() > 0);
         if (!isshowndot_ && f.fileName().front() == '.') continue;
-        _r.push_back(QVector<QVariant>({
+        dirlist.push_back(new MyDirListLocal(
+            f.absoluteFilePath(),
             f.fileName(),
             f.fileTime(QFileDevice::FileModificationTime),
             f.isDir() ? -1 : f.size(),
             f.suffix()
-        }));
+        ));
     }
-    return _r;
+    return dirlist;
 }
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
@@ -65,23 +76,37 @@ MyFileSystemModelLocal::MyFileSystemModelLocal(QWidget* parent, const QString& p
     fl_ = dir_->fileList();
 }
 
+QString MyFileSystemModelLocal::fullPath(const QModelIndex& index) const {
+    const MyDirListLocal& l = *static_cast<const MyDirListLocal*>(index.internalPointer());
+    return l.fullpath;
+}
+
+bool MyFileSystemModelLocal::isDir(const QModelIndex& index) const {
+    const MyDirListLocal& l = *static_cast<const MyDirListLocal*>(index.internalPointer());
+    return l.size < 0 ? true : false;
+}
+
+QString MyFileSystemModelLocal::oneUpPath() {
+    return dir_->oneUpPath();
+}
+
 const QVector<QString>& MyFileSystemModelLocal::headerList() const {
     return _headerdata;
 }
 
-QVariant MyFileSystemModelLocal::data(const QVector<QVariant>& fi, int column, int role) const {
-    Q_ASSERT(fi.size() == 4);
+QVariant MyFileSystemModelLocal::data(const MyDirList& fi, int column, int role) const {
+    const MyDirListLocal& pfi = *reinterpret_cast<const MyDirListLocal*>(&fi);
     QVariant _r = QVariant();
     if (role == Qt::TextAlignmentRole && column == 2) _r = Qt::AlignRight;
     else if (role == Qt::DecorationRole && column == 0) {
-        _r = fi[2].toInt() < 0 ? QIcon(kResImage_closedfolder16x16) : QIcon(kResImage_cleanfile16x16);
+        _r = pfi.size < 0 ? QIcon(kResImage_closedfolder16x16) : QIcon(kResImage_cleanfile16x16);
     }
     else if (role == Qt::DisplayRole) {
         switch (column) {
-        case 0: _r = fi[0].toString(); break;
-        case 1: _r = fi[1].toDateTime(); break;
-        case 2: _r = fi[2].toInt() < 0 ? QVariant("<DIR>") : QVariant(fi[2].toInt()); break;
-        case 3: _r = fi[3].toString(); break;
+        case 0: _r = pfi.filename; break;
+        case 1: _r = pfi.time; break;
+        case 2: _r = pfi.size < 0 ? QVariant("<DIR>") : QVariant(pfi.size); break;
+        case 3: _r = pfi.ext; break;
         }
     }
     return _r;

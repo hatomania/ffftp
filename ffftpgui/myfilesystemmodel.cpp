@@ -1,6 +1,8 @@
 ﻿#include "myfilesystemmodel.hpp"
 #include "stdafx.h"
 
+MyDirList::MyDirList() {}
+
 class MyDir::Private {
 public:
     Private() {}
@@ -13,8 +15,14 @@ MyDir::MyDir(const QString& path, bool isshowndot)
 void MyDir::setShowDot(bool isshowndot) {
     isshowndot_ = isshowndot;
 }
+bool MyDir::showDot() const {
+    return isshowndot_;
+}
 void MyDir::setSorting(int flags) {
     sortflags_ = flags;
+}
+const QString& MyDir::currentPath() const {
+    return path_;
 }
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
@@ -46,6 +54,10 @@ void MyFileSystemModel::setShowDot(bool isshowndot) {
     emit layoutChanged();
 }
 
+bool MyFileSystemModel::showDot() const {
+    return dir_->showDot();
+}
+
 // ↓なぜか各種純粋仮想関数の実装が何度もコールされる
 // スプリッタやウィンドウのリサイズ等がとても重くなる
 // qDebug()アンコメントするとメッセージが表示されまくる
@@ -61,8 +73,8 @@ int MyFileSystemModel::columnCount(const QModelIndex& parent) const {
 QVariant MyFileSystemModel::data(const QModelIndex& index, int role) const {
     //qDebug() << __FUNCTION__ << " called. index=" << index << " role = " << role;
     QVariant _r = QVariant();
-    QVector<QVariant>* info = static_cast<QVector<QVariant>*>(index.internalPointer());
     if (index.isValid() && index != QModelIndex()) {
+        MyDirList* info = static_cast<MyDirList*>(index.internalPointer());
         _r = data(*info, index.column(), role);
     }
     return _r;
@@ -78,7 +90,7 @@ QVariant MyFileSystemModel::headerData(int section, Qt::Orientation orientation,
 QModelIndex MyFileSystemModel::index(int row, int column, const QModelIndex& parent) const {
     if (parent.isValid()) return QModelIndex();
     Q_ASSERT(fl_.size() > row);
-    return createIndex(row, column, &fl_[row]);
+    return createIndex(row, column, fl_[row]); // 第3引数について、&fl_[row]とするのは間違い。実体がポインタなのでそのまま実体を渡す
 }
 
 QModelIndex MyFileSystemModel::parent(const QModelIndex& index) const {

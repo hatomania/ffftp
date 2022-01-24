@@ -3,12 +3,20 @@
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QFileInfo>
 
+class MyDirList {
+public:
+    explicit MyDirList();
+};
+
 class MyDir {
 public:
     explicit MyDir(const QString& path, bool isshowndot);
     void setShowDot(bool isshowndot);
+    bool showDot() const;
     void setSorting(int flags);
-    virtual QVector<QVector<QVariant>> fileList() const = 0;
+    const QString& currentPath() const;
+    virtual QString oneUpPath() = 0;
+    virtual const QVector<MyDirList*>& fileList() const = 0;
 protected:
     QString path_;
     bool isshowndot_;
@@ -25,6 +33,9 @@ class MyFileSystemModel : public QAbstractItemModel
 public:
     explicit MyFileSystemModel(QWidget *parent = Q_NULLPTR, const QString& path = "", bool isshowndot = false);
     void setShowDot(bool isshowndot);
+    bool showDot() const;
+    virtual QString fullPath(const QModelIndex& index) const = 0;
+    virtual bool isDir(const QModelIndex& index) const = 0;
 
 public:
     int columnCount(const QModelIndex& parent = QModelIndex()) const override;
@@ -36,9 +47,9 @@ public:
 
 protected:
     virtual const QVector<QString>& headerList() const = 0;
-    virtual QVariant data(const QVector<QVariant>& fi, int column, int role) const = 0;
+    virtual QVariant data(const MyDirList& fi, int column, int role) const = 0;
     MyDir* dir_;
-    QVector<QVector<QVariant>> fl_;
+    QVector<MyDirList*> fl_;
 
 private:
     class Private;

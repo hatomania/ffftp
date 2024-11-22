@@ -3,6 +3,9 @@
 
 ffftpをQtやPOSIXその他のクロスプラットフォームライブラリを用いて、クロスプラットフォーム化する試み。
 
+![ss000](https://github.com/user-attachments/assets/6d7e557c-888d-406b-93ab-c8876ff0f535)  
+Qt6で起動したメイン画面（開発中）
+
 ## ffftpとlibffftpとffftpguiの関係
 
 ffftpの元のコードをAPIとして集約してライブラリ化(libffftp)する。  

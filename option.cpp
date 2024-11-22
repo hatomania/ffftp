@@ -32,7 +32,7 @@
 
 static auto GetStrings(HWND hdlg, int id) {
 	std::vector<std::wstring> strings;
-	auto count = (int)SendDlgItemMessageW(hdlg, id, LB_GETCOUNT, 0, 0);
+	auto const count = (int)SendDlgItemMessageW(hdlg, id, LB_GETCOUNT, 0, 0);
 	strings.reserve(count);
 	std::wstring string;
 	for (int i = 0; i < count; i++) {
@@ -43,12 +43,11 @@ static auto GetStrings(HWND hdlg, int id) {
 	}
 	return strings;
 }
-static void SetStrings(HWND hdlg, int id, std::vector<std::wstring> const& strings) {
+static void SetStrings(HWND hdlg, int id, std::vector<std::wstring> const& strings) noexcept {
 	for (auto const& string : strings)
 		SendDlgItemMessageW(hdlg, id, LB_ADDSTRING, 0, (LPARAM)string.c_str());
 }
 int GetDecimalText(HWND hDlg, int Ctrl);
-void CheckRange2(int *Cur, int Max, int Min);
 
 
 // ファイル属性設定ウインドウ
@@ -56,7 +55,7 @@ struct DefAttr {
 	using result_t = bool;
 	std::wstring filename;
 	std::wstring attr;
-	INT_PTR OnInit(HWND hDlg) {
+	INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, DEFATTR_FNAME, EM_LIMITTEXT, FMAX_PATH, 0);
 		SendDlgItemMessageW(hDlg, DEFATTR_ATTR, EM_LIMITTEXT, 4, 0);
 		return TRUE;
@@ -83,7 +82,7 @@ struct DefAttr {
 struct User {
 	static constexpr WORD dialogId = opt_user_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, USER_ADRS, EM_LIMITTEXT, PASSWORD_LEN, 0);
 		SetText(hDlg, USER_ADRS, UserMailAdrs);
 		return TRUE;
@@ -105,7 +104,7 @@ struct Transfer1 {
 	static constexpr WORD dialogId = opt_trmode1_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
 	using ModeButton = RadioButton<TRMODE_AUTO, TRMODE_ASCII, TRMODE_BIN>;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SetStrings(hDlg, TRMODE_EXT_LIST, AsciiExt);
 		ModeButton::Set(hDlg, AskTransferType());
 		SendDlgItemMessageW(hDlg, TRMODE_TIME, BM_SETCHECK, SaveTimeStamp, 0);
@@ -134,7 +133,7 @@ struct Transfer1 {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case TRMODE_ASCII:
 		case TRMODE_BIN:
@@ -152,7 +151,7 @@ struct Transfer1 {
 				SendDlgItemMessageW(hDlg, TRMODE_EXT_LIST, LB_ADDSTRING, 0, (LPARAM)text.c_str());
 			break;
 		case TRMODE_DEL:
-			if (auto Num = (int)SendDlgItemMessageW(hDlg, TRMODE_EXT_LIST, LB_GETCURSEL, 0, 0); Num != LB_ERR)
+			if (auto const Num = (int)SendDlgItemMessageW(hDlg, TRMODE_EXT_LIST, LB_GETCURSEL, 0, 0); Num != LB_ERR)
 				SendDlgItemMessageW(hDlg, TRMODE_EXT_LIST, LB_DELETESTRING, Num, 0);
 			break;
 		}
@@ -177,8 +176,7 @@ struct Transfer2 {
 		case PSN_APPLY: {
 			DefaultLocalPath = GetText(hDlg, TRMODE2_LOCAL);
 			FnameCnv = CnvButton::Get(hDlg);
-			TimeOut = GetDecimalText(hDlg, TRMODE2_TIMEOUT);
-			CheckRange2(&TimeOut, 300, 0);
+			TimeOut = std::clamp(GetDecimalText(hDlg, TRMODE2_TIMEOUT), 0, 300);
 			return PSNRET_NOERROR;
 		}
 		case PSN_HELP:
@@ -205,7 +203,7 @@ struct Transfer3 {
 			return;
 		LVITEMW item;
 		item = { .mask = LVIF_TEXT, .iItem = std::numeric_limits<int>::max(), .pszText = const_cast<LPWSTR>(name.c_str()) };
-		auto index = (int)SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_INSERTITEMW, 0, (LPARAM)&item);
+		auto const index = (int)SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_INSERTITEMW, 0, (LPARAM)&item);
 		item = { .mask = LVIF_TEXT, .iItem = index, .iSubItem = 1, .pszText = const_cast<LPWSTR>(attr.c_str()) };
 		SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_SETITEMW, 0, (LPARAM)&item);
 	}
@@ -240,7 +238,7 @@ struct Transfer3 {
 		switch (nmh->code) {
 		case PSN_APPLY: {
 			DefAttrList.clear();
-			auto count = (int)SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_GETITEMCOUNT, 0, 0);
+			auto const count = (int)SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_GETITEMCOUNT, 0, 0);
 			DefAttrList.reserve((size_t)count * 2);
 			for (int i = 0; i < count; i++) {
 				LVITEMW item;
@@ -269,7 +267,7 @@ struct Transfer3 {
 				AddRow(hDlg, data.filename, data.attr);
 			break;
 		case TRMODE3_DEL:
-			if (auto Tmp = (long)SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_GETNEXTITEM, -1, LVNI_ALL | LVNI_SELECTED); Tmp != -1)
+			if (auto const Tmp = (long)SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_GETNEXTITEM, -1, LVNI_ALL | LVNI_SELECTED); Tmp != -1)
 				SendDlgItemMessageW(hDlg, TRMODE3_LIST, LVM_DELETEITEM, Tmp, 0);
 			break;
 		case TRMODE3_FOLDER:
@@ -286,7 +284,7 @@ struct Transfer4 {
 	static constexpr WORD dialogId = opt_trmode4_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
 	using KanjiButton = RadioButton<TRMODE4_SJIS_CNV, TRMODE4_JIS_CNV, TRMODE4_EUC_CNV, TRMODE4_UTF8N_CNV, TRMODE4_UTF8BOM_CNV>;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		KanjiButton::Set(hDlg, AskLocalKanjiCode());
 		if (IsZoneIDLoaded())
 			SendDlgItemMessageW(hDlg, TRMODE4_MARK_INTERNET, BM_SETCHECK, MarkAsInternet, 0);
@@ -315,7 +313,7 @@ struct Transfer4 {
 struct Mirroring {
 	static constexpr WORD dialogId = opt_mirror_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SetStrings(hDlg, MIRROR_NOTRN_LIST, MirrorNoTrn);
 		SetStrings(hDlg, MIRROR_NODEL_LIST, MirrorNoDel);
 		SendDlgItemMessageW(hDlg, MIRROR_LOW, BM_SETCHECK, MirrorFnameCnv, 0);
@@ -340,7 +338,7 @@ struct Mirroring {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case MIRROR_NOTRN_ADD:
 			if (std::wstring text; InputDialog(fname_in_dlg, hDlg, IDS_MSGJPN199, text, FMAX_PATH))
@@ -351,11 +349,11 @@ struct Mirroring {
 				SendDlgItemMessageW(hDlg, MIRROR_NODEL_LIST, LB_ADDSTRING, 0, (LPARAM)text.c_str());
 			break;
 		case MIRROR_NOTRN_DEL:
-			if (auto Num = (int)SendDlgItemMessageW(hDlg, MIRROR_NOTRN_LIST, LB_GETCURSEL, 0, 0); Num != LB_ERR)
+			if (auto const Num = (int)SendDlgItemMessageW(hDlg, MIRROR_NOTRN_LIST, LB_GETCURSEL, 0, 0); Num != LB_ERR)
 				SendDlgItemMessageW(hDlg, MIRROR_NOTRN_LIST, LB_DELETESTRING, Num, 0);
 			break;
 		case MIRROR_NODEL_DEL:
-			if (auto Num = (int)SendDlgItemMessageW(hDlg, MIRROR_NODEL_LIST, LB_GETCURSEL, 0, 0); Num != LB_ERR)
+			if (auto const Num = (int)SendDlgItemMessageW(hDlg, MIRROR_NODEL_LIST, LB_GETCURSEL, 0, 0); Num != LB_ERR)
 				SendDlgItemMessageW(hDlg, MIRROR_NODEL_LIST, LB_DELETESTRING, Num, 0);
 			break;
 		}
@@ -369,7 +367,7 @@ struct Operation {
 	using UpButton = RadioButton<NOTIFY_U_DLG, NOTIFY_U_OVW>;
 	using DclickButton = RadioButton<NOTIFY_OPEN, NOTIFY_DOWNLOAD>;
 	using MoveButton = RadioButton<NOTIFY_M_NODLG, NOTIFY_M_DLG, NOTIFY_M_DISABLE>;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		DownButton::Set(hDlg, RecvMode);
 		UpButton::Set(hDlg, SendMode);
 		DclickButton::Set(hDlg, DclickOpen);
@@ -396,7 +394,7 @@ struct View1 {
 	static constexpr WORD dialogId = opt_disp1_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
 	static inline LOGFONTW TmpFont;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		TmpFont = ListLogFont;
 		if (ListFont != NULL)
 			SetText(hDlg, DISP_FONT, TmpFont.lfFaceName);
@@ -424,7 +422,7 @@ struct View1 {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		static CHOOSEFONTW chooseFont;
 		switch (id) {
 		case DISP_FONT_BR:
@@ -439,7 +437,7 @@ struct View1 {
 struct View2 {
 	static constexpr WORD dialogId = opt_disp2_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, DISP2_PERMIT_NUM, BM_SETCHECK, DispPermissionsNumber, 0);
 		SendDlgItemMessageW(hDlg, DISP2_AUTO_REFRESH, BM_SETCHECK, AutoRefreshFileList, 0);
 		SendDlgItemMessageW(hDlg, DISP2_REMOVE_OLD_LOG, BM_SETCHECK, RemoveOldLog, 0);
@@ -489,8 +487,7 @@ struct Connecting {
 			ConnectAndSet = (int)SendDlgItemMessageW(hDlg, MISC_OLDDLG, BM_GETCHECK, 0, 0);
 			RasClose = (int)SendDlgItemMessageW(hDlg, CONNECT_RASCLOSE, BM_GETCHECK, 0, 0);
 			RasCloseNotify = (int)SendDlgItemMessageW(hDlg, CONNECT_CLOSE_NOTIFY, BM_GETCHECK, 0, 0);
-			FileHist = GetDecimalText(hDlg, CONNECT_HIST);
-			CheckRange2(&FileHist, HISTORY_MAX, 0);
+			FileHist = std::clamp(GetDecimalText(hDlg, CONNECT_HIST), 0, HISTORY_MAX);
 			QuickAnonymous = (int)SendDlgItemMessageW(hDlg, CONNECT_QUICK_ANONY, BM_GETCHECK, 0, 0);
 			PassToHist = (int)SendDlgItemMessageW(hDlg, CONNECT_HIST_PASS, BM_GETCHECK, 0, 0);
 			SendQuit = (int)SendDlgItemMessageW(hDlg, CONNECT_SENDQUIT, BM_GETCHECK, 0, 0);
@@ -503,7 +500,7 @@ struct Connecting {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case CONNECT_RASCLOSE:
 			if (SendDlgItemMessageW(hDlg, CONNECT_RASCLOSE, BM_GETCHECK, 0, 0) == 1)
@@ -531,7 +528,7 @@ struct Firewall {
 		{ TRUE,  TRUE,  FALSE, FALSE, TRUE,  TRUE  }
 	};
 	static INT_PTR OnInit(HWND hDlg) {
-		UINT_PTR Type = std::distance(std::begin(firewallTypes), std::find(std::begin(firewallTypes), std::end(firewallTypes), FwallType));
+		UINT_PTR const Type = std::distance(std::begin(firewallTypes), std::find(std::begin(firewallTypes), std::end(firewallTypes), FwallType));
 		for (auto resourceId : { IDS_MSGJPN204, IDS_MSGJPN205, IDS_MSGJPN206, IDS_MSGJPN207, IDS_MSGJPN208, IDS_MSGJPN209, IDS_MSGJPN210, IDS_MSGJPN211, IDS_MSGJPN294 })
 			SendDlgItemMessageW(hDlg, FIRE_TYPE, CB_ADDSTRING, 0, (LPARAM)GetString(resourceId).c_str());
 		SendDlgItemMessageW(hDlg, FIRE_TYPE, CB_SETCURSEL, Type - 1, 0);
@@ -563,7 +560,7 @@ struct Firewall {
 	static INT_PTR OnNotify(HWND hDlg, NMHDR* nmh) {
 		switch (nmh->code) {
 		case PSN_APPLY: {
-			auto Type = (int)SendDlgItemMessageW(hDlg, FIRE_TYPE, CB_GETCURSEL, 0, 0) + 1;
+			auto const Type = (int)SendDlgItemMessageW(hDlg, FIRE_TYPE, CB_GETCURSEL, 0, 0) + 1;
 			FwallType = firewallTypes[Type];
 			FwallHost = GetText(hDlg, FIRE_HOST);
 			FwallUser = GetText(hDlg, FIRE_USER);
@@ -584,10 +581,10 @@ struct Firewall {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case FIRE_TYPE: {
-			auto Num = (int)SendDlgItemMessageW(hDlg, FIRE_TYPE, CB_GETCURSEL, 0, 0);
+			auto const Num = (int)SendDlgItemMessageW(hDlg, FIRE_TYPE, CB_GETCURSEL, 0, 0);
 			EnableWindow(GetDlgItem(hDlg, FIRE_USER), HideTbl[Num][0]);
 			EnableWindow(GetDlgItem(hDlg, FIRE_PASS), HideTbl[Num][1]);
 			EnableWindow(GetDlgItem(hDlg, FIRE_SECURITY), HideTbl[Num][2]);
@@ -603,7 +600,7 @@ struct Firewall {
 struct Tool {
 	static constexpr WORD dialogId = opt_tool_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, TOOL_EDITOR1, EM_LIMITTEXT, FMAX_PATH, 0);
 		SendDlgItemMessageW(hDlg, TOOL_EDITOR2, EM_LIMITTEXT, FMAX_PATH, 0);
 		SendDlgItemMessageW(hDlg, TOOL_EDITOR3, EM_LIMITTEXT, FMAX_PATH, 0);
@@ -651,7 +648,7 @@ struct Tool {
 struct Other {
 	static constexpr WORD dialogId = opt_misc_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, MISC_WINPOS, BM_SETCHECK, SaveWinPos, 0);
 		SendDlgItemMessageW(hDlg, MISC_DEBUG, BM_SETCHECK, DebugConsole, 0);
 		SendDlgItemMessageW(hDlg, MISC_REGTYPE, BM_SETCHECK, RegType, 0);
@@ -694,14 +691,14 @@ void SetOption() {
 
 
 // ソート設定
-int SortSetting() {
+int SortSetting() noexcept {
 	struct Data {
 		using result_t = int;
 		using LsortOrdButton = RadioButton<SORT_LFILE_NAME, SORT_LFILE_EXT, SORT_LFILE_SIZE, SORT_LFILE_DATE>;
 		using LDirsortOrdButton = RadioButton<SORT_LDIR_NAME, SORT_LDIR_DATE>;
 		using RsortOrdButton = RadioButton<SORT_RFILE_NAME, SORT_RFILE_EXT, SORT_RFILE_SIZE, SORT_RFILE_DATE>;
 		using RDirsortOrdButton = RadioButton<SORT_RDIR_NAME, SORT_RDIR_DATE>;
-		INT_PTR OnInit(HWND hDlg) {
+		INT_PTR OnInit(HWND hDlg) noexcept {
 			LsortOrdButton::Set(hDlg, AskSortType().LocalFile & SORT_MASK_ORD);
 			SendDlgItemMessageW(hDlg, SORT_LFILE_REV, BM_SETCHECK, (AskSortType().LocalFile & SORT_GET_ORD) != SORT_ASCENT, 0);
 			LDirsortOrdButton::Set(hDlg, AskSortType().LocalDirectory & SORT_MASK_ORD);
@@ -751,30 +748,4 @@ int SortSetting() {
 int GetDecimalText(HWND hDlg, int Ctrl) {
 	auto const text = GetText(hDlg, Ctrl);
 	return !empty(text) && std::iswdigit(text[0]) ? stoi(text) : 0;
-}
-
-
-/*----- 設定値の範囲チェック --------------------------------------------------
-*
-*	Parameter
-*		int *Cur : 設定値
-*		int Max : 最大値
-*		int Min : 最小値
-*
-*	Return Value
-*		なし
-*
-*	Parameter change
-*		int *Cur : 設定値
-*----------------------------------------------------------------------------*/
-
-// hostman.cで使用
-//static void CheckRange2(int *Cur, int Max, int Min)
-void CheckRange2(int *Cur, int Max, int Min)
-{
-	if(*Cur < Min)
-		*Cur = Min;
-	if(*Cur > Max)
-		*Cur = Max;
-	return;
 }

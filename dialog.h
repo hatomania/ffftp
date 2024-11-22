@@ -1,4 +1,4 @@
-// Copyright(C) 2018 Kurata Sayuri. All rights reserved.
+ï»¿// Copyright(C) Kurata Sayuri. All rights reserved.
 #pragma once
 #include <type_traits>
 #include <Windows.h>
@@ -14,7 +14,7 @@ class Resizable<Controls<anchorRight...>, Controls<anchorBottom...>, Controls<an
 	static const UINT flags = SWP_NOZORDER | SWP_NOREDRAW | SWP_NOACTIVATE | SWP_NOOWNERZORDER | SWP_NOSENDCHANGING | SWP_DEFERERASE | SWP_ASYNCWINDOWPOS;
 	SIZE minimum;
 	SIZE& current;
-	static void OnSizeRight(HWND dialog, int id, LONG dx) {
+	static void OnSizeRight(HWND dialog, int id, LONG dx) noexcept {
 		auto control = GetDlgItem(dialog, id);
 		RECT r;
 		GetWindowRect(control, &r);
@@ -22,7 +22,7 @@ class Resizable<Controls<anchorRight...>, Controls<anchorBottom...>, Controls<an
 		ScreenToClient(dialog, &p);
 		SetWindowPos(control, 0, p.x + dx, p.y, 0, 0, SWP_NOSIZE | flags);
 	}
-	static void OnSizeBottom(HWND dialog, int id, LONG dy) {
+	static void OnSizeBottom(HWND dialog, int id, LONG dy) noexcept {
 		auto control = GetDlgItem(dialog, id);
 		RECT r;
 		GetWindowRect(control, &r);
@@ -30,17 +30,17 @@ class Resizable<Controls<anchorRight...>, Controls<anchorBottom...>, Controls<an
 		ScreenToClient(dialog, &p);
 		SetWindowPos(control, 0, p.x, p.y + dy, 0, 0, SWP_NOSIZE | flags);
 	}
-	static void OnSizeStretch(HWND dialog, int id, LONG dx, LONG dy) {
+	static void OnSizeStretch(HWND dialog, int id, LONG dx, LONG dy) noexcept {
 		auto control = GetDlgItem(dialog, id);
 		RECT r;
 		GetWindowRect(control, &r);
 		SetWindowPos(control, 0, 0, 0, r.right - r.left + dx, r.bottom - r.top + dy, SWP_NOMOVE | flags);
 	}
 public:
-	Resizable(SIZE& current) : minimum{}, current { current } {}
+	Resizable(SIZE& current) noexcept : minimum{}, current { current } {}
 	Resizable(SIZE&&) = delete;
-	void OnSize(HWND dialog, LONG cx, LONG cy) {
-		LONG dx = cx - current.cx, dy = cy - current.cy;
+	void OnSize(HWND dialog, LONG cx, LONG cy) noexcept {
+		LONG const dx = cx - current.cx, dy = cy - current.cy;
 		if (dx != 0)
 			(..., OnSizeRight(dialog, anchorRight, dx));
 		if (dy != 0)
@@ -50,7 +50,7 @@ public:
 		current = { cx, cy };
 		InvalidateRect(dialog, nullptr, FALSE);
 	}
-	void OnSizing(HWND dialog, RECT* targetSize, int edge) {
+	void OnSizing(HWND dialog, RECT* targetSize, int edge) noexcept {
 		if (targetSize->right - targetSize->left < minimum.cx) {
 			if (edge == WMSZ_LEFT || edge == WMSZ_TOPLEFT || edge == WMSZ_BOTTOMLEFT)
 				targetSize->left = targetSize->right - minimum.cx;
@@ -65,14 +65,14 @@ public:
 		}
 		OnSize(dialog, targetSize->right - targetSize->left, targetSize->bottom - targetSize->top);
 	}
-	void Initialize(HWND dialog) {
+	void Initialize(HWND dialog) noexcept {
 		RECT r;
 		GetWindowRect(dialog, &r);
 		minimum = { r.right - r.left, r.bottom - r.top };
 		if (current.cx == 0 || current.cx == -1)
 			current = minimum;
 		else {
-			auto copied = current;
+			auto const copied = current;
 			current = minimum;
 			SetWindowPos(dialog, 0, 0, 0, copied.cx, copied.cy, SWP_NOMOVE | flags);
 		}
@@ -95,11 +95,11 @@ namespace detail {
 		template<class T> static constexpr auto hasResizable() -> decltype(T::resizable, 0) { return true; }
 		template<class T> static constexpr auto hasResizable(...) { return false; }
 	public:
-		static INT_PTR CALLBACK Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+		static INT_PTR CALLBACK Proc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam) noexcept {
 			if (uMsg == WM_INITDIALOG) {
 				auto ptr = reinterpret_cast<Data*>(lParam);
 				SetWindowLongPtrW(hwndDlg, GWLP_USERDATA, lParam);
-				INT_PTR result = TRUE;
+				__pragma(warning(suppress: 26496)) INT_PTR result = TRUE;
 				if constexpr (hasOnInit<Data>())
 					result = ptr->OnInit(hwndDlg);
 				if constexpr (hasResizable<Data>())
@@ -120,7 +120,7 @@ namespace detail {
 			}
 			if constexpr (hasResizable<Data>()) {
 				if (uMsg == WM_SIZING) {
-					data->resizable.OnSizing(hwndDlg, reinterpret_cast<RECT*>(lParam), static_cast<int>(wParam));
+					data->resizable.OnSizing(hwndDlg, reinterpret_cast<RECT*>(lParam), int(wParam));
 					return TRUE;
 				}
 				if (uMsg == WM_SIZE) {
@@ -142,33 +142,33 @@ namespace detail {
 	};
 }
 
-// DialogBox‚ğ•\¦‚µ‚Ü‚·B
-// Ÿ‚Ì—vŒ‚ğ–‚½‚µ‚½Œ^‚ğó‚¯“ü‚ê‚Ü‚·B
+// DialogBoxã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
+// æ¬¡ã®è¦ä»¶ã‚’æº€ãŸã—ãŸå‹ã‚’å—ã‘å…¥ã‚Œã¾ã™ã€‚
 // struct Data {
-//     // •K{Bƒ_ƒCƒAƒƒOƒvƒƒV[ƒWƒƒ‚©‚çEndDialog()‚ğŒÄ‚Ño‚·Û‚Ég‚í‚ê‚é’l‚ÌŒ^‚ğéŒ¾‚µ‚Ü‚·B‚»‚Ì‚Ü‚ÜDialog()ŠÖ”‚Ì–ß‚è’l‚É‚È‚è‚Ü‚·B
+//     // å¿…é ˆã€‚ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ãƒ—ãƒ­ã‚·ãƒ¼ã‚¸ãƒ£ã‹ã‚‰EndDialog()ã‚’å‘¼ã³å‡ºã™éš›ã«ä½¿ã‚ã‚Œã‚‹å€¤ã®å‹ã‚’å®£è¨€ã—ã¾ã™ã€‚ãã®ã¾ã¾Dialog()é–¢æ•°ã®æˆ»ã‚Šå€¤ã«ãªã‚Šã¾ã™ã€‚
 //     using result_t = ...;
-//     // ”CˆÓBéŒ¾‚³‚ê‚Ä‚¢‚éê‡‚Íƒ_ƒCƒAƒƒO‚ÌƒTƒCƒY‚ğ‰Â•Ï‚É‚µ‚Ü‚·B‘æ‚Pƒeƒ“ƒvƒŒ[ƒgƒpƒ‰ƒ[ƒ^[‚Í‰E’[‚ÉŒÅ’è‚³‚ê‚éIDA‘æ‚Q‚Í‰º’[‚ÉŒÅ’è‚³‚ê‚éIDA‘æ‚R‚ÍLk‚·‚éID‚ğ‚»‚ê‚¼‚êw’è‚µ‚Ü‚·B
-//     // resizable.GetCurrent()‚ÅŒ»İ‚Ìƒ_ƒCƒAƒƒOƒTƒCƒY‚ğæ“¾‚Å‚«‚Ü‚·B
+//     // ä»»æ„ã€‚å®£è¨€ã•ã‚Œã¦ã„ã‚‹å ´åˆã¯ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã®ã‚µã‚¤ã‚ºã‚’å¯å¤‰ã«ã—ã¾ã™ã€‚ç¬¬ï¼‘ãƒ†ãƒ³ãƒ—ãƒ¬ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ãƒ¼ã¯å³ç«¯ã«å›ºå®šã•ã‚Œã‚‹IDã€ç¬¬ï¼’ã¯ä¸‹ç«¯ã«å›ºå®šã•ã‚Œã‚‹IDã€ç¬¬ï¼“ã¯ä¼¸ç¸®ã™ã‚‹IDã‚’ãã‚Œãã‚ŒæŒ‡å®šã—ã¾ã™ã€‚
+//     // resizable.GetCurrent()ã§ç¾åœ¨ã®ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ã‚µã‚¤ã‚ºã‚’å–å¾—ã§ãã¾ã™ã€‚
 //     Resizable<Controls<ID1, ID2, ...>, Controls<ID3, ID4, ...>, Controls<ID5, ID6, ...>> resizable;
-//     // ”CˆÓBWM_INITDIALOGƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB
+//     // ä»»æ„ã€‚WM_INITDIALOGãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
 //     INT_PTR OnInit(HWND);
-//     // ”CˆÓBWM_COMMANDƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB‘æ‚Qˆø”‚Í‰Ÿ‚³‚ê‚½ƒRƒ}ƒ“ƒh‚ÌID‚Å‚·B
+//     // ä»»æ„ã€‚WM_COMMANDãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚ç¬¬ï¼’å¼•æ•°ã¯æŠ¼ã•ã‚ŒãŸã‚³ãƒãƒ³ãƒ‰ã®IDã§ã™ã€‚
 //     void OnCommand(HWND, WORD);
-//     // ”CˆÓBWM_NOTIFYƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB‘æ‚Qˆø”‚ÍlParam‚Å“n‚³‚ê‚½NMHDR*‚Å‚·B
+//     // ä»»æ„ã€‚WM_NOTIFYãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚ç¬¬ï¼’å¼•æ•°ã¯lParamã§æ¸¡ã•ã‚ŒãŸNMHDR*ã§ã™ã€‚
 //     INT_PTR OnNotify(HWND, NMHDR*);
-//     // ”CˆÓBc‚è‚ÌƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB
+//     // ä»»æ„ã€‚æ®‹ã‚Šã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
 //     INT_PTR OnMessage(HWND, UNIT, WPARAM, LPARAM);
 // };
 template<class Data>
-static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent, Data&& data) {
+static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent, Data&& data) noexcept {
 	using T = std::remove_reference_t<Data>;
 	return (typename T::result_t)DialogBoxParamW(instance, MAKEINTRESOURCEW(resourceId), parent, detail::Dialog<T>::Proc, (LPARAM)&data);
 }
 
-static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent) {
+static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent) noexcept {
 	struct Data {
 		using result_t = bool;
-		static void OnCommand(HWND hDlg, WORD id) {
+		static void OnCommand(HWND hDlg, WORD id) noexcept {
 			switch (id) {
 			case IDOK:
 				EndDialog(hDlg, true);
@@ -186,8 +186,8 @@ template<int first, int... rest>
 class RadioButton {
 	static constexpr int controls[] = { first, rest... };
 public:
-	static void Set(HWND hDlg, int value) {
-		for (auto id : controls)
+	static void Set(HWND hDlg, int value) noexcept {
+		for (auto const id : controls)
 			if ((char)id == (char)value) {
 				SendDlgItemMessageW(hDlg, id, BM_SETCHECK, BST_CHECKED, 0);
 				SendMessageW(hDlg, WM_COMMAND, MAKEWPARAM(id, 0), 0);
@@ -196,34 +196,34 @@ public:
 		SendDlgItemMessageW(hDlg, first, BM_SETCHECK, BST_CHECKED, 0);
 		SendMessageW(hDlg, WM_COMMAND, MAKEWPARAM(first, 0), 0);
 	}
-	static auto Get(HWND hDlg) {
-		for (auto id : controls)
+	static auto Get(HWND hDlg) noexcept {
+		for (auto const id : controls)
 			if (SendDlgItemMessageW(hDlg, id, BM_GETCHECK, 0, 0) == BST_CHECKED)
 				return (int)(char)id;
 		return (int)(char)first;
 	}
 };
 
-// PropertySheet‚ğ•\¦‚µ‚Ü‚·B
-// Ÿ‚Ì—vŒ‚ğ–‚½‚µ‚½Œ^‚ğó‚¯“ü‚ê‚Ü‚·B
+// PropertySheetã‚’è¡¨ç¤ºã—ã¾ã™ã€‚
+// æ¬¡ã®è¦ä»¶ã‚’æº€ãŸã—ãŸå‹ã‚’å—ã‘å…¥ã‚Œã¾ã™ã€‚
 // struct Page {
-//     // •K{BPROPSHEETPAGE::pszTemplate‚Éw’è‚·‚éƒ_ƒCƒAƒƒOƒŠƒ\[ƒXID‚Å‚·B
+//     // å¿…é ˆã€‚PROPSHEETPAGE::pszTemplateã«æŒ‡å®šã™ã‚‹ãƒ€ã‚¤ã‚¢ãƒ­ã‚°ãƒªã‚½ãƒ¼ã‚¹IDã§ã™ã€‚
 //     static constexpr int dialogId = ...;
-//     // •K{BPROPSHEETPAGE::dwFlags‚Éw’è‚·‚é’l‚Å‚·B
+//     // å¿…é ˆã€‚PROPSHEETPAGE::dwFlagsã«æŒ‡å®šã™ã‚‹å€¤ã§ã™ã€‚
 //     static constexpr DWORD flag = ...;
-//     // ”CˆÓBWM_INITDIALOGƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB
+//     // ä»»æ„ã€‚WM_INITDIALOGãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
 //     static INT_PTR OnInit(HWND);
-//     // ”CˆÓBWM_COMMANDƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB‘æ‚Qˆø”‚Í‰Ÿ‚³‚ê‚½ƒRƒ}ƒ“ƒh‚ÌID‚Å‚·B
+//     // ä»»æ„ã€‚WM_COMMANDãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚ç¬¬ï¼’å¼•æ•°ã¯æŠ¼ã•ã‚ŒãŸã‚³ãƒãƒ³ãƒ‰ã®IDã§ã™ã€‚
 //     static void OnCommand(HWND, WORD);
-//     // ”CˆÓBWM_NOTIFYƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB‘æ‚Qˆø”‚ÍlParam‚Å“n‚³‚ê‚½NMHDR*‚Å‚·B
+//     // ä»»æ„ã€‚WM_NOTIFYãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚ç¬¬ï¼’å¼•æ•°ã¯lParamã§æ¸¡ã•ã‚ŒãŸNMHDR*ã§ã™ã€‚
 //     static INT_PTR OnNotify(HWND, NMHDR*);
-//     // ”CˆÓBc‚è‚ÌƒƒbƒZ[ƒW‚ğˆ—‚·‚éƒR[ƒ‹ƒoƒbƒNB
+//     // ä»»æ„ã€‚æ®‹ã‚Šã®ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸ã‚’å‡¦ç†ã™ã‚‹ã‚³ãƒ¼ãƒ«ãƒãƒƒã‚¯ã€‚
 //     static INT_PTR OnMessage(HWND, UNIT, WPARAM, LPARAM);
 // };
-// TODO: Šeƒy[ƒW‚Íinstance‰»‚³‚ê‚Ä‚¢‚È‚¢‚Ì‚Åstaticƒƒ“ƒo[‚Æ‚·‚é§–ñ‚ª‚ ‚éB
+// TODO: å„ãƒšãƒ¼ã‚¸ã¯instanceåŒ–ã•ã‚Œã¦ã„ãªã„ã®ã§staticãƒ¡ãƒ³ãƒãƒ¼ã¨ã™ã‚‹åˆ¶ç´„ãŒã‚ã‚‹ã€‚
 template<class... Page>
 static inline auto PropSheet(HWND parent, HINSTANCE instance, int captionId, DWORD flag) {
-	PROPSHEETPAGEW psp[]{ { sizeof(PROPSHEETPAGEW), Page::flag, instance, MAKEINTRESOURCEW(Page::dialogId), 0, nullptr, detail::Dialog<Page>::Proc }... };
-	PROPSHEETHEADERW psh{ sizeof(PROPSHEETHEADERW), flag | PSH_PROPSHEETPAGE, parent, instance, 0, MAKEINTRESOURCEW(captionId), size_as<UINT>(psp), 0, psp };
+	const PROPSHEETPAGEW psp[]{ { sizeof(PROPSHEETPAGEW), Page::flag, instance, MAKEINTRESOURCEW(Page::dialogId), 0, nullptr, detail::Dialog<Page>::Proc }... };
+	const PROPSHEETHEADERW psh{ sizeof(PROPSHEETHEADERW), flag | PSH_PROPSHEETPAGE, parent, instance, 0, MAKEINTRESOURCEW(captionId), size_as<UINT>(psp), 0, psp };
 	return PropertySheetW(&psh);
 }

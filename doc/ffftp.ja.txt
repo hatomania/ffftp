@@ -1,6 +1,6 @@
 ﻿============================================================
-【ソフト名】　FTPクライアント FFFTP Ver 5.6
-【動作環境】　Windows 10, 8.1, 8, 7, Vista
+【ソフト名】　FTPクライアント FFFTP Ver 5.8
+【動作環境】　Windows 11, 10, 8.1, 7, Vista
 【サポート】　https://github.com/ffftp/ffftp
 ============================================================
 
@@ -27,13 +27,14 @@ FFFTP Ver.1.96d+009以降を最初に起動した時、接続メニューの設�
 マスターパスワードの入力が求められますので、入力してください。
 
 
-Ver 5.6での変更点
+Ver 5.8での変更点
 ------------------
 
-- 接続直後に切断されてしまう問題を修正しました。 #352, #354
-- ツールチップの自前実装をやめ、標準機能を使うようにしました。 #350
-- Unicode 14.0に対応しました。 #349
-- コードをリファクタリングしました。 #347, #348, #351
+- 64bit版の動作環境はWindows 10以降となります。 #388
+- Visual Studio 17.5に対応しました。 #386
+- boost-regexのバージョンを最新化しました。 #392
+- ファイルではなくディレクトリが作成されてしまう問題を修正しました。 #369
+- 接続ヒストリ数を 0 に設定するとクラッシュする問題を修正しました。 #382
 
 
 Ver 1.96d以前へ戻す場合
@@ -70,7 +71,7 @@ GUIを持つFTPクライアントソフトです。
 動作環境
 --------
 ・x64版
-  Windows 8.1以降
+  Windows 10以降
 ・x86版
   Windows Vista以降
 
@@ -112,7 +113,7 @@ ffftp.ja.txt ----- このファイル
 
 Copyright(C) 1997-2010, Sota & cooperators. All rights reserved.
 Copyright (C) 2011-2018 FFFTP Project (Hiromichi Matsushima, Suguru Kawamoto, IWAMOTO Kouichi, vitamin0x, unarist, Asami, fortran90, tomo1192, Yuji Tanaka, Moriguchi Hirokazu, Fu-sen, potato).
-Copyright (C) 2018-2021, Kurata Sayuri.
+Copyright (C) 2018- Kurata Sayuri.
 
 Redistribution and use in source and binary forms, with or without 
 modification, are permitted provided that the following conditions 
@@ -139,7 +140,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 Copyright(C) 1997-2010 Sota & ご協力いただいた方々. All rights reserved.
 Copyright (C) 2011-2018 FFFTP Project (Hiromichi Matsushima, Suguru Kawamoto, IWAMOTO Kouichi, vitamin0x, unarist, Asami, fortran90, tomo1192, Yuji Tanaka, Moriguchi Hirokazu, Fu-sen, potato).
-Copyright (C) 2018-2021, 倉田佐祐理.
+Copyright (C) 2018- 倉田佐祐理.
 
 ソースコード形式でもバイナリ形式でも、変更の有無に関わらず、以下の条件を
 満たす場合に、再配布および使用を許可します。

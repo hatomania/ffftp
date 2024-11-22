@@ -37,24 +37,21 @@ int MakeStatusBarWindow() {
 	hWndSbar = CreateWindowExW(0, STATUSCLASSNAMEW, nullptr, WS_CHILD | WS_VISIBLE | WS_CLIPSIBLINGS | SBARS_SIZEGRIP, 0, 0, 0, 0, GetMainHwnd(), 0, GetFtpInst(), nullptr);
 	if (!hWndSbar)
 		return FFFTP_FAIL;
-	static int parts[]{ 120, 190, 340, 500, 660, -1 };
-	for (auto& part : parts)
-		if (part != -1)
-			part = CalcPixelX(part);
+	int const parts[] = { 120, 190, 340, 500, 660, -1 };
 	SendMessageW(hWndSbar, SB_SETPARTS, size_as<WPARAM>(parts), (LPARAM)parts);
 	return FFFTP_SUCCESS;
 }
 
 
 // ステータスウインドウを削除
-void DeleteStatusBarWindow() {
+void DeleteStatusBarWindow() noexcept {
 	if (hWndSbar)
 		DestroyWindow(hWndSbar);
 }
 
 
 // ステータスウインドウのウインドウハンドルを返す
-HWND GetSbarWnd() {
+HWND GetSbarWnd() noexcept {
 	return hWndSbar;
 }
 
@@ -67,7 +64,7 @@ void UpdateStatusBar() {
 
 // カレントウインドウを表示
 void DispCurrentWindow(int Win) {
-	auto resourceId = Win == WIN_LOCAL ? IDS_MSGJPN245 : Win == WIN_REMOTE ? IDS_MSGJPN246 : 0;
+	auto const resourceId = Win == WIN_LOCAL ? IDS_MSGJPN245 : Win == WIN_REMOTE ? IDS_MSGJPN246 : 0;
 	SendMessageW(hWndSbar, SB_SETTEXTW, MAKEWORD(1, 0), (LPARAM)(resourceId == 0 ? L"" : GetString(resourceId).c_str()));
 }
 
@@ -75,8 +72,10 @@ void DispCurrentWindow(int Win) {
 // 選択されているファイル数とサイズを表示
 void DispSelectedSpace() {
 	static auto const format = GetString(IDS_MSGJPN247);
-	auto Win = GetFocus() == GetRemoteHwnd() ? WIN_REMOTE : WIN_LOCAL;
-	auto const text = std::vformat(format, std::make_wformat_args(GetSelectedCount(Win), MakeSizeString(GetSelectedTotalSize(Win))));
+	auto const Win = GetFocus() == GetRemoteHwnd() ? WIN_REMOTE : WIN_LOCAL;
+	auto const selectedCount = GetSelectedCount(Win);
+	auto const selectedTotalSize = MakeSizeString(GetSelectedTotalSize(Win));
+	auto const text = std::vformat(format, std::make_wformat_args(selectedCount, selectedTotalSize));
 	SendMessageW(hWndSbar, SB_SETTEXTW, MAKEWORD(2, 0), (LPARAM)text.c_str());
 }
 
@@ -85,7 +84,8 @@ void DispSelectedSpace() {
 void DispLocalFreeSpace(fs::path const& directory) {
 	static auto const format = GetString(IDS_MSGJPN248);
 	ULARGE_INTEGER a;
-	auto const text = std::vformat(format, std::make_wformat_args(GetDiskFreeSpaceExW(directory.c_str(), &a, nullptr, nullptr) != 0 ? MakeSizeString(a.QuadPart) : L"??"s));
+	auto const diskFreeSpace = GetDiskFreeSpaceExW(directory.c_str(), &a, nullptr, nullptr) != 0 ? MakeSizeString(a.QuadPart) : L"??"s;
+	auto const text = std::vformat(format, std::make_wformat_args(diskFreeSpace));
 	SendMessageW(hWndSbar, SB_SETTEXTW, MAKEWORD(3, 0), (LPARAM)text.c_str());
 }
 
@@ -93,7 +93,8 @@ void DispLocalFreeSpace(fs::path const& directory) {
 // 転送するファイルの数を表示
 void DispTransferFiles() {
 	static auto const format = GetString(IDS_MSGJPN249);
-	auto const text = std::vformat(format, std::make_wformat_args(AskTransferFileNum()));
+	auto const transferFileNum = AskTransferFileNum();
+	auto const text = std::vformat(format, std::make_wformat_args(transferFileNum));
 	SendMessageW(hWndSbar, SB_SETTEXTW, MAKEWORD(4, 0), (LPARAM)text.c_str());
 }
 
@@ -101,7 +102,8 @@ void DispTransferFiles() {
 // 受信中のバイト数を表示
 void DispDownloadSize(LONGLONG Size) {
 	static auto const format = GetString(IDS_MSGJPN250);
-	auto const text = 0 <= Size ? std::vformat(format, std::make_wformat_args(MakeSizeString(Size))) : L""s;
+	auto const downloadSize = MakeSizeString(Size);
+	auto const text = 0 <= Size ? std::vformat(format, std::make_wformat_args(downloadSize)) : L""s;
 	SendMessageW(hWndSbar, SB_SETTEXTW, MAKEWORD(5, 0), (LPARAM)text.c_str());
 }
 

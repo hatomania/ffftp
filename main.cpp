@@ -80,7 +80,7 @@ static void CalcWinSize(void);
 static void CheckResizeFrame(WPARAM Keys, int x, int y);
 static void DispDirInfo(void);
 static void DeleteAlltempFile();
-static void AboutDialog(HWND hWnd);
+static void AboutDialog(HWND hWnd) noexcept;
 static int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd);
 
 /*===== ローカルなワーク =====*/
@@ -118,7 +118,7 @@ static DWORD dwCookie;
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
 static DWORD MainThreadId;
 HANDLE ChangeNotification = INVALID_HANDLE_VALUE;
-static int ToolWinHeight;
+static int ToolWinHeight = 28;
 static HWND hHelpWin = NULL;
 static int NoopEnable = NO;
 
@@ -167,10 +167,10 @@ static auto version() {
 	UINT len;
 	result = VerQueryValueW(data(buffer), L"\\", &block, &len);
 	assert(result && sizeof(VS_FIXEDFILEINFO) <= len);
-	auto const ms = reinterpret_cast<VS_FIXEDFILEINFO*>(block)->dwProductVersionMS, ls = reinterpret_cast<VS_FIXEDFILEINFO*>(block)->dwProductVersionLS;
+	auto const ms = static_cast<VS_FIXEDFILEINFO*>(block)->dwProductVersionMS, ls = static_cast<VS_FIXEDFILEINFO*>(block)->dwProductVersionLS;
 	auto const major = HIWORD(ms), minor = LOWORD(ms), patch = HIWORD(ls), build = LOWORD(ls);
 	auto const format = build != 0 ? L"{}.{}.{}.{}"sv : patch != 0 ? L"{}.{}.{}"sv : L"{}.{}"sv;
-	return std::format(format, major, minor, patch, build);
+	return std::vformat(format, std::make_wformat_args(major, minor, patch, build));
 }
 
 
@@ -287,16 +287,7 @@ static int InitApp(int cmdShow)
 	{
 		Accel = LoadAcceleratorsW(GetFtpInst(), MAKEINTRESOURCEW(ffftp_accel));
 
-		// 高DPI対応
-		WinWidth = CalcPixelX(WinWidth);
-		WinHeight = CalcPixelY(WinHeight);
-		LocalWidth = CalcPixelX(LocalWidth);
-		TaskHeight = CalcPixelY(TaskHeight);
-		for (auto& width : LocalTabWidthDefault)
-			width = CalcPixelX(width);
 		std::copy(std::begin(LocalTabWidthDefault), std::end(LocalTabWidthDefault), std::begin(LocalTabWidth));
-		for (auto& width : RemoteTabWidthDefault)
-			width = CalcPixelX(width);
 		std::copy(std::begin(RemoteTabWidthDefault), std::end(RemoteTabWidthDefault), std::begin(RemoteTabWidth));
 
 		std::vector<std::wstring_view> args{ __wargv + 1, __wargv + __argc };
@@ -479,8 +470,6 @@ static bool MakeAllWindows(int cmdShow) {
 	WNDCLASSEXW classEx{ sizeof(WNDCLASSEXW), 0, FtpWndProc, 0, 0, GetFtpInst(), LoadIconW(GetFtpInst(), MAKEINTRESOURCEW(ffftp)), 0, GetSysColorBrush(COLOR_3DFACE), MAKEINTRESOURCEW(main_menu), FtpClass };
 	RegisterClassExW(&classEx);
 
-	ToolWinHeight = CalcPixelY(16) + 12;
-
 	if (SaveWinPos == NO) {
 		WinPosX = CW_USEDEFAULT;
 		WinPosY = 0;
@@ -520,7 +509,7 @@ static bool MakeAllWindows(int cmdShow) {
 
 // ウインドウのタイトルを取得する
 static std::wstring GetWindowTitle() {
-	return std::format(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, TitleHostName, FilterStr);
+	return std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
 }
 
 
@@ -539,53 +528,28 @@ static void DeleteAllObject() {
 
 
 // メインウインドウのウインドウハンドルを返す
-HWND GetMainHwnd() {
+HWND GetMainHwnd() noexcept {
 	return hWndFtp;
 }
 
 
-/*----- 現在フォーカスがあるウインドウのウインドウハンドルを返す --------------
-*
-*	Parameter
-*		なし
-*
-*	Return Value
-*		HWND ウインドウハンドル
-*----------------------------------------------------------------------------*/
-
-HWND GetFocusHwnd(void)
-{
-	return(hWndCurFocus);
-}
-
-
-/*----- 現在フォーカスがあるウインドウのをセットする --------------------------
-*
-*	Parameter
-*		HWND hWnd : ウインドウハンドル
-*
-*	Return Value
-*		なし
-*----------------------------------------------------------------------------*/
-
-void SetFocusHwnd(HWND hWnd)
-{
+// 現在フォーカスがあるウインドウのをセットする
+void SetFocusHwnd(HWND hWnd) noexcept {
 	hWndCurFocus = hWnd;
-	return;
 }
 
 
 // プログラムのインスタンスを返す
-HINSTANCE GetFtpInst() {
+HINSTANCE GetFtpInst() noexcept {
 	return hInstFtp;
 }
 
 
-static void OtpCalcTool() {
+static void OtpCalcTool() noexcept {
 	struct Data {
 		using result_t = int;
 		using AlgoButton = RadioButton<OTPCALC_MD4, OTPCALC_MD5, OTPCALC_SHA1>;
-		INT_PTR OnInit(HWND hDlg) {
+		INT_PTR OnInit(HWND hDlg) noexcept {
 			SendDlgItemMessageW(hDlg, OTPCALC_KEY, EM_LIMITTEXT, 40, 0);
 			SendDlgItemMessageW(hDlg, OTPCALC_PASS, EM_LIMITTEXT, PASSWORD_LEN, 0);
 			AlgoButton::Set(hDlg, MD4);
@@ -623,7 +587,7 @@ static void OtpCalcTool() {
 }
 
 static void TurnStatefulFTPFilter() {
-	if (auto ID = Message(IDS_MANAGE_STATEFUL_FTP, MB_YESNOCANCEL); ID == IDYES || ID == IDNO)
+	if (auto const ID = Message(IDS_MANAGE_STATEFUL_FTP, MB_YESNOCANCEL); ID == IDYES || ID == IDNO)
 		if (PtrToInt(ShellExecuteW(NULL, L"runas", L"netsh", ID == IDYES ? L"advfirewall set global statefulftp enable" : L"advfirewall set global statefulftp disable", systemDirectory().c_str(), SW_SHOW)) <= 32)
 			Message(IDS_FAIL_TO_MANAGE_STATEFUL_FTP, MB_OK | MB_ICONERROR);
 }
@@ -1414,10 +1378,10 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 						// SetTimerによるとnIDEventが一致する既存のタイマーを置き換えるとのこと <https://msdn.microsoft.com/en-us/library/ms644906(v=vs.85).aspx>
 						// この通りであれば問題ない。ただしCWnd::SetTimerによると新たなタイマーが作成される（＝既存のタイマーを置き換えない）とのこと
 						// <https://docs.microsoft.com/ja-jp/cpp/mfc/reference/cwnd-class#settimer>
-						auto id = SetTimer(hWnd, 3, USER_TIMER_MINIMUM, [](auto hWnd, auto, auto, auto) {
+						auto const id = SetTimer(hWnd, 3, USER_TIMER_MINIMUM, [](auto hWnd, auto, auto, auto) {
 							DispSelectedSpace();
 							MakeButtonsFocus();
-							auto result = KillTimer(hWnd, 3);
+							auto const result = KillTimer(hWnd, 3);
 							assert(result);
 						});
 						assert(id == 3);
@@ -1521,11 +1485,11 @@ static void StartupProc(std::vector<std::wstring_view> const& args) {
 	std::wstring unc;
 	bool initializeDeferred = false;
 	if (auto result = AnalyzeComLine(args, hostname, unc)) {
-		int opt = *result;
-		int Kanji = opt & OPT_UTF8BOM ? KANJI_UTF8BOM : opt & OPT_UTF8N ? KANJI_UTF8N : opt & OPT_SJIS ? KANJI_SJIS : opt & OPT_JIS ? KANJI_JIS : opt & OPT_EUC ? KANJI_EUC : KANJI_NOCNV;
-		int Kana = opt & OPT_KANA ? NO : YES;
-		int FnameKanji = opt & OPT_UTF8N_NAME ? KANJI_UTF8N : opt & OPT_SJIS_NAME ? KANJI_SJIS : opt & OPT_JIS_NAME ? KANJI_JIS : opt & OPT_EUC_NAME ? KANJI_EUC : KANJI_NOCNV;
-		int TrMode = opt & OPT_BINARY ? TYPE_I : opt & OPT_ASCII ? TYPE_A : TYPE_DEFAULT;
+		int const opt = *result;
+		int const Kanji = opt & OPT_UTF8BOM ? KANJI_UTF8BOM : opt & OPT_UTF8N ? KANJI_UTF8N : opt & OPT_SJIS ? KANJI_SJIS : opt & OPT_JIS ? KANJI_JIS : opt & OPT_EUC ? KANJI_EUC : KANJI_NOCNV;
+		int const Kana = opt & OPT_KANA ? NO : YES;
+		int const FnameKanji = opt & OPT_UTF8N_NAME ? KANJI_UTF8N : opt & OPT_SJIS_NAME ? KANJI_SJIS : opt & OPT_JIS_NAME ? KANJI_JIS : opt & OPT_EUC_NAME ? KANJI_EUC : KANJI_NOCNV;
+		int const TrMode = opt & OPT_BINARY ? TYPE_I : opt & OPT_ASCII ? TYPE_A : TYPE_DEFAULT;
 		if (opt & OPT_QUIT)
 			AutoExit = YES;
 		if (opt & OPT_SAVEOFF)
@@ -1538,7 +1502,7 @@ static void StartupProc(std::vector<std::wstring_view> const& args) {
 		} else if (empty(hostname) && !empty(unc)) {
 			DirectConnectProc(std::move(unc), Kanji, Kana, FnameKanji, TrMode);
 		} else if (!empty(hostname) && empty(unc)) {
-			if (int AutoConnect = SearchHostName(hostname); AutoConnect == -1)
+			if (int const AutoConnect = SearchHostName(hostname); AutoConnect == -1)
 				Notice(IDS_MSGJPN177, hostname);
 			else {
 				initializeDeferred = true;
@@ -1579,8 +1543,8 @@ static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& a
 	int option = 0;
 	for (auto it = begin(args); it != end(args); ++it) {
 		if ((*it)[0] == L'-') {
-			auto key = lc(*it);
-			if (auto mapit = map.find(key); mapit != end(map)) {
+			auto key = lc(std::wstring{ *it });
+			if (auto const mapit = map.find(key); mapit != end(map)) {
 				option |= mapit->second;
 			} else if (key == L"-n"sv || key == L"--ini"sv) {
 				if (++it == end(args)) {
@@ -1681,7 +1645,7 @@ void DoubleClickProc(int Win, int Mode, int App) {
 				if (App != -1 || item.Node == NODE_FILE) {
 					if (DclickOpen == YES || Mode == YES) {
 						// ビューワ２、３のパスが "d " で始まっていたら差分ビューア使用
-						auto UseDiffViewer = (App == 1 || App == 2) && ViewerName[App].starts_with(L"d "sv);
+						auto const UseDiffViewer = (App == 1 || App == 2) && ViewerName[App].starts_with(L"d "sv);
 
 						auto remoteDir = tempDirectory() / L"file";
 						fs::create_directory(remoteDir);
@@ -1691,7 +1655,7 @@ void DoubleClickProc(int Win, int Mode, int App) {
 							SktShareProh();
 
 						MainTransPkt.Command = L"RETR "s;
-						MainTransPkt.Remote = AskHostType() == HTYPE_ACOS ? std::format(L"'{}({})'"sv, AskHostLsName(), item.Name) : item.Name;
+						MainTransPkt.Remote = AskHostType() == HTYPE_ACOS ? std::format(L"'{}({})'"sv, GetConnectingHost().LsName, item.Name) : item.Name;
 						MainTransPkt.Local = remotePath;
 						MainTransPkt.Type = AskTransferTypeAssoc(MainTransPkt.Remote, AskTransferType());
 						MainTransPkt.Size = 1;
@@ -1813,7 +1777,7 @@ static void CalcWinSize(void)
 	GetClientRect(GetMainHwnd(), &Rect);
 
 	ClientWidth = Rect.right;
-	int ClientHeight = Rect.bottom;
+	int const ClientHeight = Rect.bottom;
 
 	SepaWidth = 4;
 	LocalWidth = std::clamp(LocalWidth, 0, ClientWidth - SepaWidth);
@@ -1955,9 +1919,9 @@ void ExecViewer2(fs::path const& path1, fs::path const& path2, int App) {
 	/* FindExecutable()は関連付けられたプログラムのパス名にスペースが	*/
 	/* 含まれている時、間違ったパス名を返す事がある。					*/
 	/* そこで、関連付けられたプログラムの起動はShellExecute()を使う。	*/
-	auto format = path1.native().find(L' ') == std::wstring::npos && path2.native().find(L' ') == std::wstring::npos ? LR"({} {} {})"sv : LR"({} "{}" "{}")"sv;
+	auto const format = path1.native().find(L' ') == std::wstring::npos && path2.native().find(L' ') == std::wstring::npos ? LR"({} {} {})"sv : LR"({} "{}" "{}")"sv;
 	auto const executable = std::wstring_view{ ViewerName[App] }.substr(2);		/* 先頭の "d " は読み飛ばす */
-	auto commandLine = std::format(format, executable, path1.native(), path2.native());
+	auto commandLine = std::vformat(format, std::make_wformat_args(executable, path1.native(), path2.native()));
 	Debug(L"FindExecutable - {}"sv, commandLine);
 	STARTUPINFOW si{ sizeof(STARTUPINFOW), nullptr, nullptr, nullptr, 0, 0, 0, 0, 0, 0, 0, 0, SW_SHOWNORMAL };
 	if (ProcessInformation pi; __pragma(warning(suppress:6335)) !CreateProcessW(nullptr, data(commandLine), nullptr, nullptr, false, 0, nullptr, systemDirectory().c_str(), &si, &pi)) {
@@ -1982,15 +1946,15 @@ static void DeleteAlltempFile() {
 
 
 // Ａｂｏｕｔダイアログボックス
-static void AboutDialog(HWND hWnd) {
+static void AboutDialog(HWND hWnd) noexcept {
 	struct About {
 		using result_t = int;
-		static INT_PTR OnInit(HWND hDlg) {
+		static INT_PTR OnInit(HWND hDlg) noexcept {
 			SendDlgItemMessageW(hDlg, ABOUT_URL, EM_LIMITTEXT, 256, 0);
 			SetText(hDlg, ABOUT_URL, WebURL);
 			return TRUE;
 		}
-		static void OnCommand(HWND hDlg, WORD id) {
+		static void OnCommand(HWND hDlg, WORD id) noexcept {
 			switch (id) {
 			case IDOK:
 			case IDCANCEL:
@@ -2009,38 +1973,19 @@ void ShowHelp(DWORD_PTR helpTopicId) {
 
 
 // INIファイルのパス名を返す
-fs::path const& AskIniFilePath() {
+fs::path const& AskIniFilePath() noexcept {
 	return IniPath;
 }
 
-/*----- INIファイルのみを使うかどうかを返す -----------------------------------
-*
-*	Parameter
-*		なし
-*
-*	Return Value
-*		int ステータス : YES/NO
-*----------------------------------------------------------------------------*/
 
-int AskForceIni(void)
-{
-	return(ForceIni);
+// INIファイルのみを使うかどうかを返す
+int AskForceIni() noexcept {
+	return ForceIni;
 }
 
 
-
-
-/*----- メッセージ処理 --------------------------------------------------------
-*
-*	Parameter
-*		なし
-*
-*	Return Value
-*		int 終了フラグ (YES=WM_CLOSEが来た/NO)
-*----------------------------------------------------------------------------*/
-
-int BackgrndMessageProc(void)
-{
+// メッセージ処理
+int BackgrndMessageProc() noexcept {
 	MSG Msg;
 	int Ret;
 
@@ -2072,34 +2017,15 @@ int BackgrndMessageProc(void)
 }
 
 
-/*----- 自動終了フラグをクリアする --------------------------------------------
-*
-*	Parameter
-*		なし
-*
-*	Return Value
-*		なし
-*----------------------------------------------------------------------------*/
-
-void ResetAutoExitFlg(void)
-{
+// 自動終了フラグをクリアする
+void ResetAutoExitFlg() noexcept {
 	AutoExit = NO;
-	return;
 }
 
 
-/*----- 自動終了フラグを返す --------------------------------------------------
-*
-*	Parameter
-*		なし
-*
-*	Return Value
-*		int フラグ (YES/NO)
-*----------------------------------------------------------------------------*/
-
-int AskAutoExit(void)
-{
-	return(AutoExit);
+// 自動終了フラグを返す
+int AskAutoExit() noexcept {
+	return AutoExit;
 }
 
 // ユーザにパスワードを入力させ，それを設定する
@@ -2119,10 +2045,10 @@ int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
 	}
 
 	/* 末尾の空白を削除 */
-	if (auto pos = pass1.find_last_not_of(L' '); pos != std::wstring::npos && pos + 1 != size(pass1))
+	if (auto const pos = pass1.find_last_not_of(L' '); pos != std::wstring::npos && pos + 1 != size(pass1))
 		pass1.erase(pos + 1);
 	/* 先頭の空白を削除 */
-	if (auto pos = pass1.find_first_not_of(L' '); pos != std::wstring::npos && pos != 0)
+	if (auto const pos = pass1.find_first_not_of(L' '); pos != std::wstring::npos && pos != 0)
 		pass1.erase(0, pos);
 
 	if (empty(pass1)) {
@@ -2135,29 +2061,27 @@ int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
 }
 
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
-BOOL IsMainThread()
-{
+BOOL IsMainThread() noexcept {
 	if(GetCurrentThreadId() != MainThreadId)
 		return FALSE;
 	return TRUE;
 }
 
-void Restart() {
+void Restart() noexcept {
 	STARTUPINFOW si;
 	GetStartupInfoW(&si);
 	ProcessInformation pi;
 	__pragma(warning(suppress:6335)) CreateProcessW(nullptr, GetCommandLineW(), nullptr, nullptr, false, 0, nullptr, nullptr, &si, &pi);
 }
 
-void Terminate()
-{
+void Terminate() noexcept {
 	exit(1);
 }
 
 // タスクバー進捗表示
 static ComPtr<ITaskbarList3> taskbarList;
 
-int LoadTaskbarList3() {
+int LoadTaskbarList3() noexcept {
 	if (CoCreateInstance(CLSID_TaskbarList, NULL, CLSCTX_ALL, IID_PPV_ARGS(&taskbarList)) == S_OK)
 		return FFFTP_SUCCESS;
 	return FFFTP_FAIL;
@@ -2167,7 +2091,7 @@ void FreeTaskbarList3() {
 	taskbarList.Reset();
 }
 
-int IsTaskbarList3Loaded() {
+int IsTaskbarList3Loaded() noexcept {
 	return taskbarList ? YES : NO;
 }
 
@@ -2180,8 +2104,7 @@ void UpdateTaskbarProgress() {
 }
 
 // 高DPI対応
-int AskToolWinHeight(void)
-{
+int AskToolWinHeight() noexcept {
 	return(ToolWinHeight);
 }
 

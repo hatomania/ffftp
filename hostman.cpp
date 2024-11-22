@@ -330,7 +330,7 @@ struct HostList {
 				SendDlgItemMessageW(hDlg, HOST_LIST, TVM_GETITEMW, TVGN_CARET, (LPARAM)&Item);
 				CurrentHost = (int)Item.lParam;
 				CopyHostFromList(CurrentHost, &TmpHost);
-				int Level1 = IsNodeGroup(CurrentHost);
+				int const Level1 = IsNodeGroup(CurrentHost);
 				auto set = Level1 == NO && DispHostSetDlg(hDlg);
 				if (!set && Level1 == YES)
 					set = InputDialog(group_dlg, hDlg, 0, TmpHost.HostName, HOST_NAME_LEN + 1);
@@ -357,7 +357,7 @@ struct HostList {
 				TVITEMW Item{ TVIF_PARAM, hItem };
 				SendDlgItemMessageW(hDlg, HOST_LIST, TVM_GETITEMW, TVGN_CARET, (LPARAM)&Item);
 				CurrentHost = (int)Item.lParam;
-				int Level1 = IsNodeGroup(CurrentHost);
+				int const Level1 = IsNodeGroup(CurrentHost);
 				if (Level1 == YES && Dialog(GetFtpInst(), groupdel_dlg, hDlg) || Level1 == NO && Dialog(GetFtpInst(), hostdel_dlg, hDlg)) {
 					DelHostFromList(CurrentHost);
 					if (CurrentHost >= Hosts)
@@ -373,7 +373,69 @@ struct HostList {
 				CurrentHost = (int)Item.lParam;
 
 				if (CurrentHost > 0) {
-					CurrentHost = HostUp(CurrentHost);
+					auto Data1 = GetNode(CurrentHost);
+					int const Level1 = Data1->GetLevel();
+					auto Data2 = GetNode(CurrentHost - 1);
+					int const Level2 = Data2->GetLevel();
+					if (Level1 == Level2 && (Data2->Level & SET_LEVEL_GROUP)) {
+						//Data2のchildへ
+						if (Data1->Next != NULL)
+							Data1->Next->Prev = Data1->Prev;
+						if (Data1->Prev != NULL)
+							Data1->Prev->Next = Data1->Next;
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+							Data1->Parent->Child = Data1->Next;
+						if (Data1->Parent == NULL && HostListTop == Data1)
+							HostListTop = Data1->Next;
+
+						Data1->Next = Data2->Child;
+						Data1->Prev = NULL;
+						Data1->Parent = Data2;
+						Data2->Child = Data1;
+					} else if (Level1 < Level2) {
+						//Data1のPrevのChildのNextの末尾へ
+						Data2 = Data1->Prev->Child;
+						while (Data2->Next != NULL)
+							Data2 = Data2->Next;
+
+						if (Data1->Next != NULL)
+							Data1->Next->Prev = Data1->Prev;
+						if (Data1->Prev != NULL)
+							Data1->Prev->Next = Data1->Next;
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+							Data1->Parent->Child = Data1->Next;
+						if (Data1->Parent == NULL && HostListTop == Data1)
+							HostListTop = Data1->Next;
+
+						Data2->Next = Data1;
+						Data1->Prev = Data2;
+						Data1->Next = NULL;
+						Data1->Parent = Data2->Parent;
+					} else {
+						//Data2のprevへ
+						if (Data1->Next != NULL)
+							Data1->Next->Prev = Data1->Prev;
+						if (Data1->Prev != NULL)
+							Data1->Prev->Next = Data1->Next;
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+							Data1->Parent->Child = Data1->Next;
+						if (Data1->Parent == NULL && HostListTop == Data1)
+							HostListTop = Data1->Next;
+
+						if (Data2->Prev != NULL)
+							Data2->Prev->Next = Data1;
+						Data1->Prev = Data2->Prev;
+						Data2->Prev = Data1;
+						Data1->Next = Data2;
+						Data1->Parent = Data2->Parent;
+
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data2)
+							Data1->Parent->Child = Data1;
+						if (Data1->Parent == NULL && HostListTop == Data2)
+							HostListTop = Data1;
+					}
+
+					CurrentHost = GetNum(Data1);
 					SendAllHostNames(GetDlgItem(hDlg, HOST_LIST), CurrentHost);
 				}
 			}
@@ -384,7 +446,97 @@ struct HostList {
 				SendDlgItemMessageW(hDlg, HOST_LIST, TVM_GETITEMW, TVGN_CARET, (LPARAM)&Item);
 				CurrentHost = (int)Item.lParam;
 
-				CurrentHost = HostDown(CurrentHost);
+				auto Data1 = GetNode(CurrentHost);
+				int const Level1 = Data1->GetLevel();
+				std::shared_ptr<HOSTLISTDATA> Data2;
+				int Level2 = SET_LEVEL_SAME;
+				if (CurrentHost < Hosts - 1) {
+					Data2 = GetNode(CurrentHost + 1);
+					Level2 = Data2->GetLevel();
+
+					if (Level1 < Level2) {
+						if (Data1->Next != NULL) {
+							//Data2 = Data1のNext
+							Data2 = Data1->Next;
+							Level2 = Data2->GetLevel();
+						} else if (Data1->Parent != NULL) {
+							Data2 = NULL;
+							Level2 = SET_LEVEL_SAME;
+						}
+					}
+				}
+
+				__assume(Data1);
+				if (Data2 == NULL && Level1 > 0 || Level1 > Level2) {
+					__assume(Data1->Parent);
+					//Data1のParentのNextへ
+					Data2 = Data1->Parent;
+
+					if (Data1->Next != NULL)
+						Data1->Next->Prev = Data1->Prev;
+					if (Data1->Prev != NULL)
+						Data1->Prev->Next = Data1->Next;
+					if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+						Data1->Parent->Child = Data1->Next;
+					if (Data1->Parent == NULL && HostListTop == Data1)
+						HostListTop = Data1->Next;
+
+					if (Data2->Next != NULL)
+						Data2->Next->Prev = Data1;
+					Data1->Next = Data2->Next;
+					Data2->Next = Data1;
+					Data1->Prev = Data2;
+					Data1->Parent = Data2->Parent;
+
+					if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+						Data1->Parent->Child = Data2;
+					if (Data1->Parent == NULL && HostListTop == Data1)
+						HostListTop = Data2;
+				} else if (Level1 == Level2) {
+					__assume(Data2);
+					if (Data2->Level & SET_LEVEL_GROUP) {
+						//Data2のChildへ
+						if (Data1->Next != NULL)
+							Data1->Next->Prev = Data1->Prev;
+						if (Data1->Prev != NULL)
+							Data1->Prev->Next = Data1->Next;
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+							Data1->Parent->Child = Data1->Next;
+						if (Data1->Parent == NULL && HostListTop == Data1)
+							HostListTop = Data1->Next;
+
+						if (Data2->Child != NULL)
+							Data2->Child->Prev = Data1;
+						Data1->Next = Data2->Child;
+						Data1->Prev = NULL;
+						Data1->Parent = Data2;
+						Data2->Child = Data1;
+					} else {
+						//Data2のNextへ
+						if (Data1->Next != NULL)
+							Data1->Next->Prev = Data1->Prev;
+						if (Data1->Prev != NULL)
+							Data1->Prev->Next = Data1->Next;
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+							Data1->Parent->Child = Data1->Next;
+						if (Data1->Parent == NULL && HostListTop == Data1)
+							HostListTop = Data1->Next;
+
+						if (Data2->Next != NULL)
+							Data2->Next->Prev = Data1;
+						Data1->Next = Data2->Next;
+						Data2->Next = Data1;
+						Data1->Prev = Data2;
+						Data1->Parent = Data2->Parent;
+
+						if (Data1->Parent != NULL && Data1->Parent->Child == Data1)
+							Data1->Parent->Child = Data2;
+						if (Data1->Parent == NULL && HostListTop == Data1)
+							HostListTop = Data2;
+					}
+				}
+
+				CurrentHost = GetNum(Data1);
 				SendAllHostNames(GetDlgItem(hDlg, HOST_LIST), CurrentHost);
 			}
 			break;
@@ -563,7 +715,7 @@ static void DeleteChildAndNext(std::shared_ptr<HOSTLISTDATA> Pos) {
 
 
 // 設定値リストから設定値を取り出す
-//   現在ホストに接続中の時は、CopyHostFromListInConnect() を使う事
+//   現在ホストに接続中の時は、GetConnectingHost() を使う事
 int CopyHostFromList(int Num, HOSTDATA* Set) {
 	if (Num < 0 || Hosts <= Num)
 		return FFFTP_FAIL;
@@ -573,38 +725,37 @@ int CopyHostFromList(int Num, HOSTDATA* Set) {
 }
 
 
-// 設定値リストから設定値を取り出す
-//   現在ホストに接続中の時に使う
-int CopyHostFromListInConnect(int Num, HOSTDATA* Set) {
-	if (Num < 0 || Hosts <= Num)
-		return FFFTP_FAIL;
-	auto Pos = GetNode(Num);
-	Set->ChmodCmd = Pos->ChmodCmd;
-	Set->Port = Pos->Port;
-	Set->Anonymous = Pos->Anonymous;
-	Set->KanjiCode = Pos->KanjiCode;
-	Set->KanaCnv = Pos->KanaCnv;
-	Set->NameKanjiCode = Pos->NameKanjiCode;
-	Set->NameKanaCnv = Pos->NameKanaCnv;
-	Set->Pasv = Pos->Pasv;
-	Set->FireWall = Pos->FireWall;
-	Set->ListCmdOnly = Pos->ListCmdOnly;
-	Set->UseNLST_R = Pos->UseNLST_R;
-	Set->LastDir = Pos->LastDir;
-	Set->TimeZone = Pos->TimeZone;
-	Set->UseNoEncryption = Pos->UseNoEncryption;
-	Set->UseFTPES = Pos->UseFTPES;
-	Set->UseFTPIS = Pos->UseFTPIS;
-	Set->UseSFTP = Pos->UseSFTP;
-	Set->MaxThreadCount = Pos->MaxThreadCount;
-	Set->ReuseCmdSkt = Pos->ReuseCmdSkt;
-	Set->UseMLSD = Pos->UseMLSD;
-	Set->NoopInterval = Pos->NoopInterval;
-	Set->TransferErrorMode = Pos->TransferErrorMode;
-	Set->TransferErrorNotify = Pos->TransferErrorNotify;
-	Set->TransferErrorReconnect = Pos->TransferErrorReconnect;
-	Set->NoPasvAdrs = Pos->NoPasvAdrs;
-	return FFFTP_SUCCESS;
+HOSTDATA GetConnectingHost() {
+	auto host = GetCurHost();
+	if (0 <= ConnectingHost && ConnectingHost < Hosts) {
+		auto pos = GetNode(ConnectingHost);
+		host.ChmodCmd = pos->ChmodCmd;
+		host.Port = pos->Port;
+		host.Anonymous = pos->Anonymous;
+		host.KanjiCode = pos->KanjiCode;
+		host.KanaCnv = pos->KanaCnv;
+		host.NameKanjiCode = pos->NameKanjiCode;
+		host.NameKanaCnv = pos->NameKanaCnv;
+		host.Pasv = pos->Pasv;
+		host.FireWall = pos->FireWall;
+		host.ListCmdOnly = pos->ListCmdOnly;
+		host.UseNLST_R = pos->UseNLST_R;
+		host.LastDir = pos->LastDir;
+		host.TimeZone = pos->TimeZone;
+		host.UseNoEncryption = pos->UseNoEncryption;
+		host.UseFTPES = pos->UseFTPES;
+		host.UseFTPIS = pos->UseFTPIS;
+		host.UseSFTP = pos->UseSFTP;
+		host.MaxThreadCount = pos->MaxThreadCount;
+		host.ReuseCmdSkt = pos->ReuseCmdSkt;
+		host.UseMLSD = pos->UseMLSD;
+		host.NoopInterval = pos->NoopInterval;
+		host.TransferErrorMode = pos->TransferErrorMode;
+		host.TransferErrorNotify = pos->TransferErrorNotify;
+		host.TransferErrorReconnect = pos->TransferErrorReconnect;
+		host.NoPasvAdrs = pos->NoPasvAdrs;
+	}
+	return host;
 }
 
 
@@ -672,13 +823,13 @@ int SetHostSort(int Num, HostSort const& sort) {
 
 
 // 現在接続中の設定番号を返す
-int AskCurrentHost() {
+int AskCurrentHost() noexcept {
 	return ConnectingHost;
 }
 
 
 // 現在接続中の設定番号をセットする
-void SetCurrentHost(int Num) {
+void SetCurrentHost(int Num) noexcept {
 	ConnectingHost = Num;
 }
 
@@ -698,7 +849,7 @@ void SetDefaultHost(HOSTDATA* Set) {
 	DefaultHost = *Set;
 }
 
-HostExeptPassword::HostExeptPassword() {
+HostExeptPassword::HostExeptPassword() noexcept {
 	LocalInitDir = DefaultLocalPath;
 }
 
@@ -712,7 +863,7 @@ static void SendAllHostNames(HWND hWnd, int Cur) {
 	std::vector<HTREEITEM> Level(Hosts);
 	auto Pos = HostListTop;
 	for (int i = 0; i < Hosts; i++) {
-		size_t CurLevel = Pos->GetLevel();
+		size_t const CurLevel = Pos->GetLevel();
 		TVINSERTSTRUCTW is{
 			.hParent = CurLevel == 0 ? TVI_ROOT : Level[CurLevel - 1],
 			.hInsertAfter = TVI_LAST,
@@ -762,7 +913,7 @@ void ImportFromWSFTP() {
 						host.HostName = u8({ &line[1], size(line) - 2 });
 						hasHost = true;
 					}
-				} else if (auto pos = line.find('='); hasHost && pos != std::string::npos) {
+				} else if (auto const pos = line.find('='); hasHost && pos != std::string::npos) {
 					auto name = lc(line.substr(0, pos));
 					name.erase(std::remove_if(begin(name), end(name), [](auto ch) { return ch == ' ' || ch == '\t' || ch == '\n'; }), end(name));
 					auto value = line.substr(pos + 1);
@@ -792,7 +943,7 @@ void ImportFromWSFTP() {
 struct General {
 	static constexpr WORD dialogId = hset_main_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, HSET_HOST, EM_LIMITTEXT, HOST_NAME_LEN, 0);
 		SendDlgItemMessageW(hDlg, HSET_ADRS, EM_LIMITTEXT, HOST_ADRS_LEN, 0);
 		SendDlgItemMessageW(hDlg, HSET_USER, EM_LIMITTEXT, USER_NAME_LEN, 0);
@@ -847,12 +998,12 @@ struct General {
 		case HSET_ANONYMOUS:
 			if (SendDlgItemMessageW(hDlg, HSET_ANONYMOUS, BM_GETCHECK, 0, 0) == 1) {
 				SetText(hDlg, HSET_USER, L"anonymous");
-				auto wStyle = GetWindowLongPtrW(GetDlgItem(hDlg, HSET_PASS), GWL_STYLE);
+				auto const wStyle = GetWindowLongPtrW(GetDlgItem(hDlg, HSET_PASS), GWL_STYLE);
 				SetWindowLongPtrW(GetDlgItem(hDlg, HSET_PASS), GWL_STYLE, wStyle & ~ES_PASSWORD);
 				SetText(hDlg, HSET_PASS, UserMailAdrs);
 			} else {
 				SetText(hDlg, HSET_USER, L"");
-				auto wStyle = GetWindowLongPtrW(GetDlgItem(hDlg, HSET_PASS), GWL_STYLE);
+				auto const wStyle = GetWindowLongPtrW(GetDlgItem(hDlg, HSET_PASS), GWL_STYLE);
 				SetWindowLongPtrW(GetDlgItem(hDlg, HSET_PASS), GWL_STYLE, wStyle | ES_PASSWORD);
 				SetText(hDlg, HSET_PASS, L"");
 			}
@@ -918,7 +1069,7 @@ struct KanjiCode {
 	static constexpr DWORD flag = PSP_HASHELP;
 	using KanjiButton = RadioButton<HSET_NO_CNV, HSET_SJIS_CNV, HSET_JIS_CNV, HSET_EUC_CNV, HSET_UTF8N_CNV, HSET_UTF8BOM_CNV>;
 	using NameKanjiButton = RadioButton<HSET_FN_AUTO_CNV, HSET_FN_SJIS_CNV, HSET_FN_JIS_CNV, HSET_FN_EUC_CNV, HSET_FN_SMH_CNV, HSET_FN_SMC_CNV, HSET_FN_UTF8N_CNV, HSET_FN_UTF8HFSX_CNV>;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		KanjiButton::Set(hDlg, TmpHost.KanjiCode);
 		SendDlgItemMessageW(hDlg, HSET_HANCNV, BM_SETCHECK, TmpHost.KanaCnv, 0);
 		NameKanjiButton::Set(hDlg, TmpHost.NameKanjiCode);
@@ -939,7 +1090,7 @@ struct KanjiCode {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case HSET_SJIS_CNV:
 		case HSET_JIS_CNV:
@@ -1000,7 +1151,7 @@ struct Dialup {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case HSET_DIALUP:
 			if (SendDlgItemMessageW(hDlg, HSET_DIALUP, BM_GETCHECK, 0, 0) == 0) {
@@ -1074,7 +1225,7 @@ struct Special {
 		}
 		return 0;
 	}
-	static void OnCommand(HWND hDlg, WORD id) {
+	static void OnCommand(HWND hDlg, WORD id) noexcept {
 		switch (id) {
 		case HSET_CHMOD_NOR:
 			SetText(hDlg, HSET_CHMOD_CMD, Host::DefaultChmod);
@@ -1092,7 +1243,7 @@ struct Special {
 			}
 			break;
 		case HSET_HOSTTYPE:
-			if (auto Num = (int)SendDlgItemMessageW(hDlg, HSET_HOSTTYPE, CB_GETCURSEL, 0, 0); Num == 2) {
+			if (auto const Num = (int)SendDlgItemMessageW(hDlg, HSET_HOSTTYPE, CB_GETCURSEL, 0, 0); Num == 2) {
 				EnableWindow(GetDlgItem(hDlg, HSET_NLST_R), FALSE);
 				EnableWindow(GetDlgItem(hDlg, HSET_LISTCMD), FALSE);
 				EnableWindow(GetDlgItem(hDlg, HSET_FULLPATH), FALSE);
@@ -1130,7 +1281,7 @@ struct Special {
 struct Encryption {
 	static constexpr WORD dialogId = hset_crypt_dlg;
 	static constexpr DWORD flag = PSP_HASHELP;
-	static INT_PTR OnInit(HWND hDlg) {
+	static INT_PTR OnInit(HWND hDlg) noexcept {
 		SendDlgItemMessageW(hDlg, HSET_NO_ENCRYPTION, BM_SETCHECK, TmpHost.UseNoEncryption, 0);
 		SendDlgItemMessageW(hDlg, HSET_FTPES, BM_SETCHECK, TmpHost.UseFTPES, 0);
 		SendDlgItemMessageW(hDlg, HSET_FTPIS, BM_SETCHECK, TmpHost.UseFTPIS, 0);
@@ -1181,11 +1332,9 @@ struct Feature {
 	static INT_PTR OnNotify(HWND hDlg, NMHDR* nmh) {
 		switch (nmh->code) {
 		case PSN_APPLY:
-			TmpHost.MaxThreadCount = GetDecimalText(hDlg, HSET_THREAD_COUNT);
-			CheckRange2(&TmpHost.MaxThreadCount, MAX_DATA_CONNECTION, 1);
+			TmpHost.MaxThreadCount = std::clamp(GetDecimalText(hDlg, HSET_THREAD_COUNT), 1, MAX_DATA_CONNECTION);
 			TmpHost.ReuseCmdSkt = (int)SendDlgItemMessageW(hDlg, HSET_REUSE_SOCKET, BM_GETCHECK, 0, 0);
-			TmpHost.NoopInterval = GetDecimalText(hDlg, HSET_NOOP_INTERVAL);
-			CheckRange2(&TmpHost.NoopInterval, 300, 0);
+			TmpHost.NoopInterval = std::clamp(GetDecimalText(hDlg, HSET_NOOP_INTERVAL), 0, 300);
 			switch (SendDlgItemMessageW(hDlg, HSET_ERROR_MODE, CB_GETCURSEL, 0, 0)) {
 			case 0:
 				TmpHost.TransferErrorMode = EXIST_OVW;
@@ -1217,7 +1366,7 @@ struct Feature {
 
 // ホスト設定のプロパティシート
 static bool DispHostSetDlg(HWND hDlg) {
-	auto result = PropSheet<General, Advanced, KanjiCode, Dialup, Special, Encryption, Feature>(hDlg, GetFtpInst(), IDS_HOSTSETTING, PSH_NOAPPLYNOW | PSH_NOCONTEXTHELP);
+	auto const result = PropSheet<General, Advanced, KanjiCode, Dialup, Special, Encryption, Feature>(hDlg, GetFtpInst(), IDS_HOSTSETTING, PSH_NOAPPLYNOW | PSH_NOCONTEXTHELP);
 	return 1 <= result;
 }
 
@@ -1269,7 +1418,7 @@ int getHostIndex(const void* hc) {
 #endif
 }
 HOSTDATA getHostContext(const void* hc) {
-	return *reinterpret_cast<const HOSTLISTDATA*>(hc);
+	return *static_cast<const HOSTLISTDATA*>(hc);
 }
 int getHostContextLevel(const void* hc) {
 	return ((HOSTLISTDATA*)hc)->GetLevel();

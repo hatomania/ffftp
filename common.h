@@ -27,11 +27,33 @@
 /============================================================================*/
 
 #pragma once
-#define _CRT_SECURE_NO_WARNINGS
 #define NOMINMAX
 #define SECURITY_WIN32
 #define WIN32_LEAN_AND_MEAN
 #define UMDF_USING_NTSTATUS
+#pragma warning(disable: 26426)		// error C26426: Global initializer calls a non-constexpr function 'XXX' (i.22).
+#pragma warning(disable: 26429)		// error C26429: Symbol 'XXX' is never tested for nullness, it can be marked as not_null (f.23).
+#pragma warning(disable: 26432)		// error C26432: If you define or delete any default operation in the type 'XXX', define or delete them all (c.21).
+#pragma warning(disable: 26436)		// error C26436: The type 'XXX' with a virtual function needs either public virtual or protected non-virtual destructor (c.35).
+#pragma warning(disable: 26440)		// error C26440: Function 'XXX' can be declared 'noexcept' (f.6).
+#pragma warning(disable: 26445)		// error C26445: Do not assign gsl::span or std::string_view to a reference. They are cheap to construct and are not owners of the underlying data. (gsl.view).
+#pragma warning(disable: 26446)		// error C26446: Prefer to use gsl::at() instead of unchecked subscript operator (bounds.4).
+#pragma warning(disable: 26447)		// error C26447: The function is declared 'noexcept' but calls function 'XXX' which may throw exceptions (f.6).
+#pragma warning(disable: 26459)		// error C26459: You called an STL function 'XXX' with a raw pointer parameter at position 'YYY' that may be unsafe - this relies on the caller to check that the passed values are correct. Consider wrapping your range in a gsl::span and pass as a span iterator (stl.1).
+#pragma warning(disable: 26461)		// error C26461: The pointer argument 'XXX' for function 'YYY' can be marked as a pointer to const (con.3).
+#pragma warning(disable: 26462)		// error C26462: The value pointed to by 'XXX' is assigned only once, mark it as a pointer to const (con.4).
+#pragma warning(disable: 26476)		// error C26476: Expression/symbol '{0}' uses a naked union 'union ' with multiple type pointers: Use variant instead (type.7).
+#pragma warning(disable: 26481)		// error C26481: Don't use pointer arithmetic. Use span instead (bounds.1).
+#pragma warning(disable: 26482)		// error C26482: Only index into arrays using constant expressions (bounds.2).
+#pragma warning(disable: 26485)		// error C26485: Expression 'XXX': No array to pointer decay (bounds.3).
+#pragma warning(disable: 26490)		// error C26490: Don't use reinterpret_cast (type.1).
+#pragma warning(disable: 26491)		// error C26491: Don't use static_cast downcasts (type.2).
+#pragma warning(disable: 26492)		// error C26492: Don't use const_cast to cast away const or volatile (type.3).
+#pragma warning(disable: 26493)		// error C26493: Don't use C-style casts (type.4).
+#pragma warning(disable: 26494)		// error C26494: Variable 'XXX' is uninitialized. Always initialize an object (type.5).
+#pragma warning(disable: 26496)		// error C26496 : The variable 'XXX' does not change after construction, mark it as const (con.4).
+#pragma warning(disable: 26818)		// error C26818: Switch statement does not cover all cases. Consider adding a 'default' label (es.79).
+#pragma warning(disable: 26821)		// error C26821: For 'XXX', consider using gsl::span instead of std::span to guarantee runtime bounds safety (gsl.view).
 #include <algorithm>
 #include <array>
 #include <bit>
@@ -131,7 +153,7 @@ constexpr FileType AllFileTyes[]{ FileType::All, FileType::Executable, FileType:
 #define YES_ALL			3
 #define YES_LIST		4
 
-#define VER_NUM					2000		/* 設定バージョン */
+#define VER_NUM					5700		/* 設定バージョン */
 
 /*===== ユーザ定義コマンド =====*/
 
@@ -561,7 +583,7 @@ struct SocketContext : public WSAOVERLAPPED {
 	int Listen(int backlog);
 	void OnComplete(DWORD error, DWORD transferred, DWORD flags);
 	int AsyncFetch();
-	int GetReadStatus();
+	int GetReadStatus() noexcept;
 	std::tuple<int, std::wstring> ReadReply(int* CancelCheckWork);
 	bool ReadSpan(std::span<char>& span, int* CancelCheckWork);
 	template<class Data>
@@ -570,7 +592,7 @@ struct SocketContext : public WSAOVERLAPPED {
 		return ReadSpan(span, CancelCheckWork);
 	}
 	int ReadAll(int* CancelCheckWork, std::function<bool(std::vector<char> const&)> callback);
-	void ClearReadBuffer();
+	void ClearReadBuffer() noexcept;
 	int Send(const char* buf, int len, int flags, int* CancelCheckWork);
 };
 
@@ -578,7 +600,7 @@ struct SocketContext : public WSAOVERLAPPED {
 struct HostExeptPassword {
 	static inline auto DefaultChmod = L"SITE CHMOD"s;	/* 属性変更コマンド */
 	static inline auto DefaultLsOption = L"-alL"s;		/* NLSTに付けるもの */
-	static inline int DefaultTimeZone = [] {
+	static inline int DefaultTimeZone = []() noexcept {
 		TIME_ZONE_INFORMATION tzi;
 		GetTimeZoneInformation(&tzi);
 		return tzi.Bias / -60;
@@ -622,7 +644,7 @@ struct HostExeptPassword {
 	int TransferErrorNotify = YES;						/* 転送エラー時に確認ダイアログを出すかどうか (YES/NO) */
 	int TransferErrorReconnect = YES;					/* 転送エラー時に再接続する (YES/NO) */
 	int NoPasvAdrs = NO;								/* PASVで返されるアドレスを無視する (YES/NO) */
-	inline HostExeptPassword();
+	inline HostExeptPassword() noexcept;
 };
 
 struct Host : HostExeptPassword {
@@ -653,7 +675,7 @@ struct HOSTDATA : Host {
 
 struct HISTORYDATA : Host {
 	int Type;							/* 転送方法 (TYPE_xx) */
-	HISTORYDATA() : Type{ 0 } {}
+	HISTORYDATA() noexcept : Type{ 0 } {}
 	HISTORYDATA(HISTORYDATA const&) = default;
 	HISTORYDATA(Host const& that, bool includePassword, int type) : Host{ that, includePassword }, Type{ type } {}
 };
@@ -719,12 +741,12 @@ class Sound {
 	const wchar_t* keyName;
 	const wchar_t* name;
 	int id;
-	Sound(const wchar_t* keyName, const wchar_t* name, int id) : keyName{ keyName }, name{ name }, id{ id } {}
+	Sound(const wchar_t* keyName, const wchar_t* name, int id) noexcept : keyName{ keyName }, name{ name }, id{ id } {}
 public:
 	static Sound Connected;
 	static Sound Transferred;
 	static Sound Error;
-	void Play(){ PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
+	void Play() noexcept { PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
 	static void Register();
 };
 
@@ -747,40 +769,38 @@ public:
 fs::path const& systemDirectory();
 fs::path const& tempDirectory();
 void DispWindowTitle();
-HWND GetMainHwnd(void);
-HWND GetFocusHwnd(void);
-void SetFocusHwnd(HWND hWnd);
-HINSTANCE GetFtpInst(void);
+HWND GetMainHwnd() noexcept;
+void SetFocusHwnd(HWND hWnd) noexcept;
+HINSTANCE GetFtpInst() noexcept;
 void DoubleClickProc(int Win, int Mode, int App);
 void ExecViewer(fs::path const& path, int App);
 void ExecViewer2(fs::path const& path1, fs::path const& path2, int App);
 void AddTempFileList(fs::path const& file);
-void SoundPlay(int Num);
 void ShowHelp(DWORD_PTR helpTopicId);
-fs::path const& AskIniFilePath();
-int AskForceIni(void);
-int BackgrndMessageProc(void);
-void ResetAutoExitFlg(void);
-int AskAutoExit(void);
+fs::path const& AskIniFilePath() noexcept;
+int AskForceIni() noexcept;
+int BackgrndMessageProc() noexcept;
+void ResetAutoExitFlg() noexcept;
+int AskAutoExit() noexcept;
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
-BOOL IsMainThread();
-void Restart();
-void Terminate();
+BOOL IsMainThread() noexcept;
+void Restart() noexcept;
+void Terminate() noexcept;
 // タスクバー進捗表示
-int LoadTaskbarList3();
+int LoadTaskbarList3() noexcept;
 void FreeTaskbarList3();
-int IsTaskbarList3Loaded();
+int IsTaskbarList3Loaded() noexcept;
 void UpdateTaskbarProgress();
 // 高DPI対応
-int AskToolWinHeight(void);
+int AskToolWinHeight() noexcept;
 
 /*===== filelist.c =====*/
 
 int MakeListWin();
-void DeleteListWin(void);
-HWND GetLocalHwnd(void);
-HWND GetRemoteHwnd(void);
-void SetListViewType(void);
+void DeleteListWin() noexcept;
+HWND GetLocalHwnd() noexcept;
+HWND GetRemoteHwnd() noexcept;
+void SetListViewType() noexcept;
 void GetRemoteDirForWnd(int Mode, int *CancelCheckWork);
 void GetLocalDirForWnd(void);
 void RefreshLocal();
@@ -788,20 +808,20 @@ void ReSortDispList(int Win, int *CancelCheckWork);
 bool CheckFname(std::wstring const& file, std::wstring const& spec);
 void SelectFileInList(HWND hWnd, int Type, std::vector<FILELIST> const& Base);
 void FindFileInList(HWND hWnd, int Type);
-FILELIST const& GetItem(int Win, int Pos);
-int GetCurrentItem(int Win);
-int GetItemCount(int Win);
-int GetSelectedCount(int Win);
-int GetFirstSelected(int Win, int All);
-int GetNextSelected(int Win, int Pos, int All);
-void EraseRemoteDirForWnd(void);
-uintmax_t GetSelectedTotalSize(int Win);
+FILELIST const& GetItem(int Win, int Pos) noexcept;
+int GetCurrentItem(int Win) noexcept;
+int GetItemCount(int Win) noexcept;
+int GetSelectedCount(int Win) noexcept;
+int GetFirstSelected(int Win, int All) noexcept;
+int GetNextSelected(int Win, int Pos, int All) noexcept;
+void EraseRemoteDirForWnd() noexcept;
+uintmax_t GetSelectedTotalSize(int Win) noexcept;
 int MakeSelectedFileList(int Win, int Expand, int All, std::vector<FILELIST>& Base, int *CancelCheckWork);
 std::tuple<fs::path, std::vector<FILELIST>> MakeDroppedFileList(WPARAM wParam);
 fs::path MakeDroppedDir(WPARAM wParam);
 void AddRemoteTreeToFileList(int Num, std::wstring const& Path, int IncDir, std::vector<FILELIST>& Base);
 const FILELIST* SearchFileList(std::wstring_view Fname, std::vector<FILELIST> const& Base, int Caps);
-static inline FILELIST* SearchFileList(std::wstring_view Fname, std::vector<FILELIST>& Base, int Caps) {
+static inline FILELIST* SearchFileList(std::wstring_view Fname, __pragma(warning(suppress:26460)) std::vector<FILELIST>& Base, int Caps) {
 	return const_cast<FILELIST*>(SearchFileList(Fname, static_cast<std::vector<FILELIST> const&>(Base), Caps));
 }
 void SetFilter(int *CancelCheckWork);
@@ -811,63 +831,63 @@ void doDeleteRemoteFile(void);
 /*===== toolmenu.c =====*/
 
 bool MakeToolBarWindow();
-void DeleteToolBarWindow(void);
-HWND GetMainTbarWnd(void);
-HWND GetLocalHistHwnd(void);
-HWND GetRemoteHistHwnd(void);
-HWND GetLocalHistEditHwnd(void);
-HWND GetRemoteHistEditHwnd(void);
-HWND GetLocalTbarWnd(void);
-HWND GetRemoteTbarWnd(void);
-void MakeButtonsFocus(void);
+void DeleteToolBarWindow() noexcept;
+HWND GetMainTbarWnd() noexcept;
+HWND GetLocalHistHwnd() noexcept;
+HWND GetRemoteHistHwnd() noexcept;
+HWND GetLocalHistEditHwnd() noexcept;
+HWND GetRemoteHistEditHwnd() noexcept;
+HWND GetLocalTbarWnd() noexcept;
+HWND GetRemoteTbarWnd() noexcept;
+void MakeButtonsFocus() noexcept;
 void DisableUserOpe(void);
 void EnableUserOpe(void);
-bool AskUserOpeDisabled();
-void SetTransferTypeImm(int Mode);
+bool AskUserOpeDisabled() noexcept;
+void SetTransferTypeImm(int Mode) noexcept;
 void SetTransferType(int Type);
 void DispTransferType(void);
-int AskTransferType(void);
+int AskTransferType() noexcept;
 int AskTransferTypeAssoc(std::wstring_view path, int Type);
-void SaveTransferType(void);
+void SaveTransferType() noexcept;
 void SetHostKanjiCodeImm(int Mode);
 void SetHostKanjiCode(int Type);
 void DispHostKanjiCode(void);
-int AskHostKanjiCode(void);
-void HideHostKanjiButton(void);
+int AskHostKanjiCode() noexcept;
+void HideHostKanjiButton() noexcept;
 // UTF-8対応
 void SetLocalKanjiCodeImm(int Mode);
 void SetLocalKanjiCode(int Type);
 void DispLocalKanjiCode(void);
-int AskLocalKanjiCode(void);
-void HideLocalKanjiButton(void);
-void SaveLocalKanjiCode(void);
-void SetHostKanaCnvImm(int Mode);
-void SetHostKanaCnv(void);
-void DispHostKanaCnv(void);
-int AskHostKanaCnv(void);
-void SetSortTypeImm(HostSort const& sort);
-void SetSortTypeByColumn(int Win, int Tab);
-HostSort const& AskSortType();
-void SetSaveSortToHost(int Sw);
-int AskSaveSortToHost(void);
-void DispListType(void);
-void SetSyncMoveMode(int Mode);
-void ToggleSyncMoveMode(void);
-void DispSyncMoveMode(void);
-int AskSyncMoveMode(void);
+int AskLocalKanjiCode() noexcept;
+void HideLocalKanjiButton() noexcept;
+void SaveLocalKanjiCode() noexcept;
+void SetHostKanaCnvImm(int Mode) noexcept;
+void SetHostKanaCnv() noexcept;
+void DispHostKanaCnv() noexcept;
+int AskHostKanaCnv() noexcept;
+void SetSortTypeImm(HostSort const& sort) noexcept;
+void SetSortTypeByColumn(int Win, int Tab) noexcept;
+HostSort const& AskSortType() noexcept;
+void SetSaveSortToHost(int Sw) noexcept;
+int AskSaveSortToHost() noexcept;
+void DispListType() noexcept;
+void SetSyncMoveMode(int Mode) noexcept;
+void ToggleSyncMoveMode() noexcept;
+void DispSyncMoveMode() noexcept;
+int AskSyncMoveMode() noexcept;
 void SetRemoteDirHist(std::wstring const&  path);
 void SetLocalDirHist(fs::path const& path);
-fs::path const& AskLocalCurDir();
-std::wstring const& AskRemoteCurDir();
-void SetCurrentDirAsDirHist();
-void DispDotFileMode(void);
+fs::path const& AskLocalCurDir() noexcept;
+std::wstring const& AskRemoteCurDir() noexcept;
+void SetCurrentDirAsDirHist() noexcept;
+void DispDotFileMode() noexcept;
 void ShowPopupMenu(int Win, int Pos);
 
 /*===== statuswin.c =====*/
 
 int MakeStatusBarWindow();
-void DeleteStatusBarWindow(void);
-HWND GetSbarWnd(void);
+void DeleteStatusBarWindow() noexcept;
+HWND GetSbarWnd() noexcept;
 void UpdateStatusBar();
 void DispCurrentWindow(int Win);
 void DispSelectedSpace(void);
@@ -878,9 +898,9 @@ bool NotifyStatusBar(const NMHDR* hdr);
 
 /*===== taskwin.c =====*/
 
-int MakeTaskWindow();
-void DeleteTaskWindow(void);
-HWND GetTaskWnd(void);
+int MakeTaskWindow() noexcept;
+void DeleteTaskWindow() noexcept;
+HWND GetTaskWnd() noexcept;
 void DispTaskMsg(void);
 namespace detail {
 	void Notice(UINT id, std::wformat_args args);
@@ -904,14 +924,14 @@ static inline void WSAError(std::wstring_view functionName, int lastError = WSAG
 int SelectHost(int Type);
 int AddHostToList(HOSTDATA *Set, int Pos, int Level);
 int CopyHostFromList(int Num, HOSTDATA *Set);
-int CopyHostFromListInConnect(int Num, HOSTDATA *Set);
+HOSTDATA GetConnectingHost();
 int SetHostBookMark(int Num, std::vector<std::wstring>&& bookmark);
 std::optional<std::vector<std::wstring>> AskHostBookMark(int Num);
 int SetHostDir(int Num, std::wstring_view LocDir, std::wstring_view HostDir);
 int SetHostPassword(int Num, std::wstring const& Pass);
 int SetHostSort(int Num, HostSort const& sort);
-int AskCurrentHost(void);
-void SetCurrentHost(int Num);
+int AskCurrentHost() noexcept;
+void SetCurrentHost(int Num) noexcept;
 void CopyDefaultHost(HOSTDATA *Set);
 // ホスト共通設定機能
 void ResetDefaultHost(void);
@@ -923,38 +943,31 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 
 /*===== connect.c =====*/
 
-HOSTDATA const& GetCurHost();
+HOSTDATA const& GetCurHost() noexcept;
 void ConnectProc(int Type, int Num);
 void QuickConnectProc(void);
 void DirectConnectProc(std::wstring&& unc, int Kanji, int Kana, int Fkanji, int TrMode);
 void HistoryConnectProc(int MenuCmd);
-int AskHostNameKana(void);
-int AskListCmdMode(void);
-int AskUseNLST_R(void);
-std::wstring AskHostChmodCmd();
-int AskHostTimeZone(void);
-std::wstring AskHostLsName();
 int AskHostType(void);
-int AskNoFullPathMode(void);
+int AskNoFullPathMode() noexcept;
 void SaveCurrentSetToHost(void);
 int ReConnectCmdSkt(void);
 int ReConnectTrnSkt(std::shared_ptr<SocketContext>& Skt, int *CancelCheckWork);
-std::shared_ptr<SocketContext> AskCmdCtrlSkt();
-std::shared_ptr<SocketContext> AskTrnCtrlSkt();
+std::shared_ptr<SocketContext> AskCmdCtrlSkt() noexcept;
+std::shared_ptr<SocketContext> AskTrnCtrlSkt() noexcept;
 void SktShareProh(void);
-int AskShareProh(void);
+int AskShareProh() noexcept;
 void DisconnectProc(void);
-void DisconnectSet(void);
-int AskConnecting(void);
+void DisconnectSet() noexcept;
+int AskConnecting() noexcept;
 #if defined(HAVE_TANDEM)
-int AskRealHostType(void);
 int SetOSS(int wkOss);
-int AskOSS(void);
+int AskOSS() noexcept;
 #endif
-std::optional<sockaddr_storage> SocksReceiveReply(std::shared_ptr<SocketContext> s, int* CancelCheckWork);
+std::optional<sockaddr_storage> SocksReceiveReply(SocketContext& s, int* CancelCheckWork);
 std::shared_ptr<SocketContext> connectsock(std::variant<std::wstring_view, std::reference_wrapper<const SocketContext>> originalTarget, std::wstring&& host, int port, int *CancelCheckWork);
 std::shared_ptr<SocketContext> GetFTPListenSocket(std::shared_ptr<SocketContext> ctrl_skt, int *CancelCheckWork);
-int AskTryingConnect(void);
+int AskTryingConnect() noexcept;
 
 // キャッシュのファイル名を作成する
 static inline fs::path MakeCacheFileName(int num) {
@@ -981,7 +994,7 @@ void ChmodProc(void);
 std::optional<std::wstring> ChmodDialog(std::wstring const& text);
 void SomeCmdProc(void);
 void CalcFileSizeProc(void);
-void DispCWDerror(HWND hWnd);
+void DispCWDerror(HWND hWnd) noexcept;
 void CopyURLtoClipBoard(void);
 int ProcForNonFullpath(std::shared_ptr<SocketContext> cSkt, std::wstring& Path, std::wstring& CurDir, HWND hWnd, int* CancelCheckWork);
 #if defined(HAVE_OPENVMS)
@@ -1007,7 +1020,7 @@ void DoLocalRENAME(fs::path const& src, fs::path const& dst);
 int DoCWD(std::wstring const& Path, int Disp, int ForceGet, int ErrorBell);
 int DoCWDStepByStep(std::wstring const& Path, std::wstring const& Cur);
 int DoMKD(std::wstring const& Path);
-void InitPWDcommand();
+void InitPWDcommand() noexcept;
 int DoRMD(std::wstring const& path);
 int DoDELE(std::wstring const& path);
 int DoRENAME(std::wstring const& from, std::wstring const& to);
@@ -1022,38 +1035,38 @@ int DoDirList(std::wstring_view AddOpt, int Num, int* CancelCheckWork);
 void SwitchOSSProc(void);
 #endif
 namespace detail {
-	std::tuple<int, std::wstring> command(std::shared_ptr<SocketContext> cSkt, int* CancelCheckWork, std::wstring&& cmd);
+	std::tuple<int, std::wstring> command(SocketContext& s, int* CancelCheckWork, std::wstring&& cmd);
 }
 template<class... Args>
-static inline std::tuple<int, std::wstring> Command(std::shared_ptr<SocketContext> socket, int* CancelCheckWork, std::wstring_view format, const Args&... args) {
-	return !socket ? std::tuple{ 429, L""s } : detail::command(socket, CancelCheckWork, std::format(format, args...));
+static inline std::tuple<int, std::wstring> Command(__pragma(warning(suppress: 26415 26418)) std::shared_ptr<SocketContext> socket, int* CancelCheckWork, std::wstring_view format, const Args&... args) {
+	return !socket ? std::tuple{ 429, L""s } : detail::command(*socket, CancelCheckWork, std::vformat(format, std::make_wformat_args(args...)));
 }
 
 /*===== getput.c =====*/
 
-int MakeTransferThread(void);
-void CloseTransferThread(void);
+int MakeTransferThread() noexcept;
+void CloseTransferThread() noexcept;
 // 同時接続対応
 void AbortAllTransfer();
 void AddTransFileList(TRANSPACKET *Pkt);
 // バグ対策
 void AddNullTransFileList();
 void AppendTransFileList(std::vector<TRANSPACKET>&& list);
-void KeepTransferDialog(int Sw);
+void KeepTransferDialog(int Sw) noexcept;
 int AskTransferNow(void);
-int AskTransferFileNum(void);
-void GoForwardTransWindow(void);
-void InitTransCurDir(void);
+int AskTransferFileNum() noexcept;
+void GoForwardTransWindow() noexcept;
+void InitTransCurDir() noexcept;
 int DoDownload(std::shared_ptr<SocketContext> cSkt, TRANSPACKET& item, int DirList, int *CancelCheckWork);
 int CheckPathViolation(TRANSPACKET const& item);
 // タスクバー進捗表示
-LONGLONG AskTransferSizeLeft(void);
-LONGLONG AskTransferSizeTotal(void);
-int AskTransferErrorDisplay(void);
+LONGLONG AskTransferSizeLeft() noexcept;
+LONGLONG AskTransferSizeTotal() noexcept;
+int AskTransferErrorDisplay() noexcept;
 // ゾーンID設定追加
 int LoadZoneID();
 void FreeZoneID();
-int IsZoneIDLoaded();
+int IsZoneIDLoaded() noexcept;
 bool MarkFileAsDownloadedFromInternet(fs::path const& path);
 
 /*===== codecnv.c =====*/
@@ -1086,7 +1099,7 @@ class CodeConverter {
 	std::string rest;
 public:
 	const int incode;
-	CodeConverter(int incode, int outcode, bool kana) : incode{ outcode == KANJI_NOCNV || incode == outcode && !kana ? KANJI_NOCNV : incode }, outcode{ outcode }, kana{ kana } {}
+	CodeConverter(int incode, int outcode, bool kana) noexcept : incode{ outcode == KANJI_NOCNV || incode == outcode && !kana ? KANJI_NOCNV : incode }, outcode{ outcode }, kana{ kana } {}
 	std::string Convert(std::string_view input);
 };
 
@@ -1097,10 +1110,9 @@ std::string ConvertTo(std::wstring_view str, int kanji, int kana);
 /*===== option.c =====*/
 
 void SetOption();
-int SortSetting(void);
+int SortSetting() noexcept;
 // hostman.cで使用
 int GetDecimalText(HWND hDlg, int Ctrl);
-void CheckRange2(int *Cur, int Max, int Min);
 
 /*===== bookmark.c =====*/
 
@@ -1115,12 +1127,12 @@ void EditBookMark();
 
 void SaveRegistry();
 bool LoadRegistry();
-void ClearRegistry();
+void ClearRegistry() noexcept;
 // ポータブル版判定
 void ClearIni(void);
 void SetMasterPassword(std::wstring_view password = {});
 std::wstring GetMasterPassword();
-int GetMasterPasswordStatus(void);
+int GetMasterPasswordStatus() noexcept;
 int ValidateMasterPassword(void);
 void SaveSettingsToFile(void);
 int LoadSettingsFromFile(void);
@@ -1152,15 +1164,12 @@ static std::wstring MakeSizeString(uintmax_t size) {
 	return std::format(L"{:0.1f}{}B"sv, (size >> 10 * i) / 1024., L"KMGTPE"[i]);
 }
 void DispStaticText(HWND hWnd, std::wstring text);
-void RectClientToScreen(HWND hWnd, RECT *Rect);
 fs::path SelectFile(bool open, HWND hWnd, UINT titleId, const wchar_t* initialFileName, const wchar_t* extension, std::initializer_list<FileType> fileTypes);
 fs::path SelectDir(HWND hWnd);
 fs::path MakeDistinguishableFileName(fs::path&& path);
 #if defined(HAVE_TANDEM)
-void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size);
+void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size) noexcept;
 #endif
-int CalcPixelX(int x);
-int CalcPixelY(int y);
 
 /*===== opie.c =====*/
 
@@ -1172,18 +1181,18 @@ void AddHostToHistory(Host const& host);
 void AddHistoryToHistory(HISTORYDATA const& history);
 void SetAllHistoryToMenu();
 std::optional<HISTORYDATA> GetHistoryByCmd(int menuId);
-std::vector<HISTORYDATA> const& GetHistories();
+std::vector<HISTORYDATA> const& GetHistories() noexcept;
 
 /*===== socket.c =====*/
 
 BOOL LoadSSL();
-void FreeSSL();
+void FreeSSL() noexcept;
 void ShowCertificate();
 bool IsSecureConnection();
 // UPnP対応
 int LoadUPnP();
 void FreeUPnP();
-int IsUPnPLoaded();
+int IsUPnPLoaded() noexcept;
 std::optional<std::wstring> AddPortMapping(std::wstring const& internalAddress, int port);
 bool RemovePortMapping(int port);
 int CheckClosedAndReconnect(void);
@@ -1201,7 +1210,7 @@ constexpr auto data_as(Source const& source) {
 }
 template<class Size, class Source>
 constexpr auto size_as(Source const& source) {
-	return static_cast<Size>(std::size(source));
+	return gsl::narrow_cast<Size>(std::size(source));
 }
 template<class T, class Allocator>
 constexpr auto before_end(std::forward_list<T, Allocator>& list) {
@@ -1211,9 +1220,9 @@ constexpr auto before_end(std::forward_list<T, Allocator>& list) {
 }
 template<class DstChar, class SrcChar, class Fn>
 static inline auto convert(Fn&& fn, std::basic_string_view<SrcChar> src) {
-	auto len1 = fn(data(src), size_as<int>(src), nullptr, 0);
+	auto const len1 = fn(data(src), size_as<int>(src), nullptr, 0);
 	std::basic_string<DstChar> dst(len1, 0);
-	auto len2 = fn(data(src), size_as<int>(src), data(dst), len1);
+	auto const len2 = fn(data(src), size_as<int>(src), data(dst), len1);
 	dst.resize(len2);
 	return dst;
 }
@@ -1225,8 +1234,8 @@ template<class DstChar, class Fn>
 static inline auto convert(Fn&& fn, std::wstring_view src) {
 	return convert<DstChar, wchar_t>(std::forward<Fn>(fn), src);
 }
-template<class Char, class... Str>
-static inline auto concat(std::basic_string_view<Char> first, Str&&... rest) {
+template<class Char>
+static inline auto concat(std::basic_string_view<Char> first, auto const&... rest) {
 	std::basic_string<Char> result;
 	result.reserve((std::size(first) + ... + std::size(rest)));
 	((result += first) += ... += rest);
@@ -1238,43 +1247,36 @@ static inline auto operator+(std::string_view left, std::string_view right) {
 static inline auto operator+(std::wstring_view left, std::wstring_view right) {
 	return concat(left, right);
 }
-static inline auto sv(auto const& sm) {
+static inline auto sv(auto const& sm) noexcept {
 	return std::basic_string_view{ sm.first, sm.second };
 }
 static inline auto u8(std::string_view utf8) {
-	return convert<wchar_t>([](auto src, auto srclen, auto dst, auto dstlen) { return MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, src, srclen, dst, dstlen); }, utf8);
+	return convert<wchar_t>([](auto src, auto srclen, auto dst, auto dstlen) noexcept { return MultiByteToWideChar(CP_UTF8, MB_ERR_INVALID_CHARS, src, srclen, dst, dstlen); }, utf8);
 }
 static inline auto u8(std::wstring_view wide) {
-	return convert<char>([](auto src, auto srclen, auto dst, auto dstlen) { return WideCharToMultiByte(CP_UTF8, 0, src, srclen, dst, dstlen, nullptr, nullptr); }, wide);
+	return convert<char>([](auto src, auto srclen, auto dst, auto dstlen) noexcept { return WideCharToMultiByte(CP_UTF8, 0, src, srclen, dst, dstlen, nullptr, nullptr); }, wide);
 }
 template<class Char>
 static inline auto u8(const Char* str, size_t len) {
 	return u8(std::basic_string_view<Char>{ str, len });
 }
 static auto ieq(std::string_view left, std::string_view right) {
-	return std::equal(begin(left), end(left), begin(right), end(right), [](auto const l, auto const r) { return std::toupper(l) == std::toupper(r); });
+	return size(left) == size(right) && _strnicmp(data(left), data(right), size(left)) == 0;
 }
 static auto ieq(std::wstring_view left, std::wstring_view right) {
-	return std::equal(begin(left), end(left), begin(right), end(right), [](auto const l, auto const r) { return std::towupper(l) == std::towupper(r); });
+	return size(left) == size(right) && _wcsnicmp(data(left), data(right), size(left)) == 0;
 }
 static inline auto lc(std::string&& str) {
-	_strlwr(data(str));
+	_strlwr_s(data(str), size(str) + 1);
 	return str;
 }
 static inline auto lc(std::wstring&& str) {
-	_wcslwr(data(str));
+	_wcslwr_s(data(str), size(str) + 1);
 	return str;
-}
-template<class String>
-static inline auto lc(String const& src) {
-	return lc(std::basic_string(std::begin(src), std::end(src)));
 }
 static inline auto uc(std::wstring&& str) {
-	_wcsupr(data(str));
+	_wcsupr_s(data(str), size(str) + 1);
 	return str;
-}
-static inline auto uc(std::wstring_view sv) {
-	return uc(std::wstring{ sv });
 }
 template<class Char, class Evaluator>
 static inline auto replace(std::basic_string_view<Char> input, boost::basic_regex<Char> const& pattern, Evaluator&& evaluator) {
@@ -1289,17 +1291,17 @@ static inline auto replace(std::basic_string_view<Char> input, boost::basic_rege
 	return replaced;
 }
 template<int captionId = IDS_APP>
-static inline auto Message(HWND owner, int textId, DWORD style) {
-	MSGBOXPARAMSW msgBoxParams{ sizeof MSGBOXPARAMSW, owner, GetFtpInst(), MAKEINTRESOURCEW(textId), MAKEINTRESOURCEW(captionId), style, nullptr, 0, nullptr, LANG_NEUTRAL };
+static inline auto Message(HWND owner, int textId, DWORD style) noexcept {
+	MSGBOXPARAMSW msgBoxParams{ sizeof(MSGBOXPARAMSW), owner, GetFtpInst(), MAKEINTRESOURCEW(textId), MAKEINTRESOURCEW(captionId), style, nullptr, 0, nullptr, LANG_NEUTRAL };
 	return MessageBoxIndirectW(&msgBoxParams);
 }
 template<int captionId = IDS_APP>
-static inline auto Message(int textId, DWORD style) {
+static inline auto Message(int textId, DWORD style) noexcept {
 	return Message<captionId>(GetMainHwnd(), textId, style);
 }
 static auto GetString(UINT id) {
 	wchar_t buffer[1024];
-	auto length = LoadStringW(GetFtpInst(), id, buffer, size_as<int>(buffer));
+	auto const length = LoadStringW(GetFtpInst(), id, buffer, size_as<int>(buffer));
 	return std::wstring(buffer, length);
 }
 static auto GetText(HWND hwnd) {
@@ -1314,22 +1316,22 @@ static auto GetText(HWND hwnd) {
 static inline auto GetText(HWND hdlg, int id) {
 	return GetText(GetDlgItem(hdlg, id));
 }
-static inline void SetText(HWND hwnd, const wchar_t* text) {
+static inline void SetText(HWND hwnd, const wchar_t* text) noexcept {
 	SendMessageW(hwnd, WM_SETTEXT, 0, (LPARAM)text);
 }
-static inline void SetText(HWND hdlg, int id, const wchar_t* text) {
+static inline void SetText(HWND hdlg, int id, const wchar_t* text) noexcept {
 	SendDlgItemMessageW(hdlg, id, WM_SETTEXT, 0, (LPARAM)text);
 }
-static inline void SetText(HWND hwnd, const std::wstring& text) {
+static inline void SetText(HWND hwnd, const std::wstring& text) noexcept {
 	SetText(hwnd, text.c_str());
 }
-static inline void SetText(HWND hdlg, int id, const std::wstring& text) {
+static inline void SetText(HWND hdlg, int id, const std::wstring& text) noexcept {
 	SetText(hdlg, id, text.c_str());
 }
 static inline auto AddressPortToString(const SOCKADDR* sa, size_t salen) {
 	std::wstring string(sizeof "[ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff%4294967295]:65535" - 1, L'\0');
 	auto length = size_as<DWORD>(string) + 1;
-	auto result = WSAAddressToStringW(const_cast<SOCKADDR*>(sa), static_cast<DWORD>(salen), nullptr, data(string), &length);
+	auto const result = WSAAddressToStringW(const_cast<SOCKADDR*>(sa), gsl::narrow_cast<DWORD>(salen), nullptr, data(string), &length);
 	assert(result == 0);
 	string.resize(length - 1);
 	return string;
@@ -1354,14 +1356,14 @@ static inline auto AddressToString(sockaddr_storage const& sa) {
 static inline auto IdnToAscii(std::wstring_view unicode) {
 	if (empty(unicode))
 		return L""s;
-	return convert<wchar_t>([](auto src, auto srclen, auto dst, auto dstlen) { return IdnToAscii(0, src, srclen, dst, dstlen); }, unicode);
+	return convert<wchar_t>([](auto src, auto srclen, auto dst, auto dstlen) noexcept { return IdnToAscii(0, src, srclen, dst, dstlen); }, unicode);
 }
 static inline auto NormalizeString(NORM_FORM form, std::wstring_view src) {
 	if (empty(src))
 		return std::wstring{ src };
-	return convert<wchar_t>([form](auto src, auto srclen, auto dst, auto dstlen) { return NormalizeString(form, src, srclen, dst, dstlen); }, src);
+	return convert<wchar_t>([form](auto src, auto srclen, auto dst, auto dstlen) noexcept { return NormalizeString(form, src, srclen, dst, dstlen); }, src);
 }
-static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) {
+static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) noexcept {
 	struct Data {
 		using result_t = bool;
 		UINT titleId;
@@ -1369,7 +1371,7 @@ static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wst
 		size_t maxlength;
 		int* flag;
 		int helpTopicId;
-		Data(UINT titleId, std::wstring& text, size_t maxlength, int* flag, int helpTopicId) : titleId{ titleId }, text{ text }, maxlength{ maxlength }, flag{ flag }, helpTopicId{ helpTopicId } {}
+		Data(UINT titleId, std::wstring& text, size_t maxlength, int* flag, int helpTopicId) noexcept : titleId{ titleId }, text{ text }, maxlength{ maxlength }, flag{ flag }, helpTopicId{ helpTopicId } {}
 		INT_PTR OnInit(HWND hDlg) {
 			if (titleId != 0)
 				SetText(hDlg, GetString(titleId));
@@ -1403,7 +1405,7 @@ static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wst
 	return Dialog(GetFtpInst(), dialogId, parent, Data{ titleId, text, maxlength, flag, helpTopicId });
 }
 struct ProcessInformation : PROCESS_INFORMATION {
-	ProcessInformation() : PROCESS_INFORMATION{ INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE } {}
+	ProcessInformation() noexcept : PROCESS_INFORMATION{ INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE } {}
 	~ProcessInformation() {
 		if (hThread != INVALID_HANDLE_VALUE)
 			CloseHandle(hThread);
@@ -1413,13 +1415,13 @@ struct ProcessInformation : PROCESS_INFORMATION {
 };
 template<class Fn>
 static inline void GetDrives(Fn&& fn) {
-	auto drives = GetLogicalDrives();
+	auto const drives = GetLogicalDrives();
 	DWORD nodrives = 0;
 	DWORD size = sizeof(DWORD);
 	SHRegGetUSValueW(LR"(Software\Microsoft\Windows\CurrentVersion\Policies\Explorer)", L"NoDrives", nullptr, &nodrives, &size, false, nullptr, 0);
 	for (int i = 0; i < sizeof(DWORD) * 8; i++)
 		if ((drives & 1 << i) != 0 && (nodrives & 1 << i) == 0) {
-			wchar_t drive[] = { wchar_t(L'A' + i), L':', L'\\', 0 };
+			const wchar_t drive[] = { wchar_t(L'A' + i), L':', L'\\', 0 };
 			fn(drive);
 		}
 }
@@ -1434,11 +1436,11 @@ static auto GetErrorMessage(int lastError) {
 template<class Fn>
 static inline std::invoke_result_t<Fn, BCRYPT_ALG_HANDLE> BCrypt(LPCWSTR algid, Fn&& fn) {
 	BCRYPT_ALG_HANDLE alg;
-	if (auto status = BCryptOpenAlgorithmProvider(&alg, algid, nullptr, 0); status != STATUS_SUCCESS) {
+	if (auto const status = BCryptOpenAlgorithmProvider(&alg, algid, nullptr, 0); status != STATUS_SUCCESS) {
 		Debug(L"BCryptOpenAlgorithmProvider({}) failed: 0x{:08X}."sv, algid, status);
 		__pragma(warning(suppress:26444)) return {};
 	}
-	auto result = std::invoke(std::forward<Fn>(fn), alg);
+	auto const result = std::invoke(std::forward<Fn>(fn), alg);
 	BCryptCloseAlgorithmProvider(alg, 0);
 	return result;
 }
@@ -1446,11 +1448,11 @@ template<class Fn>
 static inline auto HashOpen(LPCWSTR algid, Fn&& fn) {
 	return BCrypt(algid, [fn](BCRYPT_ALG_HANDLE alg) -> std::invoke_result_t<Fn, BCRYPT_ALG_HANDLE, std::vector<UCHAR>&&, std::vector<UCHAR>&&> {
 		DWORD objlen, hashlen, resultlen;
-		if (auto status = BCryptGetProperty(alg, BCRYPT_OBJECT_LENGTH, reinterpret_cast<PUCHAR>(&objlen), sizeof objlen, &resultlen, 0); status != STATUS_SUCCESS || resultlen != sizeof objlen) {
+		if (auto const status = BCryptGetProperty(alg, BCRYPT_OBJECT_LENGTH, reinterpret_cast<PUCHAR>(&objlen), sizeof objlen, &resultlen, 0); status != STATUS_SUCCESS || resultlen != sizeof objlen) {
 			Debug(L"BCryptGetProperty({}) failed: 0x{:08X} or invalid length: {}."sv, BCRYPT_OBJECT_LENGTH, status, resultlen);
 			return {};
 		}
-		if (auto status = BCryptGetProperty(alg, BCRYPT_HASH_LENGTH, reinterpret_cast<PUCHAR>(&hashlen), sizeof hashlen, &resultlen, 0); status != STATUS_SUCCESS || resultlen != sizeof hashlen) {
+		if (auto const status = BCryptGetProperty(alg, BCRYPT_HASH_LENGTH, reinterpret_cast<PUCHAR>(&hashlen), sizeof hashlen, &resultlen, 0); status != STATUS_SUCCESS || resultlen != sizeof hashlen) {
 			Debug(L"BCryptGetProperty({}) failed: 0x{:08X} or invalid length: {}."sv, BCRYPT_HASH_LENGTH, status, resultlen);
 			return {};
 		}

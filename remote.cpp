@@ -122,17 +122,8 @@ static std::optional<std::wstring> DoPWD() {
 }
 
 
-/*----- PWDコマンドのタイプを初期化する ---------------------------------------
-*
-*	Parameter
-*		なし
-*
-*	Return Value
-*		なし
-*----------------------------------------------------------------------------*/
-
-void InitPWDcommand()
-{
+// PWDコマンドのタイプを初期化する
+void InitPWDcommand() noexcept {
 	PwdCommandType = PWD_XPWD;
 }
 
@@ -203,7 +194,7 @@ int DoRENAME(std::wstring const& from, std::wstring const& to) {
 int DoCHMOD(std::wstring const& path, std::wstring const& mode) {
 	if (AskTransferNow() == YES)
 		SktShareProh();
-	int Sts = std::get<0>(Command(AskCmdCtrlSkt(), &CancelFlg, L"{} {} {}"sv, AskHostChmodCmd(), mode, path));
+	int Sts = std::get<0>(Command(AskCmdCtrlSkt(), &CancelFlg, L"{} {} {}"sv, GetConnectingHost().ChmodCmd, mode, path));
 	if (Sts / 100 >= FTP_CONTINUE)
 		Sound::Error.Play();
 	if (auto const& curHost = GetCurHost(); CancelFlg == NO && curHost.NoopInterval > 0 && time(NULL) - LastDataConnectionTime >= curHost.NoopInterval) {
@@ -232,7 +223,7 @@ int DoMDTM(std::shared_ptr<SocketContext> cSkt, std::wstring const& Path, FILETI
 		std::wstring text;
 		std::tie(code, text) = Command(cSkt, CancelCheckWork, L"MDTM {}"sv, Path);
 		if (code / 100 == FTP_COMPLETE)
-			if (SYSTEMTIME st{}; swscanf(&text[4], L"%04hu%02hu%02hu%02hu%02hu%02hu", &st.wYear, &st.wMonth, &st.wDay, &st.wHour, &st.wMinute, &st.wSecond) == 6)
+			if (SYSTEMTIME st{}; swscanf_s(&text[4], L"%04hu%02hu%02hu%02hu%02hu%02hu", &st.wYear, &st.wMonth, &st.wDay, &st.wHour, &st.wMinute, &st.wSecond) == 6)
 				SystemTimeToFileTime(&st, Time);
 	}
 	return code / 100;
@@ -272,10 +263,10 @@ int DoDirList(std::wstring_view AddOpt, int Num, int* CancelCheckWork) {
 	if (AskTransferNow() == YES)
 		SktShareProh();
 
-	if (AskListCmdMode() == NO) {
+	if (auto const connectingHost = GetConnectingHost(); connectingHost.ListCmdOnly == NO) {
 		MainTransPkt.Command = L"NLST"s;
-		if (!empty(AskHostLsName()))
-			MainTransPkt.Command += std::format(AskHostType() == HTYPE_ACOS || AskHostType() == HTYPE_ACOS_4? L" '{}'"sv : L" {}"sv, AskHostLsName());
+		if (!empty(connectingHost.LsName))
+			MainTransPkt.Command += std::vformat(AskHostType() == HTYPE_ACOS || AskHostType() == HTYPE_ACOS_4? L" '{}'"sv : L" {}"sv, std::make_wformat_args(connectingHost.LsName));
 		if (!empty(AddOpt))
 			MainTransPkt.Command += AddOpt;
 	} else {
@@ -298,7 +289,7 @@ int DoDirList(std::wstring_view AddOpt, int Num, int* CancelCheckWork) {
 	MainTransPkt.NoTransfer = NO;
 	MainTransPkt.ExistSize = 0;
 	MainTransPkt.hWndTrans = {};
-	auto code = DoDownload(AskCmdCtrlSkt(), MainTransPkt, YES, CancelCheckWork);
+	auto const code = DoDownload(AskCmdCtrlSkt(), MainTransPkt, YES, CancelCheckWork);
 	if (code / 100 >= FTP_CONTINUE)
 		Sound::Error.Play();
 	return code / 100;
@@ -338,8 +329,7 @@ void SwitchOSSProc(void)
 
 // コマンドを送りリプライを待つ
 // ホストのファイル名の漢字コードに応じて、ここで漢字コードの変換を行なう
-std::tuple<int, std::wstring> detail::command(std::shared_ptr<SocketContext> cSkt, int* CancelCheckWork, std::wstring&& cmd) {
-	assert(cSkt);
+std::tuple<int, std::wstring> detail::command(SocketContext& s, int* CancelCheckWork, std::wstring&& cmd) {
 	if (cmd.starts_with(L"PASS "sv))
 		::Notice(IDS_REMOTECMD, L"PASS [xxxxxx]"sv);
 	else {
@@ -350,9 +340,9 @@ std::tuple<int, std::wstring> detail::command(std::shared_ptr<SocketContext> cSk
 		}
 		::Notice(IDS_REMOTECMD, cmd);
 	}
-	auto native = ConvertTo(cmd, GetCurHost().CurNameKanjiCode, AskHostNameKana());
+	auto native = ConvertTo(cmd, GetCurHost().CurNameKanjiCode, GetConnectingHost().NameKanaCnv);
 	native += "\r\n"sv;
-	if (cSkt->Send(data(native), size_as<int>(native), 0, CancelCheckWork) != FFFTP_SUCCESS)
+	if (s.Send(data(native), size_as<int>(native), 0, CancelCheckWork) != FFFTP_SUCCESS)
 		return { 429, {} };
-	return cSkt->ReadReply(CancelCheckWork);
+	return s.ReadReply(CancelCheckWork);
 }

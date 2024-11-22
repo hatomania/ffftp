@@ -46,9 +46,9 @@ void AddHostToHistory(Host const& host) {
 
 // ヒストリをヒストリリストの先頭に追加する
 void AddHistoryToHistory(HISTORYDATA const& history) {
-	if (size_as<int>(histories) == FileHist)
-		histories.resize((size_t)FileHist - 1);
 	histories.insert(begin(histories), history);
+	if (FileHist < size_as<int>(histories))
+		histories.resize(FileHist);
 }
 
 
@@ -61,7 +61,7 @@ HOSTDATA::HOSTDATA(struct HISTORYDATA const& history) {
 // 全ヒストリをメニューにセット
 void SetAllHistoryToMenu() {
 	auto menu = GetSubMenu(GetMenu(GetMainHwnd()), 0);
-	for (int i = DEF_FMENU_ITEMS, count = GetMenuItemCount(menu); i < count; i++)
+	for (int const i : std::views::iota(DEF_FMENU_ITEMS, GetMenuItemCount(menu)))
 		DeleteMenu(menu, DEF_FMENU_ITEMS, MF_BYPOSITION);
 	AppendMenuW(menu, MF_SEPARATOR, 0, NULL);
 	for (int i = 0; auto const& history : histories) {
@@ -75,12 +75,12 @@ void SetAllHistoryToMenu() {
 //   MenuCmd : 取り出すヒストリに割り当てられたメニューコマンド (MENU_xxx)
 std::optional<HISTORYDATA> GetHistoryByCmd(int menuId) {
 	if (auto it = std::find(begin(MenuHistId), end(MenuHistId), menuId); it != end(MenuHistId))
-		if (auto index = (size_t)std::distance(begin(MenuHistId), it); index < size(histories))
+		if (auto const index = (size_t)std::distance(begin(MenuHistId), it); index < size(histories))
 			return histories[index];
 	return {};
 }
 
 
-std::vector<HISTORYDATA> const& GetHistories() {
+std::vector<HISTORYDATA> const& GetHistories() noexcept {
 	return histories;
 }

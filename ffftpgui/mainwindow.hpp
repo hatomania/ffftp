@@ -81,6 +81,7 @@ public slots:
     // others
     bool askSaveCryptFunc();
     bool askMasterPassword(QString& passwd);
+    bool askRetryMasterPassword();
 
 protected:
     void timerEvent(QTimerEvent* event) override;

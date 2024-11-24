@@ -1477,3 +1477,15 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
+
+// libffftpのコールバック関数定義のためのヘルパー定義
+#define LIBFFFTP_DECLARE_CALLBACK(ret, fname, args) extern void set##fname##Callback(ret (*func)##args##);
+#define LIBFFFTP_IMPLEMENT_CALLBACK(ret, fname, args, src) static ret fname##args##src \
+	typedef ret (*fname##Func) args;\
+	static fname##Func fname##_func = fname;\
+	namespace libffftp {\
+	void set##fname##Callback(ret (*func)##args##) {\
+		fname##_func = func;\
+	}\
+	}
+#define LIBFFFTP_CALLBACK_SETTER(fname) libffftp::set##fname##Callback(func);

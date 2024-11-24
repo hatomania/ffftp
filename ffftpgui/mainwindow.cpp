@@ -32,6 +32,11 @@ static bool _AskMasterPassword(const wchar_t** passwd) {
     *passwd = static_pwd.c_str();
     return _r;
 }
+static bool _AskRetryMasterPassword() {
+    bool _r = false;
+    QMetaObject::invokeMethod(_mainwindow, "askRetryMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, _r));
+    return _r;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), d_(new MainWindow::Private())
@@ -74,6 +79,7 @@ MainWindow::MainWindow(QWidget *parent)
     _mainwindow = this;
     ffftp_setcallback_asksavecrypt(_AskSaveCryptFunc);
     ffftp_setcallback_askmasterpassword(_AskMasterPassword);
+    ffftp_setcallback_askretrymasterpassword(_AskRetryMasterPassword);
 }
 
 MainWindow::~MainWindow() {
@@ -203,4 +209,10 @@ bool MainWindow::askMasterPassword(QString& passwd) {
     bool ok = false;
     passwd = QInputDialog::getText(this, QString(ffftp_get_application_name()), kPlzInputYourMasterPwd, QLineEdit::Password, "", &ok);
     return ok;
+}
+
+bool MainWindow::askRetryMasterPassword() {
+    if (QMessageBox::question(this, QString(ffftp_get_application_name()), kAskRetryInputYourMasterPwd) == QMessageBox::Yes)
+        return true;
+    return false;
 }

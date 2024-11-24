@@ -109,9 +109,13 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*f
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword(bool (*func)(const wchar_t** passwd)) {
-    libffftp::setAskMasterPasswordCallback(func);
+    LIBFFFTP_CALLBACK_SETTER(AskMasterPassword)
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd)) {
-    libffftp::setAskMasterPassword2ndCallback(func);
+    LIBFFFTP_CALLBACK_SETTER(AskMasterPassword2nd)
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askretrymasterpassword(bool (*func)()) {
+    LIBFFFTP_CALLBACK_SETTER(AskRetryMasterPassword)
 }

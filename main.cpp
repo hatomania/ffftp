@@ -211,6 +211,44 @@ void Sound::Register() {
 	}
 }
 
+LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskMasterPassword, (const wchar_t** passwd), {
+	static std::wstring passwd_;
+	*passwd = passwd_.c_str();
+	return InputDialog(188, GetMainHwnd(), 0, passwd_, 128 + 1, nullptr, 64);
+})
+LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskMasterPassword2nd, (const wchar_t** passwd), {
+	static std::wstring passwd_;
+	*passwd = passwd_.c_str();
+	return InputDialog(newmasterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
+})
+LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskRetryMasterPassword, (), {
+	return Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDYES;
+})
+
+// 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
+// libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
+// 起動時にマスターパスワードを求めるダイアログを表示する
+//static bool AskMasterPassword(const wchar_t** passwd) {
+//	static std::wstring passwd_;
+//	*passwd = passwd_.c_str();
+//	return InputDialog(masterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
+//}
+// 2回目のマスターパスワード入力を求めるダイアログを表示する
+//static bool AskMasterPassword2nd(const wchar_t** passwd) {
+//	static std::wstring passwd_;
+//	*passwd = passwd_.c_str();
+//	return InputDialog(newmasterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
+//}
+//typedef bool (*AskMasterPasswordFunc)(const wchar_t** passwd);
+//static AskMasterPasswordFunc askmasterpassword_func = AskMasterPassword;
+//static AskMasterPasswordFunc askmasterpassword2nd_func = AskMasterPassword2nd;
+//// 入力したマスターパスワードが間違えていた場合に再度入力するか問い合わせるダイアログを表示する
+//// true: はい、false: いいえ
+//static bool AskRetryMasterPassword() {
+//	return Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDYES;
+//}
+//typedef bool (*AskRetryMasterPasswordFunc)();
+//static AskRetryMasterPasswordFunc askretrymasterpassword_func = AskRetryMasterPassword;
 
 // メインルーチン
 int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPWSTR lpCmdLine, __in int nShowCmd) {
@@ -359,7 +397,7 @@ static int InitApp(int cmdShow)
 			
 			if( useDefautPassword != 2 ){
 				/* 再トライするか確認 */
-				if( Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDNO ){
+				if( !AskRetryMasterPassword_func() ){
 					useDefautPassword = 0; /* 不一致なので，もはやデフォルトかどうかは分からない */
 					break;
 				}
@@ -2029,34 +2067,16 @@ int AskAutoExit() noexcept {
 	return AutoExit;
 }
 
-// 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
-// libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
-// 起動時にマスターパスワードを求めるダイアログを表示する
-static bool AskMasterPassword(const wchar_t** passwd) {
-	static std::wstring passwd_;
-	*passwd = passwd_.c_str();
-	return InputDialog(masterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
-}
-// 2回目のマスターパスワード入力を求めるダイアログを表示する
-static bool AskMasterPassword2nd(const wchar_t** passwd) {
-	static std::wstring passwd_;
-	*passwd = passwd_.c_str();
-	return InputDialog(newmasterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
-}
-typedef bool (*AskMasterPasswordFunc)(const wchar_t** passwd);
-static AskMasterPasswordFunc askmasterpassword_func = AskMasterPassword;
-static AskMasterPasswordFunc askmasterpassword2nd_func = AskMasterPassword2nd;
-
 static bool MasterPasswordInputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) noexcept {
 	bool ret = false;
 	const wchar_t* outpasswd = nullptr;
 	switch (dialogId)
 	{
 	case masterpasswd_dlg:
-		ret = askmasterpassword_func(&outpasswd);
+		ret = AskMasterPassword_func(&outpasswd);
 		break;
 	case newmasterpasswd_dlg:
-		ret = askmasterpassword2nd_func(&outpasswd);
+		ret = AskMasterPassword2nd_func(&outpasswd);
 		break;
 	default:
 		break;
@@ -2203,20 +2223,25 @@ void finalize() {
 	OleUninitialize();
 }
 
+const wchar_t* getApplicationName() {
+	return AppName;
+}
+
 void getWindowTitle(std::wstring& title) {
 	title = GetWindowTitle();
 }
 
-void setAskMasterPasswordCallback(bool (*func)(const wchar_t** passwd)) {
-	askmasterpassword_func = func;
-}
-
-void setAskMasterPassword2ndCallback(bool (*func)(const wchar_t** passwd)) {
-	askmasterpassword2nd_func = func;
-}
-
-const wchar_t* getApplicationName() {
-	return AppName;
-}
+// コールバック関数のセッター実装はdefine定義に集約
+//void setAskMasterPasswordCallback(bool (*func)(const wchar_t** passwd)) {
+//	AskMasterPassword_func = func;
+//}
+//
+//void setAskMasterPassword2ndCallback(bool (*func)(const wchar_t** passwd)) {
+//	askmasterpassword2nd_func = func;
+//}
+//
+//void setAskRetryMasterPasswordCallback(bool (*func)()) {
+//	askretrymasterpassword_func = func;
+//}
 
 }

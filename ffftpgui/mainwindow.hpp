@@ -80,6 +80,7 @@ public slots:
     void actionStopReceiving();
     // others
     bool askSaveCryptFunc();
+    bool askMasterPassword(QString& passwd);
 
 protected:
     void timerEvent(QTimerEvent* event) override;

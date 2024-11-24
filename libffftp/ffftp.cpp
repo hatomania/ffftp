@@ -50,6 +50,10 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
     Sound::Error.Play();
 }
 
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_application_name() {
+    return libffftp::getApplicationName();
+}
+
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle() {
     static std::wstring windowtitle{};
     libffftp::getWindowTitle(windowtitle);
@@ -102,4 +106,12 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index) {
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*func)()) {
     libffftp::setAskSaveCryptCallback(func);
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword(bool (*func)(const wchar_t** passwd)) {
+    libffftp::setAskMasterPasswordCallback(func);
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd)) {
+    libffftp::setAskMasterPassword2ndCallback(func);
 }

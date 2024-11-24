@@ -23,6 +23,7 @@ IMPLEMENT_CONSTANT_CHAR(kResImage_desktop16x16, ":/resource/desktop16x16.png")
 // この文字列は翻訳可能文字列となり、Qt Linguistソフトウェアでtsファイルを編集できるようになります
 const QString kAskSaveCryptTitle = QObject::tr("暗号化の状態の保存");
 const QString kAskSaveCryptBody = QObject::tr("現在の暗号化の状態を保存しますか？\n「はい」を選択すると次回から他の暗号化方式を試行しなくなります。");
+const QString kPlzInputYourMasterPwd = QObject::tr("設定されているマスターパスワードを入力してください");
 
 //const QString kString = QObject::tr("");
 const QString kStringName = QObject::tr("名前");

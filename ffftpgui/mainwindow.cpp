@@ -21,6 +21,17 @@ static bool _AskSaveCryptFunc() {
     QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, _r));
     return _r;
 }
+static bool _AskMasterPassword(const wchar_t** passwd) {
+    qDebug() << __FUNCTION__ << " called.";
+    bool _r = false;
+    QString passwd_;
+    QMetaObject::invokeMethod(_mainwindow, "askMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, _r), Q_ARG(QString&, passwd_));
+    qDebug() << __FUNCTION__ << _r << " " << passwd_;
+    static std::wstring static_pwd;// staticなので実体はこの関数に残り続ける。ffftp-origin側は結果的にこのポインタを参照することとなる
+    static_pwd = passwd_.toStdWString();
+    *passwd = static_pwd.c_str();
+    return _r;
+}
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), d_(new MainWindow::Private())
@@ -62,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     _mainwindow = this;
     ffftp_setcallback_asksavecrypt(_AskSaveCryptFunc);
+    ffftp_setcallback_askmasterpassword(_AskMasterPassword);
 }
 
 MainWindow::~MainWindow() {
@@ -184,4 +196,11 @@ bool MainWindow::askSaveCryptFunc() {
     if (QMessageBox::question(this, kAskSaveCryptTitle, kAskSaveCryptBody) == QMessageBox::Yes)
         return true;
     return false;
+}
+
+bool MainWindow::askMasterPassword(QString& passwd) {
+    qDebug() << __FUNCTION__ << " called.";
+    bool ok = false;
+    passwd = QInputDialog::getText(this, QString(ffftp_get_application_name()), kPlzInputYourMasterPwd, QLineEdit::Password, "", &ok);
+    return ok;
 }

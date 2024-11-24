@@ -85,6 +85,7 @@ static int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd);
 
 /*===== ローカルなワーク =====*/
 
+static const wchar_t AppName[] = L"FFFTP";
 static const wchar_t FtpClass[] = L"FFFTPWin";
 static const wchar_t WebURL[] = L"https://github.com/ffftp/ffftp";
 
@@ -2028,11 +2029,48 @@ int AskAutoExit() noexcept {
 	return AutoExit;
 }
 
+// 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
+// libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
+// 起動時にマスターパスワードを求めるダイアログを表示する
+static bool AskMasterPassword(const wchar_t** passwd) {
+	static std::wstring passwd_;
+	*passwd = passwd_.c_str();
+	return InputDialog(masterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
+}
+// 2回目のマスターパスワード入力を求めるダイアログを表示する
+static bool AskMasterPassword2nd(const wchar_t** passwd) {
+	static std::wstring passwd_;
+	*passwd = passwd_.c_str();
+	return InputDialog(newmasterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
+}
+typedef bool (*AskMasterPasswordFunc)(const wchar_t** passwd);
+static AskMasterPasswordFunc askmasterpassword_func = AskMasterPassword;
+static AskMasterPasswordFunc askmasterpassword2nd_func = AskMasterPassword2nd;
+
+static bool MasterPasswordInputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) noexcept {
+	bool ret = false;
+	const wchar_t* outpasswd = nullptr;
+	switch (dialogId)
+	{
+	case masterpasswd_dlg:
+		ret = askmasterpassword_func(&outpasswd);
+		break;
+	case newmasterpasswd_dlg:
+		ret = askmasterpassword2nd_func(&outpasswd);
+		break;
+	default:
+		break;
+	}
+	if (ret)
+		text = outpasswd;
+	return ret;
+}
+
 // ユーザにパスワードを入力させ，それを設定する
 //   0/ユーザキャンセル, 1/設定した, 2/デフォルト設定
 int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
 	std::wstring pass1;
-	if (!InputDialog(newpassword ? newmasterpasswd_dlg : masterpasswd_dlg, hWnd, 0, pass1, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064))
+	if (!MasterPasswordInputDialog(newpassword ? newmasterpasswd_dlg : masterpasswd_dlg, hWnd, 0, pass1, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064))
 		return 0;
 	if (newpassword) {
 		// 新しいパスワードを2回入力させる
@@ -2167,6 +2205,18 @@ void finalize() {
 
 void getWindowTitle(std::wstring& title) {
 	title = GetWindowTitle();
+}
+
+void setAskMasterPasswordCallback(bool (*func)(const wchar_t** passwd)) {
+	askmasterpassword_func = func;
+}
+
+void setAskMasterPassword2ndCallback(bool (*func)(const wchar_t** passwd)) {
+	askmasterpassword2nd_func = func;
+}
+
+const wchar_t* getApplicationName() {
+	return AppName;
 }
 
 }

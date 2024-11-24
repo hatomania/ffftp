@@ -52,6 +52,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
 
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_application_name();
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle();
 
 typedef void* hostcontext_t;
@@ -73,6 +74,8 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index);
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*func)());
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword(bool (*func)(const wchar_t** passwd));
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd));
 
 #ifdef __cplusplus
 }

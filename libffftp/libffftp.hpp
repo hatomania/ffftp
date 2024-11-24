@@ -8,6 +8,9 @@ namespace libffftp {
 extern bool initialize();
 extern void finalize();
 extern void getWindowTitle(std::wstring& title);
+extern void setAskMasterPasswordCallback(bool (*func)(const wchar_t** passwd));
+extern void setAskMasterPassword2ndCallback(bool (*func)(const wchar_t** passwd));
+extern const wchar_t* getApplicationName();
 // hostman.cpp
 extern const void* hostContextFirst(int* index = nullptr);
 extern const void* hostContextNext(const void* hc, int* index=nullptr);

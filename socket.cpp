@@ -63,6 +63,10 @@ std::vector<char> SocketContext::Encrypt(std::string_view plain) {
 	return result;
 }
 
+/**
+ * @addtogroup SSL関係
+ * @{
+ */
 BOOL LoadSSL() {
 	// 目的：
 	//   TLS 1.1以前を無効化する動きに対応しつつ、古いSSL 2.0にもできるだけ対応する
@@ -220,6 +224,7 @@ static inline std::invoke_result_t<Test> Wait(SocketContext& sc, int* CancelChec
 		}
 	}
 }
+/** @} */
 
 
 // SSLセッションを開始
@@ -621,9 +626,14 @@ int SocketContext::Send(const char* buf, int len, int flags, int* CancelCheckWor
 }
 
 
+/**
+ * @addtogroup NAT関係
+ * @{
+ */
 // UPnP対応
 static ComPtr<IUPnPNAT> upnpNAT;
 static ComPtr<IStaticPortMappingCollection> staticPortMappingCollection;
+/** @} */
 
 int LoadUPnP() {
 	if (IsMainThread())

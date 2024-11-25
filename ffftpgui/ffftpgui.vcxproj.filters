@@ -23,91 +23,182 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="ffftpgui.qrc">
+    <Image Include="resource\a.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ab.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\arrowcircle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\arrowdown.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\arrowup.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\b.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\cleanfile16x16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\closedfolder16x16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\connect.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\cross.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\desktop16x16.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\disconnect.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\doublearrowup.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\euc.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\folderopen.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\folderup.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\folderwithlight.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\jis.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\kana.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\mosaic1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\mosaic2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\mu.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\quickconnect.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\roadclosedsign.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\sjis.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tag.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tagandtag.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\u8b.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\utf8.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="resource\ffftpgui.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="mainwindow.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtMoc Include="mainwindow.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hostslistdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hostsettingsdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="hostsettingbasicform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="dirsandtaskmsgform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ffftpthread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="myfilesystemmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="myfilesystemmodellocal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="hostslistdialog.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="hostsettingsdialog.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="hostsettingbasicform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="dirsandtaskmsgform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ffftpthread.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="myfilesystemmodel.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="myfilesystemmodellocal.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="hostslistdialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="hostsettingsdialog.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="hostsettingbasicform.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-    <QtUic Include="dirsandtaskmsgform.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
-  </ItemGroup>
-  <ItemGroup>
-    <QtTranslation Include="ffftpgui_en.ts">
+    <QtTranslation Include="translations\ffftpgui_en.ts">
       <Filter>Translation Files</Filter>
     </QtTranslation>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\dirsandtaskmsgform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\hostsettingbasicform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\hostsettingsdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\hostslistdialog.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\mainwindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\core\ffftpthread.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingbasicform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostslistdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\dirsandtaskmsgform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\mainwindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\myfilesystemmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\core\ffftpthread.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingbasicform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingsdialog.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostslistdialog.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\main\dirsandtaskmsgform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\main\mainwindow.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\main\myfilesystemmodel.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\main\myfilesystemmodellocal.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

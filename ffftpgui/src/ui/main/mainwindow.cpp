@@ -1,6 +1,6 @@
 ﻿#include "mainwindow.hpp"
-#include "hostslistdialog.hpp"
-#include "ffftpthread.hpp"
+#include "ui/host/hostslistdialog.hpp"
+#include "core/ffftpthread.hpp"
 #include "ui_mainwindow.h"
 #include "stdafx.h"
 

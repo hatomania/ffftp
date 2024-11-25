@@ -80,7 +80,7 @@
   <customwidget>
    <class>HostSettingBasicForm</class>
    <extends>QWidget</extends>
-   <header location="global">hostsettingbasicform.hpp</header>
+   <header location="global">ui/host/hostsettingbasicform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

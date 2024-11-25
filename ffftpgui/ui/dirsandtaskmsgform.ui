@@ -26,11 +26,11 @@
    <item>
     <widget class="QSplitter" name="splitter_1">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <widget class="QSplitter" name="splitter_1_2">
       <property name="orientation">
-       <enum>Qt::Horizontal</enum>
+       <enum>Qt::Orientation::Horizontal</enum>
       </property>
       <widget class="QWidget" name="layoutWidget1">
        <layout class="QVBoxLayout" name="verticalLayout_1">
@@ -48,8 +48,8 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="ffftpgui.qrc">
-              <normaloff>:/resource/folderup.png</normaloff>:/resource/folderup.png</iconset>
+             <iconset resource="../resource/ffftpgui.qrc">
+              <normaloff>:/folderup.png</normaloff>:/folderup.png</iconset>
             </property>
            </widget>
           </item>
@@ -59,8 +59,8 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="ffftpgui.qrc">
-              <normaloff>:/resource/folderopen.png</normaloff>:/resource/folderopen.png</iconset>
+             <iconset resource="../resource/ffftpgui.qrc">
+              <normaloff>:/folderopen.png</normaloff>:/folderopen.png</iconset>
             </property>
            </widget>
           </item>
@@ -94,8 +94,8 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="ffftpgui.qrc">
-              <normaloff>:/resource/folderup.png</normaloff>:/resource/folderup.png</iconset>
+             <iconset resource="../resource/ffftpgui.qrc">
+              <normaloff>:/folderup.png</normaloff>:/folderup.png</iconset>
             </property>
            </widget>
           </item>
@@ -105,8 +105,8 @@
              <string>...</string>
             </property>
             <property name="icon">
-             <iconset resource="ffftpgui.qrc">
-              <normaloff>:/resource/folderopen.png</normaloff>:/resource/folderopen.png</iconset>
+             <iconset resource="../resource/ffftpgui.qrc">
+              <normaloff>:/folderopen.png</normaloff>:/folderopen.png</iconset>
             </property>
            </widget>
           </item>
@@ -149,7 +149,7 @@
   <tabstop>textEdit_TaskMsg</tabstop>
  </tabstops>
  <resources>
-  <include location="ffftpgui.qrc"/>
+  <include location="../resource/ffftpgui.qrc"/>
  </resources>
  <connections>
   <connection>

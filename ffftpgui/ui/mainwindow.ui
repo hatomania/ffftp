@@ -38,7 +38,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>22</height>
+     <height>33</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_Connect">
@@ -217,8 +217,8 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/connect.png</normaloff>:/resource/connect.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/connect.png</normaloff>:/connect.png</iconset>
    </property>
    <property name="text">
     <string>接続(&amp;C)...</string>
@@ -235,8 +235,8 @@
   </action>
   <action name="actionQuickConnect">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/quickconnect.png</normaloff>:/resource/quickconnect.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/quickconnect.png</normaloff>:/quickconnect.png</iconset>
    </property>
    <property name="text">
     <string>クイック接続(&amp;Q)...</string>
@@ -253,8 +253,8 @@
   </action>
   <action name="actionDisconnect">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/disconnect.png</normaloff>:/resource/disconnect.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/disconnect.png</normaloff>:/disconnect.png</iconset>
    </property>
    <property name="text">
     <string>切断(&amp;R)</string>
@@ -349,8 +349,8 @@
   </action>
   <action name="actionDownload">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/arrowdown.png</normaloff>:/resource/arrowdown.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/arrowdown.png</normaloff>:/arrowdown.png</iconset>
    </property>
    <property name="text">
     <string>ダウンロード(&amp;D)</string>
@@ -367,8 +367,8 @@
   </action>
   <action name="actionUpload">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/arrowup.png</normaloff>:/resource/arrowup.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/arrowup.png</normaloff>:/arrowup.png</iconset>
    </property>
    <property name="text">
     <string>アップロード(&amp;U)</string>
@@ -429,8 +429,8 @@
   </action>
   <action name="actionUploadMirroring">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/doublearrowup.png</normaloff>:/resource/doublearrowup.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/doublearrowup.png</normaloff>:/doublearrowup.png</iconset>
    </property>
    <property name="text">
     <string>ミラーリングアップロード(&amp;M)...</string>
@@ -472,8 +472,8 @@
   </action>
   <action name="actionCmdRm">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/cross.png</normaloff>:/resource/cross.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/cross.png</normaloff>:/cross.png</iconset>
    </property>
    <property name="text">
     <string>削除(&amp;R)...</string>
@@ -490,8 +490,8 @@
   </action>
   <action name="actionCmdRename">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/tag.png</normaloff>:/resource/tag.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/tag.png</normaloff>:/tag.png</iconset>
    </property>
    <property name="text">
     <string>名前変更(&amp;N)...</string>
@@ -522,8 +522,8 @@
   </action>
   <action name="actionCmdMkdir">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/folderwithlight.png</normaloff>:/resource/folderwithlight.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/folderwithlight.png</normaloff>:/folderwithlight.png</iconset>
    </property>
    <property name="text">
     <string>フォルダ作成(&amp;K)...</string>
@@ -554,8 +554,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/tagandtag.png</normaloff>:/resource/tagandtag.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/tagandtag.png</normaloff>:/tagandtag.png</iconset>
    </property>
    <property name="text">
     <string>フォルダ同時移動(&amp;S)</string>
@@ -689,8 +689,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/mosaic1.png</normaloff>:/resource/mosaic1.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/mosaic1.png</normaloff>:/mosaic1.png</iconset>
    </property>
    <property name="text">
     <string>一覧(&amp;L)</string>
@@ -707,8 +707,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/mosaic2.png</normaloff>:/resource/mosaic2.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/mosaic2.png</normaloff>:/mosaic2.png</iconset>
    </property>
    <property name="text">
     <string>詳細(&amp;D)</string>
@@ -769,8 +769,8 @@
   </action>
   <action name="actionReflesh">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/arrowcircle.png</normaloff>:/resource/arrowcircle.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/arrowcircle.png</normaloff>:/arrowcircle.png</iconset>
    </property>
    <property name="text">
     <string>最新の情報に更新(&amp;R)</string>
@@ -864,8 +864,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/a.png</normaloff>:/resource/a.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/a.png</normaloff>:/a.png</iconset>
    </property>
    <property name="text">
     <string>アスキー転送モード</string>
@@ -879,8 +879,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/b.png</normaloff>:/resource/b.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/b.png</normaloff>:/b.png</iconset>
    </property>
    <property name="text">
     <string>バイナリ転送モード</string>
@@ -894,8 +894,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/ab.png</normaloff>:/resource/ab.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/ab.png</normaloff>:/ab.png</iconset>
    </property>
    <property name="text">
     <string>ファイル名で転送モード切替え</string>
@@ -909,8 +909,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/sjis.png</normaloff>:/resource/sjis.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/sjis.png</normaloff>:/sjis.png</iconset>
    </property>
    <property name="text">
     <string>ローカルの漢字コードはShift_JIS</string>
@@ -924,8 +924,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/euc.png</normaloff>:/resource/euc.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/euc.png</normaloff>:/euc.png</iconset>
    </property>
    <property name="text">
     <string>ローカルの漢字コードはEUC</string>
@@ -939,8 +939,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/jis.png</normaloff>:/resource/jis.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/jis.png</normaloff>:/jis.png</iconset>
    </property>
    <property name="text">
     <string>ローカルの漢字コードはJIS</string>
@@ -954,8 +954,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/utf8.png</normaloff>:/resource/utf8.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/utf8.png</normaloff>:/utf8.png</iconset>
    </property>
    <property name="text">
     <string>ローカルの漢字コードはUTF-8</string>
@@ -969,8 +969,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/u8b.png</normaloff>:/resource/u8b.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/u8b.png</normaloff>:/u8b.png</iconset>
    </property>
    <property name="text">
     <string>ローカルの漢字コードはUTF-8 BOM</string>
@@ -984,8 +984,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/sjis.png</normaloff>:/resource/sjis.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/sjis.png</normaloff>:/sjis.png</iconset>
    </property>
    <property name="text">
     <string>ホストの漢字コードはShift_JIS</string>
@@ -999,8 +999,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/euc.png</normaloff>:/resource/euc.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/euc.png</normaloff>:/euc.png</iconset>
    </property>
    <property name="text">
     <string>ホストの漢字コードはEUC</string>
@@ -1014,8 +1014,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/jis.png</normaloff>:/resource/jis.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/jis.png</normaloff>:/jis.png</iconset>
    </property>
    <property name="text">
     <string>ホストの漢字コードはJIS</string>
@@ -1029,8 +1029,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/utf8.png</normaloff>:/resource/utf8.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/utf8.png</normaloff>:/utf8.png</iconset>
    </property>
    <property name="text">
     <string>ホストの漢字コードはUTF-8</string>
@@ -1044,8 +1044,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/u8b.png</normaloff>:/resource/u8b.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/u8b.png</normaloff>:/u8b.png</iconset>
    </property>
    <property name="text">
     <string>ホストの漢字コードはUTF-8 BOM</string>
@@ -1059,8 +1059,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/mu.png</normaloff>:/resource/mu.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/mu.png</normaloff>:/mu.png</iconset>
    </property>
    <property name="text">
     <string>漢字コードの変換なし</string>
@@ -1074,8 +1074,8 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/kana.png</normaloff>:/resource/kana.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/kana.png</normaloff>:/kana.png</iconset>
    </property>
    <property name="text">
     <string>半角カナを全角に変換</string>
@@ -1086,8 +1086,8 @@
   </action>
   <action name="actionStopReceiving">
    <property name="icon">
-    <iconset resource="ffftpgui.qrc">
-     <normaloff>:/resource/roadclosedsign.png</normaloff>:/resource/roadclosedsign.png</iconset>
+    <iconset resource="../resource/ffftpgui.qrc">
+     <normaloff>:/roadclosedsign.png</normaloff>:/roadclosedsign.png</iconset>
    </property>
    <property name="text">
     <string>受信中止</string>
@@ -1102,12 +1102,12 @@
   <customwidget>
    <class>DirsAndTaskMsgForm</class>
    <extends>QWidget</extends>
-   <header location="global">dirsandtaskmsgform.hpp</header>
+   <header location="global">ui/main/dirsandtaskmsgform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="ffftpgui.qrc"/>
+  <include location="../resource/ffftpgui.qrc"/>
  </resources>
  <connections>
   <connection>

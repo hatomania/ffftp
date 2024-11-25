@@ -1,0 +1,33 @@
+<RCC>
+  <qresource prefix="/">
+    <file>cleanfile16x16.png</file>
+    <file>folderopen.png</file>
+    <file>a.png</file>
+    <file>ab.png</file>
+    <file>arrowcircle.png</file>
+    <file>arrowdown.png</file>
+    <file>arrowup.png</file>
+    <file>b.png</file>
+    <file>cross.png</file>
+    <file>doublearrowup.png</file>
+    <file>euc.png</file>
+    <file>folderwithlight.png</file>
+    <file>jis.png</file>
+    <file>kana.png</file>
+    <file>mosaic1.png</file>
+    <file>mosaic2.png</file>
+    <file>mu.png</file>
+    <file>roadclosedsign.png</file>
+    <file>sjis.png</file>
+    <file>tag.png</file>
+    <file>tagandtag.png</file>
+    <file>u8b.png</file>
+    <file>utf8.png</file>
+    <file>folderup.png</file>
+    <file>closedfolder16x16.png</file>
+    <file>desktop16x16.png</file>
+    <file>quickconnect.png</file>
+    <file>disconnect.png</file>
+    <file>connect.png</file>
+  </qresource>
+</RCC>

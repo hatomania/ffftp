@@ -10,6 +10,76 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\a.png" />
+    <Image Include="resource\ab.png" />
+    <Image Include="resource\arrowcircle.png" />
+    <Image Include="resource\arrowdown.png" />
+    <Image Include="resource\arrowup.png" />
+    <Image Include="resource\b.png" />
+    <Image Include="resource\cleanfile16x16.png" />
+    <Image Include="resource\closedfolder16x16.png" />
+    <Image Include="resource\connect.png" />
+    <Image Include="resource\cross.png" />
+    <Image Include="resource\desktop16x16.png" />
+    <Image Include="resource\disconnect.png" />
+    <Image Include="resource\doublearrowup.png" />
+    <Image Include="resource\euc.png" />
+    <Image Include="resource\folderopen.png" />
+    <Image Include="resource\folderup.png" />
+    <Image Include="resource\folderwithlight.png" />
+    <Image Include="resource\jis.png" />
+    <Image Include="resource\kana.png" />
+    <Image Include="resource\mosaic1.png" />
+    <Image Include="resource\mosaic2.png" />
+    <Image Include="resource\mu.png" />
+    <Image Include="resource\quickconnect.png" />
+    <Image Include="resource\roadclosedsign.png" />
+    <Image Include="resource\sjis.png" />
+    <Image Include="resource\tag.png" />
+    <Image Include="resource\tagandtag.png" />
+    <Image Include="resource\u8b.png" />
+    <Image Include="resource\utf8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="resource\ffftpgui.qrc" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtTranslation Include="translations\ffftpgui_en.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="ui\dirsandtaskmsgform.ui" />
+    <QtUic Include="ui\hostsettingbasicform.ui" />
+    <QtUic Include="ui\hostsettingsdialog.ui" />
+    <QtUic Include="ui\hostslistdialog.ui" />
+    <QtUic Include="ui\mainwindow.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\core\ffftpthread.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingbasicform.cpp" />
+    <ClCompile Include="src\ui\host\hostsettingsdialog.cpp" />
+    <ClCompile Include="src\ui\host\hostslistdialog.cpp" />
+    <ClCompile Include="src\ui\main\dirsandtaskmsgform.cpp" />
+    <ClCompile Include="src\ui\main\mainwindow.cpp" />
+    <ClCompile Include="src\ui\main\myfilesystemmodel.cpp" />
+    <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="src\ui\main\myfilesystemmodellocal.hpp" />
+    <QtMoc Include="src\ui\main\myfilesystemmodel.hpp" />
+    <QtMoc Include="src\ui\main\mainwindow.hpp" />
+    <QtMoc Include="src\ui\main\dirsandtaskmsgform.hpp" />
+    <QtMoc Include="src\ui\host\hostslistdialog.hpp" />
+    <QtMoc Include="src\ui\host\hostsettingsdialog.hpp" />
+    <QtMoc Include="src\ui\host\hostsettingbasicform.hpp" />
+    <QtMoc Include="src\core\ffftpthread.hpp" />
+    <ClInclude Include="src\stdafx.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6A73D506-C2D0-4912-B2C2-408F2BC027FD}</ProjectGuid>
     <Keyword>QtVS_v304</Keyword>
@@ -64,7 +134,7 @@
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src;$(ProjectDir)..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libffftp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -75,7 +145,7 @@
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)\..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)src;$(ProjectDir)..\libffftp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libffftp.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -118,44 +188,6 @@
       <PrependInclude>stdafx.h;%(PrependInclude)</PrependInclude>
     </QtMoc>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <QtRcc Include="ffftpgui.qrc" />
-    <QtUic Include="dirsandtaskmsgform.ui" />
-    <QtUic Include="hostsettingbasicform.ui" />
-    <QtUic Include="hostsettingsdialog.ui" />
-    <QtUic Include="hostslistdialog.ui" />
-    <QtUic Include="mainwindow.ui" />
-    <QtMoc Include="mainwindow.hpp" />
-    <ClCompile Include="dirsandtaskmsgform.cpp" />
-    <ClCompile Include="ffftpthread.cpp" />
-    <ClCompile Include="hostsettingbasicform.cpp">
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
-      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
-      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
-    </ClCompile>
-    <ClCompile Include="hostsettingsdialog.cpp" />
-    <ClCompile Include="hostslistdialog.cpp" />
-    <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="main.cpp" />
-    <QtMoc Include="hostslistdialog.hpp" />
-    <QtMoc Include="hostsettingsdialog.hpp" />
-    <QtMoc Include="hostsettingbasicform.hpp" />
-    <QtMoc Include="dirsandtaskmsgform.hpp" />
-    <QtMoc Include="ffftpthread.hpp" />
-    <QtMoc Include="myfilesystemmodel.hpp" />
-    <QtMoc Include="myfilesystemmodellocal.hpp" />
-    <ClInclude Include="stdafx.h" />
-    <ClCompile Include="myfilesystemmodel.cpp" />
-    <ClCompile Include="myfilesystemmodellocal.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <QtTranslation Include="ffftpgui_en.ts" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

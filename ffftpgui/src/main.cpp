@@ -1,4 +1,4 @@
-﻿#include "mainwindow.hpp"
+﻿#include "ui/main/mainwindow.hpp"
 #include "stdafx.h"
 #include <QtWidgets/QApplication>
 

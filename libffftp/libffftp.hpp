@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "common.h"
+#include "callback.h"// コールバック関数プロトタイプ宣言はcallback.hに記載
 
 // libffftpのために用意されたインターフェース
 namespace libffftp {
@@ -9,9 +10,6 @@ extern bool initialize();
 extern void finalize();
 extern const wchar_t* getApplicationName();
 extern void getWindowTitle(std::wstring& title);
-LIBFFFTP_DECLARE_CALLBACK(bool, AskMasterPassword, (const wchar_t** passwd))
-LIBFFFTP_DECLARE_CALLBACK(bool, AskMasterPassword2nd, (const wchar_t** passwd))
-LIBFFFTP_DECLARE_CALLBACK(bool, AskRetryMasterPassword, ())
 // hostman.cpp
 extern const void* hostContextFirst(int* index = nullptr);
 extern const void* hostContextNext(const void* hc, int* index=nullptr);

@@ -50,6 +50,7 @@
   <ItemGroup>
     <QtUic Include="ui\dirsandtaskmsgform.ui" />
     <QtUic Include="ui\hostsettingbasicform.ui" />
+    <QtUic Include="ui\hostsettingcharcodeform.ui" />
     <QtUic Include="ui\hostsettingexpansionform.ui" />
     <QtUic Include="ui\hostsettingsdialog.ui" />
     <QtUic Include="ui\hostslistdialog.ui" />
@@ -63,6 +64,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\ui\host\hostsettingbasicform.cpp" />
+    <ClCompile Include="src\ui\host\hostsettingcharcodeform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingexpansionform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingsdialog.cpp" />
     <ClCompile Include="src\ui\host\hostslistdialog.cpp" />
@@ -72,6 +74,7 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\ui\host\hostsettingcharcodeform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingexpansionform.hpp" />
     <QtMoc Include="src\ui\main\myfilesystemmodellocal.hpp" />
     <QtMoc Include="src\ui\main\myfilesystemmodel.hpp" />

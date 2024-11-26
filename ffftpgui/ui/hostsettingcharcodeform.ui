@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HostSettingCharCodeForm</class>
+ <widget class="QWidget" name="HostSettingCharCodeForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>334</width>
+    <height>328</height>
+   </rect>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <item>
+    <widget class="QGroupBox" name="groupBox_1">
+     <property name="title">
+      <string>ホストの漢字コード(&amp;K):</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QRadioButton" name="radioButton_1_1">
+        <property name="text">
+         <string>無変換</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_1_2">
+        <property name="text">
+         <string>Shift_JIS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_1_3">
+        <property name="text">
+         <string>JIS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_1_4">
+        <property name="text">
+         <string>EUC</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_1_5">
+        <property name="text">
+         <string>UTF-8</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_1_6">
+        <property name="text">
+         <string>UTF-8 BOM</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_1_1">
+        <property name="text">
+         <string>半角カナを全角に変換</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>ファイル名の漢字コード(&amp;N):</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_1">
+        <property name="text">
+         <string>自動</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_2">
+        <property name="text">
+         <string>Shift_JIS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_3">
+        <property name="text">
+         <string>JIS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_4">
+        <property name="text">
+         <string>EUC</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_5">
+        <property name="text">
+         <string>Samba-HEX</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_6">
+        <property name="text">
+         <string>Samba-CAP</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_7">
+        <property name="text">
+         <string>UTF-8</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="radioButton_2_8">
+        <property name="text">
+         <string>UTF-8 HFS+</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_2_1">
+        <property name="text">
+         <string>半角カナを全角に変換</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>radioButton_1_1</tabstop>
+  <tabstop>radioButton_1_2</tabstop>
+  <tabstop>radioButton_1_3</tabstop>
+  <tabstop>radioButton_1_4</tabstop>
+  <tabstop>radioButton_1_5</tabstop>
+  <tabstop>radioButton_1_6</tabstop>
+  <tabstop>checkBox_1_1</tabstop>
+  <tabstop>radioButton_2_1</tabstop>
+  <tabstop>radioButton_2_2</tabstop>
+  <tabstop>radioButton_2_3</tabstop>
+  <tabstop>radioButton_2_4</tabstop>
+  <tabstop>radioButton_2_5</tabstop>
+  <tabstop>radioButton_2_6</tabstop>
+  <tabstop>radioButton_2_7</tabstop>
+  <tabstop>radioButton_2_8</tabstop>
+  <tabstop>checkBox_2_1</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>onClick_toolButton_SelectLocalDir()</slot>
+  <slot>onClick_pushButton_NowDir()</slot>
+ </slots>
+</ui>

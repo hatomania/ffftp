@@ -33,7 +33,7 @@
        <string>拡張</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="HostSettingCharCodeForm" name="tab_2">
       <attribute name="title">
        <string>文字コード</string>
       </attribute>
@@ -83,6 +83,12 @@
    <class>HostSettingExpansionForm</class>
    <extends>QWidget</extends>
    <header location="global">ui/host/hostsettingexpansionform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HostSettingCharCodeForm</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/host/hostsettingcharcodeform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

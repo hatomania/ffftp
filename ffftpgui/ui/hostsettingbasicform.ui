@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>377</width>
-    <height>294</height>
+    <width>382</width>
+    <height>292</height>
    </rect>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -68,7 +68,7 @@
      <item row="1" column="1">
       <widget class="QLineEdit" name="lineEdit_Password">
        <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
+        <enum>QLineEdit::EchoMode::Password</enum>
        </property>
       </widget>
      </item>
@@ -176,7 +176,7 @@
    <item>
     <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Vertical</enum>
+      <enum>Qt::Orientation::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>

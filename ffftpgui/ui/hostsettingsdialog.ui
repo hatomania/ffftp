@@ -19,20 +19,16 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab_0">
+     <widget class="HostSettingBasicForm" name="tab_0">
       <property name="windowTitle">
        <string>ホストの設定</string>
       </property>
       <attribute name="title">
        <string>基本</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="HostSettingBasicForm" name="form0_basic" native="true"/>
-       </item>
-      </layout>
+      <layout class="QHBoxLayout" name="horizontalLayout"/>
      </widget>
-     <widget class="QWidget" name="tab_1">
+     <widget class="HostSettingExpansionForm" name="tab_1">
       <attribute name="title">
        <string>拡張</string>
       </attribute>
@@ -67,10 +63,10 @@
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Help|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Help|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
@@ -81,6 +77,12 @@
    <class>HostSettingBasicForm</class>
    <extends>QWidget</extends>
    <header location="global">ui/host/hostsettingbasicform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HostSettingExpansionForm</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/host/hostsettingexpansionform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

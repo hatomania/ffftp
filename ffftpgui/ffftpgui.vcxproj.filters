@@ -137,6 +137,9 @@
     <QtUic Include="ui\mainwindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ui\hostsettingexpansionform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -169,6 +172,9 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingexpansionform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -198,6 +204,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\main\myfilesystemmodellocal.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingexpansionform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

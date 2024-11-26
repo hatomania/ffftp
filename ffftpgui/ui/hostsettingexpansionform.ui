@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>HostSettingExpansionForm</class>
+ <widget class="QWidget" name="HostSettingExpansionForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>544</width>
+    <height>384</height>
+   </rect>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LayoutDirection::LeftToRight</enum>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="1,1">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_1">
+     <item>
+      <widget class="QCheckBox" name="checkBox_UseFirewall">
+       <property name="text">
+        <string>FireWallを使う(&amp;F)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_UserPASVMode">
+       <property name="text">
+        <string>PASVモードを使う(&amp;V)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_UseFolderSameMove">
+       <property name="text">
+        <string>フォルダ同時移動を使う(&amp;S)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_1">
+         <property name="text">
+          <string>ポート番号(&amp;X):</string>
+         </property>
+         <property name="buddy">
+          <cstring>lineEdit_Port</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLineEdit" name="lineEdit_Port"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButton_StdPort">
+         <property name="minimumSize">
+          <size>
+           <width>119</width>
+           <height>24</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>119</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>標準</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_1_1">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>アカウント(&amp;C):</string>
+         </property>
+         <property name="buddy">
+          <cstring>lineEdit_Account</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_Account"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_1">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2_1">
+       <property name="sizeConstraint">
+        <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>ホストのタイムゾーン(&amp;T):</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboBox_Timezone</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_Timezone"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2_2">
+       <item>
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>セキュリティ(&amp;Q):</string>
+         </property>
+         <property name="buddy">
+          <cstring>comboBox_Security</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="comboBox_Security"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2_3">
+       <item>
+        <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>接続時にホストに送るコマンド(&amp;I):</string>
+         </property>
+         <property name="buddy">
+          <cstring>plainTextEdit_CmdWhenConnect</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPlainTextEdit" name="plainTextEdit_CmdWhenConnect"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Orientation::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+ <slots>
+  <slot>onClick_toolButton_SelectLocalDir()</slot>
+  <slot>onClick_pushButton_NowDir()</slot>
+ </slots>
+</ui>

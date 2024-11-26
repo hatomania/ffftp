@@ -8,6 +8,13 @@ class HostSettingAdvancedForm : public QWidget
 
 public:
     struct Data {
+        bool is_LIST_cmd;
+        bool is_MLSD_cmd;
+        bool is_NLST_cmd;
+        bool not_fullpath;
+        QString CHMOD_cmd;
+        int host;
+        QString NLST;
         Data();
     };
     explicit HostSettingAdvancedForm(QWidget *parent = Q_NULLPTR);
@@ -16,6 +23,10 @@ public:
     void setDataAsDefault() const;
 
 private slots:
+    void onClick_pushButton_CHMODCmd();
+    void onClick_pushButton_StdNLST();
+    void onClick_checkBox_LISTCmd(bool);
+    void onCurrentIndexChanged_comboBox_Host(int);
 
 private:
     class Private;

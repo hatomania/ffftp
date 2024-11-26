@@ -20,28 +20,28 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QCheckBox" name="checkBox_1">
+      <widget class="QCheckBox" name="checkBox_LISTCmd">
        <property name="text">
         <string>LISTコマンドでファイル一覧を取得(&amp;L)</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_2">
+      <widget class="QCheckBox" name="checkBox_MLSDCmd">
        <property name="text">
         <string>可能であればMLSDコマンドで一覧を取得(&amp;M)</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_3">
+      <widget class="QCheckBox" name="checkBox_UseNLSTR">
        <property name="text">
         <string>NLST -R を使って高速に再帰検索(&amp;N)</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_4">
+      <widget class="QCheckBox" name="checkBox_NotFullpath">
        <property name="text">
         <string>フルパスでファイルをアクセスしない(&amp;F)</string>
        </property>
@@ -52,10 +52,10 @@
    <item>
     <layout class="QGridLayout" name="gridLayout">
      <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit_1"/>
+      <widget class="QLineEdit" name="lineEdit_CHMODCmd"/>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_1">
+      <widget class="QPushButton" name="pushButton_StdCHMOD">
        <property name="text">
         <string>標準</string>
        </property>
@@ -67,7 +67,7 @@
         <string>属性変更コマンド(&amp;A):</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_1</cstring>
+        <cstring>lineEdit_CHMODCmd</cstring>
        </property>
       </widget>
      </item>
@@ -94,19 +94,65 @@
         <string>ホストの種類(&amp;H):</string>
        </property>
        <property name="buddy">
-        <cstring>comboBox_1</cstring>
+        <cstring>comboBox_Host</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QComboBox" name="comboBox_1"/>
+      <widget class="QComboBox" name="comboBox_Host">
+       <item>
+        <property name="text">
+         <string>自動認識</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ACOS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>VAX VMS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>IRMX</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ACOS-4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Stratus</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Agilent Logic Analyzer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>シバソク WL</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NonStop Server</string>
+        </property>
+       </item>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QGridLayout" name="gridLayout_2">
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="pushButton_StdNLST">
        <property name="text">
         <string>標準</string>
        </property>
@@ -118,12 +164,12 @@
         <string>NLSTファイル名/オプション</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_2</cstring>
+        <cstring>lineEdit_NLST</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit_2"/>
+      <widget class="QLineEdit" name="lineEdit_NLST"/>
      </item>
      <item row="1" column="2">
       <spacer name="horizontalSpacer_2">
@@ -156,20 +202,89 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>checkBox_1</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>lineEdit_1</tabstop>
-  <tabstop>pushButton_1</tabstop>
-  <tabstop>comboBox_1</tabstop>
-  <tabstop>lineEdit_2</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>checkBox_LISTCmd</tabstop>
+  <tabstop>checkBox_MLSDCmd</tabstop>
+  <tabstop>checkBox_UseNLSTR</tabstop>
+  <tabstop>checkBox_NotFullpath</tabstop>
+  <tabstop>lineEdit_CHMODCmd</tabstop>
+  <tabstop>pushButton_StdCHMOD</tabstop>
+  <tabstop>comboBox_Host</tabstop>
+  <tabstop>lineEdit_NLST</tabstop>
+  <tabstop>pushButton_StdNLST</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_StdCHMOD</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingAdvancedForm</receiver>
+   <slot>onClick_pushButton_CHMODCmd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_StdNLST</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingAdvancedForm</receiver>
+   <slot>onClick_pushButton_StdNLST()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_LISTCmd</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingAdvancedForm</receiver>
+   <slot>onClick_checkBox_LISTCmd(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_Host</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>HostSettingAdvancedForm</receiver>
+   <slot>onCurrentIndexChanged_comboBox_Host(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>onClick_toolButton_SelectLocalDir()</slot>
   <slot>onClick_pushButton_NowDir()</slot>
+  <slot>onClick_pushButton_CHMODCmd()</slot>
+  <slot>onClick_pushButton_StdNLST()</slot>
+  <slot>onClick_checkBox_LISTCmd(bool)</slot>
+  <slot>onCurrentIndexChanged_comboBox_Host(int)</slot>
  </slots>
 </ui>

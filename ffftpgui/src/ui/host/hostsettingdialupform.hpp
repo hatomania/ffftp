@@ -8,6 +8,10 @@ class HostSettingDialupForm : public QWidget
 
 public:
     struct Data {
+        bool use_dialup;
+        int dial_entry;
+        bool redial;
+        bool confirm_redial;
         Data();
     };
     explicit HostSettingDialupForm(QWidget *parent = Q_NULLPTR);

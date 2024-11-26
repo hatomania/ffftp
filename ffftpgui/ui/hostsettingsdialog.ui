@@ -48,7 +48,7 @@
        <string>高度</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tab_5">
+     <widget class="HostSettingEncryptForm" name="tab_5">
       <attribute name="title">
        <string>暗号化</string>
       </attribute>
@@ -101,6 +101,12 @@
    <class>HostSettingAdvancedForm</class>
    <extends>QWidget</extends>
    <header location="global">ui/host/hostsettingadvancedform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HostSettingEncryptForm</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/host/hostsettingencryptform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

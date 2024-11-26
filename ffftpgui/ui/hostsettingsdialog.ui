@@ -38,7 +38,7 @@
        <string>文字コード</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="HostSettingDialupForm" name="tab_3">
       <attribute name="title">
        <string>ダイアルアップ</string>
       </attribute>
@@ -89,6 +89,12 @@
    <class>HostSettingCharCodeForm</class>
    <extends>QWidget</extends>
    <header location="global">ui/host/hostsettingcharcodeform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HostSettingDialupForm</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/host/hostsettingdialupform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

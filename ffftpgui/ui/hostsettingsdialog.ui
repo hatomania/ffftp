@@ -43,7 +43,7 @@
        <string>ダイアルアップ</string>
       </attribute>
      </widget>
-     <widget class="QWidget" name="tab_4">
+     <widget class="HostSettingAdvancedForm" name="tab_4">
       <attribute name="title">
        <string>高度</string>
       </attribute>
@@ -95,6 +95,12 @@
    <class>HostSettingDialupForm</class>
    <extends>QWidget</extends>
    <header location="global">ui/host/hostsettingdialupform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>HostSettingAdvancedForm</class>
+   <extends>QWidget</extends>
+   <header location="global">ui/host/hostsettingadvancedform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

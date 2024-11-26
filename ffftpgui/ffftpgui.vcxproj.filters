@@ -146,6 +146,9 @@
     <QtUic Include="ui\hostsettingdialupform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ui\hostsettingadvancedform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -187,6 +190,9 @@
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -225,6 +231,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingdialupform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingadvancedform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

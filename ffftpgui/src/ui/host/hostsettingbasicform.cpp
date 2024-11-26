@@ -6,7 +6,7 @@
 class HostSettingBasicForm::Private {
 public:
     Private() {}
-    ~Private() {}
+    ~Private() = default;
     Ui::HostSettingBasicForm ui;
 };
 

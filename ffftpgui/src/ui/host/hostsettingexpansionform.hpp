@@ -8,6 +8,14 @@ class HostSettingExpansionForm : public QWidget
 
 public:
     struct Data {
+        bool use_firewall;
+        bool use_pasv_mode;
+        bool use_folder_samemove;
+        int port;
+        QString account;
+        int timezone;
+        int security;
+        QString cmd_when_connect;
         Data();
     };
     explicit HostSettingExpansionForm(QWidget *parent = Q_NULLPTR);
@@ -16,6 +24,7 @@ public:
     void setDataAsDefault() const;
 
 private slots:
+    void onClick_pushButton_StdPort();
 
 private:
     class Private;

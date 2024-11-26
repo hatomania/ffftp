@@ -31,6 +31,9 @@
        <property name="text">
         <string>PASVモードを使う(&amp;V)</string>
        </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -66,7 +69,11 @@
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QLineEdit" name="lineEdit_Port"/>
+        <widget class="QLineEdit" name="lineEdit_Port">
+         <property name="text">
+          <string>21</string>
+         </property>
+        </widget>
        </item>
        <item row="1" column="1">
         <widget class="QPushButton" name="pushButton_StdPort">
@@ -139,7 +146,136 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_Timezone"/>
+        <widget class="QComboBox" name="comboBox_Timezone">
+         <property name="currentIndex">
+          <number>21</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>GMT-12:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-11:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-10:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-09:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-08:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-07:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-06:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-05:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-04:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-03:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-02:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT-01:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+01:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+02:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+03:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+04:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+05:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+06:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+07:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+08:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+09:00 (日本)</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+10:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+11:00</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>GMT+12:00</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
@@ -156,7 +292,36 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="comboBox_Security"/>
+        <widget class="QComboBox" name="comboBox_Security">
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <item>
+          <property name="text">
+           <string>使用しない</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>自動認識</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>OPT MD4, S/KEY</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>OPT MD5</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>OPT SHA-1</string>
+          </property>
+         </item>
+        </widget>
        </item>
       </layout>
      </item>
@@ -195,9 +360,25 @@
   </layout>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_StdPort</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingExpansionForm</receiver>
+   <slot>onClick_pushButton_StdPort()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>192</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>271</x>
+     <y>192</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
-  <slot>onClick_toolButton_SelectLocalDir()</slot>
-  <slot>onClick_pushButton_NowDir()</slot>
+  <slot>onClick_pushButton_StdPort()</slot>
  </slots>
 </ui>

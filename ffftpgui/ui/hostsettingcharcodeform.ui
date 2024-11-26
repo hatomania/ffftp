@@ -24,49 +24,49 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QRadioButton" name="radioButton_1_1">
+       <widget class="QRadioButton" name="radioButton_1_1_NOP">
         <property name="text">
          <string>無変換</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_1_2">
+       <widget class="QRadioButton" name="radioButton_1_2_SJIS">
         <property name="text">
          <string>Shift_JIS</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_1_3">
+       <widget class="QRadioButton" name="radioButton_1_3_JIS">
         <property name="text">
          <string>JIS</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_1_4">
+       <widget class="QRadioButton" name="radioButton_1_4_EUC">
         <property name="text">
          <string>EUC</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_1_5">
+       <widget class="QRadioButton" name="radioButton_1_5_UTF8">
         <property name="text">
          <string>UTF-8</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_1_6">
+       <widget class="QRadioButton" name="radioButton_1_6_UTF8BOM">
         <property name="text">
          <string>UTF-8 BOM</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_1_1">
+       <widget class="QCheckBox" name="checkBox_1_1_HKanaToW">
         <property name="text">
          <string>半角カナを全角に変換</string>
         </property>
@@ -95,63 +95,63 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QRadioButton" name="radioButton_2_1">
+       <widget class="QRadioButton" name="radioButton_2_1_Auto">
         <property name="text">
          <string>自動</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_2">
+       <widget class="QRadioButton" name="radioButton_2_2_SJIS">
         <property name="text">
          <string>Shift_JIS</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_3">
+       <widget class="QRadioButton" name="radioButton_2_3_JIS">
         <property name="text">
          <string>JIS</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_4">
+       <widget class="QRadioButton" name="radioButton_2_4_EUC">
         <property name="text">
          <string>EUC</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_5">
+       <widget class="QRadioButton" name="radioButton_2_5_SMB_HEX">
         <property name="text">
          <string>Samba-HEX</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_6">
+       <widget class="QRadioButton" name="radioButton_2_6_SMB_CAP">
         <property name="text">
          <string>Samba-CAP</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_7">
+       <widget class="QRadioButton" name="radioButton_2_7_UTF8">
         <property name="text">
          <string>UTF-8</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_8">
+       <widget class="QRadioButton" name="radioButton_2_8_UTF8HFSp">
         <property name="text">
          <string>UTF-8 HFS+</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_2_1">
+       <widget class="QCheckBox" name="checkBox_2_1_HKanaToW">
         <property name="text">
          <string>半角カナを全角に変換</string>
         </property>
@@ -176,27 +176,252 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>radioButton_1_1</tabstop>
-  <tabstop>radioButton_1_2</tabstop>
-  <tabstop>radioButton_1_3</tabstop>
-  <tabstop>radioButton_1_4</tabstop>
-  <tabstop>radioButton_1_5</tabstop>
-  <tabstop>radioButton_1_6</tabstop>
-  <tabstop>checkBox_1_1</tabstop>
-  <tabstop>radioButton_2_1</tabstop>
-  <tabstop>radioButton_2_2</tabstop>
-  <tabstop>radioButton_2_3</tabstop>
-  <tabstop>radioButton_2_4</tabstop>
-  <tabstop>radioButton_2_5</tabstop>
-  <tabstop>radioButton_2_6</tabstop>
-  <tabstop>radioButton_2_7</tabstop>
-  <tabstop>radioButton_2_8</tabstop>
-  <tabstop>checkBox_2_1</tabstop>
+  <tabstop>radioButton_1_1_NOP</tabstop>
+  <tabstop>radioButton_1_2_SJIS</tabstop>
+  <tabstop>radioButton_1_3_JIS</tabstop>
+  <tabstop>radioButton_1_4_EUC</tabstop>
+  <tabstop>radioButton_1_5_UTF8</tabstop>
+  <tabstop>radioButton_1_6_UTF8BOM</tabstop>
+  <tabstop>checkBox_1_1_HKanaToW</tabstop>
+  <tabstop>radioButton_2_1_Auto</tabstop>
+  <tabstop>radioButton_2_2_SJIS</tabstop>
+  <tabstop>radioButton_2_3_JIS</tabstop>
+  <tabstop>radioButton_2_4_EUC</tabstop>
+  <tabstop>radioButton_2_5_SMB_HEX</tabstop>
+  <tabstop>radioButton_2_6_SMB_CAP</tabstop>
+  <tabstop>radioButton_2_7_UTF8</tabstop>
+  <tabstop>radioButton_2_8_UTF8HFSp</tabstop>
+  <tabstop>checkBox_2_1_HKanaToW</tabstop>
  </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>radioButton_1_1_NOP</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_Host()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_1_2_SJIS</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_Host()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_1_3_JIS</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_Host()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_1_4_EUC</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_Host()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_1_5_UTF8</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_Host()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_1_6_UTF8BOM</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_Host()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_1_Auto</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_2_SJIS</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_3_JIS</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_4_EUC</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_5_SMB_HEX</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_6_SMB_CAP</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_7_UTF8</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_2_8_UTF8HFSp</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingCharCodeForm</receiver>
+   <slot>onClick_radioButton_File()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
-  <slot>onClick_toolButton_SelectLocalDir()</slot>
-  <slot>onClick_pushButton_NowDir()</slot>
+  <slot>onClick_radioButton_Host()</slot>
+  <slot>onClick_radioButton_File()</slot>
  </slots>
 </ui>

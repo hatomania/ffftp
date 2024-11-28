@@ -234,9 +234,26 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>checkBox_Anonymous</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingBasicForm</receiver>
+   <slot>onClick_checkBox_Anonymous(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>327</x>
+     <y>93</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>190</x>
+     <y>146</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>onClick_toolButton_SelectLocalDir()</slot>
   <slot>onClick_pushButton_NowDir()</slot>
+  <slot>onClick_checkBox_Anonymous(bool)</slot>
  </slots>
 </ui>

@@ -26,6 +26,7 @@ public:
 private slots:
     void onClick_toolButton_SelectLocalDir();
     void onClick_pushButton_NowDir();
+    void onClick_checkBox_Anonymous(bool);
 
 private:
     class Private;

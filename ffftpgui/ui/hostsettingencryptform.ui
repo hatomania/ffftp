@@ -18,21 +18,21 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="checkBox_1">
+    <widget class="QCheckBox" name="checkBox_WithoutEncrypt">
      <property name="text">
       <string>暗号化なしで接続を許可(&amp;A)</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox_2">
+    <widget class="QCheckBox" name="checkBox_FTPSExplicit">
      <property name="text">
       <string>FTPS (Explicit)で接続(&amp;E)</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox_3">
+    <widget class="QCheckBox" name="checkBox_FTPSImplicit">
      <property name="text">
       <string>FTPS (Implicit)で接続(&amp;I)</string>
      </property>

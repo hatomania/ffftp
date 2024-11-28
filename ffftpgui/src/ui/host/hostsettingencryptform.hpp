@@ -8,6 +8,9 @@ class HostSettingEncryptForm : public QWidget
 
 public:
     struct Data {
+        bool allow_without_encrypt;
+        bool is_ftps_explicit;
+        bool is_ftps_implicit;
         Data();
     };
     explicit HostSettingEncryptForm(QWidget *parent = Q_NULLPTR);

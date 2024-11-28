@@ -8,7 +8,13 @@ public:
     Private() {}
     ~Private() = default;
     Ui::HostSettingBasicForm ui;
+    QString initdir_remote;
 };
+
+namespace {
+constexpr const char* const kDefAnonymousUsename  = "anonymous";
+constexpr const char* const kDefAnonymousPassword = "who@example.com";
+}
 
 // ＜＜slotも隠ぺいしようとしたが失敗＞＞
 // コード的には問題ないが、VS用Qtプラグインのmocプレビルドシステムが期待通り動かない
@@ -60,6 +66,7 @@ HostSettingBasicForm::HostSettingBasicForm(QWidget* parent)
 }
 
 void HostSettingBasicForm::setData(const Data& data) const {
+    d_->initdir_remote = data.initdir_remote;
     d_->ui.lineEdit_SettingName->setText(data.settingname);
     d_->ui.lineEdit_HostAddr->setText(data.hostaddr);
     d_->ui.lineEdit_Username->setText(data.username);
@@ -68,6 +75,7 @@ void HostSettingBasicForm::setData(const Data& data) const {
     d_->ui.lineEdit_LocalDir->setText(data.initdir_local);
     d_->ui.lineEdit_RemoteDir->setText(data.initdir_remote);
     d_->ui.checkBox_LastDir->setChecked(data.is_lastdir_as_initdir);
+    d_->ui.pushButton_NowDir->setEnabled(!d_->initdir_remote.isEmpty());
 }
 
 const HostSettingBasicForm::Data& HostSettingBasicForm::getData() const {
@@ -89,8 +97,27 @@ void HostSettingBasicForm::setDataAsDefault() const {
 
 void HostSettingBasicForm::onClick_toolButton_SelectLocalDir() {
     qDebug() << __FUNCTION__ << "called!";
+    QString dirpath = QFileDialog::getExistingDirectory(this, "", d_->ui.lineEdit_LocalDir->text());
+    if (!dirpath.isEmpty()) {
+        d_->ui.lineEdit_LocalDir->setText(dirpath);
+    }
 }
 
 void HostSettingBasicForm::onClick_pushButton_NowDir() {
     qDebug() << __FUNCTION__ << "called!";
+    d_->ui.lineEdit_RemoteDir->setText(d_->initdir_remote);
+}
+
+void HostSettingBasicForm::onClick_checkBox_Anonymous(bool checked) {
+    qDebug() << __FUNCTION__ << "called!";
+    static QPair<QString, QString> user_passwd;
+    if (checked) {
+        user_passwd.first = d_->ui.lineEdit_Username->text();
+        user_passwd.second = d_->ui.lineEdit_Password->text();
+        d_->ui.lineEdit_Username->setText(kDefAnonymousUsename);
+        d_->ui.lineEdit_Password->setText(kDefAnonymousPassword);
+    } else {
+        d_->ui.lineEdit_Username->setText(user_passwd.first);
+        d_->ui.lineEdit_Password->setText(user_passwd.second);
+    }
 }

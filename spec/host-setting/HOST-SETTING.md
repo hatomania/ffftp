@@ -29,6 +29,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 * [「ダイアルアップ」タブ](#ダイアルアップタブ)
 * [「高度」タブ](#高度タブ)
 * [「暗号化」タブ](#暗号化タブ)
+* [「特殊機能」タブ](#特殊機能タブ)
 
 ## 「基本」タブ
 
@@ -218,8 +219,8 @@ Win32 APIを使用してリストを構築している。詳しくは SetRasEntr
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | LISTコマンドでファイル一覧を取得 | HOSTDATA::ListCmdOnly | hostdata::hostdata_special::list_cmd_only | HostSettingSpecialForm::Data::list_cmd_only |  |
-| 可能であればMLSDコマンドで一覧を取得 | HOSTDATA::UseMLSD | hostdata::hostdata_special::use_MLSD | HostSettingSpecialForm::Data::use_MLSD |  |
-| NLST -R を使って高速に再帰検索 | HOSTDATA::UseNLST_R | hostdata::hostdata_special::use_NLST_R | HostSettingSpecialForm::Data::use_NLST_R |  |
+| 可能であればMLSDコマンドで一覧を取得 | HOSTDATA::UseMLSD | hostdata::hostdata_special::use_mlsd | HostSettingSpecialForm::Data::use_MLSD |  |
+| NLST -R を使って高速に再帰検索 | HOSTDATA::UseNLST_R | hostdata::hostdata_special::use_nlst_r | HostSettingSpecialForm::Data::use_NLST_R |  |
 | フルパスでファイルをアクセスしない | HOSTDATA::NoFullPath | hostdata::hostdata_special::no_fullpath | HostSettingSpecialForm::Data::no_fullpath |  |
 | 属性変更コマンド | HOSTDATA::ChmodCmd | hostdata::hostdata_special::chmod_cmd | HostSettingSpecialForm::Data::chmod_cmd | 上限文字数=40 |
 | ホストの種類 | HOSTDATA::HostType | hostdata::hostdata_special::host_type | HostSettingSpecialForm::Data::host_type |  |
@@ -271,5 +272,35 @@ NonStop Server
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | 暗号化なしで接続を許可 | HOSTDATA::UseNoEncryption | hostdata::hostdata_encryption::use_no_encryption | HostSettingEncryptionForm::Data::use_no_encryption |  |
-| FTPS (Explicit)で接続 | HOSTDATA::UseFTPES | hostdata::hostdata_encryption::use_FTPES | HostSettingEncryptionForm::Data::use_FTPES |  |
-| FTPS (Implicit)で接続 | HOSTDATA::UseFTPIS | hostdata::hostdata_encryption::use_FTPIS | HostSettingEncryptionForm::Data::use_FTPIS |  |
+| FTPS (Explicit)で接続 | HOSTDATA::UseFTPES | hostdata::hostdata_encryption::use_ftp_es | HostSettingEncryptionForm::Data::use_FTPES |  |
+| FTPS (Implicit)で接続 | HOSTDATA::UseFTPIS | hostdata::hostdata_encryption::use_ftp_is | HostSettingEncryptionForm::Data::use_FTPIS |  |
+
+## 「特殊機能」タブ
+
+関連するシンボル名とそのソースファイル名: struct Feature (hostman.cpp:1305)
+
+![「暗号化」タブ](./host-setting-7-feature.png)
+
+### 各部品の値を保持している変数名およびそれに関連する変数名(7)
+
+| UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
+| --- | --- | --- | --- | --- |
+| 最大同時接続数 | HOSTDATA::MaxThreadCount | hostdata::hostdata_feature::max_thread_cnt | HostSettingFeatureForm::Data::max_thread_cnt | 上限文字数=1, int型, 入力可能範囲=1-4 |
+| メインウィンドウのソケットを再利用 | HOSTDATA::ReuseCmdSkt | hostdata::hostdata_feature::reuse_cmdsocket | HostSettingFeatureForm::Data::reuse_cmdsocket |  |
+| PASVで返されるアドレスを無視 | HOSTDATA::NoPasvAdrs | hostdata::hostdata_feature::no_pasv_adrs | HostSettingFeatureForm::Data::no_pasv_adrs |  |
+| 接続維持用コマンド周期 | HOSTDATA::NoopInterval | hostdata::hostdata_feature::noop_interval | HostSettingFeatureForm::Data::noop_interval | 上限文字数=3, int型, 入力可能範囲=0-300 |
+| 転送エラー時の処理 | HOSTDATA::TransferErrorNotify, HOSTDATA::TransferErrorMode | hostdata::hostdata_feature::error_mode | HostSettingFeatureForm::Data::error_mode |  |
+| 転送エラー後に再接続 | HOSTDATA::TransferErrorReconnect | hostdata::hostdata_feature::reconnect | HostSettingFeatureForm::Data::reconnect |  |
+
+### 「転送エラー時の処理」コンボボックス
+
+リストと対応する変数の値は以下の通り:
+
+| リスト文字列 | HOSTDATA::TransferErrorNotify | HOSTDATA::TransferErrorModeの値 | 各error_modeの値 |
+| --- | --- | --- | --- |
+| 毎回尋ねる | YES | EXIST_OVW | 0 |
+| 全て後で上書き | NO | EXIST_OVW | 1 |
+| 全て後でリジューム | NO | EXIST_RESUME | 2 |
+| 全てスキップ | NO | EXIST_IGNORE | 3 |
+
+### 以上

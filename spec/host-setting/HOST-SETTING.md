@@ -27,6 +27,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 * [「拡張」タブ](#拡張タブ)
 * [「文字コード」タブ](#文字コードタブ)
 * [「ダイアルアップ」タブ](#ダイアルアップタブ)
+* [「高度」タブ](#高度タブ)
 
 ## 「基本」タブ
 
@@ -98,7 +99,7 @@ ONからOFFにしたとき、ONしたときに入力されていた「ユーザ�
 
 ### 「標準」ボタン
 
-押下時「ポート番号」に21を設定する。
+押下時「ポート番号」テキストボックスを`21`に書き換える。
 
 ### 「ホストのタイムゾーン」コンボボックス
 
@@ -187,7 +188,6 @@ OTP SHA-1
 | 接続する電話帳エントリ | HOSTDATA::DialEntry | hostdata::hostdata_dialup::dial_entry | HostSettingDialupForm::Data::dial_entry | 文字列型とする |
 | 別のエントリへ接続中でも上記へ接続しなおす | HOSTDATA::DialupAlways | hostdata::hostdata_dialup::dialup_always | HostSettingDialupForm::Data::hostdata_dialup |  |
 | 接続しなおす際に確認する | HOSTDATA::DialupNotify | hostdata::hostdata_dialup::dialup_notify | HostSettingDialupForm::Data::dialup_notify |  |
-|  |  |  |  |  |
 
 ### 全UI部品共通事項
 
@@ -205,3 +205,56 @@ OTP SHA-1
 ### 「接続する電話帳エントリ」コンボボックス
 
 Win32 APIを使用してリストを構築している。詳しくは SetRasEntryToComboBox() 関数参照。
+
+## 「高度」タブ
+
+関連するシンボル名とそのソースファイル名: struct Special (hostman.cpp:1177)
+
+![「高度」タブ](./host-setting-5-special.png)
+
+### 各部品の値を保持している変数名およびそれに関連する変数名(5)
+
+| UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
+| --- | --- | --- | --- | --- |
+| LISTコマンドでファイル一覧を取得 | HOSTDATA::ListCmdOnly | hostdata::hostdata_special::list_cmd_only | HostSettingSpecialForm::Data::list_cmd_only |  |
+| 可能であればMLSDコマンドで一覧を取得 | HOSTDATA::UseMLSD | hostdata::hostdata_special::use_MLSD | HostSettingSpecialForm::Data::use_MLSD |  |
+| NLST -R を使って高速に再帰検索 | HOSTDATA::UseNLST_R | hostdata::hostdata_special::use_NLST_R | HostSettingSpecialForm::Data::use_NLST_R |  |
+| フルパスでファイルをアクセスしない | HOSTDATA::NoFullPath | hostdata::hostdata_special::no_fullpath | HostSettingSpecialForm::Data::no_fullpath |  |
+| 属性変更コマンド | HOSTDATA::ChmodCmd | hostdata::hostdata_special::chmod_cmd | HostSettingSpecialForm::Data::chmod_cmd | 上限文字数=40 |
+| ホストの種類 | HOSTDATA::HostType | hostdata::hostdata_special::host_type | HostSettingSpecialForm::Data::host_type |  |
+| NLSTファイル名/オプション | HOSTDATA::LsName | hostdata::hostdata_special::ls_name | HostSettingSpecialForm::Data::ls_name | 上限文字数=40 |
+
+### 「LISTコマンドでファイル一覧を取得」チェックボックス
+
+本チェックボックスがONの時、「NLST -R を使って高速に再帰検索」チェックボックスをDisableとし、  
+そうでなければ、「可能であればMLSDコマンドで一覧を取得」チェックボックスをDisableとする。
+
+### 「ホストの種類」コンボボックス
+
+リストは以下の通り:
+
+```text
+自動認識
+ACOS
+VAX VMS
+IRMX
+ACOS-4
+Stratus
+Agilent Logic Analyzer
+シバソク WL
+NonStop Server
+```
+
+`VAX VMS`(=2)または`NonStop Server`(=8)選択時、以下をDisableとする。
+
+* 「LISTコマンドでファイル一覧を取得」チェックボックス
+* 「NLST -R を使って高速に再帰検索」チェックボックス
+* 「フルパスでファイルをアクセスしない」チェックボックス
+
+### 「標準」ボタン（「属性変更コマンド」）
+
+「属性変更コマンド」テキストボックスを`SITE CHMOD`に書き換える。
+
+### 「標準」ボタン（「NLSTファイル名/オプション」）
+
+「NLSTファイル名/オプション」テキストボックスを`-alL`に書き換える。

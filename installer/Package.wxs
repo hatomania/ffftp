@@ -1,0 +1,9 @@
+﻿<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="FFFTP (Qt version)" Manufacturer="hatomania" Version="1.0.0.0" UpgradeCode="e8ccc2d9-9d0c-4678-befc-8cf14c72948b">
+    <MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+    <Feature Id="Main">
+      <ComponentGroupRef Id="ExampleComponents" />
+    </Feature>
+  </Package>
+</Wix>

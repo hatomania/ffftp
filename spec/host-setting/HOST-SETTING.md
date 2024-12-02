@@ -26,6 +26,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 * [「基本」タブ](#基本タブ)
 * [「拡張」タブ](#拡張タブ)
 * [「文字コード」タブ](#文字コードタブ)
+* [「ダイアルアップ」タブ](#ダイアルアップタブ)
 
 ## 「基本」タブ
 
@@ -44,7 +45,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 | anonymous | HOSTDATA::Anonymous | hostdata::hostdata_general::anonymous | HostSettingGeneralForm::Data::anonymous | - |
 | ローカルの初期フォルダ | HOSTDATA::LocalInitDir | hostdata::hostdata_general::initdir_local | HostSettingGeneralForm::Data::initdir_local | 上限文字数=1024-40=984 |
 | リモートの初期フォルダ | HOSTDATA::RemoteInitDir | hostdata::hostdata_general::initdir_remote | HostSettingGeneralForm::Data::initdir_remote | 上限文字数=1024-40=984 |
-| 現在のフォルダ | AskRemoteCurDir関数で取得可能 | hostdata::hostdata_general::initdir_remote_now | HostSettingGeneralForm::Data::initdir_remote_now | カレントディレクトリパス文字列を保持[(参照)](#現在のフォルダボタン) |
+| 現在のフォルダ | AskRemoteCurDir()関数で取得可能 | hostdata::hostdata_general::initdir_remote_now | HostSettingGeneralForm::Data::initdir_remote_now | カレントディレクトリパス文字列を保持[(参照)](#現在のフォルダボタン) |
 | 最後にアクセスした～ | HOSTDATA::LastDir | hostdata::hostdata_general::last_dir | HostSettingGeneralForm::Data::last_dir | - |
 
 ### 「anonymous」チェックボックス
@@ -147,7 +148,7 @@ OTP SHA-1
 
 関連するシンボル名とそのソースファイル名: struct KanjiCode (hostman.cpp:1067)
 
-![「拡張」タブ](./host-setting-3-kanjicode.png)
+![「文字コード」タブ](./host-setting-3-kanjicode.png)
 
 ### 各部品の値を保持している変数名およびそれに関連する変数名(3)
 
@@ -171,3 +172,36 @@ OTP SHA-1
 | UTF-8 | HOSTDATA::NameKanjiCode==HSET_FN_UTF8N_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_UTF8N | HostSettingKanjiCodeForm::Data::kanjicode_name==kUTF8N |  |
 | UTF-8 HFS+ | HOSTDATA::NameKanjiCode==HSET_FN_UTF8HFSX_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_UTF8HFSX | HostSettingKanjiCodeForm::Data::kanjicode_name==kUTF8HFSX |  |
 | 半角カナを全角に変換 | HOSTDATA::NameKanaCnv | hostdata::hostdata_kanjicode::kanacnv_name | HostSettingKanjiCodeForm::Data::kanacnv_name | JIS,EUC選択時のみEnable |
+
+## 「ダイアルアップ」タブ
+
+関連するシンボル名とそのソースファイル名: struct Dialup (hostman.cpp:1121)
+
+![「ダイアルアップ」タブ](./host-setting-4-dialup.png)
+
+### 各部品の値を保持している変数名およびそれに関連する変数名(4)
+
+| UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
+| --- | --- | --- | --- | --- |
+| ダイアルアップで接続する | HOSTDATA::Dialup | hostdata::hostdata_dialup::dialup | HostSettingDialupForm::Data::dialup |  |
+| 接続する電話帳エントリ | HOSTDATA::DialEntry | hostdata::hostdata_dialup::dial_entry | HostSettingDialupForm::Data::dial_entry | 文字列型とする |
+| 別のエントリへ接続中でも上記へ接続しなおす | HOSTDATA::DialupAlways | hostdata::hostdata_dialup::dialup_always | HostSettingDialupForm::Data::hostdata_dialup |  |
+| 接続しなおす際に確認する | HOSTDATA::DialupNotify | hostdata::hostdata_dialup::dialup_notify | HostSettingDialupForm::Data::dialup_notify |  |
+|  |  |  |  |  |
+
+### 全UI部品共通事項
+
+「RASの制御を行わない」チェックボックス（オプションダイアログの「接続/切断」タブ）がONの時、または、  
+「ダイアルアップで接続する」チェックボックスがOFFの時、Disableとする。
+
+### 「ダイアルアップで接続する」チェックボックス
+
+「RASの制御を行わない」チェックボックス（オプションダイアログの「接続/切断」タブ）がONの時、チェックをOFFとする。
+
+### 「接続しなおす際に確認する」チェックボックス
+
+「別のエントリへ接続中でも上記へ接続しなおす」チェックボックスがOFFのとき、Disableとする。
+
+### 「接続する電話帳エントリ」コンボボックス
+
+Win32 APIを使用してリストを構築している。詳しくは SetRasEntryToComboBox() 関数参照。

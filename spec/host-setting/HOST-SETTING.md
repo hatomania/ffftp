@@ -85,7 +85,7 @@ ONからOFFにしたとき、ONしたときに入力されていた「ユーザ�
 
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
-| FireWallFireWallを使う | HOSTDATA::FireWall | hostdata::hostdata_advanced::firewall | HostSettingAdvancedForm::Data::firewall |  |
+| FireWallを使う | HOSTDATA::FireWall | hostdata::hostdata_advanced::firewall | HostSettingAdvancedForm::Data::firewall |  |
 | PASVモードを使う | HOSTDATA::Pasv | hostdata::hostdata_advanced::pasv | HostSettingAdvancedForm::Data::pasv |  |
 | フォルダ同時移動を使う | HOSTDATA::SyncMove | hostdata::hostdata_advanced::syncmove | HostSettingAdvancedForm::Data::syncmove |  |
 | ポート番号 | HOSTDATA::Port | hostdata::hostdata_advanced::port | HostSettingAdvancedForm::Data::port | 上限文字数=5 |

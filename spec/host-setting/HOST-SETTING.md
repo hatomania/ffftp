@@ -28,6 +28,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 * [「文字コード」タブ](#文字コードタブ)
 * [「ダイアルアップ」タブ](#ダイアルアップタブ)
 * [「高度」タブ](#高度タブ)
+* [「暗号化」タブ](#暗号化タブ)
 
 ## 「基本」タブ
 
@@ -258,3 +259,17 @@ NonStop Server
 ### 「標準」ボタン（「NLSTファイル名/オプション」）
 
 「NLSTファイル名/オプション」テキストボックスを`-alL`に書き換える。
+
+## 「暗号化」タブ
+
+関連するシンボル名とそのソースファイル名: struct Encryption (hostman.cpp:1281)
+
+![「暗号化」タブ](./host-setting-6-encryption.png)
+
+### 各部品の値を保持している変数名およびそれに関連する変数名(6)
+
+| UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
+| --- | --- | --- | --- | --- |
+| 暗号化なしで接続を許可 | HOSTDATA::UseNoEncryption | hostdata::hostdata_encryption::use_no_encryption | HostSettingEncryptionForm::Data::use_no_encryption |  |
+| FTPS (Explicit)で接続 | HOSTDATA::UseFTPES | hostdata::hostdata_encryption::use_FTPES | HostSettingEncryptionForm::Data::use_FTPES |  |
+| FTPS (Implicit)で接続 | HOSTDATA::UseFTPIS | hostdata::hostdata_encryption::use_FTPIS | HostSettingEncryptionForm::Data::use_FTPIS |  |

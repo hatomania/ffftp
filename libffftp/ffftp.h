@@ -1,28 +1,28 @@
 ﻿/*=============================================================================
-*						ＦＦＦＴＰインターフェースファイル
+* ＦＦＦＴＰインターフェースファイル
 *
 ===============================================================================
 / Copyright (C) 2021 K.C. All rights reserved.
 /
-/ Redistribution and use in source and binary forms, with or without 
-/ modification, are permitted provided that the following conditions 
+/ Redistribution and use in source and binary forms, with or without
+/ modification, are permitted provided that the following conditions
 / are met:
 /
-/  1. Redistributions of source code must retain the above copyright 
+/  1. Redistributions of source code must retain the above copyright
 /     notice, this list of conditions and the following disclaimer.
-/  2. Redistributions in binary form must reproduce the above copyright 
-/     notice, this list of conditions and the following disclaimer in the 
+/  2. Redistributions in binary form must reproduce the above copyright
+/     notice, this list of conditions and the following disclaimer in the
 /     documentation and/or other materials provided with the distribution.
 /
-/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR 
-/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
-/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT, 
-/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
-/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF 
-/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
-/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
-/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
+/ THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+/ IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
+/ OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+/ IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+/ INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+/ BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF
+/ USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
+/ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+/ (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 / THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /============================================================================*/
 
@@ -59,29 +59,43 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle();
 
 typedef void* hostcontext_t;
 #ifdef __cplusplus
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first(int* index = nullptr);
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc, int* index = nullptr);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_first(int* index = nullptr);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_next(const hostcontext_t hc, int* index = nullptr);
 #else
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first(int* index = NULL);
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc, int* index = NULL);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_first(int* index = NULL);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_next(const hostcontext_t hc, int* index = NULL);
 #endif
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_new(int index, const hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_new(int index, const hostdata* hdata);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index);
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(int index, hostdata* hdata);
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getindex(const hostcontext_t hc);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_hostdata(int index, hostdata* hdata);
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
+ffftp_hostcontext_getindex(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getcurrentindex();
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_getname(const hostcontext_t hc);
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getlevel(const hostcontext_t hc);
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcontext_t hc);
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV
+ffftp_hostcontext_getname(const hostcontext_t hc);
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
+ffftp_hostcontext_getlevel(const hostcontext_t hc);
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV
+ffftp_hostcontext_isgroup(const hostcontext_t hc);
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index);
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*func)());
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword(bool (*func)(const wchar_t** passwd));
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd));
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askretrymasterpassword(bool (*func)());
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_setcallback_asksavecrypt(bool (*func)());
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_setcallback_askmasterpassword(bool (*func)(const wchar_t** passwd));
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd));
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_setcallback_askretrymasterpassword(bool (*func)());
 
 #ifdef __cplusplus
 }

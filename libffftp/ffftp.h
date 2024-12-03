@@ -29,6 +29,8 @@
 #ifndef FFFTP_2C8AE9F9_6CDE_41C7_AE02_CE4A7248088A_H_
 #define FFFTP_2C8AE9F9_6CDE_41C7_AE02_CE4A7248088A_H_
 
+#include "ffftp_hostdata.h"
+
 #ifdef LIBFFFTP_EXPORTS
 #define LIBFFFTP_DECLSPEC __declspec(dllexport)
 #else
@@ -63,9 +65,12 @@ LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(c
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first(int* index = NULL);
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc, int* index = NULL);
 #endif
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_new(int index, const hostdata* hdata);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(int index, hostdata* hdata);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getindex(const hostcontext_t hc);
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getcurrentindex();
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_getname(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getlevel(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcontext_t hc);

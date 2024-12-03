@@ -869,6 +869,12 @@ static void SendAllHostNames(HWND hWnd, int Cur) {
 			.hInsertAfter = TVI_LAST,
 			.item = { .mask = TVIF_TEXT | TVIF_CHILDREN | TVIF_IMAGE | TVIF_SELECTEDIMAGE | TVIF_PARAM, .pszText = data(Pos->HostName), .cChildren = 1, .lParam = i },
 		};
+#ifdef _DEBUG
+		// 確認のためにlParam値を追加表示
+		static std::wstring hostname;
+		hostname = std::format(L"{} ({})", Pos->HostName, is.item.lParam);
+		is.item.pszText = data(hostname);
+#endif // _DEBUG
 		if (!(Pos->Level & SET_LEVEL_GROUP))
 			is.item.iImage = is.item.iSelectedImage = 2;
 		auto hItem = (HTREEITEM)SendMessageW(hWnd, TVM_INSERTITEMW, 0, (LPARAM)&is);
@@ -1383,6 +1389,7 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 	return FFFTP_SUCCESS;
 }
 
+#include "libffftp/ffftp_hostdata.h"
 namespace libffftp {
 
 const void* hostContextFirst(int* index/*=常に0だと思うがライブラリに任せたほうがいい*/) {
@@ -1400,11 +1407,43 @@ const void* hostContextNext(const void* hc, int* index/*=先頭から何番目�
 	return nullptr;
 #endif
 }
+void hostContextNew(int index, const hostdata* hdata) {
+	int level = -1;
+	if (Hosts == 0) {
+		TmpHost.Level = 0;
+		CurrentHost = Hosts;
+	} else {
+		assert(0 <= index && index <= (Hosts-1));
+		TmpHost.Level = GetLevel(index);
+		CurrentHost = level = index + 1;
+	}
+	AddHostToList(&TmpHost, level, SET_LEVEL_SAME);
+}
 int hostContextUp(int index) {
 	return HostList::HostUp(index);
 }
 int hostContextDown(int index) {
 	return HostList::HostDown(index);
+}
+void hostContextData(int index, hostdata* hdata) {
+#ifdef LIBFFFTP_EXPORTS
+	if (index < 0 || Hosts <= index)
+		// TODO: assertが必要？
+		return;
+	static HOSTDATA p; // 文字列はこのstatic変数(へのポインタ)がライブラリ使用側に返る
+	CopyHostFromList(index, &p);
+	// [基本]タブ
+	hdata->basic.host_name			= p.HostName.c_str();
+	hdata->basic.host_addr			= p.HostAdrs.c_str();
+	hdata->basic.user_name			= p.UserName.c_str();
+	hdata->basic.password			= p.PassWord.c_str();
+	hdata->basic.is_anonymous		= p.Anonymous == YES;
+	hdata->basic.initdir_local		= p.LocalInitDir.c_str();
+	hdata->basic.initdir_remote		= p.RemoteInitDir.c_str();
+	hdata->basic.initdir_remotenow	= AskRemoteCurDir().c_str();
+	hdata->basic.enabled_nowdir		= AskConnecting() == YES;
+	hdata->basic.use_lastdir		= p.LastDir == YES;
+#endif
 }
 int getHostIndex(const void* hc) {
 #ifdef LIBFFFTP_EXPORTS
@@ -1416,6 +1455,9 @@ int getHostIndex(const void* hc) {
 #else
 	return -1;
 #endif
+}
+int currentHostIndex() {
+	return CurrentHost;
 }
 HOSTDATA getHostContext(const void* hc) {
 	return *static_cast<const HOSTLISTDATA*>(hc);

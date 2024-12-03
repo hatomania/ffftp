@@ -68,6 +68,10 @@ LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(c
     return (const hostcontext_t)libffftp::hostContextNext(hc, index);
 }
 
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_new(int index, const hostdata* hdata) {
+    libffftp::hostContextNew(index, hdata);
+}
+
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index) {
     return libffftp::hostContextUp(index);
 }
@@ -76,8 +80,16 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index) {
     return libffftp::hostContextDown(index);
 }
 
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(int index, hostdata* hdata) {
+    libffftp::hostContextData(index, hdata);
+}
+
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getindex(const hostcontext_t hc) {
     return libffftp::getHostIndex(hc);
+}
+
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getcurrentindex() {
+    return libffftp::currentHostIndex();
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_getname(const hostcontext_t hc) {

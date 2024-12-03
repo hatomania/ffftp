@@ -15,13 +15,15 @@ public:
     Private()
         : rootnode(nullptr)
         , model(new QStandardItemModel())
-        , connecting_host_index(-1) {}
+        , connecting_host_index(-1)
+        , selected_host_index(-1) {}
     ~Private() { delete model; }
     void buildHostTreeView(int current = -1);
     Ui::HostsListDialogClass ui;
     QStandardItem* rootnode;
     QStandardItemModel* model;
     int connecting_host_index;
+    int selected_host_index;
 };
 
 static QStandardItem* _createHostTreeViewItem(const hostcontext_t hc) {
@@ -156,6 +158,10 @@ int HostsListDialog::connectingHostIndex() {
 void HostsListDialog::onClick_pushButton_NewHost() {
     qDebug() << __FUNCTION__ << "called!";
     HostSettingsDialog(this).exec();
+    hostdata hd{};
+    int insert_index = d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
+    ffftp_hostcontext_new(insert_index, &hd);
+    d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
 }
 
 void HostsListDialog::onClick_pushButton_NewGroup() {
@@ -198,4 +204,5 @@ void HostsListDialog::onClick_pushButton_Help() {
 
 void HostsListDialog::selectedHost(const QModelIndex& index) {
     qDebug() << __FUNCTION__ << "called! data=" << d_->model->itemFromIndex(index)->data();
+    d_->selected_host_index = d_->model->itemFromIndex(index)->data().toInt();
 }

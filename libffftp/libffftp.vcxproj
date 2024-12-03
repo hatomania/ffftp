@@ -101,6 +101,7 @@
     <ClInclude Include="..\Resource\resource.en-US.h" />
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
     <ClInclude Include="ffftp.h" />
+    <ClInclude Include="ffftp_hostdata.h" />
     <ClInclude Include="libffftp.hpp" />
   </ItemGroup>
   <ItemGroup>

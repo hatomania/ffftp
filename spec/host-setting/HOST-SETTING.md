@@ -14,7 +14,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 | | 文字列系 | チェックボックス | コンボボックス |
 | --- | --- | --- | --- |
 | ffftp | std::wstring | int (YES=ON, NO=OFF) | int (先頭選択時=0) |
-| libffftp | char* | bool (true=ON, false=OFF) | int (先頭選択時=0) |
+| libffftp | wchar_t* | bool (true=ON, false=OFF) | int (先頭選択時=0) |
 | ffftpgui | std::wstring | bool (true=ON, false=OFF) | int (先頭選択時=0) |
 
 (YES, NOは#defineで定義されている)
@@ -47,8 +47,8 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 | パスワード | HOSTDATA::PassWord | hostdata::hostdata_general::password | HostSettingGeneralForm::Data::password | 上限文字数=80 |
 | anonymous | HOSTDATA::Anonymous | hostdata::hostdata_general::anonymous | HostSettingGeneralForm::Data::anonymous | - |
 | ローカルの初期フォルダ | HOSTDATA::LocalInitDir | hostdata::hostdata_general::initdir_local | HostSettingGeneralForm::Data::initdir_local | 上限文字数=1024-40=984 |
-| リモートの初期フォルダ | HOSTDATA::RemoteInitDir | hostdata::hostdata_general::initdir_remote | HostSettingGeneralForm::Data::initdir_remote | 上限文字数=1024-40=984 |
-| 現在のフォルダ | AskRemoteCurDir()関数で取得可能 | hostdata::hostdata_general::initdir_remote_now | HostSettingGeneralForm::Data::initdir_remote_now | カレントディレクトリパス文字列を保持[(参照)](#現在のフォルダボタン) |
+| ホストの初期フォルダ | HOSTDATA::RemoteInitDir | hostdata::hostdata_general::initdir_remote | HostSettingGeneralForm::Data::initdir_remote | 上限文字数=1024-40=984 |
+| 現在のフォルダ | AskRemoteCurDir()関数で取得可能 | hostdata::hostdata_general::initdir_remote_now, hostdata::hostdata_general::enabled_curdir | HostSettingGeneralForm::Data::initdir_remote_now, HostSettingGeneralForm::Data::enabled_curdir | カレントディレクトリパス文字列を保持[(参照)](#現在のフォルダボタン) |
 | 最後にアクセスした～ | HOSTDATA::LastDir | hostdata::hostdata_general::last_dir | HostSettingGeneralForm::Data::last_dir | - |
 
 ### 「anonymous」チェックボックス
@@ -67,8 +67,8 @@ ONからOFFにしたとき、ONしたときに入力されていた「ユーザ�
 
 ### 「現在のフォルダ」ボタン
 
-リモート先に接続状態でないときは、Disableとする。  
-押下時、リモート側のカレントディレクトリパスを「リモートの初期フォルダ」に表示する。
+リモート先に接続状態でない(`enabled_curdir==false`)ときは、Disableとする。  
+押下時、リモート側のカレントディレクトリパスを「ホストの初期フォルダ」に表示する。
 
 ### 「OK」ボタン(1)
 

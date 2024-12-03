@@ -9,27 +9,22 @@
 extern "C" {
 #endif
 
-struct hostdata_basic {
-  /* Basic tab */
+/* 「基本」タブのUIデータ */
+struct hostdata_general {
   const wchar_t* host_name;
-  const wchar_t* host_addr;
-  const wchar_t* user_name;
+  const wchar_t* host_adrs;
+  const wchar_t* username;
   const wchar_t* password;
-  bool is_anonymous;
+  bool anonymous;
   const wchar_t* initdir_local;
   const wchar_t* initdir_remote;
-  const wchar_t* initdir_remotenow;
-  bool enabled_nowdir;
-  bool use_lastdir;
-};
-
-struct hostdata_expansion {
-  /* Expansion tab */
+  const wchar_t* initdir_remote_now;
+  bool enabled_curdir;
+  bool last_dir;
 };
 
 struct hostdata {
-  hostdata_basic basic;
-  hostdata_expansion expansion;
+  hostdata_general basic;
 };
 
 #ifdef __cplusplus

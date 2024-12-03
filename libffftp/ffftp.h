@@ -47,7 +47,23 @@
 extern "C" {
 #endif
 
+/**
+ * @brief libffftpの初期化を行う。
+ *
+ * 他のインターフェースを使用する前に呼び出さなければならない。
+ * 呼び出しは1度だけ行う。複数回呼び出した場合の動作は未定義です。
+ *
+ * @return true  成功
+ * @return false 失敗
+ */
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize();
+
+/**
+ * @brief libffftpの後処理を行う。
+ *
+ * アプリケーション終了時に1度だけ呼び出さなければならない。
+ * 呼び出しは1度だけ行う。複数回呼び出した場合の動作は未定義です。
+ */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize();
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
@@ -73,6 +89,13 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_new(int index, const hostdata* hdata);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index);
+
+/**
+ * @brief 指定したindexのhostdataを取得する。
+ *
+ * @param[in]  index 取得したいホストリストのindex
+ * @param[out] hdata 結果を格納するhostdataへのポインタ
+ */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_hostdata(int index, hostdata* hdata);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV

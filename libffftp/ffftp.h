@@ -50,18 +50,18 @@ extern "C" {
 /**
  * @brief libffftpの初期化を行う。
  *
- * 他のインターフェースを使用する前に呼び出さなければならない。
+ * 他のインターフェースを使用する前に呼び出さなければならない。@n
  * 呼び出しは1度だけ行う。複数回呼び出した場合の動作は未定義です。
  *
- * @return true  成功
- * @return false 失敗
+ * @retval true  成功
+ * @retval false 失敗
  */
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize();
 
 /**
  * @brief libffftpの後処理を行う。
  *
- * アプリケーション終了時に1度だけ呼び出さなければならない。
+ * アプリケーション終了時に1度だけ呼び出さなければならない。@n
  * 呼び出しは1度だけ行う。複数回呼び出した場合の動作は未定義です。
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize();

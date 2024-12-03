@@ -24,7 +24,7 @@ struct hostdata_general {
 };
 
 struct hostdata {
-  hostdata_general basic;
+  hostdata_general general;
 };
 
 #ifdef __cplusplus

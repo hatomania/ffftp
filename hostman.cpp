@@ -1417,6 +1417,17 @@ void hostContextNew(int index, const hostdata* hdata) {
 		TmpHost.Level = GetLevel(index);
 		CurrentHost = level = index + 1;
 	}
+
+	// [基本]タブ
+	TmpHost.HostName = hdata->general.host_name;
+	TmpHost.HostAdrs = hdata->general.host_adrs;
+	TmpHost.UserName = hdata->general.username;
+	TmpHost.PassWord = hdata->general.password;
+	TmpHost.Anonymous = hdata->general.anonymous ? YES : NO;
+	TmpHost.LocalInitDir = hdata->general.initdir_local;
+	TmpHost.RemoteInitDir = hdata->general.initdir_remote;
+	TmpHost.LastDir = hdata->general.last_dir;
+
 	AddHostToList(&TmpHost, level, SET_LEVEL_SAME);
 }
 int hostContextUp(int index) {
@@ -1427,22 +1438,21 @@ int hostContextDown(int index) {
 }
 void hostContextData(int index, hostdata* hdata) {
 #ifdef LIBFFFTP_EXPORTS
-	if (index < 0 || Hosts <= index)
-		// TODO: assertが必要？
-		return;
-	static HOSTDATA p; // 文字列はこのstatic変数(へのポインタ)がライブラリ使用側に返る
-	CopyHostFromList(index, &p);
+	assert(0 <= index && index <= (Hosts - 1));
+
+	static HOSTDATA hd; // 文字列はこのstatic変数(へのポインタ)がライブラリ使用側に返る
+	CopyHostFromList(index, &hd);
 	// [基本]タブ
-	hdata->basic.host_name			= p.HostName.c_str();
-	hdata->basic.host_addr			= p.HostAdrs.c_str();
-	hdata->basic.user_name			= p.UserName.c_str();
-	hdata->basic.password			= p.PassWord.c_str();
-	hdata->basic.is_anonymous		= p.Anonymous == YES;
-	hdata->basic.initdir_local		= p.LocalInitDir.c_str();
-	hdata->basic.initdir_remote		= p.RemoteInitDir.c_str();
-	hdata->basic.initdir_remotenow	= AskRemoteCurDir().c_str();
-	hdata->basic.enabled_nowdir		= AskConnecting() == YES;
-	hdata->basic.use_lastdir		= p.LastDir == YES;
+	hdata->general.host_name			= hd.HostName.c_str();
+	hdata->general.host_adrs			= hd.HostAdrs.c_str();
+	hdata->general.username				= hd.UserName.c_str();
+	hdata->general.password				= hd.PassWord.c_str();
+	hdata->general.anonymous			= hd.Anonymous == YES;
+	hdata->general.initdir_local		= hd.LocalInitDir.c_str();
+	hdata->general.initdir_remote		= hd.RemoteInitDir.c_str();
+	hdata->general.initdir_remote_now	= AskRemoteCurDir().c_str();
+	hdata->general.enabled_curdir		= AskConnecting() == YES;
+	hdata->general.last_dir				= hd.LastDir == YES;
 #endif
 }
 int getHostIndex(const void* hc) {

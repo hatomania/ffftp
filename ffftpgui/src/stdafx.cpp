@@ -16,34 +16,34 @@
 #pragma init_seg(lib)
 #endif
 
-#define IMPLEMENT_CONSTANT_CHAR(x, str) const char* const x = str;
-#define IMPLEMENT_CONSTANT_QSTRING(x, str) const QString x = QObject::tr(str);
+#define IMPL_CONST_CHAR(x, str) const char* const x = str;
+#define IMPL_CONST_WCHAR(x, str) const wchar_t* const x = str;
+#define IMPL_CONST_QSTRING(x, str) const QString x = QObject::tr(str);
 
-IMPLEMENT_CONSTANT_CHAR(kEmptyString, "")
-IMPLEMENT_CONSTANT_CHAR(kResImage_closedfolder16x16, ":/closedfolder16x16.png")
-IMPLEMENT_CONSTANT_CHAR(kResImage_cleanfile16x16, ":/cleanfile16x16.png")
-IMPLEMENT_CONSTANT_CHAR(kResImage_desktop16x16, ":/desktop16x16.png")
+IMPL_CONST_WCHAR(kEmptyString, L"")
+IMPL_CONST_CHAR(kResImage_closedfolder16x16, ":/closedfolder16x16.png")
+IMPL_CONST_CHAR(kResImage_cleanfile16x16, ":/cleanfile16x16.png")
+IMPL_CONST_CHAR(kResImage_desktop16x16, ":/desktop16x16.png")
 
 // ユーザーに表示する文字列には必ずQObject::tr()で囲ってください
 // この文字列は翻訳可能文字列となり、Qt
 // Linguistソフトウェアでtsファイルを編集できるようになります
-IMPLEMENT_CONSTANT_QSTRING(kAskSaveCryptTitle, "暗号化の状態の保存")
-IMPLEMENT_CONSTANT_QSTRING(
+IMPL_CONST_QSTRING(kAskSaveCryptTitle, "暗号化の状態の保存")
+IMPL_CONST_QSTRING(
     kAskSaveCryptBody,
     "現在の暗号化の状態を保存しますか？\n"
     "「はい」を選択すると次回から他の暗号化方式を試行しなくなります。")
-IMPLEMENT_CONSTANT_QSTRING(
-    kPlzInputYourMasterPwd,
-    "設定されているマスターパスワードを入力してください:")
-IMPLEMENT_CONSTANT_QSTRING(
+IMPL_CONST_QSTRING(kPlzInputYourMasterPwd,
+                   "設定されているマスターパスワードを入力してください:")
+IMPL_CONST_QSTRING(
     kAskRetryInputYourMasterPwd,
     "指定されたマスターパスワードが登録されたものと一致しません。"
     "再度入力しますか？\n"
     "「いいえ」を選ぶと記憶されたFTPパスワードは利用できません。")
 
-IMPLEMENT_CONSTANT_QSTRING(kStringName, "名前")
-IMPLEMENT_CONSTANT_QSTRING(kStringDate, "日付")
-IMPLEMENT_CONSTANT_QSTRING(kStringSize, "サイズ")
-IMPLEMENT_CONSTANT_QSTRING(kStringExtension, "種類")
-IMPLEMENT_CONSTANT_QSTRING(kStringPermission, "属性")
-IMPLEMENT_CONSTANT_QSTRING(kStringOwner, "所有者")
+IMPL_CONST_QSTRING(kStringName, "名前")
+IMPL_CONST_QSTRING(kStringDate, "日付")
+IMPL_CONST_QSTRING(kStringSize, "サイズ")
+IMPL_CONST_QSTRING(kStringExtension, "種類")
+IMPL_CONST_QSTRING(kStringPermission, "属性")
+IMPL_CONST_QSTRING(kStringOwner, "所有者")

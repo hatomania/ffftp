@@ -51,14 +51,16 @@ constexpr const char* const kDefAnonymousPassword = "who@example.com";
 //};
 
 HostSettingBasicForm::Data::Data()
-    : settingname(kEmptyString),
-      hostaddr(kEmptyString),
+    : host_name(kEmptyString),
+      host_adrs(kEmptyString),
       username(kEmptyString),
       password(kEmptyString),
-      is_anonymous(false),
+      anonymous(false),
       initdir_local(kEmptyString),
       initdir_remote(kEmptyString),
-      is_lastdir_as_initdir(false) {}
+      initdir_remote_now(kEmptyString),
+      enabled_curdir(false),
+      last_dir(false) {}
 
 HostSettingBasicForm::HostSettingBasicForm(QWidget* parent)
     : QWidget(parent), d_(new HostSettingBasicForm::Private()) {
@@ -71,28 +73,28 @@ HostSettingBasicForm::HostSettingBasicForm(QWidget* parent)
 }
 
 void HostSettingBasicForm::setData(const Data& data) const {
-  d_->initdir_remote = data.initdir_remote;
-  d_->ui.lineEdit_SettingName->setText(data.settingname);
-  d_->ui.lineEdit_HostAddr->setText(data.hostaddr);
-  d_->ui.lineEdit_Username->setText(data.username);
-  d_->ui.lineEdit_Password->setText(data.password);
-  d_->ui.checkBox_Anonymous->setChecked(data.is_anonymous);
-  d_->ui.lineEdit_LocalDir->setText(data.initdir_local);
-  d_->ui.lineEdit_RemoteDir->setText(data.initdir_remote);
-  d_->ui.checkBox_LastDir->setChecked(data.is_lastdir_as_initdir);
-  d_->ui.pushButton_NowDir->setEnabled(!d_->initdir_remote.isEmpty());
+  //d_->initdir_remote = data.initdir_remote;
+  //d_->ui.lineEdit_SettingName->setText(data.settingname);
+  //d_->ui.lineEdit_HostAddr->setText(data.hostaddr);
+  //d_->ui.lineEdit_Username->setText(data.username);
+  //d_->ui.lineEdit_Password->setText(data.password);
+  //d_->ui.checkBox_Anonymous->setChecked(data.is_anonymous);
+  //d_->ui.lineEdit_LocalDir->setText(data.initdir_local);
+  //d_->ui.lineEdit_RemoteDir->setText(data.initdir_remote);
+  //d_->ui.checkBox_LastDir->setChecked(data.is_lastdir_as_initdir);
+  //d_->ui.pushButton_NowDir->setEnabled(!d_->initdir_remote.isEmpty());
 }
 
 const HostSettingBasicForm::Data& HostSettingBasicForm::getData() const {
   static Data data;
-  data.settingname = d_->ui.lineEdit_SettingName->text();
-  data.hostaddr = d_->ui.lineEdit_HostAddr->text();
-  data.username = d_->ui.lineEdit_Username->text();
-  data.password = d_->ui.lineEdit_Password->text();
-  data.is_anonymous = d_->ui.checkBox_Anonymous->isChecked();
-  data.initdir_local = d_->ui.lineEdit_LocalDir->text();
-  data.initdir_remote = d_->ui.lineEdit_RemoteDir->text();
-  data.is_lastdir_as_initdir = d_->ui.checkBox_LastDir->isChecked();
+  //data.settingname = d_->ui.lineEdit_SettingName->text();
+  //data.hostaddr = d_->ui.lineEdit_HostAddr->text();
+  //data.username = d_->ui.lineEdit_Username->text();
+  //data.password = d_->ui.lineEdit_Password->text();
+  //data.is_anonymous = d_->ui.checkBox_Anonymous->isChecked();
+  //data.initdir_local = d_->ui.lineEdit_LocalDir->text();
+  //data.initdir_remote = d_->ui.lineEdit_RemoteDir->text();
+  //data.is_lastdir_as_initdir = d_->ui.checkBox_LastDir->isChecked();
   return data;
 }
 

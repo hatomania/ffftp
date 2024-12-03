@@ -1,21 +1,22 @@
 ﻿#include <QString>
 
-#define DECLARE_CONSTANT_CHAR(x) extern const char* const x;
-#define DECLARE_CONSTANT_QSTRING(x) extern const QString x;
+#define DECL_CONST_CHAR(x) extern const char* const x;
+#define DECL_CONST_WCHAR(x) extern const wchar_t* const x;
+#define DECL_CONST_QSTRING(x) extern const QString x;
 
-DECLARE_CONSTANT_CHAR(kEmptyString)
-DECLARE_CONSTANT_CHAR(kResImage_closedfolder16x16)
-DECLARE_CONSTANT_CHAR(kResImage_cleanfile16x16)
-DECLARE_CONSTANT_CHAR(kResImage_desktop16x16)
+DECL_CONST_WCHAR(kEmptyString)
+DECL_CONST_CHAR(kResImage_closedfolder16x16)
+DECL_CONST_CHAR(kResImage_cleanfile16x16)
+DECL_CONST_CHAR(kResImage_desktop16x16)
 
-DECLARE_CONSTANT_QSTRING(kAskSaveCryptTitle)
-DECLARE_CONSTANT_QSTRING(kAskSaveCryptBody)
-DECLARE_CONSTANT_QSTRING(kPlzInputYourMasterPwd)
-DECLARE_CONSTANT_QSTRING(kAskRetryInputYourMasterPwd)
+DECL_CONST_QSTRING(kAskSaveCryptTitle)
+DECL_CONST_QSTRING(kAskSaveCryptBody)
+DECL_CONST_QSTRING(kPlzInputYourMasterPwd)
+DECL_CONST_QSTRING(kAskRetryInputYourMasterPwd)
 
-DECLARE_CONSTANT_QSTRING(kStringName)
-DECLARE_CONSTANT_QSTRING(kStringDate)
-DECLARE_CONSTANT_QSTRING(kStringSize)
-DECLARE_CONSTANT_QSTRING(kStringExtension)
-DECLARE_CONSTANT_QSTRING(kStringPermission)
-DECLARE_CONSTANT_QSTRING(kStringOwner)
+DECL_CONST_QSTRING(kStringName)
+DECL_CONST_QSTRING(kStringDate)
+DECL_CONST_QSTRING(kStringSize)
+DECL_CONST_QSTRING(kStringExtension)
+DECL_CONST_QSTRING(kStringPermission)
+DECL_CONST_QSTRING(kStringOwner)

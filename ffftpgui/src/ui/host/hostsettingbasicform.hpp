@@ -7,14 +7,16 @@ class HostSettingBasicForm : public QWidget {
 
  public:
   struct Data {
-    QString settingname;
-    QString hostaddr;
-    QString username;
-    QString password;
-    bool is_anonymous;
-    QString initdir_local;
-    QString initdir_remote;
-    bool is_lastdir_as_initdir;
+    std::wstring host_name;
+    std::wstring host_adrs;
+    std::wstring username;
+    std::wstring password;
+    bool anonymous;
+    std::wstring initdir_local;
+    std::wstring initdir_remote;
+    std::wstring initdir_remote_now;
+    bool enabled_curdir;
+    bool last_dir;
     Data();
   };
   explicit HostSettingBasicForm(QWidget* parent = Q_NULLPTR);

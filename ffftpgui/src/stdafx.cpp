@@ -20,13 +20,19 @@ IMPLEMENT_CONSTANT_CHAR(kResImage_cleanfile16x16, ":/cleanfile16x16.png")
 IMPLEMENT_CONSTANT_CHAR(kResImage_desktop16x16, ":/desktop16x16.png")
 
 // ユーザーに表示する文字列には必ずQObject::tr()で囲ってください
-// この文字列は翻訳可能文字列となり、Qt Linguistソフトウェアでtsファイルを編集できるようになります
+// この文字列は翻訳可能文字列となり、Qt
+// Linguistソフトウェアでtsファイルを編集できるようになります
 const QString kAskSaveCryptTitle = QObject::tr("暗号化の状態の保存");
-const QString kAskSaveCryptBody = QObject::tr("現在の暗号化の状態を保存しますか？\n「はい」を選択すると次回から他の暗号化方式を試行しなくなります。");
-const QString kPlzInputYourMasterPwd = QObject::tr("設定されているマスターパスワードを入力してください:");
-const QString kAskRetryInputYourMasterPwd = QObject::tr("指定されたマスターパスワードが登録されたものと一致しません。再度入力しますか？\n「いいえ」を選ぶと記憶されたFTPパスワードは利用できません。");
+const QString kAskSaveCryptBody = QObject::tr(
+    "現在の暗号化の状態を保存しますか？\n「はい」を選択すると次回から他の暗号化"
+    "方式を試行しなくなります。");
+const QString kPlzInputYourMasterPwd =
+    QObject::tr("設定されているマスターパスワードを入力してください:");
+const QString kAskRetryInputYourMasterPwd = QObject::tr(
+    "指定されたマスターパスワードが登録されたものと一致しません。再度入力します"
+    "か？\n「いいえ」を選ぶと記憶されたFTPパスワードは利用できません。");
 
-//const QString kString = QObject::tr("");
+// const QString kString = QObject::tr("");
 const QString kStringName = QObject::tr("名前");
 const QString kStringDate = QObject::tr("日付");
 const QString kStringSize = QObject::tr("サイズ");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HostSettingBasicForm</class>
- <widget class="QWidget" name="HostSettingBasicForm">
+ <class>HostSettingGeneralForm</class>
+ <widget class="QWidget" name="HostSettingGeneralForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -205,7 +205,7 @@
   <connection>
    <sender>pushButton_NowDir</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingBasicForm</receiver>
+   <receiver>HostSettingGeneralForm</receiver>
    <slot>onClick_pushButton_NowDir()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -221,7 +221,7 @@
   <connection>
    <sender>toolButton_SelectLocalDir</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingBasicForm</receiver>
+   <receiver>HostSettingGeneralForm</receiver>
    <slot>onClick_toolButton_SelectLocalDir()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -237,7 +237,7 @@
   <connection>
    <sender>checkBox_Anonymous</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingBasicForm</receiver>
+   <receiver>HostSettingGeneralForm</receiver>
    <slot>onClick_checkBox_Anonymous(bool)</slot>
    <hints>
     <hint type="sourcelabel">

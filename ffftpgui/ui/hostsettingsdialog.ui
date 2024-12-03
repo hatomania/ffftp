@@ -19,7 +19,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="HostSettingBasicForm" name="tab_0">
+     <widget class="HostSettingGeneralForm" name="tab_0">
       <property name="windowTitle">
        <string>ホストの設定</string>
       </property>
@@ -74,9 +74,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>HostSettingBasicForm</class>
+   <class>HostSettingGeneralForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingbasicform.hpp</header>
+   <header location="global">ui/host/hostsettinggeneralform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>

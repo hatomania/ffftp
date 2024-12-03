@@ -1,6 +1,6 @@
 ﻿#include "hostsettingsdialog.hpp"
 
-#include "hostsettingbasicform.hpp"
+#include "hostsettinggeneralform.hpp"
 #include "ui_hostsettingsdialog.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

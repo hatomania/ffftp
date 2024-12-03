@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-class HostSettingBasicForm : public QWidget {
+class HostSettingGeneralForm : public QWidget {
   Q_OBJECT
 
  public:
@@ -19,7 +19,7 @@ class HostSettingBasicForm : public QWidget {
     bool last_dir;
     Data();
   };
-  explicit HostSettingBasicForm(QWidget* parent = Q_NULLPTR);
+  explicit HostSettingGeneralForm(QWidget* parent = Q_NULLPTR);
   void setData(const Data& data) const;
   const Data& getData() const;
   void setDataAsDefault() const;
@@ -32,5 +32,5 @@ class HostSettingBasicForm : public QWidget {
  private:
   class Private;
   Private* d_;
-  Q_DISABLE_COPY(HostSettingBasicForm)
+  Q_DISABLE_COPY(HostSettingGeneralForm)
 };

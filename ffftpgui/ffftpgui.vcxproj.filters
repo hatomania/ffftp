@@ -125,9 +125,6 @@
     <QtUic Include="ui\dirsandtaskmsgform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingbasicform.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="ui\hostsettingsdialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
@@ -155,6 +152,9 @@
     <QtUic Include="ui\hostsettingspecialform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ui\hostsettinggeneralform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -164,9 +164,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\ffftpthread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingbasicform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\hostsettingsdialog.cpp">
@@ -205,6 +202,9 @@
     <ClCompile Include="src\ui\host\hostsettingspecialform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettinggeneralform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -213,9 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\core\ffftpthread.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingbasicform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingsdialog.hpp">
@@ -252,6 +249,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingspecialform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettinggeneralform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

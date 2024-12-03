@@ -1,16 +1,16 @@
-﻿#include "hostsettingbasicform.hpp"
+﻿#include "hostsettinggeneralform.hpp"
 
 #include <QFileDialog>
 
 #include "stdafx.h"
-#include "ui_hostsettingbasicform.h"
+#include "ui_hostsettinggeneralform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
-class HostSettingBasicForm::Private {
+class HostSettingGeneralForm::Private {
  public:
   Private() {}
   ~Private() = default;
-  Ui::HostSettingBasicForm ui;
+  Ui::HostSettingGeneralForm ui;
   QString initdir_remote;
 };
 
@@ -35,12 +35,12 @@ constexpr const char* const kDefAnonymousPassword = "who@example.com";
 // この.mocファイルをcppとしてコンパイラに通してくれればいいがそんなことはしてくれず結果的にcppから出力したmocのコードはコンパイルできない
 // （ちなみにこの"(拡張子を除くファイル名).moc"を手動で"moc_(拡張子を除くファイル名).cpp.cpp"に変更してもコンパイルしてくれなかった）
 // 独自のプレビルドで実現できないことはないが、さすがにそこまでするのはな～
-// class HostSettingBasicForm::Private : public QWidget {
+// class HostSettingGeneralForm::Private : public QWidget {
 //	Q_OBJECT
 // public:
 //	Private(QWidget* parent = Q_NULLPTR) : QWidget(parent) {}
 //	~Private() {}
-//	Ui::HostSettingBasicForm ui;
+//	Ui::HostSettingGeneralForm ui;
 // public slots:
 //	void onClick_pushButton_SelectLocalDir() {
 //		qDebug() << __FUNCTION__ << "called!";
@@ -50,7 +50,7 @@ constexpr const char* const kDefAnonymousPassword = "who@example.com";
 //	}
 //};
 
-HostSettingBasicForm::Data::Data()
+HostSettingGeneralForm::Data::Data()
     : host_name(kEmptyString),
       host_adrs(kEmptyString),
       username(kEmptyString),
@@ -62,8 +62,8 @@ HostSettingBasicForm::Data::Data()
       enabled_curdir(false),
       last_dir(false) {}
 
-HostSettingBasicForm::HostSettingBasicForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingBasicForm::Private()) {
+HostSettingGeneralForm::HostSettingGeneralForm(QWidget* parent)
+    : QWidget(parent), d_(new HostSettingGeneralForm::Private()) {
   d_->ui.setupUi(this);
   this->setDataAsDefault();
 
@@ -72,7 +72,7 @@ HostSettingBasicForm::HostSettingBasicForm(QWidget* parent)
   // SLOT(onClick_pushButton_NowDir()));
 }
 
-void HostSettingBasicForm::setData(const Data& data) const {
+void HostSettingGeneralForm::setData(const Data& data) const {
   //d_->initdir_remote = data.initdir_remote;
   //d_->ui.lineEdit_SettingName->setText(data.settingname);
   //d_->ui.lineEdit_HostAddr->setText(data.hostaddr);
@@ -85,7 +85,7 @@ void HostSettingBasicForm::setData(const Data& data) const {
   //d_->ui.pushButton_NowDir->setEnabled(!d_->initdir_remote.isEmpty());
 }
 
-const HostSettingBasicForm::Data& HostSettingBasicForm::getData() const {
+const HostSettingGeneralForm::Data& HostSettingGeneralForm::getData() const {
   static Data data;
   //data.settingname = d_->ui.lineEdit_SettingName->text();
   //data.hostaddr = d_->ui.lineEdit_HostAddr->text();
@@ -98,9 +98,9 @@ const HostSettingBasicForm::Data& HostSettingBasicForm::getData() const {
   return data;
 }
 
-void HostSettingBasicForm::setDataAsDefault() const { this->setData(Data()); }
+void HostSettingGeneralForm::setDataAsDefault() const { this->setData(Data()); }
 
-void HostSettingBasicForm::onClick_toolButton_SelectLocalDir() {
+void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {
   qDebug() << __FUNCTION__ << "called!";
   QString dirpath = QFileDialog::getExistingDirectory(
       this, "", d_->ui.lineEdit_LocalDir->text());
@@ -109,12 +109,12 @@ void HostSettingBasicForm::onClick_toolButton_SelectLocalDir() {
   }
 }
 
-void HostSettingBasicForm::onClick_pushButton_NowDir() {
+void HostSettingGeneralForm::onClick_pushButton_NowDir() {
   qDebug() << __FUNCTION__ << "called!";
   d_->ui.lineEdit_RemoteDir->setText(d_->initdir_remote);
 }
 
-void HostSettingBasicForm::onClick_checkBox_Anonymous(bool checked) {
+void HostSettingGeneralForm::onClick_checkBox_Anonymous(bool checked) {
   qDebug() << __FUNCTION__ << "called!";
   static QPair<QString, QString> user_passwd;
   if (checked) {

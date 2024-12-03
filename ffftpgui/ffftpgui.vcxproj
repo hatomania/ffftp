@@ -50,11 +50,11 @@
   <ItemGroup>
     <QtUic Include="ui\dirsandtaskmsgform.ui" />
     <QtUic Include="ui\hostsettingadvancedform.ui" />
-    <QtUic Include="ui\hostsettingbasicform.ui" />
     <QtUic Include="ui\hostsettingcharcodeform.ui" />
     <QtUic Include="ui\hostsettingdialupform.ui" />
     <QtUic Include="ui\hostsettingencryptform.ui" />
     <QtUic Include="ui\hostsettingexpansionform.ui" />
+    <QtUic Include="ui\hostsettinggeneralform.ui" />
     <QtUic Include="ui\hostsettingsdialog.ui" />
     <QtUic Include="ui\hostsettingspecialform.ui" />
     <QtUic Include="ui\hostslistdialog.ui" />
@@ -68,11 +68,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
-    <ClCompile Include="src\ui\host\hostsettingbasicform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingcharcodeform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingencryptform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingexpansionform.cpp" />
+    <ClCompile Include="src\ui\host\hostsettinggeneralform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingsdialog.cpp" />
     <ClCompile Include="src\ui\host\hostsettingspecialform.cpp" />
     <ClCompile Include="src\ui\host\hostslistdialog.cpp" />
@@ -82,6 +82,7 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\ui\host\hostsettinggeneralform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingspecialform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingencryptform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingadvancedform.hpp" />
@@ -94,7 +95,6 @@
     <QtMoc Include="src\ui\main\dirsandtaskmsgform.hpp" />
     <QtMoc Include="src\ui\host\hostslistdialog.hpp" />
     <QtMoc Include="src\ui\host\hostsettingsdialog.hpp" />
-    <QtMoc Include="src\ui\host\hostsettingbasicform.hpp" />
     <QtMoc Include="src\core\ffftpthread.hpp" />
     <ClInclude Include="src\stdafx.h" />
   </ItemGroup>

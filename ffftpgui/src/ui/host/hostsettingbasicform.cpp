@@ -1,5 +1,7 @@
 ﻿#include "hostsettingbasicform.hpp"
 
+#include <QFileDialog>
+
 #include "stdafx.h"
 #include "ui_hostsettingbasicform.h"
 

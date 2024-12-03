@@ -1,18 +1,18 @@
 ﻿#pragma once
 
-#include <QtCore/QThread>
+#include <QThread>
 
 class FFFTPThread : public QThread {
   Q_OBJECT
 
  public:
-  explicit FFFTPThread(QWidget *parent = Q_NULLPTR);
+  explicit FFFTPThread(QObject* parent = Q_NULLPTR);
 
  public slots:
   void connect(int index);
 
  private:
   class Private;
-  Private *d_;
+  Private* d_;
   Q_DISABLE_COPY(FFFTPThread)
 };

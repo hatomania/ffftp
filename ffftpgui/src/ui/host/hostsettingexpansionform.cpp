@@ -1,6 +1,5 @@
 ﻿#include "hostsettingexpansionform.hpp"
 
-#include "stdafx.h"
 #include "ui_hostsettingexpansionform.h"
 
 namespace {

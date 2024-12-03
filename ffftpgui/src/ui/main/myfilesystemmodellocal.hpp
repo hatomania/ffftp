@@ -29,7 +29,7 @@ class MyFileSystemModelLocal : public MyFileSystemModel {
   Q_OBJECT
 
  public:
-  explicit MyFileSystemModelLocal(QWidget* parent = Q_NULLPTR,
+  explicit MyFileSystemModelLocal(QObject* parent = Q_NULLPTR,
                                   const QString& path = "",
                                   bool isshowndot = false);
   QString fullPath(const QModelIndex& index) const override;

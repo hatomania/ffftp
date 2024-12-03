@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <QtWidgets/QWidget>
+#include <QWidget>
 
 class HostSettingSpecialForm : public QWidget {
   Q_OBJECT

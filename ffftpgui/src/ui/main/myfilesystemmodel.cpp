@@ -1,6 +1,6 @@
 ﻿#include "myfilesystemmodel.hpp"
 
-#include "stdafx.h"
+#include <QAbstractItemModel>
 
 MyDirList::MyDirList() {}
 
@@ -35,9 +35,9 @@ class MyFileSystemModel::Private {
 //     kStringOwner,
 // };
 
-MyFileSystemModel::MyFileSystemModel(QWidget* parent, const QString& path,
+MyFileSystemModel::MyFileSystemModel(QObject* parent, const QString& path,
                                      bool isshowndot)
-    : QAbstractItemModel(parent), d_(new MyFileSystemModel::Private()) {}
+    : QAbstractItemModel(parent), d_(new MyFileSystemModel::Private()) {};
 
 void MyFileSystemModel::setShowDot(bool isshowndot) {
   dir_->setShowDot(isshowndot);

@@ -1,6 +1,5 @@
 ﻿#include "hostsettingencryptform.hpp"
 
-#include "stdafx.h"
 #include "ui_hostsettingencryptform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

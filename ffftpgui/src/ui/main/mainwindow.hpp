@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <QtWidgets/QMainWindow>
+#include <QMainWindow>
 
 class MainWindow : public QMainWindow {
   Q_OBJECT

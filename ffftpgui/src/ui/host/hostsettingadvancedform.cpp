@@ -1,6 +1,5 @@
 ﻿#include "hostsettingadvancedform.hpp"
 
-#include "stdafx.h"
 #include "ui_hostsettingadvancedform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

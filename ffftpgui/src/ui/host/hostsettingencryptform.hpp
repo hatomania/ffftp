@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <QtWidgets/QWidget>
+#include <QWidget>
 
 class HostSettingEncryptForm : public QWidget {
   Q_OBJECT

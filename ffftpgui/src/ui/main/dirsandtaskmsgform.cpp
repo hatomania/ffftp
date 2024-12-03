@@ -1,7 +1,9 @@
 ﻿#include "dirsandtaskmsgform.hpp"
 
+#include <QDir>
+#include <QScrollBar>
+
 #include "myfilesystemmodellocal.hpp"
-#include "stdafx.h"
 #include "ui_dirsandtaskmsgform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#include <QtCore/QAbstractItemModel>
-#include <QtCore/QFileInfo>
+#include <QAbstractItemModel>
+#include <QFileInfo>
 
 class MyDirList {
  public:
@@ -32,7 +32,7 @@ class MyFileSystemModel : public QAbstractItemModel {
   Q_OBJECT
 
  public:
-  explicit MyFileSystemModel(QWidget* parent = Q_NULLPTR,
+  explicit MyFileSystemModel(QObject* parent = Q_NULLPTR,
                              const QString& path = "", bool isshowndot = false);
   void setShowDot(bool isshowndot);
   bool showDot() const;

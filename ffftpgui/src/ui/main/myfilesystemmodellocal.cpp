@@ -1,5 +1,8 @@
 ﻿#include "myfilesystemmodellocal.hpp"
 
+#include <QDir>
+#include <QIcon>
+
 #include "stdafx.h"
 
 MyDirListLocal::MyDirListLocal(const QString& fullpath, const QString& filename,
@@ -83,7 +86,7 @@ static const QVector<QString> _headerdata = {
     kStringExtension,
 };
 
-MyFileSystemModelLocal::MyFileSystemModelLocal(QWidget* parent,
+MyFileSystemModelLocal::MyFileSystemModelLocal(QObject* parent,
                                                const QString& path,
                                                bool isshowndot)
     : MyFileSystemModel(parent, path),

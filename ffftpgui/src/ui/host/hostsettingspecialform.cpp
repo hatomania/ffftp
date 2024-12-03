@@ -1,6 +1,5 @@
 ﻿#include "hostsettingspecialform.hpp"
 
-#include "stdafx.h"
 #include "ui_hostsettingspecialform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

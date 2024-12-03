@@ -1,9 +1,4 @@
-﻿#include <QtCore/QDebug>
-#include <QtGui/QStandardItemModel>
-#include <QtWidgets/QtWidgets>
-#include <vector>
-
-#include "ffftp.h"
+﻿#include <QString>
 
 #define DECLARE_CONSTANT_CHAR(x) extern const char* const x;
 #define DECLARE_CONSTANT_QSTRING(x) extern const QString x;

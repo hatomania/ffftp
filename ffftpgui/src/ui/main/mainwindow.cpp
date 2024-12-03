@@ -1,6 +1,11 @@
 ﻿#include "mainwindow.hpp"
 
+#include <QActionGroup>
+#include <QInputDialog>
+#include <QMessageBox>
+
 #include "core/ffftpthread.hpp"
+#include "ffftp.h"
 #include "stdafx.h"
 #include "ui/host/hostslistdialog.hpp"
 #include "ui_mainwindow.h"

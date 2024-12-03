@@ -1,6 +1,5 @@
 ﻿#include "hostsettingdialupform.hpp"
 
-#include "stdafx.h"
 #include "ui_hostsettingdialupform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

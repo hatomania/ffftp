@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <QtWidgets/QDialog>
+#include <QDialog>
 
 class HostSettingsDialog : public QDialog {
   Q_OBJECT

@@ -1,5 +1,9 @@
 ﻿#include "hostslistdialog.hpp"
 
+#include <QStandardItem>
+#include <QStandardItemModel>
+
+#include "ffftp.h"
 #include "hostsettingsdialog.hpp"
 #include "stdafx.h"
 #include "ui_hostslistdialog.h"

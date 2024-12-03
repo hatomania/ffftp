@@ -1,6 +1,6 @@
 ﻿#include <QtWidgets/QApplication>
 
-#include "stdafx.h"
+#include "ffftp.h"
 #include "ui/main/mainwindow.hpp"
 
 int main(int argc, char *argv[]) {

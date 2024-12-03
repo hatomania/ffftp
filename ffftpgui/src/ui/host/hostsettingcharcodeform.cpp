@@ -1,6 +1,5 @@
 ﻿#include "hostsettingcharcodeform.hpp"
 
-#include "stdafx.h"
 #include "ui_hostsettingcharcodeform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装

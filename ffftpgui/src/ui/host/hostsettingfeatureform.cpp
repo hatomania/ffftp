@@ -1,20 +1,20 @@
-﻿#include "hostsettingexpansionform.hpp"
+﻿#include "hostsettingfeatureform.hpp"
 
-#include "ui_hostsettingexpansionform.h"
+#include "ui_hostsettingfeatureform.h"
 
 namespace {
 constexpr int kDefPort = 21;
 }
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
-class HostSettingExpansionForm::Private {
+class HostSettingFeatureForm::Private {
  public:
   Private() {}
   ~Private() = default;
-  Ui::HostSettingExpansionForm ui;
+  Ui::HostSettingFeatureForm ui;
 };
 
-HostSettingExpansionForm::Data::Data()
+HostSettingFeatureForm::Data::Data()
     : use_firewall(false),
       use_pasv_mode(true),
       use_folder_samemove(false),
@@ -24,14 +24,14 @@ HostSettingExpansionForm::Data::Data()
       security(1),
       cmd_when_connect("") {}
 
-HostSettingExpansionForm::HostSettingExpansionForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingExpansionForm::Private()) {
+HostSettingFeatureForm::HostSettingFeatureForm(QWidget* parent)
+    : QWidget(parent), d_(new HostSettingFeatureForm::Private()) {
   d_->ui.setupUi(this);
   d_->ui.lineEdit_Port->setValidator(new QIntValidator(0, 0xFFFF, this));
   setDataAsDefault();
 }
 
-void HostSettingExpansionForm::setData(const Data& data) const {
+void HostSettingFeatureForm::setData(const Data& data) const {
   d_->ui.checkBox_UseFirewall->setChecked(data.use_firewall);
   d_->ui.checkBox_UserPASVMode->setChecked(data.use_pasv_mode);
   d_->ui.checkBox_UseFolderSameMove->setChecked(data.use_folder_samemove);
@@ -42,7 +42,7 @@ void HostSettingExpansionForm::setData(const Data& data) const {
   d_->ui.plainTextEdit_CmdWhenConnect->setPlainText(data.cmd_when_connect);
 }
 
-const HostSettingExpansionForm::Data& HostSettingExpansionForm::getData()
+const HostSettingFeatureForm::Data& HostSettingFeatureForm::getData()
     const {
   static Data data;
   data.use_firewall = d_->ui.checkBox_UseFirewall->isChecked();
@@ -56,10 +56,10 @@ const HostSettingExpansionForm::Data& HostSettingExpansionForm::getData()
   return data;
 }
 
-void HostSettingExpansionForm::setDataAsDefault() const {
+void HostSettingFeatureForm::setDataAsDefault() const {
   this->setData(Data());
 }
 
-void HostSettingExpansionForm::onClick_pushButton_StdPort() {
+void HostSettingFeatureForm::onClick_pushButton_StdPort() {
   d_->ui.lineEdit_Port->setText(QString::number(kDefPort));
 }

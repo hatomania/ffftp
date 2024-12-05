@@ -52,7 +52,7 @@
     <QtUic Include="ui\hostsettingadvancedform.ui" />
     <QtUic Include="ui\hostsettingdialupform.ui" />
     <QtUic Include="ui\hostsettingencryptionform.ui" />
-    <QtUic Include="ui\hostsettingexpansionform.ui" />
+    <QtUic Include="ui\hostsettingfeatureform.ui" />
     <QtUic Include="ui\hostsettinggeneralform.ui" />
     <QtUic Include="ui\hostsettingkanjicodeform.ui" />
     <QtUic Include="ui\hostsettingsdialog.ui" />
@@ -71,7 +71,7 @@
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp" />
-    <ClCompile Include="src\ui\host\hostsettingexpansionform.cpp" />
+    <ClCompile Include="src\ui\host\hostsettingfeatureform.cpp" />
     <ClCompile Include="src\ui\host\hostsettinggeneralform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingkanjicodeform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingsdialog.cpp" />
@@ -83,6 +83,7 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\ui\host\hostsettingfeatureform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingencryptionform.hpp" />
     <QtMoc Include="src\ui\base\baseform.hpp" />
@@ -90,7 +91,6 @@
     <QtMoc Include="src\ui\host\hostsettingspecialform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingadvancedform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingdialupform.hpp" />
-    <QtMoc Include="src\ui\host\hostsettingexpansionform.hpp" />
     <QtMoc Include="src\ui\main\myfilesystemmodellocal.hpp" />
     <QtMoc Include="src\ui\main\myfilesystemmodel.hpp" />
     <QtMoc Include="src\ui\main\mainwindow.hpp" />

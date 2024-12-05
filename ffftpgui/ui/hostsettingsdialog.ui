@@ -28,7 +28,7 @@
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout"/>
      </widget>
-     <widget class="HostSettingExpansionForm" name="tab_1">
+     <widget class="HostSettingAdvancedForm" name="tab_1">
       <attribute name="title">
        <string>拡張</string>
       </attribute>
@@ -43,7 +43,7 @@
        <string>ダイアルアップ</string>
       </attribute>
      </widget>
-     <widget class="HostSettingAdvancedForm" name="tab_4">
+     <widget class="HostSettingSpecialForm" name="tab_4">
       <attribute name="title">
        <string>高度</string>
       </attribute>
@@ -53,7 +53,7 @@
        <string>暗号化</string>
       </attribute>
      </widget>
-     <widget class="HostSettingSpecialForm" name="tab_6">
+     <widget class="HostSettingFeatureForm" name="tab_6">
       <attribute name="title">
        <string>特殊機能</string>
       </attribute>
@@ -80,9 +80,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HostSettingExpansionForm</class>
+   <class>HostSettingAdvancedForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingexpansionform.hpp</header>
+   <header location="global">ui/host/hostsettingadvancedform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -98,9 +98,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HostSettingAdvancedForm</class>
+   <class>HostSettingSpecialForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingadvancedform.hpp</header>
+   <header location="global">ui/host/hostsettingspecialform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -110,9 +110,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HostSettingSpecialForm</class>
+   <class>HostSettingFeatureForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingspecialform.hpp</header>
+   <header location="global">ui/host/hostsettingfeatureform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

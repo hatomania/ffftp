@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-class HostSettingExpansionForm : public QWidget {
+class HostSettingFeatureForm : public QWidget {
   Q_OBJECT
 
  public:
@@ -17,7 +17,7 @@ class HostSettingExpansionForm : public QWidget {
     QString cmd_when_connect;
     Data();
   };
-  explicit HostSettingExpansionForm(QWidget* parent = Q_NULLPTR);
+  explicit HostSettingFeatureForm(QWidget* parent = Q_NULLPTR);
   void setData(const Data& data) const;
   const Data& getData() const;
   void setDataAsDefault() const;
@@ -28,5 +28,5 @@ class HostSettingExpansionForm : public QWidget {
  private:
   class Private;
   Private* d_;
-  Q_DISABLE_COPY(HostSettingExpansionForm)
+  Q_DISABLE_COPY(HostSettingFeatureForm)
 };

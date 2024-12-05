@@ -10,7 +10,6 @@ class BaseForm : public QWidget {
 
  public:
   struct Data {
-    int CCCCCCC;
     Data();
   };
 

@@ -2,95 +2,62 @@
 
 #include "ui_hostsettingadvancedform.h"
 
+namespace {
+inline const HostSettingAdvancedForm::Data& castData(
+    const BaseForm::Data& data) {
+  return static_cast<const HostSettingAdvancedForm::Data&>(data);
+}
+inline HostSettingAdvancedForm::Data& castData(BaseForm::Data& data) {
+  return static_cast<HostSettingAdvancedForm::Data&>(data);
+}
+}  // namespace
+
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class HostSettingAdvancedForm::Private {
  public:
-  Private() {}
-  ~Private() = default;
+  Private();
+  ~Private();
   Ui::HostSettingAdvancedForm ui;
-  void enableControls() const;
 };
-
-namespace {
-constexpr const char* const kDefCHMODCmd = "SITE CHMOD";
-constexpr const char* const kDefNLST = "-alL";
-}  // namespace
+HostSettingAdvancedForm::Private::Private() {}
+HostSettingAdvancedForm::Private::~Private() {}
 
 HostSettingAdvancedForm::Data::Data()
-    : is_LIST_cmd(true),
-      is_MLSD_cmd(true),
-      is_NLST_cmd(true),
-      not_fullpath(false),
-      CHMOD_cmd(QString(kDefCHMODCmd)),
-      host(0),
-      NLST(QString(kDefNLST)) {}
+    : firewall(false),
+      pasv(false),
+      syncmove(false),
+      port(0),
+      account(),
+      timezone(0),
+      security(0),
+      initcmd() {}
 
-void HostSettingAdvancedForm::Private::enableControls() const {
-  int cidx = ui.comboBox_Host->currentIndex();
-  if (cidx == 8) {
-    ui.checkBox_LISTCmd->setChecked(true);
-  }
-
-  bool checked = ui.checkBox_LISTCmd->isChecked();
-  if (checked) {
-    ui.checkBox_MLSDCmd->setEnabled(true);
-    ui.checkBox_UseNLSTR->setEnabled(false);
-  } else {
-    ui.checkBox_MLSDCmd->setEnabled(false);
-    ui.checkBox_UseNLSTR->setEnabled(true);
-  }
-  if (cidx == 2 || cidx == 8) {
-    ui.checkBox_LISTCmd->setEnabled(false);
-    ui.checkBox_UseNLSTR->setEnabled(false);
-    ui.checkBox_NotFullpath->setEnabled(false);
-  } else {
-    ui.checkBox_LISTCmd->setEnabled(true);
-    if (!checked) {
-      ui.checkBox_UseNLSTR->setEnabled(true);
-    }
-    ui.checkBox_NotFullpath->setEnabled(true);
-  }
-}
+HostSettingAdvancedForm::Data::Data(bool firewall, bool pasv, bool syncmove,
+                                    int port, QString account, int timezone,
+                                    int security, QString initcmd)
+    : firewall(firewall),
+      pasv(pasv),
+      syncmove(syncmove),
+      port(port),
+      account(account),
+      timezone(timezone),
+      security(security),
+      initcmd(initcmd) {}
 
 HostSettingAdvancedForm::HostSettingAdvancedForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingAdvancedForm::Private()) {
+    : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  setDataAsDefault();
+}
+HostSettingAdvancedForm ::~HostSettingAdvancedForm() {}
+
+void HostSettingAdvancedForm::setRawData(const BaseForm::Data& data) {
+  castData(*data_) = castData(data);
 }
 
-void HostSettingAdvancedForm::setData(const Data& data) const {
-  d_->ui.checkBox_LISTCmd->setChecked(data.is_LIST_cmd);
-  d_->ui.checkBox_MLSDCmd->setChecked(data.is_MLSD_cmd);
-  d_->ui.checkBox_UseNLSTR->setChecked(data.is_NLST_cmd);
-  d_->ui.checkBox_NotFullpath->setChecked(data.not_fullpath);
-  d_->ui.lineEdit_CHMODCmd->setText(data.CHMOD_cmd);
-  d_->ui.comboBox_Host->setCurrentIndex(data.host);
-  d_->ui.lineEdit_NLST->setText(data.NLST);
-  d_->enableControls();
-}
+void HostSettingAdvancedForm::updateUi(const BaseForm::Data& data) {}
 
-const HostSettingAdvancedForm::Data& HostSettingAdvancedForm::getData() const {
-  static Data data;
-  return data;
-}
+void HostSettingAdvancedForm::updateData(BaseForm::Data& data) const {}
 
-void HostSettingAdvancedForm::setDataAsDefault() const {
-  this->setData(Data());
-}
+void HostSettingAdvancedForm::onClick_pushButton_StdPort() {
 
-void HostSettingAdvancedForm::onClick_pushButton_CHMODCmd() {
-  d_->ui.lineEdit_CHMODCmd->setText(QString(kDefCHMODCmd));
-}
-
-void HostSettingAdvancedForm::onClick_pushButton_StdNLST() {
-  d_->ui.lineEdit_NLST->setText(QString(kDefNLST));
-}
-
-void HostSettingAdvancedForm::onClick_checkBox_LISTCmd(bool checked) {
-  d_->enableControls();
-}
-
-void HostSettingAdvancedForm::onCurrentIndexChanged_comboBox_Host(int index) {
-  qDebug() << __FUNCTION__ << "called!";
-  d_->enableControls();
 }

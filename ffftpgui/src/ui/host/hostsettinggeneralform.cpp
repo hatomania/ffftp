@@ -2,7 +2,6 @@
 
 #include <QFileDialog>
 
-#include "ui/base/baseform.hpp"
 #include "ui_hostsettinggeneralform.h"
 
 namespace {
@@ -68,7 +67,7 @@ HostSettingGeneralForm::Data::Data()
       initdir_remote(),
       initdir_remote_now(),
       enabled_curdir(false),
-      last_dir(true) {}
+      last_dir(false) {}
 
 HostSettingGeneralForm::Data::Data(std::wstring host_name,
                                    std::wstring host_adrs,
@@ -89,8 +88,7 @@ HostSettingGeneralForm::Data::Data(std::wstring host_name,
       last_dir(last_dir) {}
 
 HostSettingGeneralForm::HostSettingGeneralForm(QWidget* parent)
-    : BaseForm(new HostSettingGeneralForm::Data(), parent),
-      d_(new HostSettingGeneralForm::Private()) {
+    : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
 
   // slots隠ぺいの残骸

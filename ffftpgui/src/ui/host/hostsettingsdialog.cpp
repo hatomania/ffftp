@@ -22,22 +22,19 @@ HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
 void HostSettingsDialog::setHostData(const hostdata& hdata) {
   // [基本]タブへデータを入力
   HostSettingGeneralForm::Data data_tab_0{
-      hdata.general.host_name,
-      hdata.general.host_adrs,
-      hdata.general.username,
-      hdata.general.password,
-      hdata.general.anonymous,
-      hdata.general.initdir_local,
-      hdata.general.initdir_remote,
-      hdata.general.initdir_remote_now,
-      hdata.general.enabled_curdir,
-      hdata.general.last_dir,
+      hdata.general.host_name,      hdata.general.host_adrs,
+      hdata.general.username,       hdata.general.password,
+      hdata.general.anonymous,      hdata.general.initdir_local,
+      hdata.general.initdir_remote, hdata.general.initdir_remote_now,
+      hdata.general.enabled_curdir, hdata.general.last_dir,
   };
   d_->ui.tab_0->setData(data_tab_0);
+  // [拡張]タブへデータを入力
+  HostSettingAdvancedForm::Data data_tab_1{};
 }
 
-#define DECL_FORMDATA(T, V)\
-  static T::Data data_##V;\
+#define DECL_FORMDATA(T, V) \
+  static T::Data data_##V;  \
   data_##V = static_cast<const T::Data&>(d_->ui.V->data());
 
 void HostSettingsDialog::hostData(hostdata& hdata) const {

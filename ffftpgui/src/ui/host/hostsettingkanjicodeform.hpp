@@ -1,42 +1,34 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSETTINGKANJICODEFORM_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSETTINGKANJICODEFORM_HPP_
+
+#include <memory>
 
 #include <QWidget>
 
-class HostSettingKanjiCodeForm : public QWidget {
+#include "ui/base/baseform.hpp"
+
+class HostSettingKanjiCodeForm : public BaseForm {
   Q_OBJECT
 
  public:
-  enum class Code {
-    NOP,
-    SJIS,
-    JIS,
-    EUC,
-    UTF8,
-    UTF8BOM,
-    AUTO,
-    SMBHEX,
-    SMBCAP,
-    UTF8HFSP,
-  };
-
-  struct Data {
-    Code host_code;
-    Code file_code;
-    std::optional<bool> is_host_hkana_to_wkana;
-    std::optional<bool> is_file_hkana_to_wkana;
+  struct Data : public BaseForm::Data {
     Data();
   };
+
   explicit HostSettingKanjiCodeForm(QWidget* parent = Q_NULLPTR);
-  void setData(const Data& data) const;
-  const Data& getData() const;
-  void setDataAsDefault() const;
+  virtual ~HostSettingKanjiCodeForm();
+
+ protected:
+  void setRawData(const BaseForm::Data& data);
+  void updateUi(const BaseForm::Data& data);
+  void updateData(BaseForm::Data& data) const;
 
  private slots:
-  void onClick_radioButton_Host();
-  void onClick_radioButton_File();
 
  private:
   class Private;
   Private* d_;
   Q_DISABLE_COPY(HostSettingKanjiCodeForm)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSETTINGKANJICODEFORM_HPP_

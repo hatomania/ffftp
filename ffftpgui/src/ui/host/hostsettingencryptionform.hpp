@@ -1,21 +1,27 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSETTINGENCRYPTIONFORM_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSETTINGENCRYPTIONFORM_HPP_
+
+#include <memory>
 
 #include <QWidget>
 
-class HostSettingEncryptionForm : public QWidget {
+#include "ui/base/baseform.hpp"
+
+class HostSettingEncryptionForm : public BaseForm {
   Q_OBJECT
 
  public:
-  struct Data {
-    bool allow_without_encrypt;
-    bool is_ftps_explicit;
-    bool is_ftps_implicit;
+  struct Data : public BaseForm::Data {
     Data();
   };
+
   explicit HostSettingEncryptionForm(QWidget* parent = Q_NULLPTR);
-  void setData(const Data& data) const;
-  const Data& getData() const;
-  void setDataAsDefault() const;
+  virtual ~HostSettingEncryptionForm();
+
+ protected:
+  void setRawData(const BaseForm::Data& data);
+  void updateUi(const BaseForm::Data& data);
+  void updateData(BaseForm::Data& data) const;
 
  private slots:
 
@@ -24,3 +30,5 @@ class HostSettingEncryptionForm : public QWidget {
   Private* d_;
   Q_DISABLE_COPY(HostSettingEncryptionForm)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSETTINGENCRYPTIONFORM_HPP_

@@ -1,22 +1,27 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSETTINGDIALUPFORM_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSETTINGDIALUPFORM_HPP_
+
+#include <memory>
 
 #include <QWidget>
 
-class HostSettingDialupForm : public QWidget {
+#include "ui/base/baseform.hpp"
+
+class HostSettingDialupForm : public BaseForm {
   Q_OBJECT
 
  public:
-  struct Data {
-    bool use_dialup;
-    int dial_entry;
-    bool redial;
-    bool confirm_redial;
+  struct Data : public BaseForm::Data {
     Data();
   };
+
   explicit HostSettingDialupForm(QWidget* parent = Q_NULLPTR);
-  void setData(const Data& data) const;
-  const Data& getData() const;
-  void setDataAsDefault() const;
+  virtual ~HostSettingDialupForm();
+
+ protected:
+  void setRawData(const BaseForm::Data& data);
+  void updateUi(const BaseForm::Data& data);
+  void updateData(BaseForm::Data& data) const;
 
  private slots:
 
@@ -25,3 +30,5 @@ class HostSettingDialupForm : public QWidget {
   Private* d_;
   Q_DISABLE_COPY(HostSettingDialupForm)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSETTINGDIALUPFORM_HPP_

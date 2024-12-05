@@ -2,46 +2,37 @@
 
 #include "ui_hostsettingspecialform.h"
 
+namespace {
+inline const HostSettingSpecialForm::Data& castData(const BaseForm::Data& data) {
+  return static_cast<const HostSettingSpecialForm::Data&>(data);
+}
+inline HostSettingSpecialForm::Data& castData(BaseForm::Data& data) {
+  return static_cast<HostSettingSpecialForm::Data&>(data);
+}
+}  // namespace
+
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class HostSettingSpecialForm::Private {
  public:
-  Private() {}
-  ~Private() {}
+  Private();
+  ~Private();
   Ui::HostSettingSpecialForm ui;
 };
+HostSettingSpecialForm::Private::Private() {}
+HostSettingSpecialForm::Private::~Private() {}
 
-HostSettingSpecialForm::Data::Data()
-    : max_connection(1),
-      reuse_main_socket(true),
-      ignore_PASV_addr(false),
-      keep_connection_freq(60),
-      proc_when_error(0),
-      reconnect_after_error(true) {}
+HostSettingSpecialForm::Data::Data() {}
 
 HostSettingSpecialForm::HostSettingSpecialForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingSpecialForm::Private()) {
+    : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  setDataAsDefault();
+}
+HostSettingSpecialForm ::~HostSettingSpecialForm() {}
+
+void HostSettingSpecialForm::setRawData(const BaseForm::Data& data) {
+  castData(*data_) = castData(data);
 }
 
-void HostSettingSpecialForm::setData(const Data& data) const {
-  d_->ui.spinBox_MaxConnection->setValue(data.max_connection);
-  d_->ui.checkBox_ReuseMainSocket->setChecked(data.reuse_main_socket);
-  d_->ui.checkBox_IgnorePASVAddr->setChecked(data.ignore_PASV_addr);
-  d_->ui.spinBox_KeepConnectionFreq->setValue(data.keep_connection_freq);
-  d_->ui.comboBox_ProcWhenError->setCurrentIndex(data.proc_when_error);
-  d_->ui.checkBox_ReconnectAfterError->setChecked(data.reconnect_after_error);
-}
+void HostSettingSpecialForm::updateUi(const BaseForm::Data& data) {}
 
-const HostSettingSpecialForm::Data& HostSettingSpecialForm::getData() const {
-  static Data data;
-  data.max_connection = d_->ui.spinBox_MaxConnection->value();
-  data.reuse_main_socket = d_->ui.checkBox_ReuseMainSocket->isChecked();
-  data.ignore_PASV_addr = d_->ui.checkBox_IgnorePASVAddr->isChecked();
-  data.keep_connection_freq = d_->ui.spinBox_KeepConnectionFreq->value();
-  data.proc_when_error = d_->ui.comboBox_ProcWhenError->currentIndex();
-  data.reconnect_after_error = d_->ui.checkBox_ReconnectAfterError->isChecked();
-  return data;
-}
-
-void HostSettingSpecialForm::setDataAsDefault() const { this->setData(Data()); }
+void HostSettingSpecialForm::updateData(BaseForm::Data& data) const {}

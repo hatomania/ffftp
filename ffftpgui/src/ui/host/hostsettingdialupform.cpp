@@ -2,37 +2,37 @@
 
 #include "ui_hostsettingdialupform.h"
 
+namespace {
+inline const HostSettingDialupForm::Data& castData(const BaseForm::Data& data) {
+  return static_cast<const HostSettingDialupForm::Data&>(data);
+}
+inline HostSettingDialupForm::Data& castData(BaseForm::Data& data) {
+  return static_cast<HostSettingDialupForm::Data&>(data);
+}
+}  // namespace
+
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class HostSettingDialupForm::Private {
  public:
-  Private() {}
-  ~Private() = default;
+  Private();
+  ~Private();
   Ui::HostSettingDialupForm ui;
 };
+HostSettingDialupForm::Private::Private() {}
+HostSettingDialupForm::Private::~Private() {}
 
-HostSettingDialupForm::Data::Data()
-    : use_dialup(false), dial_entry(0), redial(false), confirm_redial(true) {}
+HostSettingDialupForm::Data::Data() {}
 
 HostSettingDialupForm::HostSettingDialupForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingDialupForm::Private()) {
+    : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  setDataAsDefault();
+}
+HostSettingDialupForm ::~HostSettingDialupForm() {}
+
+void HostSettingDialupForm::setRawData(const BaseForm::Data& data) {
+  castData(*data_) = castData(data);
 }
 
-void HostSettingDialupForm::setData(const Data& data) const {
-  d_->ui.groupBox_UseDialup->setChecked(data.use_dialup);
-  d_->ui.comboBox_DialupEntry->setCurrentIndex(data.dial_entry);
-  d_->ui.groupBox_UseRedial->setChecked(data.redial);
-  d_->ui.checkBox_ConfirmRedial->setChecked(data.confirm_redial);
-}
+void HostSettingDialupForm::updateUi(const BaseForm::Data& data) {}
 
-const HostSettingDialupForm::Data& HostSettingDialupForm::getData() const {
-  static Data data;
-  data.use_dialup = d_->ui.groupBox_UseDialup->isChecked();
-  data.dial_entry = d_->ui.comboBox_DialupEntry->currentIndex();
-  data.redial = d_->ui.groupBox_UseRedial->isChecked();
-  data.confirm_redial = d_->ui.checkBox_ConfirmRedial->isChecked();
-  return data;
-}
-
-void HostSettingDialupForm::setDataAsDefault() const { this->setData(Data()); }
+void HostSettingDialupForm::updateData(BaseForm::Data& data) const {}

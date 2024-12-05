@@ -1,24 +1,27 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSETTINGSPECIALFORM_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSETTINGSPECIALFORM_HPP_
+
+#include <memory>
 
 #include <QWidget>
 
-class HostSettingSpecialForm : public QWidget {
+#include "ui/base/baseform.hpp"
+
+class HostSettingSpecialForm : public BaseForm {
   Q_OBJECT
 
  public:
-  struct Data {
-    int max_connection;
-    bool reuse_main_socket;
-    bool ignore_PASV_addr;
-    int keep_connection_freq;
-    int proc_when_error;
-    bool reconnect_after_error;
+  struct Data : public BaseForm::Data {
     Data();
   };
+
   explicit HostSettingSpecialForm(QWidget* parent = Q_NULLPTR);
-  void setData(const Data& data) const;
-  const Data& getData() const;
-  void setDataAsDefault() const;
+  virtual ~HostSettingSpecialForm();
+
+ protected:
+  void setRawData(const BaseForm::Data& data);
+  void updateUi(const BaseForm::Data& data);
+  void updateData(BaseForm::Data& data) const;
 
  private slots:
 
@@ -27,3 +30,5 @@ class HostSettingSpecialForm : public QWidget {
   Private* d_;
   Q_DISABLE_COPY(HostSettingSpecialForm)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSETTINGSPECIALFORM_HPP_

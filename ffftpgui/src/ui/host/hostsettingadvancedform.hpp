@@ -1,34 +1,45 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSETTINGADVANCEDFORM_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSETTINGADVANCEDFORM_HPP_
+
+#include <memory>
 
 #include <QWidget>
 
-class HostSettingAdvancedForm : public QWidget {
+#include "ui/base/baseform.hpp"
+
+class HostSettingAdvancedForm : public BaseForm {
   Q_OBJECT
 
  public:
-  struct Data {
-    bool is_LIST_cmd;
-    bool is_MLSD_cmd;
-    bool is_NLST_cmd;
-    bool not_fullpath;
-    QString CHMOD_cmd;
-    int host;
-    QString NLST;
+  struct Data : public BaseForm::Data {
+    bool firewall;
+    bool pasv;
+    bool syncmove;
+    int port;
+    QString account;
+    int timezone;
+    int security;
+    QString initcmd;
     Data();
+    Data(bool firewall, bool pasv, bool syncmove, int port, QString account,
+         int timezone, int security, QString initcmd);
   };
+
   explicit HostSettingAdvancedForm(QWidget* parent = Q_NULLPTR);
-  void setData(const Data& data) const;
-  const Data& getData() const;
-  void setDataAsDefault() const;
+  virtual ~HostSettingAdvancedForm();
+
+ protected:
+  void setRawData(const BaseForm::Data& data);
+  void updateUi(const BaseForm::Data& data);
+  void updateData(BaseForm::Data& data) const;
 
  private slots:
-  void onClick_pushButton_CHMODCmd();
-  void onClick_pushButton_StdNLST();
-  void onClick_checkBox_LISTCmd(bool);
-  void onCurrentIndexChanged_comboBox_Host(int);
+  void onClick_pushButton_StdPort();
 
  private:
   class Private;
   Private* d_;
   Q_DISABLE_COPY(HostSettingAdvancedForm)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSETTINGADVANCEDFORM_HPP_

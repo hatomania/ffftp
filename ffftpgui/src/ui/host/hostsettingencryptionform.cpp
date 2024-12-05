@@ -2,39 +2,37 @@
 
 #include "ui_hostsettingencryptionform.h"
 
+namespace {
+inline const HostSettingEncryptionForm::Data& castData(const BaseForm::Data& data) {
+  return static_cast<const HostSettingEncryptionForm::Data&>(data);
+}
+inline HostSettingEncryptionForm::Data& castData(BaseForm::Data& data) {
+  return static_cast<HostSettingEncryptionForm::Data&>(data);
+}
+}  // namespace
+
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class HostSettingEncryptionForm::Private {
  public:
-  Private() {}
-  ~Private() {}
+  Private();
+  ~Private();
   Ui::HostSettingEncryptionForm ui;
 };
+HostSettingEncryptionForm::Private::Private() {}
+HostSettingEncryptionForm::Private::~Private() {}
 
-HostSettingEncryptionForm::Data::Data()
-    : allow_without_encrypt(true),
-      is_ftps_explicit(true),
-      is_ftps_implicit(true)
-
-{}
+HostSettingEncryptionForm::Data::Data() {}
 
 HostSettingEncryptionForm::HostSettingEncryptionForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingEncryptionForm::Private()) {
+    : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  setDataAsDefault();
+}
+HostSettingEncryptionForm ::~HostSettingEncryptionForm() {}
+
+void HostSettingEncryptionForm::setRawData(const BaseForm::Data& data) {
+  castData(*data_) = castData(data);
 }
 
-void HostSettingEncryptionForm::setData(const Data& data) const {
-  d_->ui.checkBox_WithoutEncrypt->setChecked(data.allow_without_encrypt);
-  d_->ui.checkBox_FTPSExplicit->setChecked(data.is_ftps_explicit);
-  d_->ui.checkBox_FTPSImplicit->setChecked(data.is_ftps_implicit);
-}
+void HostSettingEncryptionForm::updateUi(const BaseForm::Data& data) {}
 
-const HostSettingEncryptionForm::Data& HostSettingEncryptionForm::getData() const {
-  static Data data;
-  data.allow_without_encrypt = d_->ui.checkBox_WithoutEncrypt->isChecked();
-  data.is_ftps_explicit = d_->ui.checkBox_FTPSExplicit->isChecked();
-  data.is_ftps_implicit = d_->ui.checkBox_FTPSImplicit->isChecked();
-  return data;
-}
-
-void HostSettingEncryptionForm::setDataAsDefault() const { this->setData(Data()); }
+void HostSettingEncryptionForm::updateData(BaseForm::Data& data) const {}

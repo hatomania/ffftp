@@ -70,7 +70,6 @@ static void _buildHostTreeViewNode(hostcontext_t& hc, int level,
   }
 }
 
-;
 static struct _FindModelIndexRet {
   bool b;
   QModelIndex m;

@@ -36,11 +36,12 @@ void HostSettingsDialog::setHostData(const hostdata& hdata) {
   d_->ui.tab_0->setData(data_tab_0);
 }
 
-void HostSettingsDialog::hostData(hostdata& hdata) const {
-  static HostSettingGeneralForm::Data data_tab_0;
+#define DECL_FORMDATA(T, V)\
+  static T::Data data_##V;\
+  data_##V = static_cast<const T::Data&>(d_->ui.V->data());
 
-  data_tab_0 =
-      static_cast<const HostSettingGeneralForm::Data&>(d_->ui.tab_0->data());
+void HostSettingsDialog::hostData(hostdata& hdata) const {
+  DECL_FORMDATA(HostSettingGeneralForm, tab_0);
 
   hdata.general = {
       .host_name = data_tab_0.host_name.c_str(),

@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-/* 「基本」タブのUIデータ */
+/* [基本]タブのUIデータ */
 struct hostdata_general {
   const wchar_t* host_name;
   const wchar_t* host_adrs;
@@ -23,8 +23,21 @@ struct hostdata_general {
   bool last_dir;
 };
 
+/* [拡張]タブのUIデータ */
+struct hostdata_advanced {
+  bool firewall;
+  bool pasv;
+  bool syncmove;
+  int port;
+  const wchar_t* account;
+  int timezone;
+  int security;
+  const wchar_t* initcmd;
+};
+
 struct hostdata {
   hostdata_general general;
+  hostdata_advanced advanced;
 };
 
 #ifdef __cplusplus

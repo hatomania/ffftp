@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+#include "ffftp_hostdata.h"
+
 class HostsListDialog : public QDialog {
   Q_OBJECT
 
@@ -21,6 +23,9 @@ class HostsListDialog : public QDialog {
   void onClick_pushButton_Default();
   void onClick_pushButton_Help();
   void selectedHost(const QModelIndex& index);
+
+ private:
+  bool showSettingDialog(hostdata& in_out_data);
 
  private:
   class Private;

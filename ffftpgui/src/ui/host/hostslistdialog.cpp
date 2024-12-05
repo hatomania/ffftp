@@ -157,6 +157,7 @@ void HostsListDialog::Private::buildHostTreeView(int current) {
 HostsListDialog::HostsListDialog(QWidget* parent)
     : QDialog(parent), d_(new HostsListDialog::Private()) {
   d_->ui.setupUi(this);
+  // TODO: リストが非選択の時、ボタンを押せなくする
   d_->buildHostTreeView();
 }
 
@@ -175,11 +176,14 @@ int HostsListDialog::connectingHostIndex() { return d_->connecting_host_index; }
 
 void HostsListDialog::onClick_pushButton_NewHost() {
   qDebug() << __FUNCTION__ << "called!";
-  HostSettingsDialog(this).exec();
-  hostdata hd{};
-  int insert_index = d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
-  ffftp_hostcontext_new(insert_index, &hd);
-  d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
+  hostdata hdata;
+  ffftp_hostcontext_hostdata_default(&hdata);
+  if (showSettingDialog(hdata)) {
+    int insert_index =
+        d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
+    ffftp_hostcontext_new(insert_index, &hdata);
+    d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
+  }
 }
 
 void HostsListDialog::onClick_pushButton_NewGroup() {
@@ -188,6 +192,15 @@ void HostsListDialog::onClick_pushButton_NewGroup() {
 
 void HostsListDialog::onClick_pushButton_Mod() {
   qDebug() << __FUNCTION__ << "called!";
+  hostdata hdata;
+  ffftp_hostcontext_hostdata(d_->selected_host_index, &hdata);
+  if (showSettingDialog(hdata)) {
+    int insert_index =
+        d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
+    // TODO: newのまま
+    ffftp_hostcontext_new(insert_index, &hdata);
+    d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
+  }
 }
 
 void HostsListDialog::onClick_pushButton_Copy() {
@@ -230,4 +243,15 @@ void HostsListDialog::selectedHost(const QModelIndex& index) {
   qDebug() << __FUNCTION__
            << "called! data=" << d_->model->itemFromIndex(index)->data();
   d_->selected_host_index = d_->model->itemFromIndex(index)->data().toInt();
+}
+
+bool HostsListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
+  qDebug() << __FUNCTION__ << "called!";
+  bool ret = false;
+  HostSettingsDialog setting_dlg(in_out_data, this);// const付けるとthisもconst型になり型不一致でエラー
+  if (setting_dlg.exec() == QDialog::Accepted) {
+    setting_dlg.hostData(in_out_data);
+    ret = true;
+  }
+  return ret;
 }

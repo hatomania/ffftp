@@ -67,6 +67,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\ui\base\baseform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingcharcodeform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
@@ -82,6 +83,7 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="src\ui\base\baseform.hpp" />
     <QtMoc Include="src\ui\host\hostsettinggeneralform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingspecialform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingencryptform.hpp" />

@@ -86,6 +86,11 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index) {
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_hostdata_default(hostdata* hdata) {
+  libffftp::hostContextDataDefault(hdata);
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_hostdata(int index, hostdata* hdata) {
   libffftp::hostContextData(index, hdata);
 }

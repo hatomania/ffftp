@@ -2,22 +2,30 @@
 
 #include <QFileDialog>
 
-#include "stdafx.h"
+#include "ui/base/baseform.hpp"
 #include "ui_hostsettinggeneralform.h"
-
-// D-Pointer(PImplメカニズム)による隠ぺいの実装
-class HostSettingGeneralForm::Private {
- public:
-  Private() {}
-  ~Private() = default;
-  Ui::HostSettingGeneralForm ui;
-  QString initdir_remote;
-};
 
 namespace {
 constexpr const char* const kDefAnonymousUsename = "anonymous";
 constexpr const char* const kDefAnonymousPassword = "who@example.com";
+inline const HostSettingGeneralForm::Data& castData(
+    const BaseForm::Data& data) {
+  return static_cast<const HostSettingGeneralForm::Data&>(data);
+}
+inline HostSettingGeneralForm::Data& castData(BaseForm::Data& data) {
+  return static_cast<HostSettingGeneralForm::Data&>(data);
+}
 }  // namespace
+
+// D-Pointer(PImplメカニズム)による隠ぺいの実装
+class HostSettingGeneralForm::Private {
+ public:
+  Private();
+  ~Private();
+  Ui::HostSettingGeneralForm ui;
+};
+HostSettingGeneralForm::Private::Private() {}
+HostSettingGeneralForm::Private::~Private() {}
 
 // ＜＜slotも隠ぺいしようとしたが失敗＞＞
 // コード的には問題ないが、VS用Qtプラグインのmocプレビルドシステムが期待通り動かない
@@ -51,79 +59,110 @@ constexpr const char* const kDefAnonymousPassword = "who@example.com";
 //};
 
 HostSettingGeneralForm::Data::Data()
-    : host_name(kEmptyString),
-      host_adrs(kEmptyString),
-      username(kEmptyString),
-      password(kEmptyString),
+    : host_name(),
+      host_adrs(),
+      username(),
+      password(),
       anonymous(false),
-      initdir_local(kEmptyString),
-      initdir_remote(kEmptyString),
-      initdir_remote_now(kEmptyString),
+      initdir_local(),
+      initdir_remote(),
+      initdir_remote_now(),
       enabled_curdir(false),
-      last_dir(false) {}
+      last_dir(true) {}
+
+HostSettingGeneralForm::Data::Data(std::wstring host_name,
+                                   std::wstring host_adrs,
+                                   std::wstring username, std::wstring password,
+                                   bool anonymous, std::wstring initdir_local,
+                                   std::wstring initdir_remote,
+                                   std::wstring initdir_remote_now,
+                                   bool enabled_curdir, bool last_dir)
+    : host_name(host_name),
+      host_adrs(host_adrs),
+      username(username),
+      password(password),
+      anonymous(anonymous),
+      initdir_local(initdir_local),
+      initdir_remote(initdir_remote),
+      initdir_remote_now(initdir_remote_now),
+      enabled_curdir(enabled_curdir),
+      last_dir(last_dir) {}
 
 HostSettingGeneralForm::HostSettingGeneralForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingGeneralForm::Private()) {
+    : BaseForm(new HostSettingGeneralForm::Data(), parent),
+      d_(new HostSettingGeneralForm::Private()) {
   d_->ui.setupUi(this);
-  this->setDataAsDefault();
 
   // slots隠ぺいの残骸
   // QObject::connect(d_->ui.pushButton_NowDir, SIGNAL(clicked()), d_,
   // SLOT(onClick_pushButton_NowDir()));
 }
+HostSettingGeneralForm::~HostSettingGeneralForm() {}
 
-void HostSettingGeneralForm::setData(const Data& data) const {
-  //d_->initdir_remote = data.initdir_remote;
-  //d_->ui.lineEdit_SettingName->setText(data.settingname);
-  //d_->ui.lineEdit_HostAddr->setText(data.hostaddr);
-  //d_->ui.lineEdit_Username->setText(data.username);
-  //d_->ui.lineEdit_Password->setText(data.password);
-  //d_->ui.checkBox_Anonymous->setChecked(data.is_anonymous);
-  //d_->ui.lineEdit_LocalDir->setText(data.initdir_local);
-  //d_->ui.lineEdit_RemoteDir->setText(data.initdir_remote);
-  //d_->ui.checkBox_LastDir->setChecked(data.is_lastdir_as_initdir);
-  //d_->ui.pushButton_NowDir->setEnabled(!d_->initdir_remote.isEmpty());
+#define UI_SETTEXT(c, d) c->setText(d)
+#define UI_SETCHECKED(c, d) c->setChecked(d)
+#define UI_SETENABLED(c, d) c->setEnabled(d)
+
+void HostSettingGeneralForm::setRawData(const BaseForm::Data& data) {
+  castData(*data_) = castData(data);
 }
 
-const HostSettingGeneralForm::Data& HostSettingGeneralForm::getData() const {
-  static Data data;
-  //data.settingname = d_->ui.lineEdit_SettingName->text();
-  //data.hostaddr = d_->ui.lineEdit_HostAddr->text();
-  //data.username = d_->ui.lineEdit_Username->text();
-  //data.password = d_->ui.lineEdit_Password->text();
-  //data.is_anonymous = d_->ui.checkBox_Anonymous->isChecked();
-  //data.initdir_local = d_->ui.lineEdit_LocalDir->text();
-  //data.initdir_remote = d_->ui.lineEdit_RemoteDir->text();
-  //data.is_lastdir_as_initdir = d_->ui.checkBox_LastDir->isChecked();
-  return data;
+void HostSettingGeneralForm::updateUi(const BaseForm::Data& data) {
+  const HostSettingGeneralForm::Data& data_ = castData(data);
+  UI_SETTEXT(d_->ui.lineEdit_HostName, QString(data_.host_name));
+  UI_SETTEXT(d_->ui.lineEdit_HostAdrs, QString(data_.host_adrs));
+  UI_SETTEXT(d_->ui.lineEdit_Username, QString(data_.username));
+  UI_SETTEXT(d_->ui.lineEdit_Password, QString(data_.password));
+  UI_SETCHECKED(d_->ui.checkBox_Anonymous, data_.anonymous);
+  UI_SETTEXT(d_->ui.lineEdit_InitDirLocal, QString(data_.initdir_local));
+  UI_SETTEXT(d_->ui.lineEdit_InitDirRemote, QString(data_.initdir_remote));
+  UI_SETENABLED(d_->ui.pushButton_CurDir, data_.enabled_curdir);
+  UI_SETCHECKED(d_->ui.checkBox_LastDir, data_.last_dir);
 }
 
-void HostSettingGeneralForm::setDataAsDefault() const { this->setData(Data()); }
+#define UI_TEXT(d, c) d = c->text()
+#define UI_ISCHECKED(d, c) d = c->isChecked()
+
+void HostSettingGeneralForm::updateData(BaseForm::Data& data) const {
+  HostSettingGeneralForm::Data& data_ = castData(data);
+  UI_TEXT(data_.host_name, d_->ui.lineEdit_HostName).toStdWString();
+  UI_TEXT(data_.host_adrs, d_->ui.lineEdit_HostAdrs).toStdWString();
+  UI_TEXT(data_.username, d_->ui.lineEdit_Username).toStdWString();
+  UI_TEXT(data_.password, d_->ui.lineEdit_Password).toStdWString();
+  UI_ISCHECKED(data_.anonymous, d_->ui.checkBox_Anonymous);
+  UI_TEXT(data_.initdir_local, d_->ui.lineEdit_InitDirLocal).toStdWString();
+  UI_TEXT(data_.initdir_remote, d_->ui.lineEdit_InitDirRemote).toStdWString();
+  UI_ISCHECKED(data_.last_dir, d_->ui.checkBox_LastDir);
+}
 
 void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {
   qDebug() << __FUNCTION__ << "called!";
   QString dirpath = QFileDialog::getExistingDirectory(
-      this, "", d_->ui.lineEdit_LocalDir->text());
+      this, "", d_->ui.lineEdit_InitDirLocal->text());
   if (!dirpath.isEmpty()) {
-    d_->ui.lineEdit_LocalDir->setText(dirpath);
+    d_->ui.lineEdit_InitDirLocal->setText(dirpath);
   }
 }
 
-void HostSettingGeneralForm::onClick_pushButton_NowDir() {
+void HostSettingGeneralForm::onClick_pushButton_CurDir() {
   qDebug() << __FUNCTION__ << "called!";
-  d_->ui.lineEdit_RemoteDir->setText(d_->initdir_remote);
+  d_->ui.lineEdit_InitDirRemote->setText(QString(mydata().initdir_remote));
 }
 
 void HostSettingGeneralForm::onClick_checkBox_Anonymous(bool checked) {
   qDebug() << __FUNCTION__ << "called!";
   static QPair<QString, QString> user_passwd;
   if (checked) {
-    user_passwd.first = d_->ui.lineEdit_Username->text();
-    user_passwd.second = d_->ui.lineEdit_Password->text();
-    d_->ui.lineEdit_Username->setText(kDefAnonymousUsename);
-    d_->ui.lineEdit_Password->setText(kDefAnonymousPassword);
+    UI_TEXT(user_passwd.first, d_->ui.lineEdit_Username);
+    UI_TEXT(user_passwd.second, d_->ui.lineEdit_Password);
+    UI_SETTEXT(d_->ui.lineEdit_Username, kDefAnonymousUsename);
+    UI_SETTEXT(d_->ui.lineEdit_Password, kDefAnonymousPassword);
   } else {
-    d_->ui.lineEdit_Username->setText(user_passwd.first);
-    d_->ui.lineEdit_Password->setText(user_passwd.second);
+    UI_SETTEXT(d_->ui.lineEdit_Username, user_passwd.first);
+    UI_SETTEXT(d_->ui.lineEdit_Password, user_passwd.second);
   }
+}
+
+const HostSettingGeneralForm::Data& HostSettingGeneralForm::mydata() const {
+  return castData(rawData());
 }

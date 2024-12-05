@@ -1,12 +1,17 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSETTINGGENERALFORM_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSETTINGGENERALFORM_HPP_
+
+#include <memory>
 
 #include <QWidget>
 
-class HostSettingGeneralForm : public QWidget {
+#include "ui/base/baseform.hpp"
+
+class HostSettingGeneralForm : public BaseForm {
   Q_OBJECT
 
  public:
-  struct Data {
+  struct Data : public BaseForm::Data {
     std::wstring host_name;
     std::wstring host_adrs;
     std::wstring username;
@@ -18,19 +23,32 @@ class HostSettingGeneralForm : public QWidget {
     bool enabled_curdir;
     bool last_dir;
     Data();
+    Data(std::wstring host_name, std::wstring host_adrs, std::wstring username,
+         std::wstring password, bool anonymous, std::wstring initdir_local,
+         std::wstring initdir_remote, std::wstring initdir_remote_now,
+         bool enabled_curdir, bool last_dir);
   };
+
   explicit HostSettingGeneralForm(QWidget* parent = Q_NULLPTR);
-  void setData(const Data& data) const;
-  const Data& getData() const;
-  void setDataAsDefault() const;
+  virtual ~HostSettingGeneralForm();
+
+ protected:
+  void setRawData(const BaseForm::Data& data);
+  void updateUi(const BaseForm::Data& data);
+  void updateData(BaseForm::Data& data) const;
 
  private slots:
   void onClick_toolButton_SelectLocalDir();
-  void onClick_pushButton_NowDir();
+  void onClick_pushButton_CurDir();
   void onClick_checkBox_Anonymous(bool);
 
  private:
+  const Data& mydata() const;
+
+ private:
   class Private;
-  Private* d_;
+  std::unique_ptr<Private> d_;
   Q_DISABLE_COPY(HostSettingGeneralForm)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSETTINGGENERALFORM_HPP_

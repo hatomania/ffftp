@@ -1407,6 +1407,37 @@ const void* hostContextNext(const void* hc, int* index/*=先頭から何番目�
 	return nullptr;
 #endif
 }
+void convertHostData(hostdata& dst, const HOSTDATA& src) {
+	// [基本]タブ
+	dst.general.host_name = src.HostName.c_str();
+	dst.general.host_adrs = src.HostAdrs.c_str();
+	dst.general.username = src.UserName.c_str();
+	dst.general.password = src.PassWord.c_str();
+	dst.general.anonymous = src.Anonymous == YES;
+	dst.general.initdir_local = src.LocalInitDir.c_str();
+	dst.general.initdir_remote = src.RemoteInitDir.c_str();
+	dst.general.initdir_remote_now = AskRemoteCurDir().c_str();
+	dst.general.enabled_curdir = AskConnecting() == YES;
+	dst.general.last_dir = src.LastDir == YES;
+	// TODO: [拡張]タブ
+}
+void convertHostData(HOSTDATA& dst, const hostdata& src) {
+	// [基本]タブ
+	dst.HostName = src.general.host_name;
+	dst.HostAdrs = src.general.host_adrs;
+	dst.UserName = src.general.username;
+	dst.PassWord = src.general.password;
+	dst.Anonymous = src.general.anonymous ? YES : NO;
+	dst.LocalInitDir = src.general.initdir_local;
+	dst.RemoteInitDir = src.general.initdir_remote;
+	dst.LastDir = src.general.last_dir;
+	// TODO: [拡張]タブ
+}
+hostdata convertHostData(const HOSTDATA& src) {
+	hostdata ret;
+	convertHostData(ret, src);
+	return ret;
+}
 void hostContextNew(int index, const hostdata* hdata) {
 	int level = -1;
 	if (Hosts == 0) {
@@ -1435,6 +1466,9 @@ int hostContextUp(int index) {
 }
 int hostContextDown(int index) {
 	return HostList::HostDown(index);
+}
+void hostContextDataDefault(hostdata* hdata) {
+	convertHostData(*hdata, DefaultHost);
 }
 void hostContextData(int index, hostdata* hdata) {
 #ifdef LIBFFFTP_EXPORTS

@@ -91,6 +91,14 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index);
 
 /**
+ * @brief hostdataのデフォルト値を取得する。
+ *
+ * @param[out] hdata 結果を格納するhostdataへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_hostdata_default(hostdata* hdata);
+
+/**
  * @brief 指定したindexのhostdataを取得する。
  *
  * @param[in]  index 取得したいホストリストのindex
@@ -98,6 +106,7 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index);
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_hostdata(int index, hostdata* hdata);
+
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
 ffftp_hostcontext_getindex(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getcurrentindex();

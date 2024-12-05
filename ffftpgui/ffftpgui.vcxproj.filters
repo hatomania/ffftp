@@ -205,6 +205,9 @@
     <ClCompile Include="src\ui\host\hostsettinggeneralform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\base\baseform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -252,6 +255,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettinggeneralform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\base\baseform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

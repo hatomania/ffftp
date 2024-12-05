@@ -25,15 +25,15 @@
         <string>ホストの設定名(&amp;T):</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_SettingName</cstring>
+        <cstring>lineEdit_HostName</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit_SettingName"/>
+      <widget class="QLineEdit" name="lineEdit_HostName"/>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_HostAddr"/>
+      <widget class="QLineEdit" name="lineEdit_HostAdrs"/>
      </item>
      <item row="0" column="1">
       <widget class="QLabel" name="label_2">
@@ -47,7 +47,7 @@
         <string>ホスト名(アドレス)(&amp;N):</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_HostAddr</cstring>
+        <cstring>lineEdit_HostAdrs</cstring>
        </property>
       </widget>
      </item>
@@ -120,12 +120,12 @@
         <string>ローカルの初期フォルダ(&amp;L):</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_LocalDir</cstring>
+        <cstring>lineEdit_InitDirLocal</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit_LocalDir"/>
+      <widget class="QLineEdit" name="lineEdit_InitDirLocal"/>
      </item>
      <item row="1" column="1">
       <widget class="QToolButton" name="toolButton_SelectLocalDir">
@@ -139,7 +139,7 @@
    <item>
     <layout class="QGridLayout" name="gridLayout_4">
      <item row="1" column="0">
-      <widget class="QLineEdit" name="lineEdit_RemoteDir"/>
+      <widget class="QLineEdit" name="lineEdit_InitDirRemote"/>
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="label_6">
@@ -153,12 +153,12 @@
         <string>ホストの初期フォルダ(&amp;R):</string>
        </property>
        <property name="buddy">
-        <cstring>lineEdit_RemoteDir</cstring>
+        <cstring>lineEdit_InitDirRemote</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_NowDir">
+      <widget class="QPushButton" name="pushButton_CurDir">
        <property name="text">
         <string>現在のフォルダ</string>
        </property>
@@ -189,24 +189,24 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit_SettingName</tabstop>
-  <tabstop>lineEdit_HostAddr</tabstop>
+  <tabstop>lineEdit_HostName</tabstop>
+  <tabstop>lineEdit_HostAdrs</tabstop>
   <tabstop>lineEdit_Username</tabstop>
   <tabstop>lineEdit_Password</tabstop>
   <tabstop>checkBox_Anonymous</tabstop>
-  <tabstop>lineEdit_LocalDir</tabstop>
+  <tabstop>lineEdit_InitDirLocal</tabstop>
   <tabstop>toolButton_SelectLocalDir</tabstop>
-  <tabstop>lineEdit_RemoteDir</tabstop>
-  <tabstop>pushButton_NowDir</tabstop>
+  <tabstop>lineEdit_InitDirRemote</tabstop>
+  <tabstop>pushButton_CurDir</tabstop>
   <tabstop>checkBox_LastDir</tabstop>
  </tabstops>
  <resources/>
  <connections>
   <connection>
-   <sender>pushButton_NowDir</sender>
+   <sender>pushButton_CurDir</sender>
    <signal>clicked()</signal>
    <receiver>HostSettingGeneralForm</receiver>
-   <slot>onClick_pushButton_NowDir()</slot>
+   <slot>onClick_pushButton_CurDir()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>327</x>
@@ -253,7 +253,7 @@
  </connections>
  <slots>
   <slot>onClick_toolButton_SelectLocalDir()</slot>
-  <slot>onClick_pushButton_NowDir()</slot>
+  <slot>onClick_pushButton_CurDir()</slot>
   <slot>onClick_checkBox_Anonymous(bool)</slot>
  </slots>
 </ui>

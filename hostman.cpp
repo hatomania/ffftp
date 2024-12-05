@@ -1407,6 +1407,12 @@ const void* hostContextNext(const void* hc, int* index/*=先頭から何番目�
 	return nullptr;
 #endif
 }
+inline int timezone2Index(int timezone) {
+	return timezone + 12;
+}
+inline int index2Timezone(int timezone) {
+	return timezone - 12;
+}
 void convertHostData(hostdata& dst, const HOSTDATA& src) {
 	// [基本]タブ
 	dst.general = {
@@ -1428,7 +1434,7 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.syncmove = src.SyncMove == YES,
 		.port = src.Port,
 		.account = src.Account.c_str(),
-		.timezone = src.TimeZone,
+		.timezone = timezone2Index(src.TimeZone),
 		.security = src.Security,
 		.initcmd = src.InitCmd.c_str(),
 	};
@@ -1443,13 +1449,13 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	dst.LocalInitDir = src.general.initdir_local;
 	dst.RemoteInitDir = src.general.initdir_remote;
 	dst.LastDir = src.general.last_dir;
-	// TODO: [拡張]タブ
+	// [拡張]タブ
 	dst.FireWall = src.advanced.firewall ? YES : NO;
 	dst.Pasv = src.advanced.pasv ? YES : NO;
 	dst.SyncMove = src.advanced.syncmove ? YES : NO;
 	dst.Port = src.advanced.port;
 	dst.Account = src.advanced.account;
-	dst.TimeZone = src.advanced.timezone;
+	dst.TimeZone = index2Timezone(src.advanced.timezone);
 	dst.Security = src.advanced.security;
 	dst.InitCmd = src.advanced.initcmd;
 }

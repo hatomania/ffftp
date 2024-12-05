@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HostSettingCharCodeForm</class>
- <widget class="QWidget" name="HostSettingCharCodeForm">
+ <class>HostSettingKanjiCodeForm</class>
+ <widget class="QWidget" name="HostSettingKanjiCodeForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -198,7 +198,7 @@
   <connection>
    <sender>radioButton_1_1_NOP</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -214,7 +214,7 @@
   <connection>
    <sender>radioButton_1_2_SJIS</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -230,7 +230,7 @@
   <connection>
    <sender>radioButton_1_3_JIS</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -246,7 +246,7 @@
   <connection>
    <sender>radioButton_1_4_EUC</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -262,7 +262,7 @@
   <connection>
    <sender>radioButton_1_5_UTF8</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -278,7 +278,7 @@
   <connection>
    <sender>radioButton_1_6_UTF8BOM</sender>
    <signal>clicked()</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -294,7 +294,7 @@
   <connection>
    <sender>radioButton_2_1_Auto</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -310,7 +310,7 @@
   <connection>
    <sender>radioButton_2_2_SJIS</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -326,7 +326,7 @@
   <connection>
    <sender>radioButton_2_3_JIS</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -342,7 +342,7 @@
   <connection>
    <sender>radioButton_2_4_EUC</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -358,7 +358,7 @@
   <connection>
    <sender>radioButton_2_5_SMB_HEX</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -374,7 +374,7 @@
   <connection>
    <sender>radioButton_2_6_SMB_CAP</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -390,7 +390,7 @@
   <connection>
    <sender>radioButton_2_7_UTF8</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -406,7 +406,7 @@
   <connection>
    <sender>radioButton_2_8_UTF8HFSp</sender>
    <signal>clicked(bool)</signal>
-   <receiver>HostSettingCharCodeForm</receiver>
+   <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
     <hint type="sourcelabel">

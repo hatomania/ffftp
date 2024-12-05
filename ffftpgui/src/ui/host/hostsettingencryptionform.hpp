@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-class HostSettingEncryptForm : public QWidget {
+class HostSettingEncryptionForm : public QWidget {
   Q_OBJECT
 
  public:
@@ -12,7 +12,7 @@ class HostSettingEncryptForm : public QWidget {
     bool is_ftps_implicit;
     Data();
   };
-  explicit HostSettingEncryptForm(QWidget* parent = Q_NULLPTR);
+  explicit HostSettingEncryptionForm(QWidget* parent = Q_NULLPTR);
   void setData(const Data& data) const;
   const Data& getData() const;
   void setDataAsDefault() const;
@@ -22,5 +22,5 @@ class HostSettingEncryptForm : public QWidget {
  private:
   class Private;
   Private* d_;
-  Q_DISABLE_COPY(HostSettingEncryptForm)
+  Q_DISABLE_COPY(HostSettingEncryptionForm)
 };

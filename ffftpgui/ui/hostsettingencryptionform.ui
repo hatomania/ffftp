@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HostSettingEncryptForm</class>
- <widget class="QWidget" name="HostSettingEncryptForm">
+ <class>HostSettingEncryptionForm</class>
+ <widget class="QWidget" name="HostSettingEncryptionForm">
   <property name="geometry">
    <rect>
     <x>0</x>

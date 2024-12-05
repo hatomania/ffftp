@@ -2,7 +2,7 @@
 
 #include <QWidget>
 
-class HostSettingCharCodeForm : public QWidget {
+class HostSettingKanjiCodeForm : public QWidget {
   Q_OBJECT
 
  public:
@@ -26,7 +26,7 @@ class HostSettingCharCodeForm : public QWidget {
     std::optional<bool> is_file_hkana_to_wkana;
     Data();
   };
-  explicit HostSettingCharCodeForm(QWidget* parent = Q_NULLPTR);
+  explicit HostSettingKanjiCodeForm(QWidget* parent = Q_NULLPTR);
   void setData(const Data& data) const;
   const Data& getData() const;
   void setDataAsDefault() const;
@@ -38,5 +38,5 @@ class HostSettingCharCodeForm : public QWidget {
  private:
   class Private;
   Private* d_;
-  Q_DISABLE_COPY(HostSettingCharCodeForm)
+  Q_DISABLE_COPY(HostSettingKanjiCodeForm)
 };

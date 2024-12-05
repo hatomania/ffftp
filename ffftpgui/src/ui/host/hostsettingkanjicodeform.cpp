@@ -1,15 +1,15 @@
-﻿#include "hostsettingcharcodeform.hpp"
+﻿#include "hostsettingkanjicodeform.hpp"
 
-#include "ui_hostsettingcharcodeform.h"
+#include "ui_hostsettingkanjicodeform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
-class HostSettingCharCodeForm::Private {
+class HostSettingKanjiCodeForm::Private {
  public:
   Private() {}
   ~Private() = default;
-  Ui::HostSettingCharCodeForm ui;
-  QMap<HostSettingCharCodeForm::Code, QRadioButton*> vec_host_radio;
-  QMap<HostSettingCharCodeForm::Code, QRadioButton*> vec_file_radio;
+  Ui::HostSettingKanjiCodeForm ui;
+  QMap<HostSettingKanjiCodeForm::Code, QRadioButton*> vec_host_radio;
+  QMap<HostSettingKanjiCodeForm::Code, QRadioButton*> vec_file_radio;
   Code getHostCode() const;
   Code getFileCode() const;
   bool isEnabledHostCheckbox() const;
@@ -18,13 +18,13 @@ class HostSettingCharCodeForm::Private {
   void enableFileCheckbox() const;
 };
 
-HostSettingCharCodeForm::Data::Data()
+HostSettingKanjiCodeForm::Data::Data()
     : host_code(Code::NOP),
       file_code(Code::AUTO),
       is_host_hkana_to_wkana(true),
       is_file_hkana_to_wkana(false) {}
 
-HostSettingCharCodeForm::Code HostSettingCharCodeForm::Private::getHostCode()
+HostSettingKanjiCodeForm::Code HostSettingKanjiCodeForm::Private::getHostCode()
     const {
   Code ret = Code::NOP;
   for (auto [k, v] : vec_host_radio.asKeyValueRange()) {
@@ -36,7 +36,7 @@ HostSettingCharCodeForm::Code HostSettingCharCodeForm::Private::getHostCode()
   return ret;
 }
 
-HostSettingCharCodeForm::Code HostSettingCharCodeForm::Private::getFileCode()
+HostSettingKanjiCodeForm::Code HostSettingKanjiCodeForm::Private::getFileCode()
     const {
   Code ret = Code::AUTO;
   for (auto [k, v] : vec_file_radio.asKeyValueRange()) {
@@ -48,30 +48,30 @@ HostSettingCharCodeForm::Code HostSettingCharCodeForm::Private::getFileCode()
   return ret;
 }
 
-bool HostSettingCharCodeForm::Private::isEnabledHostCheckbox() const {
+bool HostSettingKanjiCodeForm::Private::isEnabledHostCheckbox() const {
   bool enabled = false;
   QVector<Code> check_kana_code = {Code::SJIS, Code::JIS, Code::EUC};
   if (check_kana_code.indexOf(getHostCode()) >= 0) enabled = true;
   return enabled;
 }
 
-bool HostSettingCharCodeForm::Private::isEnabledFileCheckbox() const {
+bool HostSettingKanjiCodeForm::Private::isEnabledFileCheckbox() const {
   bool enabled = false;
   QVector<Code> check_kana_code = {Code::JIS, Code::EUC};
   if (check_kana_code.indexOf(getFileCode()) >= 0) enabled = true;
   return enabled;
 }
 
-void HostSettingCharCodeForm::Private::enableHostCheckbox() const {
+void HostSettingKanjiCodeForm::Private::enableHostCheckbox() const {
   ui.checkBox_1_1_HKanaToW->setEnabled(isEnabledHostCheckbox());
 }
 
-void HostSettingCharCodeForm::Private::enableFileCheckbox() const {
+void HostSettingKanjiCodeForm::Private::enableFileCheckbox() const {
   ui.checkBox_2_1_HKanaToW->setEnabled(isEnabledFileCheckbox());
 }
 
-HostSettingCharCodeForm::HostSettingCharCodeForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingCharCodeForm::Private()) {
+HostSettingKanjiCodeForm::HostSettingKanjiCodeForm(QWidget* parent)
+    : QWidget(parent), d_(new HostSettingKanjiCodeForm::Private()) {
   d_->ui.setupUi(this);
   d_->vec_host_radio = {
       {Code::NOP, d_->ui.radioButton_1_1_NOP},
@@ -94,7 +94,7 @@ HostSettingCharCodeForm::HostSettingCharCodeForm(QWidget* parent)
   setDataAsDefault();
 }
 
-void HostSettingCharCodeForm::setData(const Data& data) const {
+void HostSettingKanjiCodeForm::setData(const Data& data) const {
   // 念のためすべてuncheckしてからチェックする
   for (auto [k, v] : d_->vec_host_radio.asKeyValueRange()) {
     v->setChecked(false);
@@ -110,7 +110,7 @@ void HostSettingCharCodeForm::setData(const Data& data) const {
   d_->enableFileCheckbox();
 }
 
-const HostSettingCharCodeForm::Data& HostSettingCharCodeForm::getData() const {
+const HostSettingKanjiCodeForm::Data& HostSettingKanjiCodeForm::getData() const {
   static Data data;
   data.host_code = d_->getHostCode();
   data.file_code = d_->getFileCode();
@@ -121,16 +121,16 @@ const HostSettingCharCodeForm::Data& HostSettingCharCodeForm::getData() const {
   return data;
 }
 
-void HostSettingCharCodeForm::setDataAsDefault() const {
+void HostSettingKanjiCodeForm::setDataAsDefault() const {
   this->setData(Data());
 }
 
-void HostSettingCharCodeForm::onClick_radioButton_Host() {
+void HostSettingKanjiCodeForm::onClick_radioButton_Host() {
   qDebug() << __FUNCTION__ << "called!";
   d_->enableHostCheckbox();
 }
 
-void HostSettingCharCodeForm::onClick_radioButton_File() {
+void HostSettingKanjiCodeForm::onClick_radioButton_File() {
   qDebug() << __FUNCTION__ << "called!";
   d_->enableFileCheckbox();
 }

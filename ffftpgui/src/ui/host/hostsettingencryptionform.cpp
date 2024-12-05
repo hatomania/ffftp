@@ -1,35 +1,35 @@
-﻿#include "hostsettingencryptform.hpp"
+﻿#include "hostsettingencryptionform.hpp"
 
-#include "ui_hostsettingencryptform.h"
+#include "ui_hostsettingencryptionform.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
-class HostSettingEncryptForm::Private {
+class HostSettingEncryptionForm::Private {
  public:
   Private() {}
   ~Private() {}
-  Ui::HostSettingEncryptForm ui;
+  Ui::HostSettingEncryptionForm ui;
 };
 
-HostSettingEncryptForm::Data::Data()
+HostSettingEncryptionForm::Data::Data()
     : allow_without_encrypt(true),
       is_ftps_explicit(true),
       is_ftps_implicit(true)
 
 {}
 
-HostSettingEncryptForm::HostSettingEncryptForm(QWidget* parent)
-    : QWidget(parent), d_(new HostSettingEncryptForm::Private()) {
+HostSettingEncryptionForm::HostSettingEncryptionForm(QWidget* parent)
+    : QWidget(parent), d_(new HostSettingEncryptionForm::Private()) {
   d_->ui.setupUi(this);
   setDataAsDefault();
 }
 
-void HostSettingEncryptForm::setData(const Data& data) const {
+void HostSettingEncryptionForm::setData(const Data& data) const {
   d_->ui.checkBox_WithoutEncrypt->setChecked(data.allow_without_encrypt);
   d_->ui.checkBox_FTPSExplicit->setChecked(data.is_ftps_explicit);
   d_->ui.checkBox_FTPSImplicit->setChecked(data.is_ftps_implicit);
 }
 
-const HostSettingEncryptForm::Data& HostSettingEncryptForm::getData() const {
+const HostSettingEncryptionForm::Data& HostSettingEncryptionForm::getData() const {
   static Data data;
   data.allow_without_encrypt = d_->ui.checkBox_WithoutEncrypt->isChecked();
   data.is_ftps_explicit = d_->ui.checkBox_FTPSExplicit->isChecked();
@@ -37,4 +37,4 @@ const HostSettingEncryptForm::Data& HostSettingEncryptForm::getData() const {
   return data;
 }
 
-void HostSettingEncryptForm::setDataAsDefault() const { this->setData(Data()); }
+void HostSettingEncryptionForm::setDataAsDefault() const { this->setData(Data()); }

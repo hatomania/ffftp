@@ -33,7 +33,7 @@
        <string>拡張</string>
       </attribute>
      </widget>
-     <widget class="HostSettingCharCodeForm" name="tab_2">
+     <widget class="HostSettingKanjiCodeForm" name="tab_2">
       <attribute name="title">
        <string>文字コード</string>
       </attribute>
@@ -48,7 +48,7 @@
        <string>高度</string>
       </attribute>
      </widget>
-     <widget class="HostSettingEncryptForm" name="tab_5">
+     <widget class="HostSettingEncryptionForm" name="tab_5">
       <attribute name="title">
        <string>暗号化</string>
       </attribute>
@@ -86,9 +86,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HostSettingCharCodeForm</class>
+   <class>HostSettingKanjiCodeForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingcharcodeform.hpp</header>
+   <header location="global">ui/host/hostsettingkanjicodeform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
@@ -104,9 +104,9 @@
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>HostSettingEncryptForm</class>
+   <class>HostSettingEncryptionForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingencryptform.hpp</header>
+   <header location="global">ui/host/hostsettingencryptionform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>

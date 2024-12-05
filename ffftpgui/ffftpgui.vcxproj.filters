@@ -137,22 +137,22 @@
     <QtUic Include="ui\hostsettingexpansionform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingcharcodeform.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="ui\hostsettingdialupform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\hostsettingadvancedform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingencryptform.ui">
-      <Filter>Form Files</Filter>
-    </QtUic>
     <QtUic Include="ui\hostsettingspecialform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ui\hostsettinggeneralform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\hostsettingencryptionform.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ui\hostsettingkanjicodeform.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -187,16 +187,10 @@
     <ClCompile Include="src\ui\host\hostsettingexpansionform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingcharcodeform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingencryptform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\hostsettingspecialform.cpp">
@@ -206,6 +200,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\base\baseform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingkanjicodeform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -239,16 +239,10 @@
     <QtMoc Include="src\ui\host\hostsettingexpansionform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingcharcodeform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingdialupform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingadvancedform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingencryptform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingspecialform.hpp">
@@ -258,6 +252,12 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\base\baseform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingencryptionform.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

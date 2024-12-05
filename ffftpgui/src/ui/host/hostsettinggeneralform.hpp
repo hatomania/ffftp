@@ -23,10 +23,12 @@ class HostSettingGeneralForm : public BaseForm {
     bool enabled_curdir;
     bool last_dir;
     Data();
-    Data(std::wstring host_name, std::wstring host_adrs, std::wstring username,
-         std::wstring password, bool anonymous, std::wstring initdir_local,
-         std::wstring initdir_remote, std::wstring initdir_remote_now,
-         bool enabled_curdir, bool last_dir);
+    Data(const std::wstring& host_name, const std::wstring& host_adrs,
+         const std::wstring& username, const std::wstring& password,
+         bool anonymous, const std::wstring& initdir_local,
+         const std::wstring& initdir_remote,
+         const std::wstring& initdir_remote_now, bool enabled_curdir,
+         bool last_dir);
   };
 
   explicit HostSettingGeneralForm(QWidget* parent = Q_NULLPTR);

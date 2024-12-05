@@ -2,6 +2,7 @@
 
 #include <QFileDialog>
 
+#include "ui/uicommon.h"
 #include "ui_hostsettinggeneralform.h"
 
 namespace {
@@ -69,13 +70,11 @@ HostSettingGeneralForm::Data::Data()
       enabled_curdir(false),
       last_dir(false) {}
 
-HostSettingGeneralForm::Data::Data(std::wstring host_name,
-                                   std::wstring host_adrs,
-                                   std::wstring username, std::wstring password,
-                                   bool anonymous, std::wstring initdir_local,
-                                   std::wstring initdir_remote,
-                                   std::wstring initdir_remote_now,
-                                   bool enabled_curdir, bool last_dir)
+HostSettingGeneralForm::Data::Data(
+    const std::wstring& host_name, const std::wstring& host_adrs,
+    const std::wstring& username, const std::wstring& password, bool anonymous,
+    const std::wstring& initdir_local, const std::wstring& initdir_remote,
+    const std::wstring& initdir_remote_now, bool enabled_curdir, bool last_dir)
     : host_name(host_name),
       host_adrs(host_adrs),
       username(username),
@@ -97,10 +96,6 @@ HostSettingGeneralForm::HostSettingGeneralForm(QWidget* parent)
 }
 HostSettingGeneralForm::~HostSettingGeneralForm() {}
 
-#define UI_SETTEXT(c, d) c->setText(d)
-#define UI_SETCHECKED(c, d) c->setChecked(d)
-#define UI_SETENABLED(c, d) c->setEnabled(d)
-
 void HostSettingGeneralForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);
 }
@@ -117,9 +112,6 @@ void HostSettingGeneralForm::updateUi(const BaseForm::Data& data) {
   UI_SETENABLED(d_->ui.pushButton_CurDir, data_.enabled_curdir);
   UI_SETCHECKED(d_->ui.checkBox_LastDir, data_.last_dir);
 }
-
-#define UI_TEXT(d, c) d = c->text()
-#define UI_ISCHECKED(d, c) d = c->isChecked()
 
 void HostSettingGeneralForm::updateData(BaseForm::Data& data) const {
   HostSettingGeneralForm::Data& data_ = castData(data);

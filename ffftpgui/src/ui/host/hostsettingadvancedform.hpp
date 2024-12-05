@@ -16,13 +16,14 @@ class HostSettingAdvancedForm : public BaseForm {
     bool pasv;
     bool syncmove;
     int port;
-    QString account;
+    std::wstring account;
     int timezone;
     int security;
-    QString initcmd;
+    std::wstring initcmd;
     Data();
-    Data(bool firewall, bool pasv, bool syncmove, int port, QString account,
-         int timezone, int security, QString initcmd);
+    Data(bool firewall, bool pasv, bool syncmove, int port,
+         const std::wstring& account, int timezone, int security,
+         const std::wstring& initcmd);
   };
 
   explicit HostSettingAdvancedForm(QWidget* parent = Q_NULLPTR);

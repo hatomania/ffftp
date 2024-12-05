@@ -83,6 +83,7 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ui\uicommon.h" />
     <QtMoc Include="src\ui\host\hostsettingfeatureform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingencryptionform.hpp" />

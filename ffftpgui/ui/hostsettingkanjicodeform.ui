@@ -52,7 +52,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_1_5_UTF8">
+       <widget class="QRadioButton" name="radioButton_1_5_UTF8N">
         <property name="text">
          <string>UTF-8</string>
         </property>
@@ -66,7 +66,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_1_1_HKanaToW">
+       <widget class="QCheckBox" name="checkBox_1_1_KanaConv">
         <property name="text">
          <string>半角カナを全角に変換</string>
         </property>
@@ -95,7 +95,7 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QRadioButton" name="radioButton_2_1_Auto">
+       <widget class="QRadioButton" name="radioButton_2_1_AUTO">
         <property name="text">
          <string>自動</string>
         </property>
@@ -144,14 +144,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton_2_8_UTF8HFSp">
+       <widget class="QRadioButton" name="radioButton_2_8_UTF8HFSP">
         <property name="text">
          <string>UTF-8 HFS+</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_2_1_HKanaToW">
+       <widget class="QCheckBox" name="checkBox_2_1_KanaConv">
         <property name="text">
          <string>半角カナを全角に変換</string>
         </property>
@@ -180,18 +180,18 @@
   <tabstop>radioButton_1_2_SJIS</tabstop>
   <tabstop>radioButton_1_3_JIS</tabstop>
   <tabstop>radioButton_1_4_EUC</tabstop>
-  <tabstop>radioButton_1_5_UTF8</tabstop>
+  <tabstop>radioButton_1_5_UTF8N</tabstop>
   <tabstop>radioButton_1_6_UTF8BOM</tabstop>
-  <tabstop>checkBox_1_1_HKanaToW</tabstop>
-  <tabstop>radioButton_2_1_Auto</tabstop>
+  <tabstop>checkBox_1_1_KanaConv</tabstop>
+  <tabstop>radioButton_2_1_AUTO</tabstop>
   <tabstop>radioButton_2_2_SJIS</tabstop>
   <tabstop>radioButton_2_3_JIS</tabstop>
   <tabstop>radioButton_2_4_EUC</tabstop>
   <tabstop>radioButton_2_5_SMB_HEX</tabstop>
   <tabstop>radioButton_2_6_SMB_CAP</tabstop>
   <tabstop>radioButton_2_7_UTF8</tabstop>
-  <tabstop>radioButton_2_8_UTF8HFSp</tabstop>
-  <tabstop>checkBox_2_1_HKanaToW</tabstop>
+  <tabstop>radioButton_2_8_UTF8HFSP</tabstop>
+  <tabstop>checkBox_2_1_KanaConv</tabstop>
  </tabstops>
  <resources/>
  <connections>
@@ -260,7 +260,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_1_5_UTF8</sender>
+   <sender>radioButton_1_5_UTF8N</sender>
    <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_Host()</slot>
@@ -292,7 +292,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_2_1_Auto</sender>
+   <sender>radioButton_2_1_AUTO</sender>
    <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
@@ -404,7 +404,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_2_8_UTF8HFSp</sender>
+   <sender>radioButton_2_8_UTF8HFSP</sender>
    <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>

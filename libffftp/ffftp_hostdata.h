@@ -35,9 +35,31 @@ struct hostdata_advanced {
   const wchar_t* initcmd;
 };
 
+/* 文字コード */
+enum kanjicodes {
+  KC_NOP,
+  KC_AUTO,
+  KC_JIS,
+  KC_SJIS,
+  KC_EUC,
+  KC_SMH,
+  KC_SMC,
+  KC_UTF8N,
+  KC_UTF8BOM,
+  KC_UTF8HFSX,
+};
+
+struct hostdata_kanjicode {
+  int kanjicode;
+  bool kanacnv;
+  int kanjicode_name;
+  bool kanacnv_name;
+};
+
 struct hostdata {
   hostdata_general general;
   hostdata_advanced advanced;
+  hostdata_kanjicode kanjicode;
 };
 
 #ifdef __cplusplus

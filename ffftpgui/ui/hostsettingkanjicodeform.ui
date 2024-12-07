@@ -293,7 +293,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_1_Auto</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -309,7 +309,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_2_SJIS</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -325,7 +325,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_3_JIS</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -341,7 +341,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_4_EUC</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -357,7 +357,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_5_SMB_HEX</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -373,7 +373,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_6_SMB_CAP</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -389,7 +389,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_7_UTF8</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>
@@ -405,7 +405,7 @@
   </connection>
   <connection>
    <sender>radioButton_2_8_UTF8HFSp</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingKanjiCodeForm</receiver>
    <slot>onClick_radioButton_File()</slot>
    <hints>

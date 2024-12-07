@@ -45,7 +45,7 @@ class HostSettingGeneralForm : public BaseForm {
   void onClick_checkBox_Anonymous(bool);
 
  private:
-  const Data& mydata() const;
+  const Data& thisData() const;
 
  private:
   class Private;

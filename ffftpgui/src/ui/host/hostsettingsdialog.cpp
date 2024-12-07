@@ -12,7 +12,7 @@ class HostSettingsDialog::Private {
 };
 
 HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
-    : QDialog(parent), d_(new HostSettingsDialog::Private()) {
+    : QDialog(parent), d_(new Private()) {
   d_->ui.setupUi(this);
   setHostData(hdata);
 }
@@ -34,6 +34,33 @@ void HostSettingsDialog::setHostData(const hostdata& hdata) {
       hdata.advanced.security, hdata.advanced.initcmd,
   };
   d_->ui.tab_1->setData(data_tab_1);
+  // [文字コード]タブへデータを入力
+  static const std::map<int, HostSettingKanjiCodeForm::KanjiCode> convtable{
+      {KC_NOP, HostSettingKanjiCodeForm::KanjiCode::kNOP},
+      {KC_SJIS, HostSettingKanjiCodeForm::KanjiCode::kSJIS},
+      {KC_JIS, HostSettingKanjiCodeForm::KanjiCode::kJIS},
+      {KC_EUC, HostSettingKanjiCodeForm::KanjiCode::kEUC},
+      {KC_UTF8N, HostSettingKanjiCodeForm::KanjiCode::kUTF8N},
+      {KC_UTF8BOM, HostSettingKanjiCodeForm::KanjiCode::kUTF8BOM},
+  };
+  static const std::map<int, HostSettingKanjiCodeForm::KanjiCode>
+      convtable_name{
+          {KC_AUTO, HostSettingKanjiCodeForm::KanjiCode::kAUTO},
+          {KC_SJIS, HostSettingKanjiCodeForm::KanjiCode::kSJIS},
+          {KC_JIS, HostSettingKanjiCodeForm::KanjiCode::kJIS},
+          {KC_EUC, HostSettingKanjiCodeForm::KanjiCode::kEUC},
+          {KC_SMH, HostSettingKanjiCodeForm::KanjiCode::kSMH},
+          {KC_SMC, HostSettingKanjiCodeForm::KanjiCode::kSMC},
+          {KC_UTF8N, HostSettingKanjiCodeForm::KanjiCode::kUTF8N},
+          {KC_UTF8HFSX, HostSettingKanjiCodeForm::KanjiCode::kUTF8HFSX},
+      };
+  HostSettingKanjiCodeForm::Data data_tab_2{
+      convtable.at(hdata.kanjicode.kanjicode),
+      hdata.kanjicode.kanacnv,
+      convtable_name.at(hdata.kanjicode.kanjicode_name),
+      hdata.kanjicode.kanacnv_name,
+  };
+  d_->ui.tab_2->setData(data_tab_2);
 }
 
 #define DECL_FORMDATA(T, V) \
@@ -65,6 +92,33 @@ void HostSettingsDialog::hostData(hostdata& hdata) const {
       .timezone = data_tab_1.timezone,
       .security = data_tab_1.security,
       .initcmd = data_tab_1.initcmd.c_str(),
+  };
+  // [文字コード]タブからデータを取得
+  static const std::map<HostSettingKanjiCodeForm::KanjiCode, int> convtable{
+      {HostSettingKanjiCodeForm::KanjiCode::kNOP, KC_NOP},
+      {HostSettingKanjiCodeForm::KanjiCode::kSJIS, KC_SJIS},
+      {HostSettingKanjiCodeForm::KanjiCode::kJIS, KC_JIS},
+      {HostSettingKanjiCodeForm::KanjiCode::kEUC, KC_EUC},
+      {HostSettingKanjiCodeForm::KanjiCode::kUTF8N, KC_UTF8N},
+      {HostSettingKanjiCodeForm::KanjiCode::kUTF8BOM, KC_UTF8BOM},
+  };
+  static const std::map<HostSettingKanjiCodeForm::KanjiCode, int>
+      convtable_name{
+          {HostSettingKanjiCodeForm::KanjiCode::kAUTO, KC_AUTO},
+          {HostSettingKanjiCodeForm::KanjiCode::kSJIS, KC_SJIS},
+          {HostSettingKanjiCodeForm::KanjiCode::kJIS, KC_JIS},
+          {HostSettingKanjiCodeForm::KanjiCode::kEUC, KC_EUC},
+          {HostSettingKanjiCodeForm::KanjiCode::kSMH, KC_SMH},
+          {HostSettingKanjiCodeForm::KanjiCode::kSMC, KC_SMC},
+          {HostSettingKanjiCodeForm::KanjiCode::kUTF8N, KC_UTF8N},
+          {HostSettingKanjiCodeForm::KanjiCode::kUTF8HFSX, KC_UTF8HFSX},
+      };
+  DECL_FORMDATA(HostSettingKanjiCodeForm, tab_2);
+  hdata.kanjicode = {
+      .kanjicode = convtable.at(data_tab_2.kanjicode),
+      .kanacnv = data_tab_2.kanacnv,
+      .kanjicode_name = convtable_name.at(data_tab_2.kanjicode_name),
+      .kanacnv_name = data_tab_2.kanacnv_name,
   };
 }
 

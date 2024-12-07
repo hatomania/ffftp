@@ -158,22 +158,22 @@ OTP SHA-1
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | **ホストの漢字コード** |  |  |  |  |
-| 無変換 | HOSTDATA::KanjiCode==HSET_NO_CNV | hostdata::hostdata_kanjicode::kanjicode==KC_NOP | HostSettingKanjiCodeForm::Data::kanjicode==kNOP |  |
-| Shift_JIS | HOSTDATA::KanjiCode==HSET_SJIS_CNV | hostdata::hostdata_kanjicode::kanjicode==KC_SJIS | HostSettingKanjiCodeForm::Data::kanjicode==kSJIS |  |
-| JIS | HOSTDATA::KanjiCode==HSET_JIS_CNV | hostdata::hostdata_kanjicode::kanjicode==KC_JIS | HostSettingKanjiCodeForm::Data::kanjicode==kJIS |  |
-| EUC | HOSTDATA::KanjiCode==HSET_EUC_CNV | hostdata::hostdata_kanjicode::kanjicode==KC_EUC | HostSettingKanjiCodeForm::Data::kanjicode==kEUC |  |
-| UTF-8 | HOSTDATA::KanjiCode==HSET_UTF8N_CNV | hostdata::hostdata_kanjicode::kanjicode==KC_UTF8N | HostSettingKanjiCodeForm::Data::kanjicode==kUTF8N |  |
-| UTF-8 BOM | HOSTDATA::KanjiCode==HSET_UTF8BOM_CNV | hostdata::hostdata_kanjicode::kanjicode==KC_UTF8BOM | HostSettingKanjiCodeForm::Data::kanjicode==kUTF8BOM |  |
+| 無変換 | HOSTDATA::KanjiCode==KANJI_NOCNV | hostdata::hostdata_kanjicode::kanjicode==KC_NOP | HostSettingKanjiCodeForm::Data::kanjicode==kNOP |  |
+| Shift_JIS | HOSTDATA::KanjiCode==KANJI_SJIS | hostdata::hostdata_kanjicode::kanjicode==KC_SJIS | HostSettingKanjiCodeForm::Data::kanjicode==kSJIS |  |
+| JIS | HOSTDATA::KanjiCode==KANJI_JIS | hostdata::hostdata_kanjicode::kanjicode==KC_JIS | HostSettingKanjiCodeForm::Data::kanjicode==kJIS |  |
+| EUC | HOSTDATA::KanjiCode==KANJI_EUC | hostdata::hostdata_kanjicode::kanjicode==KC_EUC | HostSettingKanjiCodeForm::Data::kanjicode==kEUC |  |
+| UTF-8 | HOSTDATA::KanjiCode==KANJI_UTF8N | hostdata::hostdata_kanjicode::kanjicode==KC_UTF8N | HostSettingKanjiCodeForm::Data::kanjicode==kUTF8N |  |
+| UTF-8 BOM | HOSTDATA::KanjiCode==KANJI_UTF8BOM | hostdata::hostdata_kanjicode::kanjicode==KC_UTF8BOM | HostSettingKanjiCodeForm::Data::kanjicode==kUTF8BOM |  |
 | 半角カナを全角に変換 | HOSTDATA::KanaCnv | hostdata::hostdata_kanjicode::kanacnv | HostSettingKanjiCodeForm::Data::kanacnv | Shift_JIS,JIS,EUC選択時のみEnable |
 | **ファイル名の漢字コード** |  |  |  |  |
-| 自動 | HOSTDATA::NameKanjiCode==HSET_FN_AUTO_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_AUTO | HostSettingKanjiCodeForm::Data::kanjicode_name==kAUTO |  |
-| Shift_JIS | HOSTDATA::NameKanjiCode==HSET_FN_SJIS_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_SJIS | HostSettingKanjiCodeForm::Data::kanjicode_name==kSJIS |  |
-| JIS | HOSTDATA::NameKanjiCode==HSET_FN_JIS_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_JIS | HostSettingKanjiCodeForm::Data::kanjicode_name==kJIS |  |
-| EUC | HOSTDATA::NameKanjiCode==HSET_FN_EUC_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_EUC | HostSettingKanjiCodeForm::Data::kanjicode_name==kEUC |  |
-| Samba-HEX | HOSTDATA::NameKanjiCode==HSET_FN_SMH_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_SMH | HostSettingKanjiCodeForm::Data::kanjicode_name==kSMH |  |
-| Samba-CAP | HOSTDATA::NameKanjiCode==HSET_FN_SMC_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_SMC | HostSettingKanjiCodeForm::Data::kanjicode_name==kSMC |  |
-| UTF-8 | HOSTDATA::NameKanjiCode==HSET_FN_UTF8N_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_UTF8N | HostSettingKanjiCodeForm::Data::kanjicode_name==kUTF8N |  |
-| UTF-8 HFS+ | HOSTDATA::NameKanjiCode==HSET_FN_UTF8HFSX_CNV | hostdata::hostdata_kanjicode::kanjicode_name==KC_UTF8HFSX | HostSettingKanjiCodeForm::Data::kanjicode_name==kUTF8HFSX |  |
+| 自動 | HOSTDATA::NameKanjiCode==KANJI_AUTO | hostdata::hostdata_kanjicode::kanjicode_name==KC_AUTO | HostSettingKanjiCodeForm::Data::kanjicode_name==kAUTO |  |
+| Shift_JIS | HOSTDATA::NameKanjiCode==KANJI_SJIS | hostdata::hostdata_kanjicode::kanjicode_name==KC_SJIS | HostSettingKanjiCodeForm::Data::kanjicode_name==kSJIS |  |
+| JIS | HOSTDATA::NameKanjiCode==KANJI_JIS | hostdata::hostdata_kanjicode::kanjicode_name==KC_JIS | HostSettingKanjiCodeForm::Data::kanjicode_name==kJIS |  |
+| EUC | HOSTDATA::NameKanjiCode==KANJI_EUC | hostdata::hostdata_kanjicode::kanjicode_name==KC_EUC | HostSettingKanjiCodeForm::Data::kanjicode_name==kEUC |  |
+| Samba-HEX | HOSTDATA::NameKanjiCode==KANJI_SMB_HEX | hostdata::hostdata_kanjicode::kanjicode_name==KC_SMH | HostSettingKanjiCodeForm::Data::kanjicode_name==kSMH |  |
+| Samba-CAP | HOSTDATA::NameKanjiCode==KANJI_SMB_CAP | hostdata::hostdata_kanjicode::kanjicode_name==KC_SMC | HostSettingKanjiCodeForm::Data::kanjicode_name==kSMC |  |
+| UTF-8 | HOSTDATA::NameKanjiCode==KANJI_UTF8N | hostdata::hostdata_kanjicode::kanjicode_name==KC_UTF8N | HostSettingKanjiCodeForm::Data::kanjicode_name==kUTF8N |  |
+| UTF-8 HFS+ | HOSTDATA::NameKanjiCode==KANJI_UTF8HFSX | hostdata::hostdata_kanjicode::kanjicode_name==KC_UTF8HFSX | HostSettingKanjiCodeForm::Data::kanjicode_name==kUTF8HFSX |  |
 | 半角カナを全角に変換 | HOSTDATA::NameKanaCnv | hostdata::hostdata_kanjicode::kanacnv_name | HostSettingKanjiCodeForm::Data::kanacnv_name | JIS,EUC選択時のみEnable |
 
 ## 「ダイアルアップ」タブ

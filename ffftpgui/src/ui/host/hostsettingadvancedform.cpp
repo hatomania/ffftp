@@ -5,12 +5,13 @@
 
 namespace {
 constexpr int kDefPort = 21;
-inline const HostSettingAdvancedForm::Data& castData(
+using ThisData = HostSettingAdvancedForm::Data;
+inline const ThisData& castData(
     const BaseForm::Data& data) {
-  return static_cast<const HostSettingAdvancedForm::Data&>(data);
+  return static_cast<const ThisData&>(data);
 }
-inline HostSettingAdvancedForm::Data& castData(BaseForm::Data& data) {
-  return static_cast<HostSettingAdvancedForm::Data&>(data);
+inline ThisData& castData(BaseForm::Data& data) {
+  return static_cast<ThisData&>(data);
 }
 }  // namespace
 
@@ -59,7 +60,7 @@ void HostSettingAdvancedForm::setRawData(const BaseForm::Data& data) {
 }
 
 void HostSettingAdvancedForm::updateUi(const BaseForm::Data& data) {
-  const HostSettingAdvancedForm::Data& data_ = castData(data);
+  const ThisData& data_ = castData(data);
   UI_SETCHECKED(d_->ui.checkBox_Firewall, data_.firewall);
   UI_SETCHECKED(d_->ui.checkBox_Pasv, data_.pasv);
   UI_SETCHECKED(d_->ui.checkBox_SyncMove, data_.syncmove);
@@ -71,7 +72,7 @@ void HostSettingAdvancedForm::updateUi(const BaseForm::Data& data) {
 }
 
 void HostSettingAdvancedForm::updateData(BaseForm::Data& data) const {
-  HostSettingAdvancedForm::Data& data_ = castData(data);
+  ThisData& data_ = castData(data);
   UI_ISCHECKED(data_.firewall, d_->ui.checkBox_Firewall);
   UI_ISCHECKED(data_.pasv, d_->ui.checkBox_Pasv);
   UI_ISCHECKED(data_.syncmove, d_->ui.checkBox_SyncMove);

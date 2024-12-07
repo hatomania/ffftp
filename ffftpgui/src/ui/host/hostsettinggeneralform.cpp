@@ -8,12 +8,13 @@
 namespace {
 constexpr const char* const kDefAnonymousUsename = "anonymous";
 constexpr const char* const kDefAnonymousPassword = "who@example.com";
-inline const HostSettingGeneralForm::Data& castData(
+using ThisData = HostSettingGeneralForm::Data;
+inline const ThisData& castData(
     const BaseForm::Data& data) {
-  return static_cast<const HostSettingGeneralForm::Data&>(data);
+  return static_cast<const ThisData&>(data);
 }
-inline HostSettingGeneralForm::Data& castData(BaseForm::Data& data) {
-  return static_cast<HostSettingGeneralForm::Data&>(data);
+inline ThisData& castData(BaseForm::Data& data) {
+  return static_cast<ThisData&>(data);
 }
 }  // namespace
 
@@ -101,7 +102,7 @@ void HostSettingGeneralForm::setRawData(const BaseForm::Data& data) {
 }
 
 void HostSettingGeneralForm::updateUi(const BaseForm::Data& data) {
-  const HostSettingGeneralForm::Data& data_ = castData(data);
+  const ThisData& data_ = castData(data);
   UI_SETTEXT(d_->ui.lineEdit_HostName, QString(data_.host_name));
   UI_SETTEXT(d_->ui.lineEdit_HostAdrs, QString(data_.host_adrs));
   UI_SETTEXT(d_->ui.lineEdit_Username, QString(data_.username));
@@ -114,7 +115,7 @@ void HostSettingGeneralForm::updateUi(const BaseForm::Data& data) {
 }
 
 void HostSettingGeneralForm::updateData(BaseForm::Data& data) const {
-  HostSettingGeneralForm::Data& data_ = castData(data);
+  ThisData& data_ = castData(data);
   UI_TEXT(data_.host_name, d_->ui.lineEdit_HostName).toStdWString();
   UI_TEXT(data_.host_adrs, d_->ui.lineEdit_HostAdrs).toStdWString();
   UI_TEXT(data_.username, d_->ui.lineEdit_Username).toStdWString();
@@ -136,7 +137,7 @@ void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {
 
 void HostSettingGeneralForm::onClick_pushButton_CurDir() {
   qDebug() << __FUNCTION__ << "called!";
-  d_->ui.lineEdit_InitDirRemote->setText(QString(mydata().initdir_remote));
+  d_->ui.lineEdit_InitDirRemote->setText(QString(thisData().initdir_remote));
 }
 
 void HostSettingGeneralForm::onClick_checkBox_Anonymous(bool checked) {
@@ -153,6 +154,6 @@ void HostSettingGeneralForm::onClick_checkBox_Anonymous(bool checked) {
   }
 }
 
-const HostSettingGeneralForm::Data& HostSettingGeneralForm::mydata() const {
+const HostSettingGeneralForm::Data& HostSettingGeneralForm::thisData() const {
   return castData(rawData());
 }

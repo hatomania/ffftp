@@ -1407,11 +1407,55 @@ const void* hostContextNext(const void* hc, int* index/*=先頭から何番目�
 	return nullptr;
 #endif
 }
-inline int timezone2Index(int timezone) {
+inline static constexpr int timezone2Index(int timezone) {
 	return timezone + 12;
 }
-inline int index2Timezone(int timezone) {
+inline static constexpr int index2Timezone(int timezone) {
 	return timezone - 12;
+}
+inline static constexpr int convertKanjiCode2libffftp(int kanjicode) {
+	return
+		kanjicode == KANJI_NOCNV ? kanjicodes::KC_NOP :
+		kanjicode == KANJI_SJIS ? kanjicodes::KC_SJIS :
+		kanjicode == KANJI_JIS ? kanjicodes::KC_JIS :
+		kanjicode == KANJI_EUC ? kanjicodes::KC_EUC :
+		kanjicode == KANJI_UTF8N ? kanjicodes::KC_UTF8N :
+		kanjicode == KANJI_UTF8BOM ? kanjicodes::KC_UTF8BOM :
+		-1;
+}
+inline static constexpr int convertNameKanjiCode2libffftp(int kanjicode) {
+	return
+		kanjicode == KANJI_AUTO ? kanjicodes::KC_AUTO :
+		kanjicode == KANJI_SJIS ? kanjicodes::KC_SJIS :
+		kanjicode == KANJI_JIS ? kanjicodes::KC_JIS :
+		kanjicode == KANJI_EUC ? kanjicodes::KC_EUC :
+		kanjicode == KANJI_SMB_HEX ? kanjicodes::KC_SMH :
+		kanjicode == KANJI_SMB_CAP ? kanjicodes::KC_SMC :
+		kanjicode == KANJI_UTF8N ? kanjicodes::KC_UTF8N :
+		kanjicode == KANJI_UTF8HFSX ? kanjicodes::KC_UTF8HFSX :
+		-1;
+}
+inline static constexpr int convertKanjiCode2ffftp(int kanjicode) {
+	return
+		kanjicode == kanjicodes::KC_NOP ? KANJI_NOCNV :
+		kanjicode == kanjicodes::KC_SJIS ? KANJI_SJIS :
+		kanjicode == kanjicodes::KC_JIS ? KANJI_JIS :
+		kanjicode == kanjicodes::KC_EUC ? KANJI_EUC :
+		kanjicode == kanjicodes::KC_UTF8N ? KANJI_UTF8N :
+		kanjicode == kanjicodes::KC_UTF8BOM ? KANJI_UTF8BOM :
+		-1;
+}
+inline static constexpr int convertNameKanjiCode2ffftp(int kanjicode) {
+	return
+		kanjicode == kanjicodes::KC_AUTO ? KANJI_AUTO :
+		kanjicode == kanjicodes::KC_SJIS ? KANJI_SJIS :
+		kanjicode == kanjicodes::KC_JIS ? KANJI_JIS :
+		kanjicode == kanjicodes::KC_EUC ? KANJI_EUC :
+		kanjicode == kanjicodes::KC_SMH ? KANJI_SMB_HEX :
+		kanjicode == kanjicodes::KC_SMC ? KANJI_SMB_CAP :
+		kanjicode == kanjicodes::KC_UTF8N ? KANJI_UTF8N :
+		kanjicode == kanjicodes::KC_UTF8HFSX ? KANJI_UTF8HFSX :
+		-1;
 }
 void convertHostData(hostdata& dst, const HOSTDATA& src) {
 	// [基本]タブ
@@ -1438,6 +1482,13 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.security = src.Security,
 		.initcmd = src.InitCmd.c_str(),
 	};
+	// [文字コード]タブ
+	dst.kanjicode = {
+		.kanjicode = convertKanjiCode2libffftp(src.KanjiCode),
+		.kanacnv = src.KanaCnv == YES,
+		.kanjicode_name = convertNameKanjiCode2libffftp(src.NameKanjiCode),
+		.kanacnv_name = src.NameKanaCnv == YES,
+	};
 }
 void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	// [基本]タブ
@@ -1458,6 +1509,11 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	dst.TimeZone = index2Timezone(src.advanced.timezone);
 	dst.Security = src.advanced.security;
 	dst.InitCmd = src.advanced.initcmd;
+	// [文字コード]タブ
+	dst.KanjiCode = convertKanjiCode2ffftp(src.kanjicode.kanjicode);
+	dst.KanaCnv = src.kanjicode.kanacnv ? YES : NO;
+	dst.NameKanjiCode = convertNameKanjiCode2ffftp(src.kanjicode.kanjicode_name);
+	dst.NameKanaCnv = src.kanjicode.kanacnv_name ? YES : NO;
 }
 hostdata convertHostData(const HOSTDATA& src) {
 	hostdata ret;

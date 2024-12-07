@@ -11,8 +11,26 @@ class HostSettingKanjiCodeForm : public BaseForm {
   Q_OBJECT
 
  public:
+  enum class KanjiCode {
+    kNOP,
+    kAUTO,
+    kJIS,
+    kSJIS,
+    kEUC,
+    kSMH,
+    kSMC,
+    kUTF8N,
+    kUTF8BOM,
+    kUTF8HFSX,
+  };
   struct Data : public BaseForm::Data {
+    KanjiCode kanjicode;
+    bool kanacnv;
+    KanjiCode kanjicode_name;
+    bool kanacnv_name;
     Data();
+    Data(KanjiCode kanjicode, bool kanacnv, KanjiCode kanjicode_name,
+         bool kanacnv_name);
   };
 
   explicit HostSettingKanjiCodeForm(QWidget* parent = Q_NULLPTR);
@@ -24,6 +42,8 @@ class HostSettingKanjiCodeForm : public BaseForm {
   void updateData(BaseForm::Data& data) const;
 
  private slots:
+  void onClick_radioButton_Host();
+  void onClick_radioButton_File();
 
  private:
   class Private;

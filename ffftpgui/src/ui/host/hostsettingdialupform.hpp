@@ -12,7 +12,14 @@ class HostSettingDialupForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    bool dialup;
+    std::vector<std::wstring> dial_entries;
+    std::wstring dial_entry;
+    bool dialup_always;
+    bool dialup_notify;
     Data();
+    Data(bool dialup, const std::vector<std::wstring>& dial_entries,
+         const std::wstring& dial_entry, bool dialup_always, bool dialup_notify);
   };
 
   explicit HostSettingDialupForm(QWidget* parent = Q_NULLPTR);

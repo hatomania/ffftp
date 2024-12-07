@@ -18,7 +18,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
-    <widget class="QGroupBox" name="groupBox_UseDialup">
+    <widget class="QGroupBox" name="groupBox_Dialup">
      <property name="title">
       <string>ダイアルアップで接続する(&amp;D)</string>
      </property>
@@ -42,12 +42,12 @@
          </widget>
         </item>
         <item>
-         <widget class="QComboBox" name="comboBox_DialupEntry"/>
+         <widget class="QComboBox" name="comboBox_DialupEnties"/>
         </item>
        </layout>
       </item>
       <item>
-       <widget class="QGroupBox" name="groupBox_UseRedial">
+       <widget class="QGroupBox" name="groupBox_DialupAlways">
         <property name="title">
          <string>別のエントリへ接続中でも上記へ接続しなおす(&amp;A)</string>
         </property>
@@ -62,7 +62,7 @@
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QCheckBox" name="checkBox_ConfirmRedial">
+          <widget class="QCheckBox" name="checkBox_DialupNotify">
            <property name="text">
             <string>接続しなおす際に確認する(&amp;N)</string>
            </property>
@@ -90,10 +90,10 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>groupBox_UseDialup</tabstop>
-  <tabstop>comboBox_DialupEntry</tabstop>
-  <tabstop>groupBox_UseRedial</tabstop>
-  <tabstop>checkBox_ConfirmRedial</tabstop>
+  <tabstop>groupBox_Dialup</tabstop>
+  <tabstop>comboBox_DialupEnties</tabstop>
+  <tabstop>groupBox_DialupAlways</tabstop>
+  <tabstop>checkBox_DialupNotify</tabstop>
  </tabstops>
  <resources/>
  <connections/>

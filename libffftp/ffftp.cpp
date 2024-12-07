@@ -73,6 +73,15 @@ ffftp_hostcontext_next(const hostcontext_t hc, int* index) {
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostdata_initialize(hostdata* hdata) {
+  std::memset(static_cast<void*>(hdata), 0, sizeof(hostdata));
+}
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostdata_finalize(hostdata* hdata) {
+  delete[] hdata->dialup.dial_entries;
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_new(int index, const hostdata* hdata) {
   libffftp::hostContextNew(index, hdata);
 }

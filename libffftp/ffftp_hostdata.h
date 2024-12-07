@@ -49,6 +49,7 @@ enum kanjicodes {
   KC_UTF8HFSX,
 };
 
+/* [文字コード]タブのUIデータ */
 struct hostdata_kanjicode {
   int kanjicode;
   bool kanacnv;
@@ -56,10 +57,21 @@ struct hostdata_kanjicode {
   bool kanacnv_name;
 };
 
+/* [ダイアルアップ]タブのUIデータ */
+struct hostdata_dialup {
+  bool dialup;
+  const wchar_t** dial_entries;
+  size_t dial_entries_cnt;
+  const wchar_t* dial_entry;
+  bool dialup_always;
+  bool dialup_notify;
+};
+
 struct hostdata {
   hostdata_general general;
   hostdata_advanced advanced;
   hostdata_kanjicode kanjicode;
+  hostdata_dialup dialup;
 };
 
 #ifdef __cplusplus

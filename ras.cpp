@@ -104,3 +104,27 @@ bool ConnectRas(bool dialup, bool explicitly, bool confirm, std::wstring const& 
 	RASDIALDLG info{ sizeof(RASDIALDLG), GetMainHwnd() };
 	return RasDialDlgW(nullptr, const_cast<LPWSTR>(name.c_str()), nullptr, &info);
 }
+
+namespace libffftp {
+
+static void dialupEntryList(std::vector<std::wstring>& entries) {
+	// ほぼSetRasEntryToComboBox関数のコピー
+	entries.clear();
+	if (DWORD size = 0, count = 0, result = RasEnumEntriesW(nullptr, nullptr, nullptr, &size, &count); result == ERROR_BUFFER_TOO_SMALL) {
+		std::vector<RASENTRYNAMEW> entries_{ size / sizeof(RASENTRYNAMEW) };
+		for (auto& e : entries_) e = { .dwSize = sizeof(RASENTRYNAMEW), .dwFlags = REN_User };
+		size = sizeof(RASENTRYNAMEW) * size_as<DWORD>(entries_);
+		if (result = RasEnumEntriesW(nullptr, nullptr, data(entries_), &size, &count); result == ERROR_SUCCESS) {
+			for (DWORD i = 0; i < count; i++)
+				entries.push_back(entries_[i].szEntryName);
+		}
+	}
+}
+
+const std::vector<std::wstring>& dialupEntries() {
+	static std::vector<std::wstring> entries;
+	dialupEntryList(entries);
+	return entries;
+}
+
+} // namespace libffftp

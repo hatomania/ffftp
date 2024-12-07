@@ -99,6 +99,7 @@ void HostsListDialog::Private::buildHostTreeView(int current) {
   delete model;
   model = new QStandardItemModel();
   rootnode = model->invisibleRootItem();
+  selected_host_index = current;
 
   hostcontext_t hc = ffftp_hostcontext_first();
   _buildHostTreeViewNode(hc, 0, rootnode);
@@ -176,6 +177,7 @@ int HostsListDialog::connectingHostIndex() { return d_->connecting_host_index; }
 void HostsListDialog::onClick_pushButton_NewHost() {
   qDebug() << __FUNCTION__ << "called!";
   hostdata hdata;
+  ffftp_hostdata_initialize(&hdata);
   ffftp_hostcontext_hostdata_default(&hdata);
   if (showSettingDialog(hdata)) {
     int insert_index =
@@ -183,6 +185,7 @@ void HostsListDialog::onClick_pushButton_NewHost() {
     ffftp_hostcontext_new(insert_index, &hdata);
     d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
   }
+  ffftp_hostdata_finalize(&hdata);
 }
 
 void HostsListDialog::onClick_pushButton_NewGroup() {
@@ -192,6 +195,7 @@ void HostsListDialog::onClick_pushButton_NewGroup() {
 void HostsListDialog::onClick_pushButton_Mod() {
   qDebug() << __FUNCTION__ << "called!";
   hostdata hdata;
+  ffftp_hostdata_initialize(&hdata);
   ffftp_hostcontext_hostdata(d_->selected_host_index, &hdata);
   if (showSettingDialog(hdata)) {
     int insert_index =
@@ -200,6 +204,7 @@ void HostsListDialog::onClick_pushButton_Mod() {
     ffftp_hostcontext_new(insert_index, &hdata);
     d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
   }
+  ffftp_hostdata_finalize(&hdata);
 }
 
 void HostsListDialog::onClick_pushButton_Copy() {
@@ -247,7 +252,8 @@ void HostsListDialog::selectedHost(const QModelIndex& index) {
 bool HostsListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
   qDebug() << __FUNCTION__ << "called!";
   bool ret = false;
-  HostSettingsDialog setting_dlg(in_out_data, this);// const付けるとthisもconst型になり型不一致でエラー
+  HostSettingsDialog setting_dlg(
+      in_out_data, this);  // 関数のおしりにconst付けるとthisもconst型になり型不一致でエラー
   if (setting_dlg.exec() == QDialog::Accepted) {
     setting_dlg.hostData(in_out_data);
     ret = true;

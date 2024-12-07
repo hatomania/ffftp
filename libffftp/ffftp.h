@@ -85,6 +85,25 @@ ffftp_hostcontext_first(int* index = NULL);
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
 ffftp_hostcontext_next(const hostcontext_t hc, int* index = NULL);
 #endif
+
+/**
+ * @brief hostdataの初期化を行う。
+ *
+ * hostdataを使用する前に、この関数を呼び出してhostdataを初期化しなければならない。
+ * @param[in] hdata 初期化するhostdataへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostdata_initialize(hostdata* hdata);
+/**
+ * @brief hostdataの後処理を行う。
+ *
+ * hostdataを使用し終わったらスコープを抜ける前に、この関数を呼び出してhostdataの後処理をしなければならない。@n
+ * これを怠るとメモリリークを引き起こす可能性があります。
+ * @param[in] hdata 後処理するhostdataへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostdata_finalize(hostdata* hdata);
+
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_new(int index, const hostdata* hdata);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index);

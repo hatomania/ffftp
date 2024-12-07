@@ -61,6 +61,17 @@ void HostSettingsDialog::setHostData(const hostdata& hdata) {
       hdata.kanjicode.kanacnv_name,
   };
   d_->ui.tab_2->setData(data_tab_2);
+  // [ダイアルアップ]タブへデータを入力
+  HostSettingDialupForm::Data data_tab_3;
+  data_tab_3.dialup = hdata.dialup.dialup;
+  data_tab_3.dial_entries.clear();
+  for (int i = 0; i < hdata.dialup.dial_entries_cnt; ++i) {
+    data_tab_3.dial_entries.push_back(hdata.dialup.dial_entries[i]);
+  }
+  data_tab_3.dial_entry = hdata.dialup.dial_entry;
+  data_tab_3.dialup_always = hdata.dialup.dialup_always;
+  data_tab_3.dialup_notify = hdata.dialup.dialup_notify;
+  d_->ui.tab_3->setData(data_tab_3);
 }
 
 #define DECL_FORMDATA(T, V) \
@@ -119,6 +130,14 @@ void HostSettingsDialog::hostData(hostdata& hdata) const {
       .kanacnv = data_tab_2.kanacnv,
       .kanjicode_name = convtable_name.at(data_tab_2.kanjicode_name),
       .kanacnv_name = data_tab_2.kanacnv_name,
+  };
+  // [ダイアルアップ]タブからデータを取得
+  DECL_FORMDATA(HostSettingDialupForm, tab_3);
+  hdata.dialup = {
+      .dialup = data_tab_3.dialup,
+      .dial_entry = data_tab_3.dial_entry.c_str(),
+      .dialup_always = data_tab_3.dialup_always,
+      .dialup_notify = data_tab_3.dialup_notify,
   };
 }
 

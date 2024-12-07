@@ -187,8 +187,8 @@ OTP SHA-1
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | ダイアルアップで接続する | HOSTDATA::Dialup | hostdata::hostdata_dialup::dialup | HostSettingDialupForm::Data::dialup |  |
-| 接続する電話帳エントリ | HOSTDATA::DialEntry | hostdata::hostdata_dialup::dial_entry | HostSettingDialupForm::Data::dial_entry | 文字列型とする |
-| 別のエントリへ接続中でも上記へ接続しなおす | HOSTDATA::DialupAlways | hostdata::hostdata_dialup::dialup_always | HostSettingDialupForm::Data::hostdata_dialup |  |
+| 接続する電話帳エントリ | HOSTDATA::DialEntry | hostdata::hostdata_dialup::dialup_entry | HostSettingDialupForm::Data::dialup_entry | 文字列型とする |
+| 別のエントリへ接続中でも上記へ接続しなおす | HOSTDATA::DialupAlways | hostdata::hostdata_dialup::dialup_always | HostSettingDialupForm::Data::dialup_always |  |
 | 接続しなおす際に確認する | HOSTDATA::DialupNotify | hostdata::hostdata_dialup::dialup_notify | HostSettingDialupForm::Data::dialup_notify |  |
 
 ### 全UI部品共通事項

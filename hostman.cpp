@@ -1489,6 +1489,24 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.kanjicode_name = convertNameKanjiCode2libffftp(src.NameKanjiCode),
 		.kanacnv_name = src.NameKanaCnv == YES,
 	};
+	// [ダイアルアップ]タブ
+	dst.dialup = {
+		.dialup = src.Dialup == YES,
+		.dial_entry = src.DialEntry.c_str(),
+		.dialup_always = src.DialupAlways == YES,
+		.dialup_notify = src.DialupNotify == YES,
+	};
+	delete[] dst.dialup.dial_entries;
+	dst.dialup.dial_entries = nullptr;
+	dst.dialup.dial_entries_cnt = 0;
+	const std::vector<std::wstring>& dialup_entries = dialupEntries();
+	if (!dialup_entries.empty()) {
+		dst.dialup.dial_entries = new const wchar_t* [dialup_entries.size()];
+		for (int i = 0; const auto & entry : dialup_entries) {
+			dst.dialup.dial_entries[i++] = entry.c_str();
+		}
+		dst.dialup.dial_entries_cnt = dialup_entries.size();
+	}
 }
 void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	// [基本]タブ
@@ -1514,6 +1532,11 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	dst.KanaCnv = src.kanjicode.kanacnv ? YES : NO;
 	dst.NameKanjiCode = convertNameKanjiCode2ffftp(src.kanjicode.kanjicode_name);
 	dst.NameKanaCnv = src.kanjicode.kanacnv_name ? YES : NO;
+	// [ダイアルアップ]タブ
+	dst.Dialup = src.dialup.dialup ? YES : NO;
+	dst.DialEntry = src.dialup.dial_entry;
+	dst.DialupAlways = src.dialup.dialup_always ? YES : NO;
+	dst.DialupNotify = src.dialup.dialup_notify ? YES : NO;
 }
 hostdata convertHostData(const HOSTDATA& src) {
 	hostdata ret;

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>394</width>
-    <height>225</height>
+    <width>278</width>
+    <height>323</height>
    </rect>
   </property>
   <property name="layoutDirection">
@@ -16,37 +16,62 @@
   <property name="autoFillBackground">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
+  <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label_1">
+      <widget class="QCheckBox" name="checkBox_ListCmdOnly">
        <property name="text">
-        <string>最大同時接続数(&amp;M):</string>
+        <string>LISTコマンドでファイル一覧を取得(&amp;L)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_UseMLSD">
+       <property name="text">
+        <string>可能であればMLSDコマンドで一覧を取得(&amp;M)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_UseNLST_R">
+       <property name="text">
+        <string>NLST -R を使って高速に再帰検索(&amp;N)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="checkBox_NoFullPath">
+       <property name="text">
+        <string>フルパスでファイルをアクセスしない(&amp;F)</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="1" column="0">
+      <widget class="QLineEdit" name="lineEdit_ChmodCmd"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_StdChmodCmd">
+       <property name="text">
+        <string>標準</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>属性変更コマンド(&amp;A):</string>
        </property>
        <property name="buddy">
-        <cstring>spinBox_MaxConnection</cstring>
+        <cstring>lineEdit_ChmodCmd</cstring>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QSpinBox" name="spinBox_MaxConnection">
-       <property name="minimum">
-        <number>1</number>
-       </property>
-       <property name="maximum">
-        <number>4</number>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>(1～4)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
+     <item row="1" column="2">
       <spacer name="horizontalSpacer">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
@@ -62,109 +87,92 @@
     </layout>
    </item>
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QCheckBox" name="checkBox_ReuseMainSocket">
+      <widget class="QLabel" name="label_2">
        <property name="text">
-        <string>メインウィンドウのソケットを再利用(&amp;S)</string>
+        <string>ホストの種類(&amp;H):</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBox_HostType</cstring>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QCheckBox" name="checkBox_IgnorePASVAddr">
-       <property name="text">
-        <string>PASVで返されるアドレスを無視(&amp;A)</string>
-       </property>
+      <widget class="QComboBox" name="comboBox_HostType">
+       <item>
+        <property name="text">
+         <string>自動認識</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ACOS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>VAX VMS</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>IRMX</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ACOS-4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Stratus</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Agilent Logic Analyzer</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>シバソク WL</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NonStop Server</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_4">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="1" column="1">
+      <widget class="QPushButton" name="pushButton_StdLsName">
        <property name="text">
-        <string>接続維持用コマンド周期(&amp;K):</string>
-       </property>
-       <property name="buddy">
-        <cstring>spinBox_KeepConnectionFreq</cstring>
+        <string>標準</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="QSpinBox" name="spinBox_KeepConnectionFreq">
-       <property name="maximum">
-        <number>300</number>
-       </property>
-      </widget>
-     </item>
-     <item>
+     <item row="0" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
-        <string>(0～300秒; 0=無効)</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Orientation::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>転送エラー時の処理(&amp;E):</string>
+        <string>NLSTファイル名/オプション</string>
        </property>
        <property name="buddy">
-        <cstring>comboBox_ProcWhenError</cstring>
+        <cstring>lineEdit_LsName</cstring>
        </property>
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QComboBox" name="comboBox_ProcWhenError">
-       <item>
-        <property name="text">
-         <string>毎回尋ねる</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>全て後で上書き</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>全て後でリジューム</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string>全てスキップ</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QCheckBox" name="checkBox_ReconnectAfterError">
-       <property name="text">
-        <string>転送エラー後に再接続(&amp;R)</string>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="lineEdit_LsName"/>
      </item>
      <item row="1" column="2">
-      <spacer name="horizontalSpacer_3">
+      <spacer name="horizontalSpacer_2">
        <property name="orientation">
         <enum>Qt::Orientation::Horizontal</enum>
        </property>
@@ -193,10 +201,90 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>checkBox_ListCmdOnly</tabstop>
+  <tabstop>checkBox_UseMLSD</tabstop>
+  <tabstop>checkBox_UseNLST_R</tabstop>
+  <tabstop>checkBox_NoFullPath</tabstop>
+  <tabstop>lineEdit_ChmodCmd</tabstop>
+  <tabstop>pushButton_StdChmodCmd</tabstop>
+  <tabstop>comboBox_HostType</tabstop>
+  <tabstop>lineEdit_LsName</tabstop>
+  <tabstop>pushButton_StdLsName</tabstop>
+ </tabstops>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_StdChmodCmd</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingSpecialForm</receiver>
+   <slot>onClick_pushButton_CHMODCmd()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>150</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_StdLsName</sender>
+   <signal>clicked()</signal>
+   <receiver>HostSettingSpecialForm</receiver>
+   <slot>onClick_pushButton_StdNLST()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>184</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_ListCmdOnly</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>HostSettingSpecialForm</receiver>
+   <slot>onClick_checkBox_LISTCmd(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>comboBox_HostType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>HostSettingSpecialForm</receiver>
+   <slot>onCurrentIndexChanged_comboBox_Host(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>203</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>162</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
  <slots>
   <slot>onClick_toolButton_SelectLocalDir()</slot>
   <slot>onClick_pushButton_NowDir()</slot>
+  <slot>onClick_pushButton_CHMODCmd()</slot>
+  <slot>onClick_pushButton_StdNLST()</slot>
+  <slot>onClick_checkBox_LISTCmd(bool)</slot>
+  <slot>onCurrentIndexChanged_comboBox_Host(int)</slot>
  </slots>
 </ui>

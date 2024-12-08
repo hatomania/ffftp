@@ -1507,6 +1507,16 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		}
 		dst.dialup.dial_entries_cnt = dialup_entries.size();
 	}
+	// [高度]タブ
+	dst.special = {
+		.list_cmd_only = src.ListCmdOnly == YES,
+		.use_mlsd = src.UseMLSD == YES,
+		.use_nlst_r = src.UseNLST_R == YES,
+		.no_fullpath = src.NoFullPath == YES,
+		.chmod_cmd = src.ChmodCmd.c_str(),
+		.host_type = src.HostType,
+		.ls_name = src.LsName.c_str(),
+	};
 }
 void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	// [基本]タブ
@@ -1537,6 +1547,14 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	dst.DialEntry = src.dialup.dial_entry;
 	dst.DialupAlways = src.dialup.dialup_always ? YES : NO;
 	dst.DialupNotify = src.dialup.dialup_notify ? YES : NO;
+	// [高度]タブ
+	dst.ListCmdOnly = src.special.list_cmd_only ? YES : NO;
+	dst.UseMLSD = src.special.use_mlsd ? YES : NO;
+	dst.UseNLST_R = src.special.use_nlst_r ? YES : NO;
+	dst.NoFullPath = src.special.no_fullpath ? YES : NO;
+	dst.ChmodCmd = src.special.chmod_cmd;
+	dst.HostType = src.special.host_type;
+	dst.LsName = src.special.ls_name;
 }
 hostdata convertHostData(const HOSTDATA& src) {
 	hostdata ret;

@@ -67,11 +67,23 @@ struct hostdata_dialup {
   bool dialup_notify;
 };
 
+/* [高度]タブのUIデータ */
+struct hostdata_special {
+  bool list_cmd_only;
+  bool use_mlsd;
+  bool use_nlst_r;
+  bool no_fullpath;
+  const wchar_t* chmod_cmd;
+  int host_type;
+  const wchar_t* ls_name;
+};
+
 struct hostdata {
   hostdata_general general;
   hostdata_advanced advanced;
   hostdata_kanjicode kanjicode;
   hostdata_dialup dialup;
+  hostdata_special special;
 };
 
 #ifdef __cplusplus

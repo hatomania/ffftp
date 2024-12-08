@@ -9,6 +9,7 @@ class HostSettingsDialog : public QDialog {
 
  public:
   explicit HostSettingsDialog(const hostdata& hdata, QWidget* parent = Q_NULLPTR);
+  virtual ~HostSettingsDialog();
 
   void hostData(hostdata& hdata) const;
 

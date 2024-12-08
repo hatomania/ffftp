@@ -68,6 +68,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\ui\base\baseform.cpp" />
+    <ClCompile Include="src\ui\base\datatransceiver.cpp" />
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp" />
@@ -83,6 +84,12 @@
     <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ui\base\datatransceiver.hpp" />
+    <ClInclude Include="src\ui\base\formdatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\generaldatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp" />
     <ClInclude Include="src\ui\uicommon.h" />
     <QtMoc Include="src\ui\host\hostsettingfeatureform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp" />

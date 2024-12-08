@@ -35,9 +35,9 @@ class HostSettingGeneralForm : public BaseForm {
   virtual ~HostSettingGeneralForm();
 
  protected:
-  void setRawData(const BaseForm::Data& data);
-  void updateUi(const BaseForm::Data& data);
-  void updateData(BaseForm::Data& data) const;
+  void setRawData(const BaseForm::Data& data) override;
+  void updateUi(const BaseForm::Data& data) override;
+  void updateData(BaseForm::Data& data) const override;
 
  private slots:
   void onClick_toolButton_SelectLocalDir();

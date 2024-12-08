@@ -1,13 +1,13 @@
 ﻿#include "hostsettingadvancedform.hpp"
 
-#include "ui/uicommon.h"
 #include "ui_hostsettingadvancedform.h"
+
+#include "ui/uicommon.h"
 
 namespace {
 constexpr int kDefPort = 21;
 using ThisData = HostSettingAdvancedForm::Data;
-inline const ThisData& castData(
-    const BaseForm::Data& data) {
+inline const ThisData& castData(const BaseForm::Data& data) {
   return static_cast<const ThisData&>(data);
 }
 inline ThisData& castData(BaseForm::Data& data) {

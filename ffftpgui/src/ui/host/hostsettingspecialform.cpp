@@ -47,7 +47,7 @@ HostSettingSpecialForm::HostSettingSpecialForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
 }
-HostSettingSpecialForm ::~HostSettingSpecialForm() { delete d_; }
+HostSettingSpecialForm ::~HostSettingSpecialForm() {}
 
 void HostSettingSpecialForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);

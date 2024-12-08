@@ -19,22 +19,23 @@ class HostSettingDialupForm : public BaseForm {
     bool dialup_notify;
     Data();
     Data(bool dialup, const std::vector<std::wstring>& dial_entries,
-         const std::wstring& dial_entry, bool dialup_always, bool dialup_notify);
+         const std::wstring& dial_entry, bool dialup_always,
+         bool dialup_notify);
   };
 
   explicit HostSettingDialupForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingDialupForm();
 
  protected:
-  void setRawData(const BaseForm::Data& data);
-  void updateUi(const BaseForm::Data& data);
-  void updateData(BaseForm::Data& data) const;
+  void setRawData(const BaseForm::Data& data) override;
+  void updateUi(const BaseForm::Data& data) override;
+  void updateData(BaseForm::Data& data) const override;
 
  private slots:
 
  private:
   class Private;
-  Private* d_;
+  std::unique_ptr<Private> d_;
   Q_DISABLE_COPY(HostSettingDialupForm)
 };
 

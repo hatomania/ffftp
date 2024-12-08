@@ -272,8 +272,8 @@ NonStop Server
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | 暗号化なしで接続を許可 | HOSTDATA::UseNoEncryption | hostdata::hostdata_encryption::use_no_encryption | HostSettingEncryptionForm::Data::use_no_encryption |  |
-| FTPS (Explicit)で接続 | HOSTDATA::UseFTPES | hostdata::hostdata_encryption::use_ftp_es | HostSettingEncryptionForm::Data::use_FTPES |  |
-| FTPS (Implicit)で接続 | HOSTDATA::UseFTPIS | hostdata::hostdata_encryption::use_ftp_is | HostSettingEncryptionForm::Data::use_FTPIS |  |
+| FTPS (Explicit)で接続 | HOSTDATA::UseFTPES | hostdata::hostdata_encryption::use_ftp_es | HostSettingEncryptionForm::Data::use_ftp_es |  |
+| FTPS (Implicit)で接続 | HOSTDATA::UseFTPIS | hostdata::hostdata_encryption::use_ftp_is | HostSettingEncryptionForm::Data::use_ftp_is |  |
 
 ## 「特殊機能」タブ
 

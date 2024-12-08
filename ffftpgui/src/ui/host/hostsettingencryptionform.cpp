@@ -3,11 +3,12 @@
 #include "ui_hostsettingencryptionform.h"
 
 namespace {
-inline const HostSettingEncryptionForm::Data& castData(const BaseForm::Data& data) {
-  return static_cast<const HostSettingEncryptionForm::Data&>(data);
+using ThisData = HostSettingEncryptionForm::Data;
+inline const ThisData& castData(const BaseForm::Data& data) {
+  return static_cast<const ThisData&>(data);
 }
-inline HostSettingEncryptionForm::Data& castData(BaseForm::Data& data) {
-  return static_cast<HostSettingEncryptionForm::Data&>(data);
+inline ThisData& castData(BaseForm::Data& data) {
+  return static_cast<ThisData&>(data);
 }
 }  // namespace
 
@@ -21,7 +22,14 @@ class HostSettingEncryptionForm::Private {
 HostSettingEncryptionForm::Private::Private() {}
 HostSettingEncryptionForm::Private::~Private() {}
 
-HostSettingEncryptionForm::Data::Data() {}
+HostSettingEncryptionForm::Data::Data()
+    : use_no_encryption(false), use_ftp_es(false), use_ftp_is(false) {}
+
+HostSettingEncryptionForm::Data::Data(bool use_no_encryption, bool use_ftp_es,
+                                      bool use_ftp_is)
+    : use_no_encryption(use_no_encryption),
+      use_ftp_es(use_ftp_es),
+      use_ftp_is(use_ftp_is) {}
 
 HostSettingEncryptionForm::HostSettingEncryptionForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {

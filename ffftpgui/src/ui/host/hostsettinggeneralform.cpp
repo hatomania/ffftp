@@ -2,15 +2,15 @@
 
 #include <QFileDialog>
 
-#include "ui/uicommon.h"
 #include "ui_hostsettinggeneralform.h"
+
+#include "ui/uicommon.h"
 
 namespace {
 constexpr const char* const kDefAnonymousUsename = "anonymous";
 constexpr const char* const kDefAnonymousPassword = "who@example.com";
 using ThisData = HostSettingGeneralForm::Data;
-inline const ThisData& castData(
-    const BaseForm::Data& data) {
+inline const ThisData& castData(const BaseForm::Data& data) {
   return static_cast<const ThisData&>(data);
 }
 inline ThisData& castData(BaseForm::Data& data) {

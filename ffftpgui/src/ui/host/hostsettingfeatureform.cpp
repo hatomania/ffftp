@@ -3,11 +3,12 @@
 #include "ui_hostsettingfeatureform.h"
 
 namespace {
-inline const HostSettingFeatureForm::Data& castData(const BaseForm::Data& data) {
-  return static_cast<const HostSettingFeatureForm::Data&>(data);
+using ThisData = HostSettingFeatureForm::Data;
+inline const ThisData& castData(const BaseForm::Data& data) {
+  return static_cast<const ThisData&>(data);
 }
-inline HostSettingFeatureForm::Data& castData(BaseForm::Data& data) {
-  return static_cast<HostSettingFeatureForm::Data&>(data);
+inline ThisData& castData(BaseForm::Data& data) {
+  return static_cast<ThisData&>(data);
 }
 }  // namespace
 

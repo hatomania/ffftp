@@ -1,7 +1,8 @@
 ﻿#include "hostsettingdialupform.hpp"
 
-#include "ui/uicommon.h"
 #include "ui_hostsettingdialupform.h"
+
+#include "ui/uicommon.h"
 
 namespace {
 using ThisData = HostSettingDialupForm::Data;

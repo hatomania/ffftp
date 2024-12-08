@@ -1,7 +1,8 @@
 ﻿#include "hostsettingkanjicodeform.hpp"
 
-#include "ui/uicommon.h"
 #include "ui_hostsettingkanjicodeform.h"
+
+#include "ui/uicommon.h"
 
 namespace {
 using ThisData = HostSettingKanjiCodeForm::Data;
@@ -52,8 +53,6 @@ void HostSettingKanjiCodeForm::updateUi(const BaseForm::Data& data) {
   struct TValue {
     QRadioButton& rbtn;
     bool conv;
-    //TValue() : rbtn(Q_NULLPTR),conv(false) {};
-    //TValue(const TValue& v) : rbtn(v.rbtn), conv(v.conv) {}
     TValue(QRadioButton& rbtn, bool conv) : rbtn(rbtn), conv(conv) {}
   };
   const std::map<KanjiCode, const TValue> host_codes{
@@ -74,7 +73,6 @@ void HostSettingKanjiCodeForm::updateUi(const BaseForm::Data& data) {
       {KanjiCode::kUTF8N, TValue{*d_->ui.radioButton_2_7_UTF8, false}},
       {KanjiCode::kUTF8HFSX, TValue{*d_->ui.radioButton_2_8_UTF8HFSP, false}},
   };
-  //host_codes[tdata.kanjicode].rbtn.setChecked(true);// ←この書き方だとなぜかエラーなる
   host_codes.at(tdata.kanjicode).rbtn.setChecked(true);
   UI_SETCHECKED(d_->ui.checkBox_1_1_KanaConv, tdata.kanacnv);
   UI_SETENABLED(d_->ui.checkBox_1_1_KanaConv,

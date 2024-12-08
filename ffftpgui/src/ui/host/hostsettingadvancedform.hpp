@@ -30,16 +30,16 @@ class HostSettingAdvancedForm : public BaseForm {
   virtual ~HostSettingAdvancedForm();
 
  protected:
-  void setRawData(const BaseForm::Data& data);
-  void updateUi(const BaseForm::Data& data);
-  void updateData(BaseForm::Data& data) const;
+  void setRawData(const BaseForm::Data& data) override;
+  void updateUi(const BaseForm::Data& data) override;
+  void updateData(BaseForm::Data& data) const override;
 
  private slots:
   void onClick_pushButton_StdPort();
 
  private:
   class Private;
-  Private* d_;
+  std::unique_ptr<Private> d_;
   Q_DISABLE_COPY(HostSettingAdvancedForm)
 };
 

@@ -12,22 +12,26 @@ class HostSettingEncryptionForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    bool use_no_encryption;
+    bool use_ftp_es;
+    bool use_ftp_is;
     Data();
+    Data(bool use_no_encryption, bool use_ftp_es, bool use_ftp_is);
   };
 
   explicit HostSettingEncryptionForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingEncryptionForm();
 
  protected:
-  void setRawData(const BaseForm::Data& data);
-  void updateUi(const BaseForm::Data& data);
-  void updateData(BaseForm::Data& data) const;
+  void setRawData(const BaseForm::Data& data) override;
+  void updateUi(const BaseForm::Data& data) override;
+  void updateData(BaseForm::Data& data) const override;
 
  private slots:
 
  private:
   class Private;
-  Private* d_;
+  std::unique_ptr<Private> d_;
   Q_DISABLE_COPY(HostSettingEncryptionForm)
 };
 

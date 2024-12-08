@@ -218,7 +218,7 @@
    <sender>pushButton_StdChmodCmd</sender>
    <signal>clicked()</signal>
    <receiver>HostSettingSpecialForm</receiver>
-   <slot>onClick_pushButton_CHMODCmd()</slot>
+   <slot>onClick_pushButton_StdChmodCmd()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>184</x>
@@ -234,7 +234,7 @@
    <sender>pushButton_StdLsName</sender>
    <signal>clicked()</signal>
    <receiver>HostSettingSpecialForm</receiver>
-   <slot>onClick_pushButton_StdNLST()</slot>
+   <slot>onClick_pushButton_StdLsName()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>184</x>
@@ -248,9 +248,9 @@
   </connection>
   <connection>
    <sender>checkBox_ListCmdOnly</sender>
-   <signal>clicked(bool)</signal>
+   <signal>clicked()</signal>
    <receiver>HostSettingSpecialForm</receiver>
-   <slot>onClick_checkBox_LISTCmd(bool)</slot>
+   <slot>onClick_checkBox_ListCmdOnly()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>138</x>
@@ -266,7 +266,7 @@
    <sender>comboBox_HostType</sender>
    <signal>currentIndexChanged(int)</signal>
    <receiver>HostSettingSpecialForm</receiver>
-   <slot>onCurrentIndexChanged_comboBox_Host(int)</slot>
+   <slot>onCurrentIndexChanged_comboBox_HostType(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>138</x>
@@ -280,11 +280,9 @@
   </connection>
  </connections>
  <slots>
-  <slot>onClick_toolButton_SelectLocalDir()</slot>
-  <slot>onClick_pushButton_NowDir()</slot>
-  <slot>onClick_pushButton_CHMODCmd()</slot>
-  <slot>onClick_pushButton_StdNLST()</slot>
-  <slot>onClick_checkBox_LISTCmd(bool)</slot>
-  <slot>onCurrentIndexChanged_comboBox_Host(int)</slot>
+  <slot>onClick_pushButton_StdChmodCmd()</slot>
+  <slot>onClick_pushButton_StdLsName()</slot>
+  <slot>onClick_checkBox_ListCmdOnly()</slot>
+  <slot>onCurrentIndexChanged_comboBox_HostType(int)</slot>
  </slots>
 </ui>

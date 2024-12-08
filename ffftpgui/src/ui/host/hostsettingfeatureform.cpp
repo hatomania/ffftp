@@ -34,6 +34,10 @@ void HostSettingFeatureForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);
 }
 
-void HostSettingFeatureForm::updateUi(const BaseForm::Data& data) {}
+void HostSettingFeatureForm::updateUi(const BaseForm::Data& data) {
+  const ThisData& data_in = castData(data);
+}
 
-void HostSettingFeatureForm::updateData(BaseForm::Data& data) const {}
+void HostSettingFeatureForm::updateData(BaseForm::Data& data) const {
+  ThisData& data_out = castData(data);
+}

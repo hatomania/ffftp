@@ -49,7 +49,7 @@ void HostSettingKanjiCodeForm::setRawData(const BaseForm::Data& data) {
 }
 
 void HostSettingKanjiCodeForm::updateUi(const BaseForm::Data& data) {
-  const ThisData& tdata = castData(data);
+  const ThisData& data_in = castData(data);
   struct TValue {
     QRadioButton& rbtn;
     bool conv;
@@ -73,18 +73,18 @@ void HostSettingKanjiCodeForm::updateUi(const BaseForm::Data& data) {
       {KanjiCode::kUTF8N, TValue{*d_->ui.radioButton_2_7_UTF8, false}},
       {KanjiCode::kUTF8HFSX, TValue{*d_->ui.radioButton_2_8_UTF8HFSP, false}},
   };
-  host_codes.at(tdata.kanjicode).rbtn.setChecked(true);
-  UI_SETCHECKED(d_->ui.checkBox_1_1_KanaConv, tdata.kanacnv);
+  host_codes.at(data_in.kanjicode).rbtn.setChecked(true);
+  UI_SETCHECKED(d_->ui.checkBox_1_1_KanaConv, data_in.kanacnv);
   UI_SETENABLED(d_->ui.checkBox_1_1_KanaConv,
-                host_codes.find(tdata.kanjicode)->second.conv);
-  name_codes.at(tdata.kanjicode_name).rbtn.setChecked(true);
-  UI_SETCHECKED(d_->ui.checkBox_2_1_KanaConv, tdata.kanacnv_name);
+                host_codes.find(data_in.kanjicode)->second.conv);
+  name_codes.at(data_in.kanjicode_name).rbtn.setChecked(true);
+  UI_SETCHECKED(d_->ui.checkBox_2_1_KanaConv, data_in.kanacnv_name);
   UI_SETENABLED(d_->ui.checkBox_2_1_KanaConv,
-                name_codes.find(tdata.kanjicode_name)->second.conv);
+                name_codes.find(data_in.kanjicode_name)->second.conv);
 }
 
 void HostSettingKanjiCodeForm::updateData(BaseForm::Data& data) const {
-  ThisData& tdata = castData(data);
+  ThisData& data_out = castData(data);
   const std::map<KanjiCode, const QRadioButton&> host_codes{
       {KanjiCode::kNOP, *d_->ui.radioButton_1_1_NOP},
       {KanjiCode::kSJIS, *d_->ui.radioButton_1_2_SJIS},
@@ -105,24 +105,24 @@ void HostSettingKanjiCodeForm::updateData(BaseForm::Data& data) const {
   };
   for (const auto& p : host_codes) {
     if (p.second.isChecked()) {
-      tdata.kanjicode = p.first;
+      data_out.kanjicode = p.first;
       break;
     }
   }
-  UI_ISCHECKED(tdata.kanacnv, d_->ui.checkBox_1_1_KanaConv);
+  UI_ISCHECKED(data_out.kanacnv, d_->ui.checkBox_1_1_KanaConv);
   for (const auto& p : name_codes) {
     if (p.second.isChecked()) {
-      tdata.kanjicode_name = p.first;
+      data_out.kanjicode_name = p.first;
       break;
     }
   }
-  UI_ISCHECKED(tdata.kanacnv_name, d_->ui.checkBox_2_1_KanaConv);
+  UI_ISCHECKED(data_out.kanacnv_name, d_->ui.checkBox_2_1_KanaConv);
 }
 
 void HostSettingKanjiCodeForm::onClick_radioButton_Host() {
-  ThisData tdata;
-  updateData(tdata);
-  updateUi(tdata);
+  ThisData data;
+  updateData(data);
+  updateUi(data);
 }
 
 void HostSettingKanjiCodeForm::onClick_radioButton_File() {

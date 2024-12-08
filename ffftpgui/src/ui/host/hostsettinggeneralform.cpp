@@ -102,28 +102,28 @@ void HostSettingGeneralForm::setRawData(const BaseForm::Data& data) {
 }
 
 void HostSettingGeneralForm::updateUi(const BaseForm::Data& data) {
-  const ThisData& data_ = castData(data);
-  UI_SETTEXT(d_->ui.lineEdit_HostName, QString(data_.host_name));
-  UI_SETTEXT(d_->ui.lineEdit_HostAdrs, QString(data_.host_adrs));
-  UI_SETTEXT(d_->ui.lineEdit_Username, QString(data_.username));
-  UI_SETTEXT(d_->ui.lineEdit_Password, QString(data_.password));
-  UI_SETCHECKED(d_->ui.checkBox_Anonymous, data_.anonymous);
-  UI_SETTEXT(d_->ui.lineEdit_InitDirLocal, QString(data_.initdir_local));
-  UI_SETTEXT(d_->ui.lineEdit_InitDirRemote, QString(data_.initdir_remote));
-  UI_SETENABLED(d_->ui.pushButton_CurDir, data_.enabled_curdir);
-  UI_SETCHECKED(d_->ui.checkBox_LastDir, data_.last_dir);
+  const ThisData& data_in = castData(data);
+  UI_SETTEXT(d_->ui.lineEdit_HostName, QString(data_in.host_name));
+  UI_SETTEXT(d_->ui.lineEdit_HostAdrs, QString(data_in.host_adrs));
+  UI_SETTEXT(d_->ui.lineEdit_Username, QString(data_in.username));
+  UI_SETTEXT(d_->ui.lineEdit_Password, QString(data_in.password));
+  UI_SETCHECKED(d_->ui.checkBox_Anonymous, data_in.anonymous);
+  UI_SETTEXT(d_->ui.lineEdit_InitDirLocal, QString(data_in.initdir_local));
+  UI_SETTEXT(d_->ui.lineEdit_InitDirRemote, QString(data_in.initdir_remote));
+  UI_SETENABLED(d_->ui.pushButton_CurDir, data_in.enabled_curdir);
+  UI_SETCHECKED(d_->ui.checkBox_LastDir, data_in.last_dir);
 }
 
 void HostSettingGeneralForm::updateData(BaseForm::Data& data) const {
-  ThisData& data_ = castData(data);
-  UI_TEXT(data_.host_name, d_->ui.lineEdit_HostName).toStdWString();
-  UI_TEXT(data_.host_adrs, d_->ui.lineEdit_HostAdrs).toStdWString();
-  UI_TEXT(data_.username, d_->ui.lineEdit_Username).toStdWString();
-  UI_TEXT(data_.password, d_->ui.lineEdit_Password).toStdWString();
-  UI_ISCHECKED(data_.anonymous, d_->ui.checkBox_Anonymous);
-  UI_TEXT(data_.initdir_local, d_->ui.lineEdit_InitDirLocal).toStdWString();
-  UI_TEXT(data_.initdir_remote, d_->ui.lineEdit_InitDirRemote).toStdWString();
-  UI_ISCHECKED(data_.last_dir, d_->ui.checkBox_LastDir);
+  ThisData& data_out = castData(data);
+  UI_TEXT(data_out.host_name, d_->ui.lineEdit_HostName).toStdWString();
+  UI_TEXT(data_out.host_adrs, d_->ui.lineEdit_HostAdrs).toStdWString();
+  UI_TEXT(data_out.username, d_->ui.lineEdit_Username).toStdWString();
+  UI_TEXT(data_out.password, d_->ui.lineEdit_Password).toStdWString();
+  UI_ISCHECKED(data_out.anonymous, d_->ui.checkBox_Anonymous);
+  UI_TEXT(data_out.initdir_local, d_->ui.lineEdit_InitDirLocal).toStdWString();
+  UI_TEXT(data_out.initdir_remote, d_->ui.lineEdit_InitDirRemote).toStdWString();
+  UI_ISCHECKED(data_out.last_dir, d_->ui.checkBox_LastDir);
 }
 
 void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {

@@ -2,6 +2,8 @@
 
 #include "ui_hostsettingencryptionform.h"
 
+#include"ui/uicommon.h"
+
 namespace {
 using ThisData = HostSettingEncryptionForm::Data;
 inline const ThisData& castData(const BaseForm::Data& data) {
@@ -41,6 +43,16 @@ void HostSettingEncryptionForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);
 }
 
-void HostSettingEncryptionForm::updateUi(const BaseForm::Data& data) {}
+void HostSettingEncryptionForm::updateUi(const BaseForm::Data& data) {
+  const ThisData& data_in = castData(data);
+  UI_SETCHECKED(d_->ui.checkBox_UseNoEncryption, data_in.use_no_encryption);
+  UI_SETCHECKED(d_->ui.checkBox_UseFTPES, data_in.use_ftp_es);
+  UI_SETCHECKED(d_->ui.checkBox_UseFTPIS, data_in.use_ftp_is);
+}
 
-void HostSettingEncryptionForm::updateData(BaseForm::Data& data) const {}
+void HostSettingEncryptionForm::updateData(BaseForm::Data& data) const {
+  ThisData& data_out = castData(data);
+  UI_ISCHECKED(data_out.use_no_encryption, d_->ui.checkBox_UseNoEncryption);
+  UI_ISCHECKED(data_out.use_ftp_es, d_->ui.checkBox_UseFTPES);
+  UI_ISCHECKED(data_out.use_ftp_is, d_->ui.checkBox_UseFTPIS);
+}

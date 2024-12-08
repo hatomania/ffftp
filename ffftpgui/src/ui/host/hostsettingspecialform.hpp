@@ -33,7 +33,14 @@ class HostSettingSpecialForm : public BaseForm {
   void updateUi(const BaseForm::Data& data) override;
   void updateData(BaseForm::Data& data) const override;
 
+ private:
+  void updateEnabled() const;
+
  private slots:
+  void onClick_pushButton_StdChmodCmd();
+  void onClick_pushButton_StdLsName();
+  void onClick_checkBox_ListCmdOnly();
+  void onCurrentIndexChanged_comboBox_HostType(int);
 
  private:
   class Private;

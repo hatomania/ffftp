@@ -55,8 +55,4 @@
  </widget>
  <resources/>
  <connections/>
- <slots>
-  <slot>onClick_toolButton_SelectLocalDir()</slot>
-  <slot>onClick_pushButton_NowDir()</slot>
- </slots>
 </ui>

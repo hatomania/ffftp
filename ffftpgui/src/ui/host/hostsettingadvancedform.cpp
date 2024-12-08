@@ -60,27 +60,27 @@ void HostSettingAdvancedForm::setRawData(const BaseForm::Data& data) {
 }
 
 void HostSettingAdvancedForm::updateUi(const BaseForm::Data& data) {
-  const ThisData& data_ = castData(data);
-  UI_SETCHECKED(d_->ui.checkBox_Firewall, data_.firewall);
-  UI_SETCHECKED(d_->ui.checkBox_Pasv, data_.pasv);
-  UI_SETCHECKED(d_->ui.checkBox_SyncMove, data_.syncmove);
-  UI_SETTEXT(d_->ui.lineEdit_Port, QString::number(data_.port));
-  UI_SETTEXT(d_->ui.lineEdit_Account, QString(data_.account));
-  UI_SETCURRENTINDEX(d_->ui.comboBox_Timezone, data_.timezone);
-  UI_SETCURRENTINDEX(d_->ui.comboBox_Security, data_.security);
-  UI_SETPLAINTEXT(d_->ui.plainTextEdit_InitCmd, QString(data_.initcmd));
+  const ThisData& data_in = castData(data);
+  UI_SETCHECKED(d_->ui.checkBox_Firewall, data_in.firewall);
+  UI_SETCHECKED(d_->ui.checkBox_Pasv, data_in.pasv);
+  UI_SETCHECKED(d_->ui.checkBox_SyncMove, data_in.syncmove);
+  UI_SETTEXT(d_->ui.lineEdit_Port, QString::number(data_in.port));
+  UI_SETTEXT(d_->ui.lineEdit_Account, QString(data_in.account));
+  UI_SETCURRENTINDEX(d_->ui.comboBox_Timezone, data_in.timezone);
+  UI_SETCURRENTINDEX(d_->ui.comboBox_Security, data_in.security);
+  UI_SETPLAINTEXT(d_->ui.plainTextEdit_InitCmd, QString(data_in.initcmd));
 }
 
 void HostSettingAdvancedForm::updateData(BaseForm::Data& data) const {
-  ThisData& data_ = castData(data);
-  UI_ISCHECKED(data_.firewall, d_->ui.checkBox_Firewall);
-  UI_ISCHECKED(data_.pasv, d_->ui.checkBox_Pasv);
-  UI_ISCHECKED(data_.syncmove, d_->ui.checkBox_SyncMove);
-  UI_TEXT(data_.port, d_->ui.lineEdit_Port).toInt();
-  UI_TEXT(data_.account, d_->ui.lineEdit_Account).toStdWString();
-  UI_CURRENTINDEX(data_.timezone, d_->ui.comboBox_Timezone);
-  UI_CURRENTINDEX(data_.security, d_->ui.comboBox_Security);
-  UI_TOPLAINTEXT(data_.initcmd, d_->ui.plainTextEdit_InitCmd).toStdWString();
+  ThisData& data_out = castData(data);
+  UI_ISCHECKED(data_out.firewall, d_->ui.checkBox_Firewall);
+  UI_ISCHECKED(data_out.pasv, d_->ui.checkBox_Pasv);
+  UI_ISCHECKED(data_out.syncmove, d_->ui.checkBox_SyncMove);
+  UI_TEXT(data_out.port, d_->ui.lineEdit_Port).toInt();
+  UI_TEXT(data_out.account, d_->ui.lineEdit_Account).toStdWString();
+  UI_CURRENTINDEX(data_out.timezone, d_->ui.comboBox_Timezone);
+  UI_CURRENTINDEX(data_out.security, d_->ui.comboBox_Security);
+  UI_TOPLAINTEXT(data_out.initcmd, d_->ui.plainTextEdit_InitCmd).toStdWString();
 }
 
 void HostSettingAdvancedForm::onClick_pushButton_StdPort() {

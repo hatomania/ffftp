@@ -1517,6 +1517,12 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.host_type = src.HostType,
 		.ls_name = src.LsName.c_str(),
 	};
+	// [暗号化]タブ
+	dst.encryption = {
+		.use_no_encryption = src.UseNoEncryption == YES,
+		.use_ftp_es = src.UseFTPES == YES,
+		.use_ftp_is = src.UseFTPIS == YES,
+	};
 }
 void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	// [基本]タブ
@@ -1555,6 +1561,10 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	dst.ChmodCmd = src.special.chmod_cmd;
 	dst.HostType = src.special.host_type;
 	dst.LsName = src.special.ls_name;
+	// [暗号化]タブ
+	dst.UseNoEncryption = src.encryption.use_no_encryption ? YES : NO;
+	dst.UseFTPES = src.encryption.use_ftp_es ? YES : NO;
+	dst.UseFTPIS = src.encryption.use_ftp_is ? YES : NO;
 }
 hostdata convertHostData(const HOSTDATA& src) {
 	hostdata ret;

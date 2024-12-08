@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>181</width>
-    <height>139</height>
+    <height>136</height>
    </rect>
   </property>
   <property name="layoutDirection">
@@ -18,21 +18,21 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QCheckBox" name="checkBox_WithoutEncrypt">
+    <widget class="QCheckBox" name="checkBox_UseNoEncryption">
      <property name="text">
       <string>暗号化なしで接続を許可(&amp;A)</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox_FTPSExplicit">
+    <widget class="QCheckBox" name="checkBox_UseFTPES">
      <property name="text">
       <string>FTPS (Explicit)で接続(&amp;E)</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="checkBox_FTPSImplicit">
+    <widget class="QCheckBox" name="checkBox_UseFTPIS">
      <property name="text">
       <string>FTPS (Implicit)で接続(&amp;I)</string>
      </property>

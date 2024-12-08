@@ -6,6 +6,8 @@
 #include "advanceddatatransceiver.hpp"
 #include "kanjicodedatatransceiver.hpp"
 #include "dialupdatatransceiver.hpp"
+#include "specialdatatransceiver.hpp"
+#include "encryptiondatatransceiver.hpp"
 
 namespace {
 enum class Form {
@@ -37,17 +39,23 @@ HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
     : QDialog(parent), d_(new Private()) {
   d_->ui.setupUi(this);
   MAKE_TRANSCEIVER(Form::kGeneral,
-                   FormDataTransceiver<HostSettingGeneralForm>,
+                   HostSettingGeneralFormDataTransceiver,
                    *d_->ui.tab_0);
   MAKE_TRANSCEIVER(Form::kAdvanced,
-                   FormDataTransceiver<HostSettingAdvancedForm>,
+                   HostSettingAdvancedFormDataTransceiver,
                    *d_->ui.tab_1);
   MAKE_TRANSCEIVER(Form::kKanjiCode,
-                   FormDataTransceiver<HostSettingKanjiCodeForm>,
+                   HostSettingKanjiCodeFormDataTransceiver,
                    *d_->ui.tab_2);
   MAKE_TRANSCEIVER(Form::kDialup,
-                   FormDataTransceiver<HostSettingDialupForm>,
+                   HostSettingDialupFormDataTransceiver,
                    *d_->ui.tab_3);
+  MAKE_TRANSCEIVER(Form::kSpecial,
+                   HostSettingSpecialFormDataTransceiver,
+                   *d_->ui.tab_4);
+  MAKE_TRANSCEIVER(Form::kEncryption,
+                   HostSettingEncryptionFormDataTransceiver,
+                   *d_->ui.tab_5);
   setHostData(hdata);
 }
 HostSettingsDialog::~HostSettingsDialog() { delete d_; }

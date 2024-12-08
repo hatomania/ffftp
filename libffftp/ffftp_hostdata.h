@@ -78,12 +78,20 @@ struct hostdata_special {
   const wchar_t* ls_name;
 };
 
+/* [暗号化]タブのUIデータ */
+struct hostdata_encryption {
+  bool use_no_encryption;
+  bool use_ftp_es;
+  bool use_ftp_is;
+};
+
 struct hostdata {
   hostdata_general general;
   hostdata_advanced advanced;
   hostdata_kanjicode kanjicode;
   hostdata_dialup dialup;
   hostdata_special special;
+  hostdata_encryption encryption;
 };
 
 #ifdef __cplusplus

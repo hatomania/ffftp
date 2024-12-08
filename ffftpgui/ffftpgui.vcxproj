@@ -69,6 +69,10 @@
     </ClCompile>
     <ClCompile Include="src\ui\base\baseform.cpp" />
     <ClCompile Include="src\ui\base\datatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\advanceddatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\dialupdatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\generaldatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp" />
@@ -78,6 +82,8 @@
     <ClCompile Include="src\ui\host\hostsettingsdialog.cpp" />
     <ClCompile Include="src\ui\host\hostsettingspecialform.cpp" />
     <ClCompile Include="src\ui\host\hostslistdialog.cpp" />
+    <ClCompile Include="src\ui\host\kanjicodedatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\specialdatatransceiver.cpp" />
     <ClCompile Include="src\ui\main\dirsandtaskmsgform.cpp" />
     <ClCompile Include="src\ui\main\mainwindow.cpp" />
     <ClCompile Include="src\ui\main\myfilesystemmodel.cpp" />
@@ -88,8 +94,10 @@
     <ClInclude Include="src\ui\base\formdatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\generaldatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\specialdatatransceiver.hpp" />
     <ClInclude Include="src\ui\uicommon.h" />
     <QtMoc Include="src\ui\host\hostsettingfeatureform.hpp" />
     <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp" />

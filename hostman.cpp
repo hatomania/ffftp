@@ -1392,17 +1392,38 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 #include "libffftp/ffftp_hostdata.h"
 namespace libffftp {
 
-const void* hostContextFirst(int* index/*=常に0だと思うがライブラリに任せたほうがいい*/) {
-	if (index) *index = GetNum(HostListTop);
+inline static const HOSTLISTDATA* castContext2Host(const void* hc) {
+	return static_cast<const HOSTLISTDATA*>(hc);
+}
+
+inline static HOSTLISTDATA* castContext2Host(void* hc) {
+	return const_cast<HOSTLISTDATA*>(static_cast<const HOSTLISTDATA*>(hc));
+}
+static int hostIndex(const void* hc) {
+#ifdef LIBFFFTP_EXPORTS
+	auto data = castContext2Host(hc);
+	int _n = 0;
+	for (auto p = HostListTop.get(); p != data; p = p->GetNext().get())
+		++_n;
+	return _n;
+#else
+	return -1;
+#endif
+}
+inline static int currentHostIndex() {
+	return CurrentHost;
+}
+
+const void* hostContextFirst() {
 	return HostListTop.get();
 }
-const void* hostContextNext(const void* hc, int* index/*=先頭から何番目か*/) {
+const void* hostContextNext(const void* hc) {
 // ダングリング状態エラー(error C26815)の回避
 #ifdef LIBFFFTP_EXPORTS
-	std::shared_ptr<HOSTLISTDATA> s = ((HOSTLISTDATA*)hc)->GetNext();
-	HOSTLISTDATA* _p = s.get();
-	if (index && _p) { *index = GetNum(s); }
-	return _p;
+	return castContext2Host(const_cast<void*>(hc))->GetNext().get();
+	//std::shared_ptr<HOSTLISTDATA> s = (const_cast<HOSTLISTDATA*>(static_cast<const HOSTLISTDATA*>(hc)))->GetNext();
+	//HOSTLISTDATA* p = s.get();
+	//return p;
 #else
 	return nullptr;
 #endif
@@ -1610,55 +1631,45 @@ hostdata convertHostData(const HOSTDATA& src) {
 	convertHostData(ret, src);
 	return ret;
 }
-void hostContextNew(int index, const hostdata* hdata) {
-	int level = -1;
-	if (Hosts == 0) {
+void hostContextNew(const void* hc, const hostdata* hdata) {
+	int pos = -1;
+	int index = -1;
+	if (!hc) {
+		// 先頭に追加したい
+		TmpHost.Level = 0;
+		CurrentHost = pos = 0;
+	} else if (Hosts == 0) {
+		// ホストが一つも登録されていなかったら
 		TmpHost.Level = 0;
 		CurrentHost = Hosts;
 	} else {
-		assert(0 <= index && index <= (Hosts-1));
+		index = hostIndex(hc);
 		TmpHost.Level = GetLevel(index);
-		CurrentHost = level = index + 1;
+		CurrentHost = pos = index + 1;
 	}
 	convertHostData(TmpHost, *hdata);
-	AddHostToList(&TmpHost, level, SET_LEVEL_SAME);
+	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
 }
-int hostContextUp(int index) {
-	return HostList::HostUp(index);
+void hostContextUp(const void* hc) {
+	HostList::HostUp(hostIndex(hc));
 }
-int hostContextDown(int index) {
-	return HostList::HostDown(index);
+void hostContextDown(const void* hc) {
+	HostList::HostDown(hostIndex(hc));
 }
 void hostContextDataDefault(hostdata* hdata) {
 	convertHostData(*hdata, DefaultHost);
 }
-void hostContextData(int index, hostdata* hdata) {
+void hostContextData(const void* hc, hostdata* hdata) {
 #ifdef LIBFFFTP_EXPORTS
-	assert(0 <= index && index <= (Hosts - 1));
-
-	static HOSTDATA hd; // 文字列はこのstatic変数(へのポインタ)がライブラリ使用側に返る
-	CopyHostFromList(index, &hd);
+	static HOSTDATA hd; // 文字列へのポインタはライブラリ使用側に返るのでstaticとする
+	CopyHostFromList(hostIndex(hc), &hd);
 	convertHostData(*hdata, hd);
 #endif
 }
-int getHostIndex(const void* hc) {
-#ifdef LIBFFFTP_EXPORTS
-	auto data = reinterpret_cast<const HOSTLISTDATA*>(hc);
-	int _n = 0;
-	for (auto p = HostListTop.get(); p != data; p = p->GetNext().get())
-		++_n;
-	return _n;
-#else
-	return -1;
-#endif
-}
-int currentHostIndex() {
-	return CurrentHost;
-}
-HOSTDATA getHostContext(const void* hc) {
+HOSTDATA hostContext(const void* hc) {
 	return *static_cast<const HOSTLISTDATA*>(hc);
 }
-int getHostContextLevel(const void* hc) {
+int hostContextLevel(const void* hc) {
 	return ((HOSTLISTDATA*)hc)->GetLevel();
 }
 

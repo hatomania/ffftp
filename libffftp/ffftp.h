@@ -73,18 +73,29 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_application_name();
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle();
 
+/**
+ * @brief ユーザーが登録したホストを参照するコンテキスト。
+ *
+ * ホストの操作（新規追加、編集、削除等）はこのコンテキストを使って行います。
+ */
 typedef void* hostcontext_t;
-#ifdef __cplusplus
+
+/**
+ * @brief 先頭のホストコンテキストを取得する。
+ *
+ * @return 先頭のホストコンテキスト。ホストリストが空の場合はnullptrを返す
+ */
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
-ffftp_hostcontext_first(int* index = nullptr);
+ffftp_hostcontext_first();
+
+/**
+ * @brief 指定したホストコンテキストの次のホストコンテキストを取得する。
+ *
+ * @param hc ホストコンテキスト
+ * @return 指定したホストコンテキストの次のホストコンテキスト。次がない場合はnullptrを返す
+ */
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
-ffftp_hostcontext_next(const hostcontext_t hc, int* index = nullptr);
-#else
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
-ffftp_hostcontext_first(int* index = NULL);
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
-ffftp_hostcontext_next(const hostcontext_t hc, int* index = NULL);
-#endif
+ffftp_hostcontext_next(const hostcontext_t hc);
 
 /**
  * @brief hostdataの初期化を行う。
@@ -104,10 +115,30 @@ ffftp_hostdata_initialize(hostdata* hdata);
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostdata_finalize(hostdata* hdata);
 
+/**
+ * @brief ホストを追加する。
+ *
+ * @param hc 追加の位置を示すホストコンテキスト。このホストコンテキストの次にホストが追加される。先頭に追加するにはnullptrを指定する。
+ * @param hdata 追加するホスト情報のhostdataへのポインタ
+ */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
-ffftp_hostcontext_new(int index, const hostdata* hdata);
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index);
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index);
+ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata);
+
+/**
+ * @brief 指定したホストを、ホストリスト上のひとつ上へ移動する。
+ *
+ * @param hc 上へ移動するホストを示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_up(const hostcontext_t hc);
+
+/**
+ * @brief 指定したホストを、ホストリスト上のひとつ下へ移動する。
+ *
+ * @param hc 下へ移動するホストを示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_down(const hostcontext_t hc);
 
 /**
  * @brief hostdataのデフォルト値を取得する。
@@ -118,17 +149,14 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_hostdata_default(hostdata* hdata);
 
 /**
- * @brief 指定したindexのhostdataを取得する。
+ * @brief 指定したホストコンテキストのhostdataを取得する。
  *
- * @param[in]  index 取得したいホストリストのindex
+ * @param[in]  hc hostdataを取得したいホストのホストコンテキストの
  * @param[out] hdata 結果を格納するhostdataへのポインタ
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
-ffftp_hostcontext_hostdata(int index, hostdata* hdata);
+ffftp_hostcontext_hostdata(const hostcontext_t hc, hostdata* hdata);
 
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
-ffftp_hostcontext_getindex(const hostcontext_t hc);
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getcurrentindex();
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV
 ffftp_hostcontext_getname(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV

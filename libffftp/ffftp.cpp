@@ -63,13 +63,13 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle() {
 }
 
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
-ffftp_hostcontext_first(int* index) {
-  return (const hostcontext_t)libffftp::hostContextFirst(index);
+ffftp_hostcontext_first() {
+  return (const hostcontext_t)libffftp::hostContextFirst();
 }
 
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
-ffftp_hostcontext_next(const hostcontext_t hc, int* index) {
-  return (const hostcontext_t)libffftp::hostContextNext(hc, index);
+ffftp_hostcontext_next(const hostcontext_t hc) {
+  return (const hostcontext_t)libffftp::hostContextNext(hc);
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
@@ -82,16 +82,18 @@ ffftp_hostdata_finalize(hostdata* hdata) {
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
-ffftp_hostcontext_new(int index, const hostdata* hdata) {
-  libffftp::hostContextNew(index, hdata);
+ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata) {
+  libffftp::hostContextNew(hc, hdata);
 }
 
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_up(int index) {
-  return libffftp::hostContextUp(index);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_up(const hostcontext_t hc) {
+  libffftp::hostContextUp(hc);
 }
 
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_down(int index) {
-  return libffftp::hostContextDown(index);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_down(const hostcontext_t hc) {
+  libffftp::hostContextDown(hc);
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
@@ -100,34 +102,25 @@ ffftp_hostcontext_hostdata_default(hostdata* hdata) {
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
-ffftp_hostcontext_hostdata(int index, hostdata* hdata) {
-  libffftp::hostContextData(index, hdata);
-}
-
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
-ffftp_hostcontext_getindex(const hostcontext_t hc) {
-  return libffftp::getHostIndex(hc);
-}
-
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_getcurrentindex() {
-  return libffftp::currentHostIndex();
+ffftp_hostcontext_hostdata(const hostcontext_t hc, hostdata* hdata) {
+  libffftp::hostContextData(hc, hdata);
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV
 ffftp_hostcontext_getname(const hostcontext_t hc) {
   static HOSTDATA hdata;
-  hdata = libffftp::getHostContext(hc);
+  hdata = libffftp::hostContext(hc);
   return hdata.HostName.c_str();
 }
 
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
 ffftp_hostcontext_getlevel(const hostcontext_t hc) {
-  return libffftp::getHostContextLevel(hc);
+  return libffftp::hostContextLevel(hc);
 }
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV
 ffftp_hostcontext_isgroup(const hostcontext_t hc) {
-  return libffftp::getHostContext(hc).Level & SET_LEVEL_GROUP;
+  return libffftp::hostContext(hc).Level & SET_LEVEL_GROUP;
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage() {

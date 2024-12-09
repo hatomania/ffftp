@@ -12,7 +12,15 @@ class HostSettingFeatureForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    int max_thread_cnt;
+    bool reuse_cmdsocket;
+    bool no_pasv_adrs;
+    int noop_interval;
+    int error_mode;
+    bool reconnect;
     Data();
+    Data(int max_thread_cnt, bool reuse_cmdsocket, bool no_pasv_adrs,
+         int noop_interval, int error_mode, bool reconnect);
   };
 
   explicit HostSettingFeatureForm(QWidget* parent = Q_NULLPTR);

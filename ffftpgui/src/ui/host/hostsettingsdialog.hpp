@@ -22,6 +22,6 @@ class HostSettingsDialog : public QDialog {
 
  private:
   class Private;
-  Private* d_;
+  std::unique_ptr<Private> d_;
   Q_DISABLE_COPY(HostSettingsDialog)
 };

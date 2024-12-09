@@ -1523,6 +1523,19 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.use_ftp_es = src.UseFTPES == YES,
 		.use_ftp_is = src.UseFTPIS == YES,
 	};
+	// [特殊機能]タブ
+	dst.feature = {
+		.max_thread_cnt = src.MaxThreadCount,
+		.reuse_cmdsocket = src.ReuseCmdSkt == YES,
+		.no_pasv_adrs = src.NoPasvAdrs == YES,
+		.noop_interval = src.NoopInterval,
+		.error_mode =
+			src.TransferErrorNotify == YES ? 0 :
+			src.TransferErrorMode == EXIST_OVW ? 1 :
+			src.TransferErrorMode == EXIST_RESUME ? 2 :
+			src.TransferErrorMode == EXIST_IGNORE ? 3 : -1,
+		.reconnect = src.TransferErrorReconnect == YES,
+	};
 }
 void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	// [基本]タブ
@@ -1565,6 +1578,32 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	dst.UseNoEncryption = src.encryption.use_no_encryption ? YES : NO;
 	dst.UseFTPES = src.encryption.use_ftp_es ? YES : NO;
 	dst.UseFTPIS = src.encryption.use_ftp_is ? YES : NO;
+	// [特殊機能]タブ
+	dst.MaxThreadCount = src.feature.max_thread_cnt;
+	dst.ReuseCmdSkt = src.feature.reuse_cmdsocket ? YES : NO;
+	dst.NoPasvAdrs = src.feature.no_pasv_adrs ? YES : NO;
+	dst.NoopInterval = src.feature.noop_interval;
+	dst.TransferErrorMode = -1;
+	switch (src.feature.error_mode)
+	{
+	case 0:
+		dst.TransferErrorMode = EXIST_OVW;
+		dst.TransferErrorNotify = YES;
+		break;
+	case 1:
+		dst.TransferErrorMode = EXIST_OVW;
+		dst.TransferErrorNotify = NO;
+		break;
+	case 2:
+		dst.TransferErrorMode = EXIST_RESUME;
+		dst.TransferErrorNotify = NO;
+		break;
+	case 3:
+		dst.TransferErrorMode = EXIST_IGNORE;
+		dst.TransferErrorNotify = NO;
+		break;
+	}
+	dst.TransferErrorReconnect = src.feature.reconnect;
 }
 hostdata convertHostData(const HOSTDATA& src) {
 	hostdata ret;

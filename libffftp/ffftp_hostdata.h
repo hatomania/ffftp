@@ -85,6 +85,16 @@ struct hostdata_encryption {
   bool use_ftp_is;
 };
 
+/* [暗号化]タブのUIデータ */
+struct hostdata_feature {
+  int max_thread_cnt;
+  bool reuse_cmdsocket;
+  bool no_pasv_adrs;
+  int noop_interval;
+  int error_mode;
+  bool reconnect;
+};
+
 struct hostdata {
   hostdata_general general;
   hostdata_advanced advanced;
@@ -92,6 +102,7 @@ struct hostdata {
   hostdata_dialup dialup;
   hostdata_special special;
   hostdata_encryption encryption;
+  hostdata_feature feature;
 };
 
 #ifdef __cplusplus

@@ -72,6 +72,7 @@
     <ClCompile Include="src\ui\host\advanceddatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\dialupdatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\featuredatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\generaldatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
@@ -95,6 +96,7 @@
     <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp" />
+    <ClInclude Include="src\ui\host\featuredatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\generaldatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\specialdatatransceiver.hpp" />

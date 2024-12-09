@@ -8,6 +8,7 @@
 #include "dialupdatatransceiver.hpp"
 #include "specialdatatransceiver.hpp"
 #include "encryptiondatatransceiver.hpp"
+#include "featuredatatransceiver.hpp"
 
 namespace {
 enum class Form {
@@ -56,9 +57,12 @@ HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
   MAKE_TRANSCEIVER(Form::kEncryption,
                    HostSettingEncryptionFormDataTransceiver,
                    *d_->ui.tab_5);
+  MAKE_TRANSCEIVER(Form::kFeature,
+                   HostSettingFeatureFormDataTransceiver,
+                   *d_->ui.tab_6);
   setHostData(hdata);
 }
-HostSettingsDialog::~HostSettingsDialog() { delete d_; }
+HostSettingsDialog::~HostSettingsDialog() {}
 
 void HostSettingsDialog::setHostData(const hostdata& hdata) {
   for (auto& [k, form] : d_->transceiver) {
@@ -73,7 +77,6 @@ void HostSettingsDialog::hostData(hostdata& hdata) const {
 }
 
 void HostSettingsDialog::accept() {
-  qDebug() << __FUNCTION__ << "called!";
   QDialog::accept();
 }
 

@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTSLISTDIALOG_HPP_
+#define FFFTPGUI_UI_HOST_HOSTSLISTDIALOG_HPP_
 
 #include <QDialog>
 
@@ -9,6 +10,7 @@ class HostsListDialog : public QDialog {
 
  public:
   explicit HostsListDialog(QWidget* parent = Q_NULLPTR);
+  virtual ~HostsListDialog();
   int connectingHostIndex();
 
  public slots:
@@ -29,6 +31,8 @@ class HostsListDialog : public QDialog {
 
  private:
   class Private;
-  Private* d_;
+  std::unique_ptr<Private> d_;
   Q_DISABLE_COPY(HostsListDialog)
 };
+
+#endif  // FFFTPGUI_UI_HOST_HOSTSLISTDIALOG_HPP_

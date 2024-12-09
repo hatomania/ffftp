@@ -3,10 +3,11 @@
 #include <QStandardItem>
 #include <QStandardItemModel>
 
+#include "ui_hostslistdialog.h"
+
 #include "ffftp.h"
 #include "hostsettingsdialog.hpp"
 #include "stdafx.h"
-#include "ui_hostslistdialog.h"
 
 class HostItem : public QStandardItem {
  private:
@@ -17,12 +18,8 @@ class HostItem : public QStandardItem {
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class HostsListDialog::Private {
  public:
-  Private()
-      : rootnode(nullptr),
-        model(new QStandardItemModel()),
-        connecting_host_index(-1),
-        selected_host_index(-1) {}
-  ~Private() { delete model; }
+  Private();
+  ~Private();
   void buildHostTreeView(int current = -1);
   Ui::HostsListDialogClass ui;
   QStandardItem* rootnode;
@@ -30,44 +27,51 @@ class HostsListDialog::Private {
   int connecting_host_index;
   int selected_host_index;
 };
+HostsListDialog::Private::Private()
+    : rootnode(nullptr),
+      model(new QStandardItemModel()),
+      connecting_host_index(-1),
+      selected_host_index(-1) {}
+HostsListDialog::Private::~Private() { delete model; }
 
 static QStandardItem* _createHostTreeViewItem(const hostcontext_t hc) {
-  return new QStandardItem(
-      QIcon(ffftp_hostcontext_isgroup(hc) ? kResImage_closedfolder16x16
-                                          : kResImage_desktop16x16),
-#ifdef _DEBUG
-      QString(R"([%1,%2]"%3")")
-          .arg(ffftp_hostcontext_getindex(hc))
-          .arg(ffftp_hostcontext_getlevel(hc))
-          .arg(QString::fromWCharArray(ffftp_hostcontext_getname(hc)))
-#else
-      QString::fromWCharArray(ffftp_hostcontext_getname(hc))
-#endif  // _DEBUG
-  );
+  //return new QStandardItem(
+  //    QIcon(ffftp_hostcontext_isgroup(hc) ? kResImage_closedfolder16x16
+  //                                        : kResImage_desktop16x16),
+//#ifdef _DEBUG
+//      QString(R"([%1,%2]"%3")") 
+//          .arg(ffftp_hostcontext_getindex(hc))
+//          .arg(ffftp_hostcontext_getlevel(hc))
+//          .arg(QString::fromWCharArray(ffftp_hostcontext_getname(hc)))
+//#else
+//      QString::fromWCharArray(ffftp_hostcontext_getname(hc))
+//#endif  // _DEBUG
+//  );
+  return Q_NULLPTR;
 }
 
 static void _buildHostTreeViewNode(hostcontext_t& hc, int level,
                                    QStandardItem* node) {
-  QStandardItem* prevone = nullptr;
-  while (hc) {
-    if (int l = ffftp_hostcontext_getlevel(hc); l == level) {
-      prevone = _createHostTreeViewItem(hc);
-      prevone->setData(ffftp_hostcontext_getindex(hc));
-      node->appendRow(prevone);
-      hc = ffftp_hostcontext_next(hc);
-    } else if (l > level) {
-      Q_ASSERT(prevone);
-      _buildHostTreeViewNode(hc, l, prevone);
-      if (hc) {
-        prevone = _createHostTreeViewItem(hc);
-        prevone->setData(ffftp_hostcontext_getindex(hc));
-        node->appendRow(prevone);
-        hc = ffftp_hostcontext_next(hc);
-      }
-    } else {
-      break;
-    }
-  }
+  //QStandardItem* prevone = nullptr;
+  //while (hc) {
+  //  if (int l = ffftp_hostcontext_getlevel(hc); l == level) {
+  //    prevone = _createHostTreeViewItem(hc);
+  //    prevone->setData(ffftp_hostcontext_getindex(hc));
+  //    node->appendRow(prevone);
+  //    hc = ffftp_hostcontext_next(hc);
+  //  } else if (l > level) {
+  //    Q_ASSERT(prevone);
+  //    _buildHostTreeViewNode(hc, l, prevone);
+  //    if (hc) {
+  //      prevone = _createHostTreeViewItem(hc);
+  //      prevone->setData(ffftp_hostcontext_getindex(hc));
+  //      node->appendRow(prevone);
+  //      hc = ffftp_hostcontext_next(hc);
+  //    }
+  //  } else {
+  //    break;
+  //  }
+  //}
 }
 
 static struct _FindModelIndexRet {
@@ -160,6 +164,7 @@ HostsListDialog::HostsListDialog(QWidget* parent)
   // TODO: リストが非選択の時、ボタンを押せなくする
   d_->buildHostTreeView();
 }
+HostsListDialog::~HostsListDialog() {}
 
 void HostsListDialog::accept() {
   qDebug()
@@ -175,17 +180,16 @@ void HostsListDialog::accept() {
 int HostsListDialog::connectingHostIndex() { return d_->connecting_host_index; }
 
 void HostsListDialog::onClick_pushButton_NewHost() {
-  qDebug() << __FUNCTION__ << "called!";
-  hostdata hdata;
-  ffftp_hostdata_initialize(&hdata);
-  ffftp_hostcontext_hostdata_default(&hdata);
-  if (showSettingDialog(hdata)) {
-    int insert_index =
-        d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
-    ffftp_hostcontext_new(insert_index, &hdata);
-    d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
-  }
-  ffftp_hostdata_finalize(&hdata);
+  //hostdata hdata;
+  //ffftp_hostdata_initialize(&hdata);
+  //ffftp_hostcontext_hostdata_default(&hdata);
+  //if (showSettingDialog(hdata)) {
+  //  int insert_index =
+  //      d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
+  //  ffftp_hostcontext_new(insert_index, &hdata);
+  //  d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
+  //}
+  //ffftp_hostdata_finalize(&hdata);
 }
 
 void HostsListDialog::onClick_pushButton_NewGroup() {
@@ -193,18 +197,17 @@ void HostsListDialog::onClick_pushButton_NewGroup() {
 }
 
 void HostsListDialog::onClick_pushButton_Mod() {
-  qDebug() << __FUNCTION__ << "called!";
-  hostdata hdata;
-  ffftp_hostdata_initialize(&hdata);
-  ffftp_hostcontext_hostdata(d_->selected_host_index, &hdata);
-  if (showSettingDialog(hdata)) {
-    int insert_index =
-        d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
-    // TODO: newのまま
-    ffftp_hostcontext_new(insert_index, &hdata);
-    d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
-  }
-  ffftp_hostdata_finalize(&hdata);
+  //hostdata hdata;
+  //ffftp_hostdata_initialize(&hdata);
+  //ffftp_hostcontext_hostdata(d_->selected_host_index, &hdata);
+  //if (showSettingDialog(hdata)) {
+  //  int insert_index =
+  //      d_->selected_host_index <= 0 ? 0 : d_->selected_host_index;
+  //  // TODO: newのまま
+  //  ffftp_hostcontext_new(insert_index, &hdata);
+  //  d_->buildHostTreeView(ffftp_hostcontext_getcurrentindex());
+  //}
+  //ffftp_hostdata_finalize(&hdata);
 }
 
 void HostsListDialog::onClick_pushButton_Copy() {
@@ -216,23 +219,19 @@ void HostsListDialog::onClick_pushButton_Del() {
 }
 
 void HostsListDialog::onClick_pushButton_Up() {
-  qDebug() << __FUNCTION__ << "called!";
-  int c = ffftp_hostcontext_up(
-      d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())
-          ->data()
-          .toInt());
-  qDebug() << "c=" << c;
-  HostsListDialog::d_->buildHostTreeView(c);
+  //int c = ffftp_hostcontext_up(
+  //    d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())
+  //        ->data()
+  //        .toInt());
+  //d_->buildHostTreeView(c);
 }
 
 void HostsListDialog::onClick_pushButton_Down() {
-  qDebug() << __FUNCTION__ << "called!";
-  int c = ffftp_hostcontext_down(
-      d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())
-          ->data()
-          .toInt());
-  qDebug() << "c=" << c;
-  HostsListDialog::d_->buildHostTreeView(c);
+  //int c = ffftp_hostcontext_down(
+  //    d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())
+  //        ->data()
+  //        .toInt());
+  //d_->buildHostTreeView(c);
 }
 
 void HostsListDialog::onClick_pushButton_Default() {
@@ -244,16 +243,14 @@ void HostsListDialog::onClick_pushButton_Help() {
 }
 
 void HostsListDialog::selectedHost(const QModelIndex& index) {
-  qDebug() << __FUNCTION__
-           << "called! data=" << d_->model->itemFromIndex(index)->data();
   d_->selected_host_index = d_->model->itemFromIndex(index)->data().toInt();
 }
 
 bool HostsListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
-  qDebug() << __FUNCTION__ << "called!";
   bool ret = false;
   HostSettingsDialog setting_dlg(
-      in_out_data, this);  // 関数のおしりにconst付けるとthisもconst型になり型不一致でエラー
+      in_out_data,
+      this);  // 関数のおしりにconst付けるとthisもconst型になり型不一致でエラー
   if (setting_dlg.exec() == QDialog::Accepted) {
     setting_dlg.hostData(in_out_data);
     ret = true;

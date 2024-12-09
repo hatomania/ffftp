@@ -21,6 +21,12 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Form Files\main">
+      <UniqueIdentifier>{592b8fb3-66ae-4164-9c7d-2570d757075e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Form Files\host">
+      <UniqueIdentifier>{dcdfdc1d-de08-4447-8f7e-ab656bb2fd8a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\a.png">
@@ -122,38 +128,38 @@
     </QtTranslation>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="ui\dirsandtaskmsgform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\main\dirsandtaskmsgform.ui">
+      <Filter>Form Files\main</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingsdialog.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\main\mainwindow.ui">
+      <Filter>Form Files\main</Filter>
     </QtUic>
-    <QtUic Include="ui\hostslistdialog.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingadvancedform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\mainwindow.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingdialupform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingdialupform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingencryptionform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingadvancedform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingfeatureform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingspecialform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettinggeneralform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettinggeneralform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingkanjicodeform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingencryptionform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingsdialog.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingkanjicodeform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostsettingspecialform.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\hostsettingfeatureform.ui">
-      <Filter>Form Files</Filter>
+    <QtUic Include="ui\host\hostslistdialog.ui">
+      <Filter>Form Files\host</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>

@@ -27,6 +27,36 @@
     <Filter Include="Form Files\host">
       <UniqueIdentifier>{dcdfdc1d-de08-4447-8f7e-ab656bb2fd8a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\core">
+      <UniqueIdentifier>{caf29181-138d-4180-b6e2-11d7415b6369}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui">
+      <UniqueIdentifier>{37befaf1-a086-47e6-8c83-dd9b2b8c9cfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\base">
+      <UniqueIdentifier>{b514ceba-14d5-42b5-b956-fea3cb5d12f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\host">
+      <UniqueIdentifier>{febf0264-25d3-499c-8fe8-3e0064b481eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\main">
+      <UniqueIdentifier>{b7ba0089-bfc3-48c1-84b3-76e6e4c767ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\core">
+      <UniqueIdentifier>{377bdf07-b2a6-4d98-b92a-89156df980d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{46234c64-caea-44c7-8deb-5cd41801fc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\base">
+      <UniqueIdentifier>{f8f5b3b2-fbee-471d-84f6-2551758a5776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\host">
+      <UniqueIdentifier>{a69da8c0-8a83-4113-8f57-2478fd5d4a90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\main">
+      <UniqueIdentifier>{c1f6f13d-8717-4aa9-8927-28776e5914e3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\a.png">
@@ -170,155 +200,155 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\core\ffftpthread.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingsdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostslistdialog.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\main\dirsandtaskmsgform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\main\mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\main\myfilesystemmodel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingdialupform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingspecialform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettinggeneralform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\base\baseform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingkanjicodeform.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\hostsettingfeatureform.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui\base</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\base\datatransceiver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui\base</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\ui\main\mainwindow.cpp">
+      <Filter>Source Files\ui\main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\myfilesystemmodel.cpp">
+      <Filter>Source Files\ui\main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\myfilesystemmodellocal.cpp">
+      <Filter>Source Files\ui\main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\dirsandtaskmsgform.cpp">
+      <Filter>Source Files\ui\main</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\advanceddatatransceiver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui\host</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\dialupdatatransceiver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui\host</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\host\generaldatatransceiver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\kanjicodedatatransceiver.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\ui\host\specialdatatransceiver.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp">
+      <Filter>Source Files\ui\host</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\featuredatatransceiver.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\generaldatatransceiver.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingdialupform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingfeatureform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettinggeneralform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingkanjicodeform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingsdialog.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostsettingspecialform.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostslistdialog.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\kanjicodedatatransceiver.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\specialdatatransceiver.cpp">
+      <Filter>Source Files\ui\host</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ui\uicommon.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ui\base\datatransceiver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\host\generaldatatransceiver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\base</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\base\formdatatransceiver.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\base</Filter>
     </ClInclude>
-    <ClInclude Include="src\ui\host\specialdatatransceiver.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\ui\uicommon.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp">
+      <Filter>Header Files\ui\host</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\host</Filter>
     </ClInclude>
     <ClInclude Include="src\ui\host\featuredatatransceiver.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\host</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\host\generaldatatransceiver.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\host\specialdatatransceiver.hpp">
+      <Filter>Header Files\ui\host</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\core\ffftpthread.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingsdialog.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostslistdialog.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\core</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\main\dirsandtaskmsgform.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\main</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\main\mainwindow.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\main</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\main\myfilesystemmodel.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\main</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\main\myfilesystemmodellocal.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingdialupform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingadvancedform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingspecialform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettinggeneralform.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\main</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\base\baseform.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\base</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingadvancedform.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingdialupform.hpp">
+      <Filter>Header Files\ui\host</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingencryptionform.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\host</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostsettingfeatureform.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettinggeneralform.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingkanjicodeform.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingsdialog.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostsettingspecialform.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostslistdialog.hpp">
+      <Filter>Header Files\ui\host</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

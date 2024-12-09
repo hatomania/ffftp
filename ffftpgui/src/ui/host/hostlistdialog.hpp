@@ -1,16 +1,16 @@
-﻿#ifndef FFFTPGUI_UI_HOST_HOSTSLISTDIALOG_HPP_
-#define FFFTPGUI_UI_HOST_HOSTSLISTDIALOG_HPP_
+﻿#ifndef FFFTPGUI_UI_HOST_HOSTLISTDIALOG_HPP_
+#define FFFTPGUI_UI_HOST_HOSTLISTDIALOG_HPP_
 
 #include <QDialog>
 
 #include "ffftp_hostdata.h"
 
-class HostsListDialog : public QDialog {
+class HostListDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit HostsListDialog(QWidget* parent = Q_NULLPTR);
-  virtual ~HostsListDialog();
+  explicit HostListDialog(QWidget* parent = Q_NULLPTR);
+  virtual ~HostListDialog();
   int connectingHostIndex();
 
  public slots:
@@ -32,7 +32,7 @@ class HostsListDialog : public QDialog {
  private:
   class Private;
   std::unique_ptr<Private> d_;
-  Q_DISABLE_COPY(HostsListDialog)
+  Q_DISABLE_COPY(HostListDialog)
 };
 
-#endif  // FFFTPGUI_UI_HOST_HOSTSLISTDIALOG_HPP_
+#endif  // FFFTPGUI_UI_HOST_HOSTLISTDIALOG_HPP_

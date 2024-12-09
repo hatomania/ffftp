@@ -188,7 +188,7 @@
     <QtUic Include="ui\host\hostsettingspecialform.ui">
       <Filter>Form Files\host</Filter>
     </QtUic>
-    <QtUic Include="ui\host\hostslistdialog.ui">
+    <QtUic Include="ui\host\hostlistdialog.ui">
       <Filter>Form Files\host</Filter>
     </QtUic>
   </ItemGroup>
@@ -259,7 +259,7 @@
     <ClCompile Include="src\ui\host\hostsettingspecialform.cpp">
       <Filter>Source Files\ui\host</Filter>
     </ClCompile>
-    <ClCompile Include="src\ui\host\hostslistdialog.cpp">
+    <ClCompile Include="src\ui\host\hostlistdialog.cpp">
       <Filter>Source Files\ui\host</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\host\kanjicodedatatransceiver.cpp">
@@ -347,7 +347,7 @@
     <QtMoc Include="src\ui\host\hostsettingspecialform.hpp">
       <Filter>Header Files\ui\host</Filter>
     </QtMoc>
-    <QtMoc Include="src\ui\host\hostslistdialog.hpp">
+    <QtMoc Include="src\ui\host\hostlistdialog.hpp">
       <Filter>Header Files\ui\host</Filter>
     </QtMoc>
   </ItemGroup>

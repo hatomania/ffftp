@@ -7,7 +7,7 @@
 #include "core/ffftpthread.hpp"
 #include "ffftp.h"
 #include "stdafx.h"
-#include "ui/host/hostslistdialog.hpp"
+#include "ui/host/hostlistdialog.hpp"
 #include "ui_mainwindow.h"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
@@ -114,7 +114,7 @@ void MainWindow::timerEvent(QTimerEvent* event) {
 
 void MainWindow::actionConnect() {
   qDebug() << __FUNCTION__ << " called.";
-  HostsListDialog* d = new HostsListDialog(this);
+  HostListDialog* d = new HostListDialog(this);
   if (d->exec() == QDialog::Accepted) {
     qDebug() << "Accepted.";
     // このffftp_connect()は接続が成功（または失敗）するまでブロッキングする

@@ -1,9 +1,9 @@
-﻿#include "hostslistdialog.hpp"
+﻿#include "hostlistdialog.hpp"
 
 #include <QStandardItem>
 #include <QStandardItemModel>
 
-#include "ui_hostslistdialog.h"
+#include "ui_hostlistdialog.h"
 
 #include "ffftp.h"
 #include "hostsettingsdialog.hpp"
@@ -16,23 +16,23 @@ class HostItem : public QStandardItem {
 };
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
-class HostsListDialog::Private {
+class HostListDialog::Private {
  public:
   Private();
   ~Private();
   void buildHostTreeView(int current = -1);
-  Ui::HostsListDialogClass ui;
+  Ui::HostListDialogClass ui;
   QStandardItem* rootnode;
   QStandardItemModel* model;
   int connecting_host_index;
   int selected_host_index;
 };
-HostsListDialog::Private::Private()
+HostListDialog::Private::Private()
     : rootnode(nullptr),
       model(new QStandardItemModel()),
       connecting_host_index(-1),
       selected_host_index(-1) {}
-HostsListDialog::Private::~Private() { delete model; }
+HostListDialog::Private::~Private() { delete model; }
 
 static QStandardItem* _createHostTreeViewItem(const hostcontext_t hc) {
   //return new QStandardItem(
@@ -98,7 +98,7 @@ static struct _FindModelIndexRet {
   return _r;
 }
 
-void HostsListDialog::Private::buildHostTreeView(int current) {
+void HostListDialog::Private::buildHostTreeView(int current) {
   ui.treeView_Host->setModel(nullptr);
   delete model;
   model = new QStandardItemModel();
@@ -158,15 +158,15 @@ void HostsListDialog::Private::buildHostTreeView(int current) {
   }
 }
 
-HostsListDialog::HostsListDialog(QWidget* parent)
-    : QDialog(parent), d_(new HostsListDialog::Private()) {
+HostListDialog::HostListDialog(QWidget* parent)
+    : QDialog(parent), d_(new HostListDialog::Private()) {
   d_->ui.setupUi(this);
   // TODO: リストが非選択の時、ボタンを押せなくする
   d_->buildHostTreeView();
 }
-HostsListDialog::~HostsListDialog() {}
+HostListDialog::~HostListDialog() {}
 
-void HostsListDialog::accept() {
+void HostListDialog::accept() {
   qDebug()
       << __FUNCTION__ << "called! index="
       << d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())->data();
@@ -177,9 +177,9 @@ void HostsListDialog::accept() {
   QDialog::accept();
 }
 
-int HostsListDialog::connectingHostIndex() { return d_->connecting_host_index; }
+int HostListDialog::connectingHostIndex() { return d_->connecting_host_index; }
 
-void HostsListDialog::onClick_pushButton_NewHost() {
+void HostListDialog::onClick_pushButton_NewHost() {
   //hostdata hdata;
   //ffftp_hostdata_initialize(&hdata);
   //ffftp_hostcontext_hostdata_default(&hdata);
@@ -192,11 +192,11 @@ void HostsListDialog::onClick_pushButton_NewHost() {
   //ffftp_hostdata_finalize(&hdata);
 }
 
-void HostsListDialog::onClick_pushButton_NewGroup() {
+void HostListDialog::onClick_pushButton_NewGroup() {
   qDebug() << __FUNCTION__ << "called!";
 }
 
-void HostsListDialog::onClick_pushButton_Mod() {
+void HostListDialog::onClick_pushButton_Mod() {
   //hostdata hdata;
   //ffftp_hostdata_initialize(&hdata);
   //ffftp_hostcontext_hostdata(d_->selected_host_index, &hdata);
@@ -210,15 +210,15 @@ void HostsListDialog::onClick_pushButton_Mod() {
   //ffftp_hostdata_finalize(&hdata);
 }
 
-void HostsListDialog::onClick_pushButton_Copy() {
+void HostListDialog::onClick_pushButton_Copy() {
   qDebug() << __FUNCTION__ << "called!";
 }
 
-void HostsListDialog::onClick_pushButton_Del() {
+void HostListDialog::onClick_pushButton_Del() {
   qDebug() << __FUNCTION__ << "called!";
 }
 
-void HostsListDialog::onClick_pushButton_Up() {
+void HostListDialog::onClick_pushButton_Up() {
   //int c = ffftp_hostcontext_up(
   //    d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())
   //        ->data()
@@ -226,7 +226,7 @@ void HostsListDialog::onClick_pushButton_Up() {
   //d_->buildHostTreeView(c);
 }
 
-void HostsListDialog::onClick_pushButton_Down() {
+void HostListDialog::onClick_pushButton_Down() {
   //int c = ffftp_hostcontext_down(
   //    d_->model->itemFromIndex(d_->ui.treeView_Host->currentIndex())
   //        ->data()
@@ -234,19 +234,19 @@ void HostsListDialog::onClick_pushButton_Down() {
   //d_->buildHostTreeView(c);
 }
 
-void HostsListDialog::onClick_pushButton_Default() {
+void HostListDialog::onClick_pushButton_Default() {
   qDebug() << __FUNCTION__ << "called!";
 }
 
-void HostsListDialog::onClick_pushButton_Help() {
+void HostListDialog::onClick_pushButton_Help() {
   qDebug() << __FUNCTION__ << "called!";
 }
 
-void HostsListDialog::selectedHost(const QModelIndex& index) {
+void HostListDialog::selectedHost(const QModelIndex& index) {
   d_->selected_host_index = d_->model->itemFromIndex(index)->data().toInt();
 }
 
-bool HostsListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
+bool HostListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
   bool ret = false;
   HostSettingsDialog setting_dlg(
       in_out_data,

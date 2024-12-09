@@ -56,7 +56,7 @@
     <QtUic Include="ui\host\hostsettingkanjicodeform.ui" />
     <QtUic Include="ui\host\hostsettingsdialog.ui" />
     <QtUic Include="ui\host\hostsettingspecialform.ui" />
-    <QtUic Include="ui\host\hostslistdialog.ui" />
+    <QtUic Include="ui\host\hostlistdialog.ui" />
     <QtUic Include="ui\main\dirsandtaskmsgform.ui" />
     <QtUic Include="ui\main\mainwindow.ui" />
   </ItemGroup>
@@ -82,7 +82,7 @@
     <ClCompile Include="src\ui\host\hostsettingkanjicodeform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingsdialog.cpp" />
     <ClCompile Include="src\ui\host\hostsettingspecialform.cpp" />
-    <ClCompile Include="src\ui\host\hostslistdialog.cpp" />
+    <ClCompile Include="src\ui\host\hostlistdialog.cpp" />
     <ClCompile Include="src\ui\host\kanjicodedatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\specialdatatransceiver.cpp" />
     <ClCompile Include="src\ui\main\dirsandtaskmsgform.cpp" />
@@ -113,7 +113,7 @@
     <QtMoc Include="src\ui\main\myfilesystemmodel.hpp" />
     <QtMoc Include="src\ui\main\mainwindow.hpp" />
     <QtMoc Include="src\ui\main\dirsandtaskmsgform.hpp" />
-    <QtMoc Include="src\ui\host\hostslistdialog.hpp" />
+    <QtMoc Include="src\ui\host\hostlistdialog.hpp" />
     <QtMoc Include="src\ui\host\hostsettingsdialog.hpp" />
     <QtMoc Include="src\core\ffftpthread.hpp" />
     <ClInclude Include="src\stdafx.h" />

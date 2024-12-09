@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>HostsListDialogClass</class>
- <widget class="QDialog" name="HostsListDialogClass">
+ <class>HostListDialogClass</class>
+ <widget class="QDialog" name="HostListDialogClass">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -175,7 +175,7 @@
   <connection>
    <sender>pushButton_Close</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -191,7 +191,7 @@
   <connection>
    <sender>treeView_Host</sender>
    <signal>clicked(QModelIndex)</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>selectedHost(QModelIndex)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -207,7 +207,7 @@
   <connection>
    <sender>pushButton_NewHost</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_NewHost()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -223,7 +223,7 @@
   <connection>
    <sender>pushButton_NewGroup</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_NewGroup()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -239,7 +239,7 @@
   <connection>
    <sender>pushButton_Mod</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Mod()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -255,7 +255,7 @@
   <connection>
    <sender>pushButton_Copy</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Copy()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -271,7 +271,7 @@
   <connection>
    <sender>pushButton_Del</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Del()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -287,7 +287,7 @@
   <connection>
    <sender>pushButton_Up</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Up()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -303,7 +303,7 @@
   <connection>
    <sender>pushButton_Down</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Down()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -319,7 +319,7 @@
   <connection>
    <sender>pushButton_Default</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Default()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -335,7 +335,7 @@
   <connection>
    <sender>pushButton_Help</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>onClick_pushButton_Help()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -351,7 +351,7 @@
   <connection>
    <sender>pushButton_Connect</sender>
    <signal>clicked()</signal>
-   <receiver>HostsListDialogClass</receiver>
+   <receiver>HostListDialogClass</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">

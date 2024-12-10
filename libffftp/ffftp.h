@@ -91,7 +91,7 @@ ffftp_hostcontext_first();
 /**
  * @brief 指定したホストコンテキストの次のホストコンテキストを取得する。
  *
- * @param hc ホストコンテキスト
+ * @param[in] hc ホストコンテキスト
  * @return 指定したホストコンテキストの次のホストコンテキスト。次がない場合はnullptrを返す
  */
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
@@ -118,16 +118,17 @@ ffftp_hostdata_finalize(hostdata* hdata);
 /**
  * @brief ホストを追加する。
  *
- * @param hc 追加の位置を示すホストコンテキスト。このホストコンテキストの次にホストが追加される。先頭に追加するにはnullptrを指定する。
- * @param hdata 追加するホスト情報のhostdataへのポインタ
+ * @param[in] hc 追加の位置を示すホストコンテキスト。このホストコンテキストの次にホストが追加される。先頭に追加するにはnullptrを指定する。
+ * @param[in] hdata 追加するホスト情報のhostdataへのポインタ
+ * @return 追加されたホストを示すホストコンテキスト
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
 ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata);
 
 /**
  * @brief 指定したホストを、ホストリスト上のひとつ上へ移動する。
  *
- * @param hc 上へ移動するホストを示すホストコンテキスト
+ * @param[in] hc 上へ移動するホストを示すホストコンテキスト
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_up(const hostcontext_t hc);
@@ -135,7 +136,7 @@ ffftp_hostcontext_up(const hostcontext_t hc);
 /**
  * @brief 指定したホストを、ホストリスト上のひとつ下へ移動する。
  *
- * @param hc 下へ移動するホストを示すホストコンテキスト
+ * @param[in] hc 下へ移動するホストを示すホストコンテキスト
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_down(const hostcontext_t hc);
@@ -151,22 +152,30 @@ ffftp_hostcontext_hostdata_default(hostdata* hdata);
 /**
  * @brief 指定したホストコンテキストのhostdataを取得する。
  *
- * @param[in]  hc hostdataを取得したいホストのホストコンテキストの
+ * @param[in]  hc hostdataを取得したいホストのホストコンテキスト
  * @param[out] hdata 結果を格納するhostdataへのポインタ
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_hostdata(const hostcontext_t hc, hostdata* hdata);
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV
-ffftp_hostcontext_getname(const hostcontext_t hc);
+ffftp_hostcontext_name(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
-ffftp_hostcontext_getlevel(const hostcontext_t hc);
+ffftp_hostcontext_level(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV
 ffftp_hostcontext_isgroup(const hostcontext_t hc);
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
 
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index);
+/**
+ * @brief 指定したホストコンテキストで接続する。
+ *
+ * @param[in]  hc 接続先ホストのホストコンテキスト
+ * @retval true  接続成功。現在この関数は常にtrueを返します
+ * @retval false 接続失敗
+ */
+
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_asksavecrypt(bool (*func)());
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV

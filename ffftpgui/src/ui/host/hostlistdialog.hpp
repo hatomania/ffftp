@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-#include "ffftp_hostdata.h"
+#include "ffftp.h"
 
 class HostListDialog : public QDialog {
   Q_OBJECT
@@ -11,7 +11,7 @@ class HostListDialog : public QDialog {
  public:
   explicit HostListDialog(QWidget* parent = Q_NULLPTR);
   virtual ~HostListDialog();
-  int connectingHostIndex();
+  const hostcontext_t hostcontext() const;
 
  public slots:
   void accept() override;
@@ -24,7 +24,6 @@ class HostListDialog : public QDialog {
   void onClick_pushButton_Down();
   void onClick_pushButton_Default();
   void onClick_pushButton_Help();
-  void selectedHost(const QModelIndex& index);
 
  private:
   bool showSettingDialog(hostdata& in_out_data);

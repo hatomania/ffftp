@@ -14,16 +14,16 @@ extern void getWindowTitle(std::wstring& title);
 // hostman.cpp
 extern const void* hostContextFirst();
 extern const void* hostContextNext(const void* hc);
-extern void hostContextNew(const void* hc, const hostdata* hdata);
+extern const void* hostContextNew(const void* hc, const hostdata* hdata);
 extern void hostContextUp(const void* hc);
 extern void hostContextDown(const void* hc);
 extern void hostContextDataDefault(hostdata* hdata);
 extern void hostContextData(const void* hc, hostdata* hdata);
 extern HOSTDATA hostContext(const void* hc);
 extern int hostContextLevel(const void* hc);
+extern bool connect(const void* hc);
 // taskwin.cpp
 extern std::wstring getTaskMessage();
 // connect.cpp
-extern bool connect(int index);
 extern void setAskSaveCryptCallback(bool (*func)());
 }  // namespace libffftp

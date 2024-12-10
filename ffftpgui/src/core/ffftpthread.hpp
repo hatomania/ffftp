@@ -9,7 +9,7 @@ class FFFTPThread : public QThread {
   explicit FFFTPThread(QObject* parent = Q_NULLPTR);
 
  public slots:
-  void connect(int index);
+  void connect(const void* hc);
 
  private:
   class Private;

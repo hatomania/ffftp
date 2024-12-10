@@ -1516,10 +1516,6 @@ int AskTryingConnect() noexcept {
 // libffftpのために用意されたインターフェース
 namespace libffftp {
 
-bool connect(int index) {
-	ConnectProc(DLG_TYPE_CON, index);
-	return true; // TODO: 接続失敗判定
-}
 void setAskSaveCryptCallback(bool (*func)()) {
 	asksavecrypt_func = func;
 }

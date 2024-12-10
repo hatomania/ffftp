@@ -76,43 +76,43 @@
   <customwidget>
    <class>HostSettingGeneralForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettinggeneralform.hpp</header>
+   <header>ui/host/hostsettinggeneralform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HostSettingAdvancedForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingadvancedform.hpp</header>
+   <header>ui/host/hostsettingadvancedform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HostSettingKanjiCodeForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingkanjicodeform.hpp</header>
+   <header>ui/host/hostsettingkanjicodeform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HostSettingDialupForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingdialupform.hpp</header>
+   <header>ui/host/hostsettingdialupform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HostSettingSpecialForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingspecialform.hpp</header>
+   <header>ui/host/hostsettingspecialform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HostSettingEncryptionForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingencryptionform.hpp</header>
+   <header>ui/host/hostsettingencryptionform.hpp</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>HostSettingFeatureForm</class>
    <extends>QWidget</extends>
-   <header location="global">ui/host/hostsettingfeatureform.hpp</header>
+   <header>ui/host/hostsettingfeatureform.hpp</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

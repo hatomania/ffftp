@@ -13,7 +13,7 @@
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class MainWindow::Private {
  public:
-  Private() {}
+  Private() : ffftpt(nullptr) {}
   ~Private() {}
   Ui::MainWindowClass ui;
   FFFTPThread* ffftpt;
@@ -101,7 +101,6 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::timerEvent(QTimerEvent* event) {
-  // qDebug() << __FUNCTION__ << " called.";
   QString msg = QString::fromWCharArray(ffftp_gettaskmessage());
   if (!msg.isEmpty()) {
     d_->ui.widget->addTaskMessage(msg);
@@ -114,28 +113,13 @@ void MainWindow::timerEvent(QTimerEvent* event) {
 
 void MainWindow::actionConnect() {
   qDebug() << __FUNCTION__ << " called.";
-  HostListDialog* d = new HostListDialog(this);
-  if (d->exec() == QDialog::Accepted) {
+  HostListDialog dialog{this};
+  if (dialog.exec() == QDialog::Accepted) {
     qDebug() << "Accepted.";
-    // このffftp_connect()は接続が成功（または失敗）するまでブロッキングする
-    // GUIイベントループの中でブロッキングするのは応答なしになるのでよくないと思ったが
-    // 応答なしにならない。その証拠に上のclose()でダイアログが閉じるし、
-    // メインウィンドウも生きている。下記のSleep()ではちゃんと応答なしになる。不思議。
-    // libffftpの中で何かしているのだろうがWindows固有なのかもしれない
-    // 将来クロスプラットフォーム化を考えるとちゃんとスレッド化したほうがいいと思う
-    //     →一応スレッド化した
-    // qDebug() << __FUNCTION__ << "QThread::sleep(10) start.";
-    // QThread::sleep(10);
-    // qDebug() << __FUNCTION__ << "returned.";
-    if (int idx = d->connectingHostIndex(); idx >= 0) {
-      qDebug() << __FUNCTION__ << "ffftp_connect() started. index=" << idx;
-      // ffftp_connect(idx);
-      QMetaObject::invokeMethod(d_->ffftpt, "connect", Qt::QueuedConnection,
-                                Q_ARG(int, idx));
-      qDebug() << __FUNCTION__ << "returned.";
-    }
+    // 接続処理は別スレッドへ
+    QMetaObject::invokeMethod(d_->ffftpt, "connect", Qt::QueuedConnection,
+                              Q_ARG(const void*, dialog.hostcontext()));
   }
-  delete d;
 }
 
 void MainWindow::actionQuickConnect() {}

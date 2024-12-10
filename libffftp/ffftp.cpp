@@ -81,9 +81,9 @@ ffftp_hostdata_finalize(hostdata* hdata) {
   delete[] hdata->dialup.dial_entries;
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
 ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata) {
-  libffftp::hostContextNew(hc, hdata);
+  return const_cast<const hostcontext_t>(libffftp::hostContextNew(hc, hdata));
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
@@ -107,14 +107,14 @@ ffftp_hostcontext_hostdata(const hostcontext_t hc, hostdata* hdata) {
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV
-ffftp_hostcontext_getname(const hostcontext_t hc) {
+ffftp_hostcontext_name(const hostcontext_t hc) {
   static HOSTDATA hdata;
   hdata = libffftp::hostContext(hc);
   return hdata.HostName.c_str();
 }
 
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV
-ffftp_hostcontext_getlevel(const hostcontext_t hc) {
+ffftp_hostcontext_level(const hostcontext_t hc) {
   return libffftp::hostContextLevel(hc);
 }
 
@@ -129,8 +129,8 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage() {
   return msg.c_str();
 }
 
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(int index) {
-  return libffftp::connect(index);
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(const hostcontext_t hc) {
+  return libffftp::connect(hc);
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV

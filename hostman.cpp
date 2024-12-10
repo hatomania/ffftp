@@ -1631,7 +1631,7 @@ hostdata convertHostData(const HOSTDATA& src) {
 	convertHostData(ret, src);
 	return ret;
 }
-void hostContextNew(const void* hc, const hostdata* hdata) {
+const void* hostContextNew(const void* hc, const hostdata* hdata) {
 	int pos = -1;
 	int index = -1;
 	if (!hc) {
@@ -1649,6 +1649,7 @@ void hostContextNew(const void* hc, const hostdata* hdata) {
 	}
 	convertHostData(TmpHost, *hdata);
 	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
+	return GetNode(CurrentHost).get();
 }
 void hostContextUp(const void* hc) {
 	HostList::HostUp(hostIndex(hc));
@@ -1671,6 +1672,10 @@ HOSTDATA hostContext(const void* hc) {
 }
 int hostContextLevel(const void* hc) {
 	return ((HOSTLISTDATA*)hc)->GetLevel();
+}
+bool connect(const void* hc) {
+	ConnectProc(DLG_TYPE_CON, hostIndex(hc));
+	return true; // TODO: 接続失敗判定
 }
 
 }

@@ -268,6 +268,9 @@
     <ClCompile Include="src\ui\host\specialdatatransceiver.cpp">
       <Filter>Source Files\ui\host</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\host\hosttreeview.cpp">
+      <Filter>Source Files\ui\host</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -348,6 +351,9 @@
       <Filter>Header Files\ui\host</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\host\hostlistdialog.hpp">
+      <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hosttreeview.hpp">
       <Filter>Header Files\ui\host</Filter>
     </QtMoc>
   </ItemGroup>

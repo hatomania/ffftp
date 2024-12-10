@@ -74,6 +74,7 @@
     <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\featuredatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\generaldatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\hosttreeview.cpp" />
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingencryptionform.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\featuredatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\generaldatatransceiver.hpp" />
+    <QtMoc Include="src\ui\host\hosttreeview.hpp" />
     <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\specialdatatransceiver.hpp" />
     <ClInclude Include="src\ui\uicommon.h" />

@@ -20,7 +20,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QTreeView" name="treeView_Host">
+      <widget class="HostTreeView" name="treeView_HostList">
        <property name="editTriggers">
         <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
        </property>
@@ -154,8 +154,15 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HostTreeView</class>
+   <extends>QTreeView</extends>
+   <header>ui/host/hosttreeview.hpp</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
-  <tabstop>treeView_Host</tabstop>
+  <tabstop>treeView_HostList</tabstop>
   <tabstop>pushButton_Connect</tabstop>
   <tabstop>pushButton_Close</tabstop>
   <tabstop>pushButton_NewHost</tabstop>
@@ -168,9 +175,7 @@
   <tabstop>pushButton_Default</tabstop>
   <tabstop>pushButton_Help</tabstop>
  </tabstops>
- <resources>
-  <include location="../resource/ffftpgui.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>pushButton_Close</sender>
@@ -185,22 +190,6 @@
     <hint type="destinationlabel">
      <x>263</x>
      <y>265</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>treeView_Host</sender>
-   <signal>clicked(QModelIndex)</signal>
-   <receiver>HostListDialogClass</receiver>
-   <slot>selectedHost(QModelIndex)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>116</x>
-     <y>133</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>149</y>
     </hint>
    </hints>
   </connection>

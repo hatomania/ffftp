@@ -15,8 +15,8 @@ class FFFTPThread::Private {
 FFFTPThread::FFFTPThread(QObject* parent)
     : QThread(parent), d_(new FFFTPThread::Private()) {}
 
-void FFFTPThread::connect(int index) {
-  qDebug() << __FUNCTION__ << " called.";
-  ffftp_connect(index);
+void FFFTPThread::connect(const void* hc) {
+  qDebug() << __FUNCTION__ << " called. " << hc;
+  ffftp_connect(const_cast<const hostcontext_t>(hc));
   qDebug() << __FUNCTION__ << " end.";
 }

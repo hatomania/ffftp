@@ -27,6 +27,7 @@ class HostSettingSpecialForm : public BaseForm {
 
   explicit HostSettingSpecialForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingSpecialForm();
+  int helpID() const override;
 
  protected:
   void setRawData(const BaseForm::Data& data) override;

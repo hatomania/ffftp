@@ -76,7 +76,7 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle();
 /**
  * @brief ユーザーが登録したホストを参照するコンテキスト。
  *
- * ホストの操作（新規追加、編集、削除等）はこのコンテキストを使って行います。
+ * ホストの操作（新規追加、編集、削除、複製等）はこのコンテキストを使って行います。
  */
 typedef void* hostcontext_t;
 
@@ -101,15 +101,18 @@ ffftp_hostcontext_next(const hostcontext_t hc);
  * @brief hostdataの初期化を行う。
  *
  * hostdataを使用する前に、この関数を呼び出してhostdataを初期化しなければならない。
+ *
  * @param[in] hdata 初期化するhostdataへのポインタ
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostdata_initialize(hostdata* hdata);
+
 /**
  * @brief hostdataの後処理を行う。
  *
  * hostdataを使用し終わったらスコープを抜ける前に、この関数を呼び出してhostdataの後処理をしなければならない。@n
  * これを怠るとメモリリークを引き起こす可能性があります。
+ *
  * @param[in] hdata 後処理するhostdataへのポインタ
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
@@ -119,11 +122,60 @@ ffftp_hostdata_finalize(hostdata* hdata);
  * @brief ホストを追加する。
  *
  * @param[in] hc 追加の位置を示すホストコンテキスト。このホストコンテキストの次にホストが追加される。先頭に追加するにはnullptrを指定する。
- * @param[in] hdata 追加するホスト情報のhostdataへのポインタ
+ * @param[in] hdata 追加するホスト情報hostdataへのポインタ
  * @return 追加されたホストを示すホストコンテキスト
  */
 LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
 ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata);
+
+/**
+ * @brief グループを追加する。
+ *
+ * @param[in] hc 追加の位置を示すホストコンテキスト。このホストコンテキストの次にグループが追加される。先頭に追加するにはnullptrを指定する。
+ * @param[in] group_name グループ名を示す文字列ポインタ
+ * @return 追加されたグループを示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_newgroup(const hostcontext_t hc, const wchar_t* group_name);
+
+/**
+ * @brief ホストを修正する。
+ *
+ * @param[in] hc 修正するホストを示すホストコンテキスト
+ * @param[in] hdata 修正するホスト情報hostdataへのポインタ
+ * @return 修正されたホストを示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_modify(const hostcontext_t hc, const hostdata* hdata);
+
+/**
+ * @brief グループ名を修正する。
+ *
+ * @param[in] hc 修正するグループを示すホストコンテキスト
+ * @param[in] hdata 新しいグループ名を示す文字列ポインタ
+ * @return 修正されたグループを示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_modifygroup(const hostcontext_t hc,
+                              const wchar_t* group_name);
+
+/**
+ * @brief ホストを複製する。
+ *
+ * @param[in] hc 複製するホストを示すホストコンテキスト。このホストコンテキストの次に複製されたホストが追加される
+ * @return 複製されたホストを示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_copy(const hostcontext_t hc);
+
+/**
+ * @brief ホストまたはグループを削除する。
+ *
+ * @param[in] hc 削除するホストまたはグループを示すホストコンテキスト
+ * @return 削除されたホストまたはグループの次を示すホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV
+ffftp_hostcontext_delete(const hostcontext_t hc);
 
 /**
  * @brief 指定したホストを、ホストリスト上のひとつ上へ移動する。
@@ -150,6 +202,14 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_hostcontext_hostdata_default(hostdata* hdata);
 
 /**
+ * @brief hostdataのデフォルト値を更新する。
+ *
+ * @param[in] hdata デフォルト値とするhostdataへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
+ffftp_hostcontext_setdefault(const hostdata* hdata);
+
+/**
  * @brief 指定したホストコンテキストのhostdataを取得する。
  *
  * @param[in]  hc hostdataを取得したいホストのホストコンテキスト
@@ -174,7 +234,6 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
  * @retval true  接続成功。現在この関数は常にtrueを返します
  * @retval false 接続失敗
  */
-
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_asksavecrypt(bool (*func)());
@@ -184,6 +243,13 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd));
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_askretrymasterpassword(bool (*func)());
+
+/**
+ * @brief ヘルプを表示する。
+ *
+ * @param[in]  id 表示するヘルプを識別するID
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showhelp(int id);
 
 #ifdef __cplusplus
 }

@@ -2,6 +2,7 @@
 
 #include "ui_hostsettingkanjicodeform.h"
 
+#include "stdafx.h"
 #include "ui/uicommon.h"
 
 namespace {
@@ -42,7 +43,11 @@ HostSettingKanjiCodeForm::HostSettingKanjiCodeForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
 }
-HostSettingKanjiCodeForm ::~HostSettingKanjiCodeForm() {}
+HostSettingKanjiCodeForm::~HostSettingKanjiCodeForm() {}
+
+int HostSettingKanjiCodeForm::helpID() const {
+  return kHelpTopicHostSettingKanjiCode;
+}
 
 void HostSettingKanjiCodeForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);

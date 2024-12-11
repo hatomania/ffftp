@@ -33,6 +33,7 @@ class HostSettingGeneralForm : public BaseForm {
 
   explicit HostSettingGeneralForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingGeneralForm();
+  int helpID() const override;
 
  protected:
   void setRawData(const BaseForm::Data& data) override;

@@ -2,6 +2,7 @@
 
 #include "ui_hostsettingencryptionform.h"
 
+#include "stdafx.h"
 #include"ui/uicommon.h"
 
 namespace {
@@ -37,7 +38,11 @@ HostSettingEncryptionForm::HostSettingEncryptionForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
 }
-HostSettingEncryptionForm ::~HostSettingEncryptionForm() {}
+HostSettingEncryptionForm::~HostSettingEncryptionForm() {}
+
+int HostSettingEncryptionForm::helpID() const {
+  return kHelpTopicHostSettingEncryption;
+}
 
 void HostSettingEncryptionForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);

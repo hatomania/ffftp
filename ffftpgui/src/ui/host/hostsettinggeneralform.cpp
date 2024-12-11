@@ -4,6 +4,7 @@
 
 #include "ui_hostsettinggeneralform.h"
 
+#include "stdafx.h"
 #include "ui/uicommon.h"
 
 namespace {
@@ -97,6 +98,10 @@ HostSettingGeneralForm::HostSettingGeneralForm(QWidget* parent)
 }
 HostSettingGeneralForm::~HostSettingGeneralForm() {}
 
+int HostSettingGeneralForm::helpID() const {
+  return kHelpTopicHostSettingGeneral;
+}
+
 void HostSettingGeneralForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);
 }
@@ -127,7 +132,6 @@ void HostSettingGeneralForm::updateData(BaseForm::Data& data) const {
 }
 
 void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {
-  qDebug() << __FUNCTION__ << "called!";
   QString dirpath = QFileDialog::getExistingDirectory(
       this, "", d_->ui.lineEdit_InitDirLocal->text());
   if (!dirpath.isEmpty()) {
@@ -136,12 +140,10 @@ void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {
 }
 
 void HostSettingGeneralForm::onClick_pushButton_CurDir() {
-  qDebug() << __FUNCTION__ << "called!";
   d_->ui.lineEdit_InitDirRemote->setText(QString(thisData().initdir_remote));
 }
 
 void HostSettingGeneralForm::onClick_checkBox_Anonymous(bool checked) {
-  qDebug() << __FUNCTION__ << "called!";
   static QPair<QString, QString> user_passwd;
   if (checked) {
     UI_TEXT(user_passwd.first, d_->ui.lineEdit_Username);

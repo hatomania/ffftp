@@ -1414,6 +1414,9 @@ inline static int currentHostIndex() {
 	return CurrentHost;
 }
 
+HOSTDATA hostContext(const void* hc) {
+	return *static_cast<const HOSTLISTDATA*>(hc);
+}
 const void* hostContextFirst() {
 	return HostListTop.get();
 }
@@ -1651,11 +1654,68 @@ const void* hostContextNew(const void* hc, const hostdata* hdata) {
 	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
 	return GetNode(CurrentHost).get();
 }
+const void* hostContextNewGroup(const void* hc, const wchar_t* group_name) {
+	int pos = -1;
+	int index = -1;
+	if (!hc) {
+		// 先頭に追加したい
+		TmpHost.Level = 0;
+		CurrentHost = pos = 0;
+	}
+	else if (Hosts == 0) {
+		// ホストが一つも登録されていなかったら
+		TmpHost.Level = 0;
+		CurrentHost = Hosts;
+	}
+	else {
+		index = hostIndex(hc);
+		TmpHost.Level = GetLevel(index);
+		CurrentHost = pos = index + 1;
+	}
+	TmpHost.Level |= SET_LEVEL_GROUP;
+	TmpHost.HostName = group_name;
+	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
+	return GetNode(CurrentHost).get();
+}
+const void* hostContextModify(const void* hc, const hostdata* hdata) {
+	CurrentHost = hostIndex(hc);
+	CopyHostFromList(CurrentHost, &TmpHost);
+	convertHostData(TmpHost, *hdata);
+	UpdateHostToList(CurrentHost, &TmpHost);
+	return GetNode(CurrentHost).get();
+}
+const void* hostContextModifyGroup(const void* hc, const wchar_t* group_name) {
+	CurrentHost = hostIndex(hc);
+	CopyHostFromList(CurrentHost, &TmpHost);
+	TmpHost.HostName = group_name;
+	UpdateHostToList(CurrentHost, &TmpHost);
+	return GetNode(CurrentHost).get();
+}
+const void* hostContextCopy(const void* hc) {
+	CurrentHost = hostIndex(hc);
+	CopyHostFromList(CurrentHost, &TmpHost);
+	TmpHost.BookMark = {};
+	CurrentHost++;
+	AddHostToList(&TmpHost, CurrentHost, SET_LEVEL_SAME);
+	return GetNode(CurrentHost).get();
+}
+const void* hostContextDelete(const void* hc) {
+	CurrentHost = hostIndex(hc);
+	DelHostFromList(CurrentHost);
+	if (CurrentHost >= Hosts)
+		CurrentHost = std::max(0, Hosts - 1);
+	return GetNode(CurrentHost).get();
+}
 void hostContextUp(const void* hc) {
 	HostList::HostUp(hostIndex(hc));
 }
 void hostContextDown(const void* hc) {
 	HostList::HostDown(hostIndex(hc));
+}
+void hostContextSetDataDefault(const hostdata* hdata) {
+	CopyDefaultHost(&TmpHost);
+	convertHostData(TmpHost, *hdata);
+	SetDefaultHost(&TmpHost);
 }
 void hostContextDataDefault(hostdata* hdata) {
 	convertHostData(*hdata, DefaultHost);
@@ -1667,8 +1727,10 @@ void hostContextData(const void* hc, hostdata* hdata) {
 	convertHostData(*hdata, hd);
 #endif
 }
-HOSTDATA hostContext(const void* hc) {
-	return *static_cast<const HOSTLISTDATA*>(hc);
+const wchar_t* hostContextName(const void* hc) {
+	static HOSTDATA hdata;
+	hdata = hostContext(hc);
+	return hdata.HostName.c_str();
 }
 int hostContextLevel(const void* hc) {
 	return ((HOSTLISTDATA*)hc)->GetLevel();
@@ -1676,6 +1738,10 @@ int hostContextLevel(const void* hc) {
 bool connect(const void* hc) {
 	ConnectProc(DLG_TYPE_CON, hostIndex(hc));
 	return true; // TODO: 接続失敗判定
+}
+
+void showHelp(int id) {
+	ShowHelp(id);
 }
 
 }

@@ -2,6 +2,7 @@
 
 #include "ui_hostsettingsdialog.h"
 
+#include "ffftp.h"
 #include "generaldatatransceiver.hpp"
 #include "advanceddatatransceiver.hpp"
 #include "kanjicodedatatransceiver.hpp"
@@ -80,4 +81,7 @@ void HostSettingsDialog::accept() {
   QDialog::accept();
 }
 
-void HostSettingsDialog::help() { qDebug() << __FUNCTION__ << "called!"; }
+void HostSettingsDialog::help() {
+  BaseForm* form = static_cast<BaseForm*>(d_->ui.tabWidget->currentWidget());
+  ffftp_showhelp(form->helpID());
+}

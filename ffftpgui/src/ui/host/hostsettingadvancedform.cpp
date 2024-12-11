@@ -2,6 +2,7 @@
 
 #include "ui_hostsettingadvancedform.h"
 
+#include "stdafx.h"
 #include "ui/uicommon.h"
 
 namespace {
@@ -53,7 +54,11 @@ HostSettingAdvancedForm::HostSettingAdvancedForm(QWidget* parent)
   d_->ui.setupUi(this);
   d_->ui.lineEdit_Port->setValidator(new QIntValidator(0, 0xFFFF, this));
 }
-HostSettingAdvancedForm ::~HostSettingAdvancedForm() {}
+HostSettingAdvancedForm::~HostSettingAdvancedForm() {}
+
+int HostSettingAdvancedForm::helpID() const {
+  return kHelpTopicHostSettingAdvanced;
+}
 
 void HostSettingAdvancedForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);

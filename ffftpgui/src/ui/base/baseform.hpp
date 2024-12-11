@@ -19,6 +19,7 @@ class BaseForm : public QWidget {
 
   void setData(const Data& data);
   const Data& data() const;
+  virtual int helpID() const = 0;
 
  protected:
   std::unique_ptr<BaseForm::Data> data_;

@@ -353,9 +353,24 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>treeView_HostList</sender>
+   <signal>clicked(QModelIndex)</signal>
+   <receiver>HostListDialogClass</receiver>
+   <slot>onClick_treeView_HostList(QModelIndex)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>116</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>150</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
-  <slot>selectedHost(QModelIndex)</slot>
   <slot>onClick_pushButton_NewHost()</slot>
   <slot>onClick_pushButton_NewGroup()</slot>
   <slot>onClick_pushButton_Mod()</slot>

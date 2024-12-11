@@ -28,6 +28,7 @@ class HostSettingAdvancedForm : public BaseForm {
 
   explicit HostSettingAdvancedForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingAdvancedForm();
+  int helpID() const override;
 
  protected:
   void setRawData(const BaseForm::Data& data) override;

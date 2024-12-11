@@ -35,6 +35,7 @@ class HostSettingKanjiCodeForm : public BaseForm {
 
   explicit HostSettingKanjiCodeForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingKanjiCodeForm();
+  int helpID() const override;
 
  protected:
   void setRawData(const BaseForm::Data& data) override;

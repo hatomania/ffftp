@@ -1,5 +1,4 @@
-﻿
-#include "stdafx.h"
+﻿#include "stdafx.h"
 
 #include <QObject>
 #include <QString>
@@ -16,34 +15,53 @@
 #pragma init_seg(lib)
 #endif
 
-#define IMPL_CONST_CHAR(x, str) const char* const x = str;
-#define IMPL_CONST_WCHAR(x, str) const wchar_t* const x = str;
-#define IMPL_CONST_QSTRING(x, str) const QString x = QObject::tr(str);
+#define IMPL_CONST_INT(x, v) const int x = v
+#define IMPL_CONST_CHAR(x, v) const char* const x = v
+#define IMPL_CONST_WCHAR(x, v) const wchar_t* const x = v
+#define IMPL_CONST_QSTRING(x, v) const QString x = QObject::tr(v)
 
-IMPL_CONST_WCHAR(kEmptyString, L"")
-IMPL_CONST_CHAR(kResImage_closedfolder16x16, ":/closedfolder16x16.png")
-IMPL_CONST_CHAR(kResImage_cleanfile16x16, ":/cleanfile16x16.png")
-IMPL_CONST_CHAR(kResImage_desktop16x16, ":/desktop16x16.png")
+IMPL_CONST_CHAR(kEmptyString, "");
+IMPL_CONST_CHAR(kResImage_closedfolder16x16, ":/closedfolder16x16.png");
+IMPL_CONST_CHAR(kResImage_cleanfile16x16, ":/cleanfile16x16.png");
+IMPL_CONST_CHAR(kResImage_desktop16x16, ":/desktop16x16.png");
 
 // ユーザーに表示する文字列には必ずQObject::tr()で囲ってください
 // この文字列は翻訳可能文字列となり、Qt
 // Linguistソフトウェアでtsファイルを編集できるようになります
-IMPL_CONST_QSTRING(kAskSaveCryptTitle, "暗号化の状態の保存")
+IMPL_CONST_QSTRING(kAskSaveCryptTitle, "暗号化の状態の保存");
 IMPL_CONST_QSTRING(
     kAskSaveCryptBody,
     "現在の暗号化の状態を保存しますか？\n"
-    "「はい」を選択すると次回から他の暗号化方式を試行しなくなります。")
+    "「はい」を選択すると次回から他の暗号化方式を試行しなくなります。");
 IMPL_CONST_QSTRING(kPlzInputYourMasterPwd,
-                   "設定されているマスターパスワードを入力してください:")
+                   "設定されているマスターパスワードを入力してください:");
 IMPL_CONST_QSTRING(
     kAskRetryInputYourMasterPwd,
     "指定されたマスターパスワードが登録されたものと一致しません。"
     "再度入力しますか？\n"
-    "「いいえ」を選ぶと記憶されたFTPパスワードは利用できません。")
+    "「いいえ」を選ぶと記憶されたFTPパスワードは利用できません。");
 
-IMPL_CONST_QSTRING(kStringName, "名前")
-IMPL_CONST_QSTRING(kStringDate, "日付")
-IMPL_CONST_QSTRING(kStringSize, "サイズ")
-IMPL_CONST_QSTRING(kStringExtension, "種類")
-IMPL_CONST_QSTRING(kStringPermission, "属性")
-IMPL_CONST_QSTRING(kStringOwner, "所有者")
+IMPL_CONST_QSTRING(kStringName, "名前");
+IMPL_CONST_QSTRING(kStringDate, "日付");
+IMPL_CONST_QSTRING(kStringSize, "サイズ");
+IMPL_CONST_QSTRING(kStringExtension, "種類");
+IMPL_CONST_QSTRING(kStringPermission, "属性");
+IMPL_CONST_QSTRING(kStringOwner, "所有者");
+IMPL_CONST_QSTRING(kStringGroupName, "グループ名");
+IMPL_CONST_QSTRING(kStringGroupNameNew, "グループを追加");
+IMPL_CONST_QSTRING(kStringGroupNameMod, "グループ名を変更");
+IMPL_CONST_QSTRING(kStringGroupNameAccess, "グループ名(&G):");
+IMPL_CONST_QSTRING(kStringDeleteHost, "ホストの削除");
+IMPL_CONST_QSTRING(kStringDeleteHostMsg, "ホストの設定を削除しますか？");
+IMPL_CONST_QSTRING(kStringDeleteGroup, "グループの削除");
+IMPL_CONST_QSTRING(kStringDeleteGroupMsg,
+                   "グループとグループ内の全てのホストの設定を削除しますか？");
+
+IMPL_CONST_INT(kHelpTopicHostList, 27);
+IMPL_CONST_INT(kHelpTopicHostSettingGeneral, 28);
+IMPL_CONST_INT(kHelpTopicHostSettingAdvanced, 29);
+IMPL_CONST_INT(kHelpTopicHostSettingKanjiCode, 30);
+IMPL_CONST_INT(kHelpTopicHostSettingDialup, 31);
+IMPL_CONST_INT(kHelpTopicHostSettingSpecial, 32);
+IMPL_CONST_INT(kHelpTopicHostSettingEncryption, 65);
+IMPL_CONST_INT(kHelpTopicHostSettingFeature, 66);

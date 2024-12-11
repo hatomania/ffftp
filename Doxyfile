@@ -967,6 +967,7 @@ WARN_LOGFILE           =
 
 INPUT                  = . \
                          ./spec \
+                         ./spec/host-list \
                          ./spec/host-setting \
                          ./libffftp
 
@@ -1124,6 +1125,7 @@ EXAMPLE_RECURSIVE      = NO
 # \image command).
 
 IMAGE_PATH             = . \
+                         ./spec/host-list \
                          ./spec/host-setting
 
 # The INPUT_FILTER tag can be used to specify a program that Doxygen should

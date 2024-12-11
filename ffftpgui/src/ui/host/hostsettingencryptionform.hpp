@@ -21,6 +21,7 @@ class HostSettingEncryptionForm : public BaseForm {
 
   explicit HostSettingEncryptionForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingEncryptionForm();
+  int helpID() const override;
 
  protected:
   void setRawData(const BaseForm::Data& data) override;

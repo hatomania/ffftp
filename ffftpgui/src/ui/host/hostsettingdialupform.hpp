@@ -25,6 +25,7 @@ class HostSettingDialupForm : public BaseForm {
 
   explicit HostSettingDialupForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingDialupForm();
+  int helpID() const override;
 
  protected:
   void setRawData(const BaseForm::Data& data) override;

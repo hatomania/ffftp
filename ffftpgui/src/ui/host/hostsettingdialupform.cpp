@@ -2,6 +2,7 @@
 
 #include "ui_hostsettingdialupform.h"
 
+#include "stdafx.h"
 #include "ui/uicommon.h"
 
 namespace {
@@ -45,7 +46,11 @@ HostSettingDialupForm::HostSettingDialupForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
 }
-HostSettingDialupForm ::~HostSettingDialupForm() {}
+HostSettingDialupForm::~HostSettingDialupForm() {}
+
+int HostSettingDialupForm::helpID() const {
+  return kHelpTopicHostSettingDialup;
+}
 
 void HostSettingDialupForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);

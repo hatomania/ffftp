@@ -2,6 +2,7 @@
 
 #include "ui_hostsettingfeatureform.h"
 
+#include "stdafx.h"
 #include"ui/uicommon.h"
 
 namespace {
@@ -46,7 +47,11 @@ HostSettingFeatureForm::HostSettingFeatureForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
 }
-HostSettingFeatureForm ::~HostSettingFeatureForm() {}
+HostSettingFeatureForm::~HostSettingFeatureForm() {}
+
+int HostSettingFeatureForm::helpID() const {
+  return kHelpTopicHostSettingFeature;
+}
 
 void HostSettingFeatureForm::setRawData(const BaseForm::Data& data) {
   castData(*data_) = castData(data);

@@ -22,6 +22,13 @@
 * [「転送3」タブ](#転送3タブ)
 * [「転送4」タブ](#転送4タブ)
 * [「ミラーリング」タブ](#ミラーリングタブ)
+* [「操作」タブ](#操作タブ)
+* [「表示1」タブ](#表示1タブ)
+* [「表示2」タブ](#表示2タブ)
+* [「接続/切断」タブ](#接続切断タブ)
+* [「FireWall」タブ](#firewallタブ)
+* [「ツール」タブ](#ツールタブ)
+* [「その他」タブ](#その他タブ)
 
 ## 「ユーザー」タブ
 
@@ -54,7 +61,6 @@
 | ファイル名のセミコロン以降は取り除いてダウンロード | VaxSemicolon | option::option_transfer1::vax_semicolon | OptionTransfer1Form::Data::vax_semicolon |  |
 | ファイル名を変えて転送した場合にディレクトリを作成 | MakeAllDir | option::option_transfer1::make_all_dir | OptionTransfer1Form::Data::make_all_dir |  |
 | ファイル一覧の取得に失敗した場合に転送を中止 | AbortOnListError | option::option_transfer1::abort_on_list_error | OptionTransfer1Form::Data::abort_on_list_error |  |
-|  |  |  |  |  |
 
 ### 「常にアスキーモード」「常にバイナリモード」ラジオボックス
 

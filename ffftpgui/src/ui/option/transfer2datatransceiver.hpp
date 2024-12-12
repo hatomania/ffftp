@@ -1,0 +1,9 @@
+﻿#ifndef FFFTPGUI_UI_OPTION_TRANSFER2DATATRANSCEIVER_HPP_
+#define FFFTPGUI_UI_OPTION_TRANSFER2DATATRANSCEIVER_HPP_
+
+#include "ui/base/formdatatransceiver.hpp"
+#include "optiontransfer2form.hpp"
+
+DECL_DATATRANSCEIVER(OptionTransfer2Form);
+
+#endif  // FFFTPGUI_UI_OPTION_TRANSFER2DATATRANSCEIVER_HPP_

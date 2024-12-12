@@ -1,0 +1,9 @@
+﻿#ifndef FFFTPGUI_UI_OPTION_CONNECTINGDATATRANSCEIVER_HPP_
+#define FFFTPGUI_UI_OPTION_CONNECTINGDATATRANSCEIVER_HPP_
+
+#include "ui/base/formdatatransceiver.hpp"
+#include "optionconnectingform.hpp"
+
+DECL_DATATRANSCEIVER(OptionConnectingForm);
+
+#endif  // FFFTPGUI_UI_OPTION_CONNECTINGDATATRANSCEIVER_HPP_

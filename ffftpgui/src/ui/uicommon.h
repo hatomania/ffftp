@@ -14,4 +14,7 @@
 #define UI_TOPLAINTEXT(d, c) d = c->toPlainText()
 #define UI_VALUE(d, c) d = c->value()
 
+#define MAKE_TRANSCEIVER(K, T, F) \
+  d_->transceiver.insert(std::make_pair(K, std::make_unique<T>(F)));
+
 #endif /* FFFTPGUI_UI_UICOMMON_H_ */

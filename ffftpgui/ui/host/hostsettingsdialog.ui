@@ -26,7 +26,6 @@
       <attribute name="title">
        <string>基本</string>
       </attribute>
-      <layout class="QHBoxLayout" name="horizontalLayout"/>
      </widget>
      <widget class="HostSettingAdvancedForm" name="tab_1">
       <attribute name="title">

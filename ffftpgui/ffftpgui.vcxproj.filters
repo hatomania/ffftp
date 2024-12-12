@@ -57,6 +57,15 @@
     <Filter Include="Source Files\ui\main">
       <UniqueIdentifier>{c1f6f13d-8717-4aa9-8927-28776e5914e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Form Files\option">
+      <UniqueIdentifier>{d927cacb-a574-4b02-821d-35744e5a8960}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\option">
+      <UniqueIdentifier>{8b36676c-1deb-4479-99fb-f9e4b2f5d495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\option">
+      <UniqueIdentifier>{f6f379af-3f50-4d65-9104-414385afe75f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\a.png">
@@ -191,6 +200,48 @@
     <QtUic Include="ui\host\hostlistdialog.ui">
       <Filter>Form Files\host</Filter>
     </QtUic>
+    <QtUic Include="ui\option\optiondialog.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionuserform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionconnectingform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionfirewallform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionmirroringform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionoperationform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionotherform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optiontoolform.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optiontransfer1form.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optiontransfer2form.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optiontransfer3form.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optiontransfer4form.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionview1form.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
+    <QtUic Include="ui\option\optionview2form.ui">
+      <Filter>Form Files\option</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -271,6 +322,87 @@
     <ClCompile Include="src\ui\host\hosttreeview.cpp">
       <Filter>Source Files\ui\host</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\option\optiondialog.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionuserform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\userdatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optiontransfer1form.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\transfer1datatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optiontransfer2form.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optiontransfer3form.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optiontransfer4form.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\transfer2datatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\transfer3datatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\transfer4datatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\connectingdatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\firewalldatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\mirroringdatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\operationdatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionconnectingform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionfirewallform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionmirroringform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionoperationform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionotherform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optiontoolform.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionview1form.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\optionview2form.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\otherdatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\tooldatatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\view1datatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\option\view2datatransceiver.cpp">
+      <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -305,6 +437,45 @@
     </ClInclude>
     <ClInclude Include="src\ui\host\specialdatatransceiver.hpp">
       <Filter>Header Files\ui\host</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\userdatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\transfer1datatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\transfer2datatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\transfer3datatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\transfer4datatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\connectingdatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\firewalldatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\mirroringdatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\operationdatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\otherdatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\tooldatatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\view1datatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ui\option\view2datatransceiver.hpp">
+      <Filter>Header Files\ui\option</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +526,48 @@
     </QtMoc>
     <QtMoc Include="src\ui\host\hosttreeview.hpp">
       <Filter>Header Files\ui\host</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optiondialog.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionuserform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optiontransfer1form.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optiontransfer2form.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optiontransfer3form.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optiontransfer4form.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionconnectingform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionfirewallform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionmirroringform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionoperationform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionotherform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optiontoolform.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionview1form.hpp">
+      <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\option\optionview2form.hpp">
+      <Filter>Header Files\ui\option</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

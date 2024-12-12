@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OptionDialog</class>
+ <widget class="QDialog" name="OptionDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>350</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ホストの設定</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="OptionUserForm" name="tab_00">
+      <attribute name="title">
+       <string>ユーザー</string>
+      </attribute>
+     </widget>
+     <widget class="OptionTransfer1Form" name="tab_01">
+      <attribute name="title">
+       <string>転送1</string>
+      </attribute>
+     </widget>
+     <widget class="OptionTransfer2Form" name="tab_02">
+      <attribute name="title">
+       <string>転送2</string>
+      </attribute>
+     </widget>
+     <widget class="OptionTransfer3Form" name="tab_03">
+      <attribute name="title">
+       <string>転送3</string>
+      </attribute>
+     </widget>
+     <widget class="OptionTransfer4Form" name="tab_04">
+      <attribute name="title">
+       <string>転送4</string>
+      </attribute>
+     </widget>
+     <widget class="OptionMirroringForm" name="tab_05">
+      <attribute name="title">
+       <string>ミラーリング</string>
+      </attribute>
+     </widget>
+     <widget class="OptionOperationForm" name="tab_06">
+      <attribute name="title">
+       <string>操作</string>
+      </attribute>
+     </widget>
+     <widget class="OptionView1Form" name="tab_07">
+      <attribute name="title">
+       <string>表示1</string>
+      </attribute>
+     </widget>
+     <widget class="OptionView2Form" name="tab_08">
+      <attribute name="title">
+       <string>表示2</string>
+      </attribute>
+     </widget>
+     <widget class="OptionConnectingForm" name="tab_09">
+      <attribute name="title">
+       <string>接続/切断</string>
+      </attribute>
+     </widget>
+     <widget class="OptionFirewallForm" name="tab_10">
+      <attribute name="title">
+       <string>FireWall</string>
+      </attribute>
+     </widget>
+     <widget class="OptionToolForm" name="tab_11">
+      <attribute name="title">
+       <string>ツール</string>
+      </attribute>
+     </widget>
+     <widget class="OptionOtherForm" name="tab_12">
+      <attribute name="title">
+       <string>その他</string>
+      </attribute>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Help|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>OptionUserForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionuserform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionTransfer1Form</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optiontransfer1form.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionTransfer2Form</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optiontransfer2form.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionTransfer3Form</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optiontransfer3form.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionTransfer4Form</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optiontransfer4form.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionMirroringForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionmirroringform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionOperationForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionoperationform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionView1Form</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionview1form.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionView2Form</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionview2form.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionConnectingForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionconnectingform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionFirewallForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionfirewallform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionToolForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optiontoolform.hpp</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>OptionOtherForm</class>
+   <extends>QWidget</extends>
+   <header>ui/option/optionotherform.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>OptionDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>248</x>
+     <y>254</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>OptionDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>316</x>
+     <y>260</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>helpRequested()</signal>
+   <receiver>OptionDialog</receiver>
+   <slot>help()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>200</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>help()</slot>
+ </slots>
+</ui>

@@ -56,6 +56,8 @@ IMPL_CONST_QSTRING(kStringDeleteHostMsg, "ホストの設定を削除します�
 IMPL_CONST_QSTRING(kStringDeleteGroup, "グループの削除");
 IMPL_CONST_QSTRING(kStringDeleteGroupMsg,
                    "グループとグループ内の全てのホストの設定を削除しますか？");
+IMPL_CONST_QSTRING(kStringFileName, "ファイル名");
+IMPL_CONST_QSTRING(kStringFileNameAccess, "ファイル名(&F):");
 
 IMPL_CONST_INT(kHelpTopicHostList, 27);
 IMPL_CONST_INT(kHelpTopicHostSettingGeneral, 28);

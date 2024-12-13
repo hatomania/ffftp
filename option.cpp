@@ -750,6 +750,8 @@ int GetDecimalText(HWND hDlg, int Ctrl) {
 	return !empty(text) && std::iswdigit(text[0]) ? stoi(text) : 0;
 }
 
+#ifdef LIBFFFTP_EXPORTS
+
 #include "libffftp/ffftp_option.h"
 namespace libffftp {
 
@@ -758,6 +760,20 @@ void setOption(const ffftp_option& opt) {
 	// [ユーザー]タブ
 	UserMailAdrs = opt.user.user_mail_adrs;
 	// [転送1]タブ
+	SetTransferTypeImm(
+		opt.transfer1.trans_mode == modes::ASCII  ? TYPE_A :
+		opt.transfer1.trans_mode == modes::BINARY ? TYPE_I :
+		opt.transfer1.trans_mode == modes::AUTO   ? TYPE_X : -1);
+	RmEOF = opt.transfer1.rm_eof ? YES : NO;
+	SaveTimeStamp = opt.transfer1.save_timestamp ? YES : NO;
+	VaxSemicolon = opt.transfer1.vax_semicolon ? YES : NO;
+	MakeAllDir = opt.transfer1.make_all_dir ? YES : NO;
+	AbortOnListError = opt.transfer1.abort_on_list_error ? YES : NO;
+	AsciiExt.clear();
+	AsciiExt.reserve(opt.transfer1.ascii_ext_cnt);
+	for (int i = 0; i < opt.transfer1.ascii_ext_cnt; ++i) {
+		AsciiExt.push_back(opt.transfer1.ascii_ext[i]);
+	}
 	// [転送2]タブ
 	// [転送3]タブ
 	// [転送4]タブ
@@ -776,6 +792,27 @@ void option(ffftp_option& opt) {
 	// [ユーザー]タブ
 	opt.user.user_mail_adrs = UserMailAdrs.c_str();
 	// [転送1]タブ
+	opt.transfer1 = {
+		.trans_mode =
+			AskTransferType() == TYPE_A ? modes::ASCII  :
+			AskTransferType() == TYPE_I ? modes::BINARY :
+			AskTransferType() == TYPE_X ? modes::AUTO   : -1,
+		.rm_eof = RmEOF == YES,
+		.save_timestamp = SaveTimeStamp == YES,
+		.vax_semicolon = VaxSemicolon == YES,
+		.make_all_dir = MakeAllDir == YES,
+		.abort_on_list_error = AbortOnListError == YES,
+	};
+	delete[] opt.transfer1.ascii_ext;
+	opt.transfer1.ascii_ext = nullptr;
+	opt.transfer1.ascii_ext_cnt = 0;
+	if (!AsciiExt.empty()) {
+		opt.transfer1.ascii_ext = new const wchar_t* [AsciiExt.size()];
+		for (int i = 0;  const auto & str : AsciiExt) {
+			opt.transfer1.ascii_ext[i++] = str.c_str();
+		}
+		opt.transfer1.ascii_ext_cnt = AsciiExt.size();
+	}
 	// [転送2]タブ
 	// [転送3]タブ
 	// [転送4]タブ
@@ -790,3 +827,5 @@ void option(ffftp_option& opt) {
 }
 
 } // namespace libffftp
+
+#endif // LIBFFFTP_EXPORTS

@@ -9,13 +9,28 @@
 extern "C" {
 #endif
 
+enum modes{
+  AUTO,
+  ASCII,
+  BINARY,
+};
+
 /* [ユーザー]タブのUIデータ */
 struct ffftp_option_user {
   const wchar_t* user_mail_adrs;
 };
 
 /* [転送1]タブのUIデータ */
-struct ffftp_option_transfer1 {};
+struct ffftp_option_transfer1 {
+  int trans_mode;
+  const wchar_t** ascii_ext;
+  size_t ascii_ext_cnt;
+  bool rm_eof;
+  bool save_timestamp;
+  bool vax_semicolon;
+  bool make_all_dir;
+  bool abort_on_list_error;
+};
 
 /* [転送2]タブのUIデータ */
 struct ffftp_option_transfer2 {};

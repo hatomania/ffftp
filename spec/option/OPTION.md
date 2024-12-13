@@ -53,9 +53,9 @@
 
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
-| 常にアスキーモード | TmpTransMode=TRMODE_ASCII | option::option_transfer1::trans_mode=ASCII | OptionTransfer1Form::Data::trans_mode=kASCII |  |
-| 常にバイナリモード | TmpTransMode=TRMODE_BIN | option::option_transfer1::trans_mode=BINARY | OptionTransfer1Form::Data::trans_mode=kBinary |  |
-| ファイル名で切り替え | TmpTransMode=TRMODE_AUTO | option::option_transfer1::trans_mode=AUTO | OptionTransfer1Form::Data::trans_mode=kAuto |  |
+| 常にアスキーモード | TmpTransMode=TYPE_A | option::option_transfer1::trans_mode=ASCII | OptionTransfer1Form::Data::trans_mode=kASCII |  |
+| 常にバイナリモード | TmpTransMode=TYPE_I | option::option_transfer1::trans_mode=BINARY | OptionTransfer1Form::Data::trans_mode=kBinary |  |
+| ファイル名で切り替え | TmpTransMode=TYPE_X | option::option_transfer1::trans_mode=AUTO | OptionTransfer1Form::Data::trans_mode=kAuto |  |
 | アスキーモードのファイル名 | AsciiExt | option::option_transfer1::ascii_ext, ascii_ext_cnt | OptionTransfer1Form::Data::ascii_ext | 文字列のvector系 |
 | アスキーモードでアップロード時、EOF(Ctrl-Z)を取り除く | RmEOF | option::option_transfer1::rm_eof | OptionTransfer1Form::Data::rm_eof |  |
 | アップロード/ダウンロードするファイルのタイムスタンプを維持 | SaveTimeStamp | option::option_transfer1::save_timestamp | OptionTransfer1Form::Data::save_timestamp |  |

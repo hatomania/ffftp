@@ -1389,6 +1389,8 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 	return FFFTP_SUCCESS;
 }
 
+#ifdef LIBFFFTP_EXPORTS
+
 #include "libffftp/ffftp_hostdata.h"
 namespace libffftp {
 
@@ -1400,15 +1402,11 @@ inline static HOSTLISTDATA* castContext2Host(void* hc) {
 	return const_cast<HOSTLISTDATA*>(static_cast<const HOSTLISTDATA*>(hc));
 }
 static int hostIndex(const void* hc) {
-#ifdef LIBFFFTP_EXPORTS
 	auto data = castContext2Host(hc);
 	int _n = 0;
 	for (auto p = HostListTop.get(); p != data; p = p->GetNext().get())
 		++_n;
 	return _n;
-#else
-	return -1;
-#endif
 }
 inline static int currentHostIndex() {
 	return CurrentHost;
@@ -1421,15 +1419,7 @@ const void* hostContextFirst() {
 	return HostListTop.get();
 }
 const void* hostContextNext(const void* hc) {
-// ダングリング状態エラー(error C26815)の回避
-#ifdef LIBFFFTP_EXPORTS
 	return castContext2Host(const_cast<void*>(hc))->GetNext().get();
-	//std::shared_ptr<HOSTLISTDATA> s = (const_cast<HOSTLISTDATA*>(static_cast<const HOSTLISTDATA*>(hc)))->GetNext();
-	//HOSTLISTDATA* p = s.get();
-	//return p;
-#else
-	return nullptr;
-#endif
 }
 inline static constexpr int timezone2Index(int timezone) {
 	return timezone + 12;
@@ -1722,11 +1712,9 @@ void hostContextDataDefault(hostdata* hdata) {
 	convertHostData(*hdata, DefaultHost);
 }
 void hostContextData(const void* hc, hostdata* hdata) {
-#ifdef LIBFFFTP_EXPORTS
 	static HOSTDATA hd; // 文字列へのポインタはライブラリ使用側に返るのでstaticとする
 	CopyHostFromList(hostIndex(hc), &hd);
 	convertHostData(*hdata, hd);
-#endif
 }
 const wchar_t* hostContextName(const void* hc) {
 	static HOSTDATA hdata;
@@ -1746,3 +1734,5 @@ void showHelp(int id) {
 }
 
 }
+
+#endif // LIBFFFTP_EXPORTS

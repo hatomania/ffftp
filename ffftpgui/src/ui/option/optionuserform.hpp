@@ -12,11 +12,14 @@ class OptionUserForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    std::wstring user_mail_adrs;
     Data();
+    Data(const std::wstring& user_mail_adrs);
   };
 
   explicit OptionUserForm(QWidget* parent = Q_NULLPTR);
   virtual ~OptionUserForm();
+  void firstFocus() const;
   int helpID() const override;
 
  protected:

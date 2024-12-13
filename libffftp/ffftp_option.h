@@ -10,7 +10,9 @@ extern "C" {
 #endif
 
 /* [ユーザー]タブのUIデータ */
-struct ffftp_option_user {};
+struct ffftp_option_user {
+  const wchar_t* user_mail_adrs;
+};
 
 /* [転送1]タブのUIデータ */
 struct ffftp_option_transfer1 {};

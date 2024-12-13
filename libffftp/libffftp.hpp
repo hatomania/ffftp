@@ -3,6 +3,7 @@
 #include "callback.h"  // コールバック関数プロトタイプ宣言はcallback.hに記載
 #include "common.h"
 #include "ffftp_hostdata.h"
+#include "ffftp_option.h"
 
 // libffftpのために用意されたインターフェース
 namespace libffftp {
@@ -36,4 +37,8 @@ extern void showHelp(int id);
 extern std::wstring getTaskMessage();
 // connect.cpp
 extern void setAskSaveCryptCallback(bool (*func)());
+// option.cpp
+extern void setOption(const ffftp_option& opt);
+extern void option(ffftp_option& opt);
+
 }  // namespace libffftp

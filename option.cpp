@@ -749,3 +749,44 @@ int GetDecimalText(HWND hDlg, int Ctrl) {
 	auto const text = GetText(hDlg, Ctrl);
 	return !empty(text) && std::iswdigit(text[0]) ? stoi(text) : 0;
 }
+
+#include "libffftp/ffftp_option.h"
+namespace libffftp {
+
+// オプションを設定する
+void setOption(const ffftp_option& opt) {
+	// [ユーザー]タブ
+	UserMailAdrs = opt.user.user_mail_adrs;
+	// [転送1]タブ
+	// [転送2]タブ
+	// [転送3]タブ
+	// [転送4]タブ
+	// [ミラーリング]タブ
+	// [操作]タブ
+	// [表示1]タブ
+	// [表示2]タブ
+	// [接続/切断]タブ
+	// [FireWall]タブ
+	// [ツール]タブ
+	// [その他]タブ
+}
+
+// 現在のオプションを取得する
+void option(ffftp_option& opt) {
+	// [ユーザー]タブ
+	opt.user.user_mail_adrs = UserMailAdrs.c_str();
+	// [転送1]タブ
+	// [転送2]タブ
+	// [転送3]タブ
+	// [転送4]タブ
+	// [ミラーリング]タブ
+	// [操作]タブ
+	// [表示1]タブ
+	// [表示2]タブ
+	// [接続/切断]タブ
+	// [FireWall]タブ
+	// [ツール]タブ
+	// [その他]タブ
+}
+
+} // namespace libffftp

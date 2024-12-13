@@ -9,7 +9,6 @@
 
 namespace {
 constexpr const char* const kDefAnonymousUsename = "anonymous";
-constexpr const char* const kDefAnonymousPassword = "who@example.com";
 using ThisData = HostSettingGeneralForm::Data;
 inline const ThisData& castData(const BaseForm::Data& data) {
   return static_cast<const ThisData&>(data);
@@ -29,42 +28,12 @@ class HostSettingGeneralForm::Private {
 HostSettingGeneralForm::Private::Private() {}
 HostSettingGeneralForm::Private::~Private() {}
 
-// ＜＜slotも隠ぺいしようとしたが失敗＞＞
-// コード的には問題ないが、VS用Qtプラグインのmocプレビルドシステムが期待通り動かない
-// コード内の"Q_OBJECT"を認識し、このcppもmocしてくれるまではいいが、mocしたcppが生成されない
-// 通常mocしたファイル名は"moc_(拡張子を除くファイル名).cpp"となるため、hppをmocしたファイル名と被って上書きされてる可能性があると思い、
-// （例えば、hoge.hppを"moc.exe
-// hoge.hpp"すると"moc_hoge.cpp"が出力され、"moc.exe
-// hoge.cpp"しても"moc_hoge.cpp"が出力される）
-// （ちなみにmoc.exeはソースコードを標準出力するだけなので、それをファイルとして保存するVS用Qtプラグインの問題）
-// プロジェクトの設定[Qt Meta-Object Compiler]=>[moc]=>[Output File
-// Name]を"moc_%(Identity).cpp"してみた
-// 期待通りhppをmocしたファイルは"moc_(拡張子を除くファイル名).hpp.cpp"となり、cppをmocしたファイル名と被らなくなると思ったが
-// なぜか、期待したcppをmocしたファイル"moc_(拡張子を除くファイル名).cpp.cpp"は生成されず、
-// 代わりに（？）"(拡張子を除くファイル名).moc"が生成される
-// この.mocファイルをcppとしてコンパイラに通してくれればいいがそんなことはしてくれず結果的にcppから出力したmocのコードはコンパイルできない
-// （ちなみにこの"(拡張子を除くファイル名).moc"を手動で"moc_(拡張子を除くファイル名).cpp.cpp"に変更してもコンパイルしてくれなかった）
-// 独自のプレビルドで実現できないことはないが、さすがにそこまでするのはな～
-// class HostSettingGeneralForm::Private : public QWidget {
-//	Q_OBJECT
-// public:
-//	Private(QWidget* parent = Q_NULLPTR) : QWidget(parent) {}
-//	~Private() {}
-//	Ui::HostSettingGeneralForm ui;
-// public slots:
-//	void onClick_pushButton_SelectLocalDir() {
-//		qDebug() << __FUNCTION__ << "called!";
-//	}
-//	void onClick_pushButton_NowDir() {
-//		qDebug() << __FUNCTION__ << "called!";
-//	}
-//};
-
 HostSettingGeneralForm::Data::Data()
     : host_name(),
       host_adrs(),
       username(),
       password(),
+      anonymous_password(),
       anonymous(false),
       initdir_local(),
       initdir_remote(),
@@ -73,14 +42,22 @@ HostSettingGeneralForm::Data::Data()
       last_dir(false) {}
 
 HostSettingGeneralForm::Data::Data(
-    const std::wstring& host_name, const std::wstring& host_adrs,
-    const std::wstring& username, const std::wstring& password, bool anonymous,
-    const std::wstring& initdir_local, const std::wstring& initdir_remote,
-    const std::wstring& initdir_remote_now, bool enabled_curdir, bool last_dir)
+    const std::wstring& host_name,
+    const std::wstring& host_adrs,
+    const std::wstring& username,
+    const std::wstring& password,
+    const std::wstring& anonymous_password,
+    bool anonymous,
+    const std::wstring& initdir_local,
+    const std::wstring& initdir_remote,
+    const std::wstring& initdir_remote_now,
+    bool enabled_curdir,
+    bool last_dir)
     : host_name(host_name),
       host_adrs(host_adrs),
       username(username),
       password(password),
+      anonymous_password(anonymous_password),
       anonymous(anonymous),
       initdir_local(initdir_local),
       initdir_remote(initdir_remote),
@@ -97,6 +74,11 @@ HostSettingGeneralForm::HostSettingGeneralForm(QWidget* parent)
   // SLOT(onClick_pushButton_NowDir()));
 }
 HostSettingGeneralForm::~HostSettingGeneralForm() {}
+
+void HostSettingGeneralForm::firstFocus() const {
+  d_->ui.lineEdit_HostName->setFocus();
+  d_->ui.lineEdit_HostName->selectAll();
+}
 
 int HostSettingGeneralForm::helpID() const {
   return kHelpTopicHostSettingGeneral;
@@ -149,7 +131,7 @@ void HostSettingGeneralForm::onClick_checkBox_Anonymous(bool checked) {
     UI_TEXT(user_passwd.first, d_->ui.lineEdit_Username);
     UI_TEXT(user_passwd.second, d_->ui.lineEdit_Password);
     UI_SETTEXT(d_->ui.lineEdit_Username, kDefAnonymousUsename);
-    UI_SETTEXT(d_->ui.lineEdit_Password, kDefAnonymousPassword);
+    UI_SETTEXT(d_->ui.lineEdit_Password, QString(thisData().anonymous_password));
   } else {
     UI_SETTEXT(d_->ui.lineEdit_Username, user_passwd.first);
     UI_SETTEXT(d_->ui.lineEdit_Password, user_passwd.second);

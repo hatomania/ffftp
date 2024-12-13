@@ -60,6 +60,7 @@ HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
                    HostSettingFeatureFormDataTransceiver,
                    *d_->ui.tab_6);
   setHostData(hdata);
+  d_->ui.tab_0->firstFocus();
 }
 HostSettingsDialog::~HostSettingsDialog() {}
 

@@ -30,6 +30,7 @@
 #define FFFTP_2C8AE9F9_6CDE_41C7_AE02_CE4A7248088A_H_
 
 #include "ffftp_hostdata.h"
+#include "ffftp_option.h"
 
 #ifdef LIBFFFTP_EXPORTS
 #define LIBFFFTP_DECLSPEC __declspec(dllexport)
@@ -243,6 +244,20 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd));
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_askretrymasterpassword(bool (*func)());
+
+/**
+ * @brief 現在のオプションを上書きする。
+ *
+ * @param[in]  opt 上書きするオプションffftp_optionへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const ffftp_option* opt);
+
+/**
+ * @brief 現在のオプションを取得する。
+ *
+ * @param[out]  opt 結果を格納するオプションffftp_optionへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(ffftp_option* opt);
 
 /**
  * @brief ヘルプを表示する。

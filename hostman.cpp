@@ -1488,6 +1488,7 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.host_adrs = src.HostAdrs.c_str(),
 		.username = src.UserName.c_str(),
 		.password = src.PassWord.c_str(),
+		.anonymous_password = UserMailAdrs.c_str(),
 		.anonymous = src.Anonymous == YES,
 		.initdir_local = src.LocalInitDir.c_str(),
 		.initdir_remote = src.RemoteInitDir.c_str(),

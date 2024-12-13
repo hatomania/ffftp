@@ -15,6 +15,7 @@ struct hostdata_general {
   const wchar_t* host_adrs;
   const wchar_t* username;
   const wchar_t* password;
+  const wchar_t* anonymous_password;
   bool anonymous;
   const wchar_t* initdir_local;
   const wchar_t* initdir_remote;

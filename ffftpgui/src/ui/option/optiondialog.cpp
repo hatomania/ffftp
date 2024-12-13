@@ -89,6 +89,7 @@ OptionDialog::OptionDialog(const ffftp_option& option_, QWidget* parent)
                    OptionOtherFormDataTransceiver,
                    *d_->ui.tab_12);
   setOption(option_);
+  d_->ui.tab_00->firstFocus();
 }
 OptionDialog::~OptionDialog() {}
 

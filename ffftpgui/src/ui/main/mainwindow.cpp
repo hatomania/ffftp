@@ -175,9 +175,12 @@ void MainWindow::actionWindowsFWSetting() {}
 void MainWindow::actionPreference() {
   qDebug() << __FUNCTION__ << " called.";
   ffftp_option option;
+  ffftp_getoption(&option);
   OptionDialog dialog{option, this};
   if (dialog.exec() == QDialog::Accepted) {
     qDebug() << "Accepted.";
+    dialog.option(option);
+    ffftp_setoption(&option);
   }
 }
 void MainWindow::actionContents() {}

@@ -63,7 +63,7 @@ HostTreeView::HostTreeView(QWidget* parent) : QTreeView(parent) {
   model_ = new HostItemModel(parent);
   setModel(model_);
 }
-HostTreeView::~HostTreeView() {}
+HostTreeView::~HostTreeView() { delete model_; }
 
 void HostTreeView::update() const { model_->update(); }
 

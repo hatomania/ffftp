@@ -59,7 +59,7 @@ OptionTransfer1Form::OptionTransfer1Form(QWidget* parent)
   d_->model_extlist = new QStandardItemModel(parent);
   d_->ui.listView_AsciiExt->setModel(d_->model_extlist);
 }
-OptionTransfer1Form::~OptionTransfer1Form() {}
+OptionTransfer1Form::~OptionTransfer1Form() { delete d_->model_extlist; }
 
 int OptionTransfer1Form::helpID() const {
   return kHelpTopicOptionTransfer1;
@@ -131,7 +131,7 @@ void OptionTransfer1Form::updateEnabled() {
   } else {
     UI_SETENABLED(d_->ui.listView_AsciiExt, false);
     UI_SETENABLED(d_->ui.pushButton_AddExt, false);
-    UI_SETENABLED(d_->ui.pushButton_DelExt, false & isdel);
+    UI_SETENABLED(d_->ui.pushButton_DelExt, false);
   }
 }
 

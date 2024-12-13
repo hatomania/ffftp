@@ -11,8 +11,17 @@ class OptionTransfer2Form : public BaseForm {
   Q_OBJECT;
 
  public:
+  enum class Modes {
+    kLower,
+    kUpper,
+    kNoCnv,
+  };
   struct Data : public BaseForm::Data {
+    Modes fname_cnv;
+    int timeout;
+    std::wstring default_local_path;
     Data();
+    Data(Modes fname_cnv, int timeout, const std::wstring& default_local_path);
   };
 
   explicit OptionTransfer2Form(QWidget* parent = Q_NULLPTR);
@@ -25,6 +34,7 @@ class OptionTransfer2Form : public BaseForm {
   void updateData(BaseForm::Data& data) const override;
 
  private slots:
+  void onClick_toolButton_DefaultLocalPath();
 
  private:
   class Private;

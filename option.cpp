@@ -775,6 +775,12 @@ void setOption(const ffftp_option& opt) {
 		AsciiExt.push_back(opt.transfer1.ascii_ext[i]);
 	}
 	// [転送2]タブ
+	FnameCnv =
+		opt.transfer2.fname_cnv == modes::LOWER ? FNAME_LOWER :
+		opt.transfer2.fname_cnv == modes::UPPER ? FNAME_UPPER :
+		opt.transfer2.fname_cnv == modes::NOCNV ? FNAME_NOCNV : -1;
+	TimeOut = opt.transfer2.timeout;
+	DefaultLocalPath = opt.transfer2.default_local_path;
 	// [転送3]タブ
 	// [転送4]タブ
 	// [ミラーリング]タブ
@@ -814,6 +820,14 @@ void option(ffftp_option& opt) {
 		opt.transfer1.ascii_ext_cnt = AsciiExt.size();
 	}
 	// [転送2]タブ
+	opt.transfer2 = {
+		.fname_cnv =
+			FnameCnv == FNAME_LOWER ? modes::LOWER :
+			FnameCnv == FNAME_UPPER ? modes::UPPER :
+			FnameCnv == FNAME_NOCNV ? modes::NOCNV : -1,
+		.timeout = TimeOut,
+		.default_local_path = DefaultLocalPath.c_str(),
+	};
 	// [転送3]タブ
 	// [転送4]タブ
 	// [ミラーリング]タブ

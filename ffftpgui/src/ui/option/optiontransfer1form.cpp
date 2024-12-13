@@ -71,12 +71,12 @@ void OptionTransfer1Form::setRawData(const BaseForm::Data& data) {
 
 void OptionTransfer1Form::updateUi(const BaseForm::Data& data) {
   const ThisData& data_in = castData(data);
-  std::map<Modes, QRadioButton&> radios{
-    { Modes::kAuto,   *d_->ui.radioButton_TransModeAuto },
+  RadioButtons<Modes> radios{
+    { Modes::kAuto,   *d_->ui.radioButton_TransModeAuto  },
     { Modes::kASCII,  *d_->ui.radioButton_TransModeASCII },
-    { Modes::kBinary, *d_->ui.radioButton_TransModeBin },
+    { Modes::kBinary, *d_->ui.radioButton_TransModeBin   },
   };
-  radios.at(data_in.trans_mode).setChecked(true);
+  radios.setChecked(data_in.trans_mode);
   d_->model_extlist->clear();
   for (const auto& str : data_in.ascii_ext) {
     addFileName(QString(str));
@@ -97,17 +97,12 @@ void OptionTransfer1Form::updateUi(const BaseForm::Data& data) {
 
 void OptionTransfer1Form::updateData(BaseForm::Data& data) const {
   ThisData& data_out = castData(data);
-  std::map<Modes, QRadioButton&> radios{
-    { Modes::kAuto,   *d_->ui.radioButton_TransModeAuto },
+  const RadioButtons<Modes> radios{
+    { Modes::kAuto,   *d_->ui.radioButton_TransModeAuto  },
     { Modes::kASCII,  *d_->ui.radioButton_TransModeASCII },
-    { Modes::kBinary, *d_->ui.radioButton_TransModeBin },
+    { Modes::kBinary, *d_->ui.radioButton_TransModeBin   },
   };
-  for (auto& [k, v]:radios) {
-    if (v.isChecked()) {
-      data_out.trans_mode = k;
-      break;
-    }
-  }
+  data_out.trans_mode = radios.checked();
   int rc = d_->model_extlist->rowCount();
   data_out.ascii_ext.clear();
   data_out.ascii_ext.reserve(rc);

@@ -13,6 +13,10 @@ enum modes{
   AUTO,
   ASCII,
   BINARY,
+
+  LOWER,
+  UPPER,
+  NOCNV,
 };
 
 /* [ユーザー]タブのUIデータ */
@@ -33,7 +37,11 @@ struct ffftp_option_transfer1 {
 };
 
 /* [転送2]タブのUIデータ */
-struct ffftp_option_transfer2 {};
+struct ffftp_option_transfer2 {
+  int fname_cnv;
+  int timeout;
+  const wchar_t* default_local_path;
+};
 
 /* [転送3]タブのUIデータ */
 struct ffftp_option_transfer3 {};

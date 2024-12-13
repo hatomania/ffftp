@@ -115,7 +115,7 @@ void HostSettingGeneralForm::updateData(BaseForm::Data& data) const {
 
 void HostSettingGeneralForm::onClick_toolButton_SelectLocalDir() {
   QString dirpath = QFileDialog::getExistingDirectory(
-      this, "", d_->ui.lineEdit_InitDirLocal->text());
+      this, QString(), d_->ui.lineEdit_InitDirLocal->text());
   if (!dirpath.isEmpty()) {
     d_->ui.lineEdit_InitDirLocal->setText(dirpath);
   }

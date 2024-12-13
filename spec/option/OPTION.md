@@ -89,9 +89,9 @@
 
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
-| ファイル名を全て小文字にして転送 | FnameCnv=TRMODE2_LOWER | option::option_transfer2::fname_cnv=LOWER | OptionTransfer2Form::Data::fname_cnv=kLower |  |
-| ファイル名を全て大文字にして転送 | FnameCnv=TRMODE2_UPPER | option::option_transfer2::fname_cnv=UPPER | OptionTransfer2Form::Data::fname_cnv=kUpper |  |
-| そのままのファイル名で転送 | FnameCnv=TRMODE2_NOCNV | option::option_transfer2::fname_cnv=NOCNV | OptionTransfer2Form::Data::fname_cnv=kNoConv |  |
+| ファイル名を全て小文字にして転送 | FnameCnv=FNAME_LOWER | option::option_transfer2::fname_cnv=LOWER | OptionTransfer2Form::Data::fname_cnv=kLower |  |
+| ファイル名を全て大文字にして転送 | FnameCnv=FNAME_UPPER | option::option_transfer2::fname_cnv=UPPER | OptionTransfer2Form::Data::fname_cnv=kUpper |  |
+| そのままのファイル名で転送 | FnameCnv=FNAME_NOCNV | option::option_transfer2::fname_cnv=NOCNV | OptionTransfer2Form::Data::fname_cnv=kNoCnv |  |
 | ネットワークタイムアウト時間 | TimeOut | option::option_transfer2::timeout | OptionTransfer2Form::Data::timeout | 上限文字数=5 |
 | デフォルトのローカルフォルダ | DefaultLocalPath | option::option_transfer2::default_local_path | OptionTransfer2Form::Data::default_local_path | 上限文字数=1024 |
 

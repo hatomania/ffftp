@@ -47,16 +47,11 @@ class OptionTransfer1Form : public BaseForm {
 
  private:
   void updateEnabled();
-  bool askFileName(QString& fname);
-  void addFileName(const QString& fname);
 
  private slots:
   void onClick_radioButton_TransModeASCII();
   void onClick_radioButton_TransModeBin();
   void onClick_radioButton_TransModeAuto();
-  void onClick_listView_AsciiExt();
-  void onClick_pushButton_AddExt();
-  void onClick_pushButton_DelExt();
 
  private:
   class Private;

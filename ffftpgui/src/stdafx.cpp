@@ -62,6 +62,7 @@ IMPL_CONST_QSTRING(kStringFileNameAccess, "ファイル名(&F):");
 IMPL_CONST_QSTRING(kStringAlsoSpecifyFolder, "フォルダ名も指定できます");
 IMPL_CONST_QSTRING(kStringFileNameNotTrans, "転送しないファイル名(&F)");
 IMPL_CONST_QSTRING(kStringFileNameNotDelete, "削除しないファイル名(&R)");
+IMPL_CONST_QSTRING(kStringFileNameAsciiMode, "アスキーモードのファイル名(&F)");
 
 IMPL_CONST_INT(kHelpTopicHostList, 27);
 IMPL_CONST_INT(kHelpTopicHostSettingGeneral, 28);

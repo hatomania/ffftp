@@ -757,6 +757,14 @@ namespace libffftp {
 
 // オプションを設定する
 void setOption(const ffftp_option& opt) {
+	// wchar_tの配列からvector<wstring>に変換する関数オブジェクト
+	auto wchar2VectorWstr = [](std::vector<std::wstring>& out_str, const wchar_t** in_str, size_t in_cnt) {
+		out_str.clear();
+		out_str.reserve(in_cnt);
+		for (int i = 0; i < in_cnt; ++i) {
+			out_str.push_back(in_str[i]);
+		}
+	};
 	// [ユーザー]タブ
 	UserMailAdrs = opt.user.user_mail_adrs;
 	// [転送1]タブ
@@ -769,11 +777,7 @@ void setOption(const ffftp_option& opt) {
 	VaxSemicolon = opt.transfer1.vax_semicolon ? YES : NO;
 	MakeAllDir = opt.transfer1.make_all_dir ? YES : NO;
 	AbortOnListError = opt.transfer1.abort_on_list_error ? YES : NO;
-	AsciiExt.clear();
-	AsciiExt.reserve(opt.transfer1.ascii_ext_cnt);
-	for (int i = 0; i < opt.transfer1.ascii_ext_cnt; ++i) {
-		AsciiExt.push_back(opt.transfer1.ascii_ext[i]);
-	}
+	wchar2VectorWstr(AsciiExt, opt.transfer1.ascii_ext, opt.transfer1.ascii_ext_cnt);
 	// [転送2]タブ
 	FnameCnv =
 		opt.transfer2.fname_cnv == modes::LOWER ? FNAME_LOWER :
@@ -799,13 +803,6 @@ void setOption(const ffftp_option& opt) {
 		opt.transfer4.local_kanjicode == modes::UTF8BOM ? KANJI_UTF8BOM : -1);
 	MarkAsInternet = opt.transfer4.mark_as_internet ? YES : NO;
 	// [ミラーリング]タブ
-	auto wchar2VectorWstr = [](std::vector<std::wstring>& out_str, const wchar_t** in_str, size_t in_cnt) {
-		out_str.clear();
-		out_str.reserve(in_cnt);
-		for (int i = 0; i < in_cnt; ++i) {
-			out_str.push_back(in_str[i]);
-		}
-	};
 	wchar2VectorWstr(MirrorNoTrn, opt.mirroring.no_trn, opt.mirroring.no_trn_cnt);
 	wchar2VectorWstr(MirrorNoDel, opt.mirroring.no_del, opt.mirroring.no_del_cnt);
 	MirrorFnameCnv = opt.mirroring.fname_cnv ? YES : NO;
@@ -823,6 +820,18 @@ void setOption(const ffftp_option& opt) {
 
 // 現在のオプションを取得する
 void option(ffftp_option& opt) {
+	// vector<wstring>からwchar_tの配列に変換する関数オブジェクト
+	auto vectorWstr2Wchar = [](const wchar_t**& out_str, size_t& out_cnt, const std::vector<std::wstring>& in_str) {
+		delete[] out_str;
+		out_str = nullptr;
+		out_cnt = in_str.size();
+		if (!in_str.empty()) {
+			out_str = new const wchar_t* [out_cnt];
+			for (int i = 0; const auto& str : in_str) {
+				out_str[i++] = str.c_str();
+			}
+		}
+	};
 	// [ユーザー]タブ
 	opt.user.user_mail_adrs = UserMailAdrs.c_str();
 	// [転送1]タブ
@@ -837,16 +846,7 @@ void option(ffftp_option& opt) {
 		.make_all_dir = MakeAllDir == YES,
 		.abort_on_list_error = AbortOnListError == YES,
 	};
-	delete[] opt.transfer1.ascii_ext;
-	opt.transfer1.ascii_ext = nullptr;
-	opt.transfer1.ascii_ext_cnt = 0;
-	if (!AsciiExt.empty()) {
-		opt.transfer1.ascii_ext = new const wchar_t* [AsciiExt.size()];
-		for (int i = 0;  const auto & str : AsciiExt) {
-			opt.transfer1.ascii_ext[i++] = str.c_str();
-		}
-		opt.transfer1.ascii_ext_cnt = AsciiExt.size();
-	}
+	vectorWstr2Wchar(opt.transfer1.ascii_ext, opt.transfer1.ascii_ext_cnt, AsciiExt);
 	// [転送2]タブ
 	opt.transfer2 = {
 		.fname_cnv =
@@ -888,17 +888,6 @@ void option(ffftp_option& opt) {
 		.mark_as_internet = MarkAsInternet == YES,
 	};
 	// [ミラーリング]タブ
-	auto vectorWstr2Wchar = [](const wchar_t**& out_str, size_t& out_cnt, const std::vector<std::wstring>& in_str) {
-		delete[] out_str;
-		out_str = nullptr;
-		out_cnt = in_str.size();
-		if (!in_str.empty()) {
-			out_str = new const wchar_t* [out_cnt];
-			for (int i = 0; const auto& str : in_str) {
-				out_str[i++] = str.c_str();
-			}
-		}
-	};
 	vectorWstr2Wchar(opt.mirroring.no_trn, opt.mirroring.no_trn_cnt, MirrorNoTrn);
 	vectorWstr2Wchar(opt.mirroring.no_del, opt.mirroring.no_del_cnt, MirrorNoDel);
 	opt.mirroring.fname_cnv = MirrorFnameCnv == YES;

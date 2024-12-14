@@ -13,14 +13,7 @@ IMPL_DATATRANSCEIVER_SEND(option_in) {
   };
   ThisData form_data{
       modes_table.at(static_cast<modes>(opt.transfer1.trans_mode)),
-      [&opt]() {
-        std::vector<std::wstring> ret{};
-        ret.reserve(opt.transfer1.ascii_ext_cnt);
-        for (int i = 0; i < opt.transfer1.ascii_ext_cnt; ++i) {
-          ret.push_back(opt.transfer1.ascii_ext[i]);
-        }
-        return ret;
-      }(),
+      wchar2VectorWstr(opt.transfer1.ascii_ext, opt.transfer1.ascii_ext_cnt),
       opt.transfer1.rm_eof,
       opt.transfer1.save_timestamp,
       opt.transfer1.vax_semicolon,
@@ -39,20 +32,13 @@ IMPL_DATATRANSCEIVER_RECEIVE(option_out) {
       { OptionTransfer1Form::Modes::kASCII,  modes::ASCII  },
       { OptionTransfer1Form::Modes::kBinary, modes::BINARY },
   };
-  opt.transfer1 = {
-      .trans_mode = modes_table.at(form_data.trans_mode),
-      .rm_eof = form_data.rm_eof,
-      .save_timestamp = form_data.save_timestamp,
-      .vax_semicolon = form_data.vax_semicolon,
-      .make_all_dir = form_data.make_all_dir,
-      .abort_on_list_error = form_data.abort_on_list_error,
-  };
-  delete[] opt.transfer1.ascii_ext;
-  opt.transfer1.ascii_ext = new const wchar_t*[form_data.ascii_ext.size()];
-  for (int i = 0; const auto& str : form_data.ascii_ext) {
-    opt.transfer1.ascii_ext[i++] = str.c_str();
-  }
-  opt.transfer1.ascii_ext_cnt = form_data.ascii_ext.size();
+  vectorWstr2Wchar(opt.transfer1.ascii_ext, opt.transfer1.ascii_ext_cnt, form_data.ascii_ext);
+  opt.transfer1.trans_mode = modes_table.at(form_data.trans_mode);
+  opt.transfer1.rm_eof = form_data.rm_eof;
+  opt.transfer1.save_timestamp = form_data.save_timestamp;
+  opt.transfer1.vax_semicolon = form_data.vax_semicolon;
+  opt.transfer1.make_all_dir = form_data.make_all_dir;
+  opt.transfer1.abort_on_list_error = form_data.abort_on_list_error;
 }
 
 IMPL_DATATRANSCEIVER_END(OptionTransfer1Form);

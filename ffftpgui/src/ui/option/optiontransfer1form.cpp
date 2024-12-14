@@ -7,6 +7,7 @@
 
 #include "stdafx.h"
 #include "ui/uicommon.h"
+#include "ui/common/addablelistwidget.hpp"
 
 namespace {
 using ThisData = OptionTransfer1Form::Data;
@@ -57,7 +58,7 @@ OptionTransfer1Form::OptionTransfer1Form(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
   d_->model_extlist = new QStandardItemModel(parent);
-  d_->ui.listView_AsciiExt->setModel(d_->model_extlist);
+  d_->ui.widget_AsciiExt->init(kStringFileNameAsciiMode, 'I');
 }
 OptionTransfer1Form::~OptionTransfer1Form() { delete d_->model_extlist; }
 
@@ -77,16 +78,7 @@ void OptionTransfer1Form::updateUi(const BaseForm::Data& data) {
     { Modes::kBinary, *d_->ui.radioButton_TransModeBin   },
   };
   radios.setChecked(data_in.trans_mode);
-  d_->model_extlist->clear();
-  for (const auto& str : data_in.ascii_ext) {
-    addFileName(QString(str));
-    // ラムダ式の場合
-    //d_->model_extlist->appendRow([](const std::wstring& str) {
-    //  QStandardItem* item = new QStandardItem(QString(str));
-    //  item->setData(QString(str), kUserRole);
-    //  return item;
-    //}(str));
-  }
+  d_->ui.widget_AsciiExt->setData(data_in.ascii_ext);
   UI_SETCHECKED(d_->ui.checkBox_RmEOF, data_in.rm_eof);
   UI_SETCHECKED(d_->ui.checkBox_SaveTimeStamp, data_in.save_timestamp);
   UI_SETCHECKED(d_->ui.checkBox_VaxSemicolon, data_in.vax_semicolon);
@@ -103,13 +95,7 @@ void OptionTransfer1Form::updateData(BaseForm::Data& data) const {
     { Modes::kBinary, *d_->ui.radioButton_TransModeBin   },
   };
   data_out.trans_mode = radios.checked();
-  int rc = d_->model_extlist->rowCount();
-  data_out.ascii_ext.clear();
-  data_out.ascii_ext.reserve(rc);
-  for (int i = 0; i < rc; ++i) {
-    data_out.ascii_ext.push_back(
-      d_->model_extlist->index(i, 0).data().toString().toStdWString());
-  }
+  data_out.ascii_ext = d_->ui.widget_AsciiExt->toVectorStdWString();
   UI_ISCHECKED(data_out.rm_eof, d_->ui.checkBox_RmEOF);
   UI_ISCHECKED(data_out.save_timestamp, d_->ui.checkBox_SaveTimeStamp);
   UI_ISCHECKED(data_out.vax_semicolon, d_->ui.checkBox_VaxSemicolon);
@@ -118,46 +104,9 @@ void OptionTransfer1Form::updateData(BaseForm::Data& data) const {
 }
 
 void OptionTransfer1Form::updateEnabled() {
-  bool isdel = d_->ui.listView_AsciiExt->currentIndex().isValid();
-  if (d_->ui.radioButton_TransModeAuto->isChecked()) {
-    UI_SETENABLED(d_->ui.listView_AsciiExt, true);
-    UI_SETENABLED(d_->ui.pushButton_AddExt, true);
-    UI_SETENABLED(d_->ui.pushButton_DelExt, true & isdel);
-  } else {
-    UI_SETENABLED(d_->ui.listView_AsciiExt, false);
-    UI_SETENABLED(d_->ui.pushButton_AddExt, false);
-    UI_SETENABLED(d_->ui.pushButton_DelExt, false);
-  }
+  UI_SETENABLED(d_->ui.widget_AsciiExt, d_->ui.radioButton_TransModeAuto->isChecked());
 }
 
 void OptionTransfer1Form::onClick_radioButton_TransModeASCII() { updateEnabled(); }
 void OptionTransfer1Form::onClick_radioButton_TransModeBin()   { updateEnabled(); }
 void OptionTransfer1Form::onClick_radioButton_TransModeAuto()  { updateEnabled(); }
-void OptionTransfer1Form::onClick_listView_AsciiExt()          { updateEnabled(); }
-
-void OptionTransfer1Form::onClick_pushButton_AddExt() {
-  if (QString fname{}; askFileName(fname)) {
-    addFileName(fname);
-    d_->ui.listView_AsciiExt->setCurrentIndex(
-        d_->model_extlist->index(d_->model_extlist->rowCount() - 1, 0));
-    updateEnabled();
-  }
-}
-void OptionTransfer1Form::onClick_pushButton_DelExt() {
-  d_->model_extlist->removeRow(d_->ui.listView_AsciiExt->currentIndex().row());
-  updateEnabled();
-}
-
-bool OptionTransfer1Form::askFileName(QString& fname) {
-  bool ok = false;
-  fname = QInputDialog::getText(
-    this, kStringFileName, kStringFileNameAccess,
-    QLineEdit::Normal, kEmptyString, &ok);
-  return ok;
-}
-
-void OptionTransfer1Form::addFileName(const QString& fname) {
-  QStandardItem* item = new QStandardItem(fname);
-  item->setData(fname);
-  d_->model_extlist->appendRow(item);
-}

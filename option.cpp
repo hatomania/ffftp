@@ -799,6 +799,19 @@ void setOption(const ffftp_option& opt) {
 		opt.transfer4.local_kanjicode == modes::UTF8BOM ? KANJI_UTF8BOM : -1);
 	MarkAsInternet = opt.transfer4.mark_as_internet ? YES : NO;
 	// [ミラーリング]タブ
+	auto wchar2VectorWstr = [](std::vector<std::wstring>& out_str, const wchar_t** in_str, size_t in_cnt) {
+		out_str.clear();
+		out_str.reserve(in_cnt);
+		for (int i = 0; i < in_cnt; ++i) {
+			out_str.push_back(in_str[i]);
+		}
+	};
+	wchar2VectorWstr(MirrorNoTrn, opt.mirroring.no_trn, opt.mirroring.no_trn_cnt);
+	wchar2VectorWstr(MirrorNoDel, opt.mirroring.no_del, opt.mirroring.no_del_cnt);
+	MirrorFnameCnv = opt.mirroring.fname_cnv ? YES : NO;
+	MirUpDelNotify = opt.mirroring.up_del_notify ? YES : NO;
+	MirDownDelNotify = opt.mirroring.down_del_notify ? YES : NO;
+	MirrorNoTransferContents = opt.mirroring.no_transfer_contents ? YES : NO;
 	// [操作]タブ
 	// [表示1]タブ
 	// [表示2]タブ
@@ -875,6 +888,23 @@ void option(ffftp_option& opt) {
 		.mark_as_internet = MarkAsInternet == YES,
 	};
 	// [ミラーリング]タブ
+	auto vectorWstr2Wchar = [](const wchar_t**& out_str, size_t& out_cnt, const std::vector<std::wstring>& in_str) {
+		delete[] out_str;
+		out_str = nullptr;
+		out_cnt = in_str.size();
+		if (!in_str.empty()) {
+			out_str = new const wchar_t* [out_cnt];
+			for (int i = 0; const auto& str : in_str) {
+				out_str[i++] = str.c_str();
+			}
+		}
+	};
+	vectorWstr2Wchar(opt.mirroring.no_trn, opt.mirroring.no_trn_cnt, MirrorNoTrn);
+	vectorWstr2Wchar(opt.mirroring.no_del, opt.mirroring.no_del_cnt, MirrorNoDel);
+	opt.mirroring.fname_cnv = MirrorFnameCnv == YES;
+	opt.mirroring.up_del_notify = MirUpDelNotify == YES;
+	opt.mirroring.down_del_notify = MirDownDelNotify == YES;
+	opt.mirroring.no_transfer_contents = MirrorNoTransferContents == YES;
 	// [操作]タブ
 	// [表示1]タブ
 	// [表示2]タブ

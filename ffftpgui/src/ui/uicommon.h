@@ -11,6 +11,7 @@
 #define UI_SETCURRENTINDEX(c, d) c->setCurrentIndex(d)
 #define UI_SETPLAINTEXT(c, d) c->setPlainText(d)
 #define UI_SETVALUE(c, d) c->setValue(d)
+#define UI_SETTITLE(c, d) c->setTitle(d)
 
 #define UI_TEXT(d, c) d = c->text()
 #define UI_ISCHECKED(d, c) d = c->isChecked()

@@ -32,6 +32,9 @@ DECL_CONST_QSTRING(kStringDeleteGroup);
 DECL_CONST_QSTRING(kStringDeleteGroupMsg);
 DECL_CONST_QSTRING(kStringFileName);
 DECL_CONST_QSTRING(kStringFileNameAccess);
+DECL_CONST_QSTRING(kStringAlsoSpecifyFolder);
+DECL_CONST_QSTRING(kStringFileNameNotTrans);
+DECL_CONST_QSTRING(kStringFileNameNotDelete);
 
 DECL_CONST_INT(kHelpTopicHostList);
 DECL_CONST_INT(kHelpTopicHostSettingGeneral);

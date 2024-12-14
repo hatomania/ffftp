@@ -12,7 +12,20 @@ class OptionMirroringForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    std::vector<std::wstring> no_trn;
+    std::vector<std::wstring> no_del;
+    bool fname_cnv;
+    bool up_del_notify;
+    bool down_del_notify;
+    bool no_transfer_contents;
     Data();
+    Data(
+      const std::vector<std::wstring>& no_trn,
+      const std::vector<std::wstring>& no_del,
+      bool fname_cnv,
+      bool up_del_notify,
+      bool down_del_notify,
+      bool no_transfer_contents);
   };
 
   explicit OptionMirroringForm(QWidget* parent = Q_NULLPTR);

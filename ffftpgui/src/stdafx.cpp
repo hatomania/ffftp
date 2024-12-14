@@ -59,6 +59,9 @@ IMPL_CONST_QSTRING(kStringDeleteGroupMsg,
                    "グループとグループ内の全てのホストの設定を削除しますか？");
 IMPL_CONST_QSTRING(kStringFileName, "ファイル名");
 IMPL_CONST_QSTRING(kStringFileNameAccess, "ファイル名(&F):");
+IMPL_CONST_QSTRING(kStringAlsoSpecifyFolder, "フォルダ名も指定できます");
+IMPL_CONST_QSTRING(kStringFileNameNotTrans, "転送しないファイル名(&F)");
+IMPL_CONST_QSTRING(kStringFileNameNotDelete, "削除しないファイル名(&R)");
 
 IMPL_CONST_INT(kHelpTopicHostList, 27);
 IMPL_CONST_INT(kHelpTopicHostSettingGeneral, 28);

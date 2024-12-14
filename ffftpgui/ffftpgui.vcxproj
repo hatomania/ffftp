@@ -48,6 +48,7 @@
     <QtTranslation Include="translations\ffftpgui_en.ts" />
   </ItemGroup>
   <ItemGroup>
+    <QtUic Include="ui\common\addablelistwidget.ui" />
     <QtUic Include="ui\common\fileandattributesettingdialog.ui" />
     <QtUic Include="ui\common\fileattributesettingdialog.ui" />
     <QtUic Include="ui\host\hostsettingadvancedform.ui" />
@@ -85,6 +86,7 @@
     </ClCompile>
     <ClCompile Include="src\ui\base\baseform.cpp" />
     <ClCompile Include="src\ui\base\datatransceiver.cpp" />
+    <ClCompile Include="src\ui\common\addablelistwidget.cpp" />
     <ClCompile Include="src\ui\common\fileandattributesettingdialog.cpp" />
     <ClCompile Include="src\ui\common\fileattributesettingdialog.cpp" />
     <ClCompile Include="src\ui\host\advanceddatatransceiver.cpp" />
@@ -141,6 +143,7 @@
     <ClInclude Include="src\ui\base\formdatatransceiver.hpp" />
     <QtMoc Include="src\ui\common\fileattributesettingdialog.hpp" />
     <QtMoc Include="src\ui\common\fileandattributesettingdialog.hpp" />
+    <QtMoc Include="src\ui\common\addablelistwidget.hpp" />
     <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp" />

@@ -65,7 +65,16 @@ struct ffftp_option_transfer4 {
 };
 
 /* [ミラーリング]タブのUIデータ */
-struct ffftp_option_mirroring {};
+struct ffftp_option_mirroring {
+  const wchar_t** no_trn;
+  size_t no_trn_cnt;
+  const wchar_t** no_del;
+  size_t no_del_cnt;
+  bool fname_cnv;
+  bool up_del_notify;
+  bool down_del_notify;
+  bool no_transfer_contents;
+};
 
 /* [操作]タブのUIデータ */
 struct ffftp_option_operation {};

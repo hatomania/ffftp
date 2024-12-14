@@ -163,8 +163,8 @@
 
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
-| 転送しないファイル名 | MirrorNoTrn | option::option_mirroring::no_trn | OptionMirroringForm::Data::no_trn | 文字列のvector系 |
-| 削除しないファイル名 | MirrorNoDel | option::option_mirroring::no_del | OptionMirroringForm::Data::no_del | 文字列のvector系 |
+| 転送しないファイル名 | MirrorNoTrn | option::option_mirroring::no_trn, no_trn_cnt | OptionMirroringForm::Data::no_trn | 文字列のvector系 |
+| 削除しないファイル名 | MirrorNoDel | option::option_mirroring::no_del, no_del_cnt | OptionMirroringForm::Data::no_del | 文字列のvector系 |
 | ファイル名を全て小文字にして転送 | MirrorFnameCnv | option::option_mirroring::fname_cnv | OptionMirroringForm::Data::fname_cnv |  |
 | ミラーリングアップロードでファイル削除前に確認 | MirUpDelNotify | option::option_mirroring::up_del_notify | OptionMirroringForm::Data::up_del_notify |  |
 | ミラーリングダウンロードでファイル削除前に確認 | MirDownDelNotify | option::option_mirroring::down_del_notify | OptionMirroringForm::Data::down_del_notify |  |

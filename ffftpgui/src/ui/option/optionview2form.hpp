@@ -12,7 +12,13 @@ class OptionView2Form : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    bool disp_permissions_number;
+    bool auto_refresh_filelist;
+    bool remove_old_log;
     Data();
+    Data(bool disp_permissions_number,
+         bool auto_refresh_filelist,
+         bool remove_old_log);
   };
 
   explicit OptionView2Form(QWidget* parent = Q_NULLPTR);

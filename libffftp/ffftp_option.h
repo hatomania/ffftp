@@ -101,7 +101,11 @@ struct ffftp_option_view1 {
 };
 
 /* [表示2]タブのUIデータ */
-struct ffftp_option_view2 {};
+struct ffftp_option_view2 {
+  bool disp_permissions_number;
+  bool auto_refresh_filelist;
+  bool remove_old_log;
+};
 
 /* [接続/切断]タブのUIデータ */
 struct ffftp_option_connecting {};

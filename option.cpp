@@ -827,6 +827,9 @@ void setOption(const ffftp_option& opt) {
 	DispFileIcon = opt.view1.disp_file_icon ? YES : NO;
 	DispTimeSeconds = opt.view1.disp_time_seconds ? YES : NO;
 	// [表示2]タブ
+	DispPermissionsNumber = opt.view2.disp_permissions_number ? YES : NO;
+	AutoRefreshFileList = opt.view2.auto_refresh_filelist ? YES : NO;
+	RemoveOldLog = opt.view2.remove_old_log ? YES : NO;
 	// [接続/切断]タブ
 	// [FireWall]タブ
 	// [ツール]タブ
@@ -933,6 +936,11 @@ void option(ffftp_option& opt) {
 		
 	};
 	// [表示2]タブ
+	opt.view2 = {
+		.disp_permissions_number = DispPermissionsNumber == YES,
+		.auto_refresh_filelist = AutoRefreshFileList == YES,
+		.remove_old_log = RemoveOldLog == YES,
+	};
 	// [接続/切断]タブ
 	// [FireWall]タブ
 	// [ツール]タブ

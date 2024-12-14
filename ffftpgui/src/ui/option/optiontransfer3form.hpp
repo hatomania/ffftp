@@ -32,16 +32,6 @@ class OptionTransfer3Form : public BaseForm {
   void updateData(BaseForm::Data& data) const override;
 
  private:
-  void updateEnabled();
-  bool askFileAttr(QString& fname, int& attr);
-  void addFileAttr(const QString& fname, int attr);
-
- private slots:
-  void onClick_pushButton_AddAttr();
-  void onClick_pushButton_DelAttr();
-  void onClick_treeView_DefAttrList();
-
- private:
   class Private;
   std::unique_ptr<Private> d_;
   Q_DISABLE_COPY_MOVE(OptionTransfer3Form);

@@ -28,7 +28,7 @@ AddableListWidget::AddableListWidget(QWidget* parent)
 }
 AddableListWidget::~AddableListWidget() {}
 
-void AddableListWidget::init(const QString& title, QChar accel, const QString& description) {
+void AddableListWidget::setup(const QString& title, QChar accel, const QString& description) {
   UI_SETTITLE(d_->ui.groupBox, title);
   UI_SETTEXT(d_->ui.pushButton_Add, QString(d_->ui.pushButton_Add->text()).arg(accel));
   UI_SETTEXT(d_->ui.label_Description, description);

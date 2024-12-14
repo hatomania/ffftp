@@ -36,6 +36,7 @@ DECL_CONST_QSTRING(kStringAlsoSpecifyFolder);
 DECL_CONST_QSTRING(kStringFileNameNotTrans);
 DECL_CONST_QSTRING(kStringFileNameNotDelete);
 DECL_CONST_QSTRING(kStringFileNameAsciiMode);
+DECL_CONST_QSTRING(kStringFileAttrUploaded);
 
 DECL_CONST_INT(kHelpTopicHostList);
 DECL_CONST_INT(kHelpTopicHostSettingGeneral);

@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ui\common\addablelistwidget.ui" />
+    <QtUic Include="ui\common\addabletreewidget.ui" />
     <QtUic Include="ui\common\fileandattributesettingdialog.ui" />
     <QtUic Include="ui\common\fileattributesettingdialog.ui" />
     <QtUic Include="ui\host\hostsettingadvancedform.ui" />
@@ -87,7 +88,9 @@
     <ClCompile Include="src\ui\base\baseform.cpp" />
     <ClCompile Include="src\ui\base\datatransceiver.cpp" />
     <ClCompile Include="src\ui\common\addablelistwidget.cpp" />
+    <ClCompile Include="src\ui\common\addabletreewidget.cpp" />
     <ClCompile Include="src\ui\common\fileandattributesettingdialog.cpp" />
+    <ClCompile Include="src\ui\common\fileandattributetreewidget.cpp" />
     <ClCompile Include="src\ui\common\fileattributesettingdialog.cpp" />
     <ClCompile Include="src\ui\host\advanceddatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\dialupdatatransceiver.cpp" />
@@ -144,6 +147,8 @@
     <QtMoc Include="src\ui\common\fileattributesettingdialog.hpp" />
     <QtMoc Include="src\ui\common\fileandattributesettingdialog.hpp" />
     <QtMoc Include="src\ui\common\addablelistwidget.hpp" />
+    <QtMoc Include="src\ui\common\addabletreewidget.hpp" />
+    <QtMoc Include="src\ui\common\fileandattributetreewidget.hpp" />
     <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp" />

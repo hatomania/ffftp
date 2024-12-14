@@ -49,8 +49,8 @@ OptionMirroringForm::Data::Data(
 OptionMirroringForm::OptionMirroringForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  d_->ui.widget_NoTrn->init(kStringFileNameNotTrans,  'I', kStringAlsoSpecifyFolder);
-  d_->ui.widget_NoDel->init(kStringFileNameNotDelete, 'A', kStringAlsoSpecifyFolder);
+  d_->ui.widget_NoTrn->setup(kStringFileNameNotTrans,  'I', kStringAlsoSpecifyFolder);
+  d_->ui.widget_NoDel->setup(kStringFileNameNotDelete, 'A', kStringAlsoSpecifyFolder);
 }
 OptionMirroringForm::~OptionMirroringForm() {}
 

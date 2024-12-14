@@ -29,7 +29,6 @@ OptionOperationForm::Data::Data(){}
 OptionOperationForm::OptionOperationForm(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-//  d_->ui.lineEdit_Port->setValidator(new QIntValidator(0, 0xFFFF, this));
 }
 OptionOperationForm::~OptionOperationForm() {}
 

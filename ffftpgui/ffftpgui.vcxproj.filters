@@ -260,6 +260,9 @@
     <QtUic Include="ui\common\addablelistwidget.ui">
       <Filter>Form Files\common</Filter>
     </QtUic>
+    <QtUic Include="ui\common\addabletreewidget.ui">
+      <Filter>Form Files\common</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -428,6 +431,12 @@
       <Filter>Source Files\ui\common</Filter>
     </ClCompile>
     <ClCompile Include="src\ui\common\addablelistwidget.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\common\addabletreewidget.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\common\fileandattributetreewidget.cpp">
       <Filter>Source Files\ui\common</Filter>
     </ClCompile>
   </ItemGroup>
@@ -603,6 +612,12 @@
       <Filter>Header Files\ui\common</Filter>
     </QtMoc>
     <QtMoc Include="src\ui\common\addablelistwidget.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\common\addabletreewidget.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\common\fileandattributetreewidget.hpp">
       <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>

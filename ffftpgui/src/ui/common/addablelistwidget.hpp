@@ -10,8 +10,8 @@ class AddableListWidget : public QWidget {
   explicit AddableListWidget(QWidget* parent = Q_NULLPTR);
   virtual ~AddableListWidget();
 
-  void init(const QString& title, QChar accel,
-            const QString& description = QString{});
+  void setup(const QString& title, QChar accel,
+             const QString& description = QString{});
   void setData(const QStringList& data);
   const QStringList& data() const;
   void setData(const std::vector<std::wstring>& data);

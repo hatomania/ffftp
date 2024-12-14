@@ -58,7 +58,7 @@ OptionTransfer1Form::OptionTransfer1Form(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
   d_->model_extlist = new QStandardItemModel(parent);
-  d_->ui.widget_AsciiExt->init(kStringFileNameAsciiMode, 'I');
+  d_->ui.widget_AsciiExt->setup(kStringFileNameAsciiMode, 'I');
 }
 OptionTransfer1Form::~OptionTransfer1Form() { delete d_->model_extlist; }
 

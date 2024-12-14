@@ -822,6 +822,10 @@ void setOption(const ffftp_option& opt) {
 		opt.operation.move_mode == modes::CONFIRM   ? MOVE_DLG :
 		opt.operation.move_mode == modes::DISABLE   ? MOVE_DISABLE : -1;
 	// [表示1]タブ
+	DispIgnoreHide = opt.view1.disp_ignore_hide ? YES : NO;
+	DispDrives = opt.view1.disp_drives ? YES : NO;
+	DispFileIcon = opt.view1.disp_file_icon ? YES : NO;
+	DispTimeSeconds = opt.view1.disp_time_seconds ? YES : NO;
 	// [表示2]タブ
 	// [接続/切断]タブ
 	// [FireWall]タブ
@@ -920,6 +924,14 @@ void option(ffftp_option& opt) {
 			MoveMode == MOVE_DISABLE ? modes::DISABLE   : -1,
 	};
 	// [表示1]タブ
+	opt.view1 = {
+		.font = -1, // TODO: 未実装
+		.disp_ignore_hide = DispIgnoreHide == YES,
+		.disp_drives = DispDrives == YES,
+		.disp_file_icon = DispFileIcon == YES,
+		.disp_time_seconds = DispTimeSeconds == YES,
+		
+	};
 	// [表示2]タブ
 	// [接続/切断]タブ
 	// [FireWall]タブ

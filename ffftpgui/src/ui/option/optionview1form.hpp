@@ -12,7 +12,18 @@ class OptionView1Form : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    int font;
+    bool disp_ignore_hide;
+    bool disp_drives;
+    bool disp_file_icon;
+    bool disp_time_seconds;
     Data();
+    Data(
+      int font,
+      bool disp_ignore_hide,
+      bool disp_drives,
+      bool disp_file_icon,
+      bool disp_time_seconds);
   };
 
   explicit OptionView1Form(QWidget* parent = Q_NULLPTR);
@@ -25,6 +36,7 @@ class OptionView1Form : public BaseForm {
   void updateData(BaseForm::Data& data) const override;
 
  private slots:
+  void onClick_pushButton_ChangeFont();
 
  private:
   class Private;

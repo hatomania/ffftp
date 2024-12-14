@@ -92,7 +92,13 @@ struct ffftp_option_operation {
 };
 
 /* [表示1]タブのUIデータ */
-struct ffftp_option_view1 {};
+struct ffftp_option_view1 {
+  int font;
+  bool disp_ignore_hide;
+  bool disp_drives;
+  bool disp_file_icon;
+  bool disp_time_seconds;
+};
 
 /* [表示2]タブのUIデータ */
 struct ffftp_option_view2 {};

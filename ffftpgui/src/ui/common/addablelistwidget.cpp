@@ -58,6 +58,7 @@ const QStringList& AddableListWidget::data() const {
 }
 
 void AddableListWidget::setData(const std::vector<std::wstring>& data) {
+  d_->model->clear();
   setData(QStringList({data.begin(), data.end()}));
 }
 

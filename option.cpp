@@ -810,6 +810,17 @@ void setOption(const ffftp_option& opt) {
 	MirDownDelNotify = opt.mirroring.down_del_notify ? YES : NO;
 	MirrorNoTransferContents = opt.mirroring.no_transfer_contents ? YES : NO;
 	// [操作]タブ
+	RecvMode =
+		opt.operation.recv_mode == modes::OVERWRITE ? TRANS_OVW :
+		opt.operation.recv_mode == modes::CONFIRM   ? TRANS_DLG : -1;
+	SendMode =
+		opt.operation.send_mode == modes::OVERWRITE ? TRANS_OVW :
+		opt.operation.send_mode == modes::CONFIRM   ? TRANS_DLG : -1;
+	DclickOpen = opt.operation.dclick_mode == modes::OPEN ? YES : NO;
+	MoveMode =
+		opt.operation.move_mode == modes::NOCONFIRM ? MOVE_NODLG :
+		opt.operation.move_mode == modes::CONFIRM   ? MOVE_DLG :
+		opt.operation.move_mode == modes::DISABLE   ? MOVE_DISABLE : -1;
 	// [表示1]タブ
 	// [表示2]タブ
 	// [接続/切断]タブ
@@ -895,6 +906,19 @@ void option(ffftp_option& opt) {
 	opt.mirroring.down_del_notify = MirDownDelNotify == YES;
 	opt.mirroring.no_transfer_contents = MirrorNoTransferContents == YES;
 	// [操作]タブ
+	opt.operation = {
+		.recv_mode =
+			RecvMode == TRANS_OVW ? modes::OVERWRITE :
+			RecvMode == TRANS_DLG ? modes::CONFIRM   : -1,
+		.send_mode =
+			SendMode == TRANS_OVW ? modes::OVERWRITE :
+			SendMode == TRANS_DLG ? modes::CONFIRM   : -1,
+		.dclick_mode = DclickOpen == YES ? modes::OPEN : modes::DOWNLOAD,
+		.move_mode =
+			MoveMode == MOVE_NODLG   ? modes::NOCONFIRM :
+			MoveMode == MOVE_DLG     ? modes::CONFIRM   :
+			MoveMode == MOVE_DISABLE ? modes::DISABLE   : -1,
+	};
 	// [表示1]タブ
 	// [表示2]タブ
 	// [接続/切断]タブ

@@ -11,8 +11,21 @@ class OptionOperationForm : public BaseForm {
   Q_OBJECT;
 
  public:
+  enum class Modes {
+    kNoConfirm,
+    kConfirm,
+    kOverwrite,
+    kOpen,
+    kDownload,
+    kDisable,
+  };
   struct Data : public BaseForm::Data {
+    Modes recv_mode;
+    Modes send_mode;
+    Modes dclick_mode;
+    Modes move_mode;
     Data();
+    Data(Modes recv_mode, Modes send_mode, Modes dclick_mode, Modes move_mode);
   };
 
   explicit OptionOperationForm(QWidget* parent = Q_NULLPTR);

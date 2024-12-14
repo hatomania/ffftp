@@ -193,18 +193,18 @@
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | ダウンロード時 |  |  |  |  |
-| 上書き | RecvMode=NOTIFY_D_OVW | option::option_operation::recv_mode=OVERWRITE | OptionOperationForm::Data::recv_mode=kOverwrite |  |
-| 確認ダイアログを表示 | RecvMode=NOTIFY_D_DLG | option::option_operation::recv_mode=CONFIRM | OptionOperationForm::Data::recv_mode=kConfirm |  |
+| 上書き | RecvMode=TRANS_OVW | option::option_operation::recv_mode=OVERWRITE | OptionOperationForm::Data::recv_mode=kOverwrite |  |
+| 確認ダイアログを表示 | RecvMode=TRANS_DLG | option::option_operation::recv_mode=CONFIRM | OptionOperationForm::Data::recv_mode=kConfirm |  |
 | アップロード時 |  |  |  |  |
-| 上書き | SendMode=NOTIFY_D_OVW | option::option_operation::send_mode=OVERWRITE | OptionOperationForm::Data::send_mode=kOverwrite |  |
-| 確認ダイアログを表示 | SendMode=NOTIFY_D_DLG | option::option_operation::send_mode=CONFIRM | OptionOperationForm::Data::send_mode=kConfirm |  |
+| 上書き | SendMode=TRANS_OVW | option::option_operation::send_mode=OVERWRITE | OptionOperationForm::Data::send_mode=kOverwrite |  |
+| 確認ダイアログを表示 | SendMode=TRANS_DLG | option::option_operation::send_mode=CONFIRM | OptionOperationForm::Data::send_mode=kConfirm |  |
 | マウスのダブルクリックの動作 |  |  |  |  |
-| 開く | DclickOpen=NOTIFY_OPEN | option::option_operation::dclick_open=OPEN | OptionOperationForm::Data::dclick_open=kOpen |  |
-| ダウンロード | DclickOpen=NOTIFY_DOWNLOAD | option::option_operation::dclick_open=DOWNLOAD | OptionOperationForm::Data::dclick_open=kDownload |  |
+| 開く | DclickOpen=YES | option::option_operation::dclick_mode=OPEN | OptionOperationForm::Data::dclick_mode=kOpen |  |
+| ダウンロード | DclickOpen=NO | option::option_operation::dclick_mode=DOWNLOAD | OptionOperationForm::Data::dclick_mode=kDownload |  |
 | ホスト内ファイル移動機能 |  |  |  |  |
-| 確認なし | MoveMode=NOTIFY_M_NODLG | option::option_operation::move_mode=NOCONFIRM | OptionOperationForm::Data::move_mode=kNoConfirm |  |
-| 確認あり | MoveMode=NOTIFY_M_DLG | option::option_operation::move_mode=CONFIRM | OptionOperationForm::Data::move_mode=kConfirm |  |
-| 使用しない | MoveMode=NOTIFY_M_DISABLE | option::option_operation::move_mode=DISABLE | OptionOperationForm::Data::move_mode=kDisable |  |
+| 確認なし | MoveMode=MOVE_NODLG | option::option_operation::move_mode=NOCONFIRM | OptionOperationForm::Data::move_mode=kNoConfirm |  |
+| 確認あり | MoveMode=MOVE_DLG | option::option_operation::move_mode=CONFIRM | OptionOperationForm::Data::move_mode=kConfirm |  |
+| 使用しない | MoveMode=MOVE_DISABLE | option::option_operation::move_mode=DISABLE | OptionOperationForm::Data::move_mode=kDisable |  |
 
 ## 「表示1」タブ
 

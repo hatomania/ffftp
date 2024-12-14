@@ -63,11 +63,12 @@ void AddableTreeWidget::addData(const std::vector<std::wstring>& data) {
 const std::vector<std::vector<std::wstring>>& AddableTreeWidget::data() const {
   static std::vector<std::vector<std::wstring>> ret{};
   int rc = d_->model->rowCount();
+  ret.clear();
   ret.reserve(rc);
   for (int i = 0; i < rc; ++i) {
     ret.push_back([&i](QStandardItemModel* model) {
       std::vector<std::wstring> ret{};
-      int cc = model->columnCount(model->index(i, 0));
+      int cc = model->columnCount();
       ret.reserve(cc);
       for (int j = 0; j < cc; ++j) {
         ret.push_back(model->index(i, j).data().toString().toStdWString());

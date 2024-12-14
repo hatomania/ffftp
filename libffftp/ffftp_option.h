@@ -23,6 +23,13 @@ enum modes {
   EUC,
   UTF8N,
   UTF8BOM,
+
+  NOCONFIRM,
+  CONFIRM,
+  OVERWRITE,
+  OPEN,
+  DOWNLOAD,
+  DISABLE,
 };
 
 /* [ユーザー]タブのUIデータ */
@@ -77,7 +84,12 @@ struct ffftp_option_mirroring {
 };
 
 /* [操作]タブのUIデータ */
-struct ffftp_option_operation {};
+struct ffftp_option_operation {
+  int recv_mode;
+  int send_mode;
+  int dclick_mode;
+  int move_mode;
+};
 
 /* [表示1]タブのUIデータ */
 struct ffftp_option_view1 {};

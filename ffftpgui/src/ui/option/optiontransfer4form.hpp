@@ -11,8 +11,18 @@ class OptionTransfer4Form : public BaseForm {
   Q_OBJECT;
 
  public:
+  enum class Codes {
+    kSJIS,
+    kJIS,
+    kEUC,
+    kUTF8N,
+    kUTF8BOM,
+  };
   struct Data : public BaseForm::Data {
+    Codes local_kanjicode;
+    bool mark_as_internet;
     Data();
+    Data(Codes local_kanjicode, bool mark_as_internet);
   };
 
   explicit OptionTransfer4Form(QWidget* parent = Q_NULLPTR);
@@ -24,7 +34,7 @@ class OptionTransfer4Form : public BaseForm {
   void updateUi(const BaseForm::Data& data) override;
   void updateData(BaseForm::Data& data) const override;
 
- private slots:
+ private Q_SLOTS:
 
  private:
   class Private;

@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-enum modes{
+enum modes {
   AUTO,
   ASCII,
   BINARY,
@@ -17,6 +17,12 @@ enum modes{
   LOWER,
   UPPER,
   NOCNV,
+
+  SJIS,
+  JIS,
+  EUC,
+  UTF8N,
+  UTF8BOM,
 };
 
 /* [ユーザー]タブのUIデータ */
@@ -53,7 +59,10 @@ struct ffftp_option_transfer3 {
 };
 
 /* [転送4]タブのUIデータ */
-struct ffftp_option_transfer4 {};
+struct ffftp_option_transfer4 {
+  int local_kanjicode;
+  bool mark_as_internet;
+};
 
 /* [ミラーリング]タブのUIデータ */
 struct ffftp_option_mirroring {};

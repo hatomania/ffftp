@@ -146,11 +146,11 @@
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | ローカルの漢字コード |  |  |  |  |
-| Shift_JIS | TmpLocalKanjiCode=TRMODE4_SJIS_CNV | option::option_transfer4::local_kanjicode=SJIS | OptionTransfer4Form::Data::local_kanjicode=kSJIS |  |
-| JIS | TmpLocalKanjiCode=TRMODE4_JIS_CNV | option::option_transfer4::local_kanjicode=JIS | OptionTransfer4Form::Data::local_kanjicode=kJIS |  |
-| EUC | TmpLocalKanjiCode=TRMODE4_EUC_CNV | option::option_transfer4::local_kanjicode=EUC | OptionTransfer4Form::Data::local_kanjicode=kEUC |  |
-| UTF-8 | TmpLocalKanjiCode=TRMODE4_UTF8N_CNV | option::option_transfer4::local_kanjicode=UTF8 | OptionTransfer4Form::Data::local_kanjicode=kUTF8 |  |
-| UTF-8 BOM | TmpLocalKanjiCode=TRMODE4_UTF8BOM_CNV | option::option_transfer4::local_kanjicode=UTF8BOM | OptionTransfer4Form::Data::local_kanjicode=kUTF8BOM |  |
+| Shift_JIS | TmpLocalKanjiCode=KANJI_SJIS | option::option_transfer4::local_kanjicode=SJIS | OptionTransfer4Form::Data::local_kanjicode=kSJIS |  |
+| JIS | TmpLocalKanjiCode=KANJI_JIS | option::option_transfer4::local_kanjicode=JIS | OptionTransfer4Form::Data::local_kanjicode=kJIS |  |
+| EUC | TmpLocalKanjiCode=KANJI_EUC | option::option_transfer4::local_kanjicode=EUC | OptionTransfer4Form::Data::local_kanjicode=kEUC |  |
+| UTF-8 | TmpLocalKanjiCode=KANJI_UTF8N | option::option_transfer4::local_kanjicode=UTF8N | OptionTransfer4Form::Data::local_kanjicode=kUTF8N |  |
+| UTF-8 BOM | TmpLocalKanjiCode=KANJI_UTF8BOM | option::option_transfer4::local_kanjicode=UTF8BOM | OptionTransfer4Form::Data::local_kanjicode=kUTF8BOM |  |
 | インターネットから入手したものとしてファイルに情報を付加する | MarkAsInternet | option::option_transfer4::mark_as_internet | OptionTransfer4Form::Data::mark_as_internet |  |
 
 ## 「ミラーリング」タブ

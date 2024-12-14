@@ -791,6 +791,13 @@ void setOption(const ffftp_option& opt) {
 	FolderAttr = opt.transfer3.use_folder_attr ? YES : NO;
 	FolderAttrNum = opt.transfer3.folder_attr;
 	// [転送4]タブ
+	SetLocalKanjiCodeImm(
+		opt.transfer4.local_kanjicode == modes::SJIS    ? KANJI_SJIS    :
+		opt.transfer4.local_kanjicode == modes::JIS     ? KANJI_JIS     :
+		opt.transfer4.local_kanjicode == modes::EUC     ? KANJI_EUC     :
+		opt.transfer4.local_kanjicode == modes::UTF8N   ? KANJI_UTF8N   :
+		opt.transfer4.local_kanjicode == modes::UTF8BOM ? KANJI_UTF8BOM : -1);
+	MarkAsInternet = opt.transfer4.mark_as_internet ? YES : NO;
 	// [ミラーリング]タブ
 	// [操作]タブ
 	// [表示1]タブ
@@ -858,6 +865,15 @@ void option(ffftp_option& opt) {
 	opt.transfer3.use_folder_attr = FolderAttr == YES;
 	opt.transfer3.folder_attr = FolderAttrNum;
 	// [転送4]タブ
+	opt.transfer4 = {
+		.local_kanjicode =
+			AskLocalKanjiCode() == KANJI_SJIS    ? modes::SJIS    :
+			AskLocalKanjiCode() == KANJI_JIS     ? modes::JIS     :
+			AskLocalKanjiCode() == KANJI_EUC     ? modes::EUC     :
+			AskLocalKanjiCode() == KANJI_UTF8N   ? modes::UTF8N   :
+			AskLocalKanjiCode() == KANJI_UTF8BOM ? modes::UTF8BOM : -1,
+		.mark_as_internet = MarkAsInternet == YES,
+	};
 	// [ミラーリング]タブ
 	// [操作]タブ
 	// [表示1]タブ

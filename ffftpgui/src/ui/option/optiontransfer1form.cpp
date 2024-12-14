@@ -1,13 +1,9 @@
 ﻿#include "optiontransfer1form.hpp"
 
-#include <QInputDialog>
-#include <QStandardItemModel>
-
 #include "ui_optiontransfer1form.h"
 
 #include "stdafx.h"
 #include "ui/uicommon.h"
-#include "ui/common/addablelistwidget.hpp"
 
 namespace {
 using ThisData = OptionTransfer1Form::Data;
@@ -24,9 +20,8 @@ class OptionTransfer1Form::Private {
   Private();
   ~Private();
   Ui::OptionTransfer1Form ui;
-  QStandardItemModel* model_extlist;
 };
-OptionTransfer1Form::Private::Private() : ui(), model_extlist(nullptr) {}
+OptionTransfer1Form::Private::Private() : ui() {}
 OptionTransfer1Form::Private::~Private() {}
 
 OptionTransfer1Form::Data::Data()
@@ -57,10 +52,9 @@ OptionTransfer1Form::Data::Data(
 OptionTransfer1Form::OptionTransfer1Form(QWidget* parent)
     : BaseForm(new Data(), parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  d_->model_extlist = new QStandardItemModel(parent);
   d_->ui.widget_AsciiExt->setup(kStringFileNameAsciiMode, 'I');
 }
-OptionTransfer1Form::~OptionTransfer1Form() { delete d_->model_extlist; }
+OptionTransfer1Form::~OptionTransfer1Form() {}
 
 int OptionTransfer1Form::helpID() const {
   return kHelpTopicOptionTransfer1;

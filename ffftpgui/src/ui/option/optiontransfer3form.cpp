@@ -6,6 +6,7 @@
 
 #include "stdafx.h"
 #include "ui/uicommon.h"
+#include "ui/common/fileandattributesettingdialog.hpp"
 
 namespace {
 using ThisData = OptionTransfer3Form::Data;
@@ -80,7 +81,15 @@ void OptionTransfer3Form::updateData(BaseForm::Data& data) const {
   UI_TEXT(data_out.folder_attr, d_->ui.lineEdit_FolderAttr).toInt();
 }
 
-void OptionTransfer3Form::onClick_pushButton_AddAttr() {}
+void OptionTransfer3Form::onClick_pushButton_AddAttr() {
+  FileAndAttributeSettingDialog dialog{this};
+  if (dialog.exec() == QDialog::Accepted) {
+    QString fname{};
+    int attr{0};
+    dialog.fileAndAttribute(fname, attr);
+    addFileAttr(fname, attr);
+  }
+}
 void OptionTransfer3Form::onClick_pushButton_DelAttr() {
   d_->model_extlist->removeRow(d_->ui.treeView_DefAttrList->currentIndex().row());
   updateEnabled();

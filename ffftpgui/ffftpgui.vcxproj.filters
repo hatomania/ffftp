@@ -66,6 +66,15 @@
     <Filter Include="Source Files\ui\option">
       <UniqueIdentifier>{f6f379af-3f50-4d65-9104-414385afe75f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Form Files\common">
+      <UniqueIdentifier>{ab134ea4-b366-47fa-8a73-3977b0cf79a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ui\common">
+      <UniqueIdentifier>{634a3853-ca28-4a01-9cc8-e2fcfba86168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ui\common">
+      <UniqueIdentifier>{11b62982-390e-4a0b-88c4-5417de8ccbc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Image Include="resource\a.png">
@@ -242,6 +251,12 @@
     <QtUic Include="ui\option\optionview2form.ui">
       <Filter>Form Files\option</Filter>
     </QtUic>
+    <QtUic Include="ui\common\fileandattributesettingdialog.ui">
+      <Filter>Form Files\common</Filter>
+    </QtUic>
+    <QtUic Include="ui\common\fileattributesettingdialog.ui">
+      <Filter>Form Files\common</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -402,6 +417,12 @@
     </ClCompile>
     <ClCompile Include="src\ui\option\view2datatransceiver.cpp">
       <Filter>Source Files\ui\option</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\common\fileattributesettingdialog.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\common\fileandattributesettingdialog.cpp">
+      <Filter>Source Files\ui\common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +589,12 @@
     </QtMoc>
     <QtMoc Include="src\ui\option\optionview2form.hpp">
       <Filter>Header Files\ui\option</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\common\fileattributesettingdialog.hpp">
+      <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\common\fileandattributesettingdialog.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

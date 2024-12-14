@@ -54,3 +54,4 @@ DECL_CONST_INT(kHelpTopicOptionConnecting);
 DECL_CONST_INT(kHelpTopicOptionFirewall);
 DECL_CONST_INT(kHelpTopicOptionTool);
 DECL_CONST_INT(kHelpTopicOptionOther);
+DECL_CONST_INT(kHelpTopicAttrSetting);

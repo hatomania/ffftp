@@ -81,3 +81,4 @@ IMPL_CONST_INT(kHelpTopicOptionConnecting, 48);
 IMPL_CONST_INT(kHelpTopicOptionFirewall, 49);
 IMPL_CONST_INT(kHelpTopicOptionTool, 50);
 IMPL_CONST_INT(kHelpTopicOptionOther, 52);
+IMPL_CONST_INT(kHelpTopicAttrSetting, 17);

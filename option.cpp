@@ -782,6 +782,14 @@ void setOption(const ffftp_option& opt) {
 	TimeOut = opt.transfer2.timeout;
 	DefaultLocalPath = opt.transfer2.default_local_path;
 	// [転送3]タブ
+	DefAttrList.clear();
+	DefAttrList.reserve(opt.transfer3.attrlist_cnt * 2);
+	for (int i = 0; i < opt.transfer3.attrlist_cnt; ++i) {
+		DefAttrList.push_back(opt.transfer3.attrlist_fname[i]);
+		DefAttrList.push_back(std::to_wstring(opt.transfer3.attrlist_attr[i]));
+	}
+	FolderAttr = opt.transfer3.use_folder_attr ? YES : NO;
+	FolderAttrNum = opt.transfer3.folder_attr;
 	// [転送4]タブ
 	// [ミラーリング]タブ
 	// [操作]タブ
@@ -829,6 +837,26 @@ void option(ffftp_option& opt) {
 		.default_local_path = DefaultLocalPath.c_str(),
 	};
 	// [転送3]タブ
+	delete[] opt.transfer3.attrlist_fname;
+	delete[] opt.transfer3.attrlist_attr;
+	opt.transfer3.attrlist_fname = nullptr;
+	opt.transfer3.attrlist_attr = nullptr;
+	opt.transfer3.attrlist_cnt = 0;
+	if (!DefAttrList.empty()) {
+		assert(DefAttrList.size() % 2 == 0);
+		size_t list_cnt = DefAttrList.size() / 2;
+		opt.transfer3.attrlist_fname = new const wchar_t* [list_cnt];
+		opt.transfer3.attrlist_attr = new int [list_cnt];
+		int i = 0;
+		for (std::vector<std::wstring>::const_iterator it = DefAttrList.begin(); it != DefAttrList.end();) {
+			opt.transfer3.attrlist_fname[i] = (it++)->c_str();
+			opt.transfer3.attrlist_attr[i]  = std::stoi((it++)->c_str());
+			++i;
+		}
+		opt.transfer3.attrlist_cnt = list_cnt;
+	}
+	opt.transfer3.use_folder_attr = FolderAttr == YES;
+	opt.transfer3.folder_attr = FolderAttrNum;
 	// [転送4]タブ
 	// [ミラーリング]タブ
 	// [操作]タブ

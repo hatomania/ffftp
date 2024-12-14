@@ -20,6 +20,7 @@ DECL_CONST_QSTRING(kStringDate);
 DECL_CONST_QSTRING(kStringSize);
 DECL_CONST_QSTRING(kStringExtension);
 DECL_CONST_QSTRING(kStringPermission);
+DECL_CONST_QSTRING(kStringAttribute);
 DECL_CONST_QSTRING(kStringOwner);
 DECL_CONST_QSTRING(kStringGroupName);
 DECL_CONST_QSTRING(kStringGroupNameNew);

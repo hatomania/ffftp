@@ -110,8 +110,8 @@
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | アップロードするファイルの属性 | DefAttrList | option::option_transfer3::attrlist_fname, attrlist_attr, attrlist_cnt | OptionTransfer3Form::Data::attr_list |  |
-| アップロード時に作成するフォルダの属性を指定する | FolderAttr | option::option_transfer3::is_folder_attr | OptionTransfer3Form::Data::is_folder_attr |  |
-| 属性 | FolderAttrNum | option::option_transfer3::folder_attr | OptionTransfer3Form::Data::folder_attr | 上限文字数=5 |
+| アップロード時に作成するフォルダの属性を指定する | FolderAttr | option::option_transfer3::use_folder_attr | OptionTransfer3Form::Data::use_folder_attr |  |
+| 属性 | FolderAttrNum | option::option_transfer3::folder_attr | OptionTransfer3Form::Data::folder_attr | 上限文字数=4 |
 
 ### 「追加」ボタン(2)
 

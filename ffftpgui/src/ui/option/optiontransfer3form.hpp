@@ -12,7 +12,14 @@ class OptionTransfer3Form : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    std::vector<std::pair<std::wstring, int>> attr_list;
+    bool use_folder_attr;
+    int folder_attr;
     Data();
+    Data(
+      const std::vector<std::pair<std::wstring, int>>& attr_list,
+      bool use_folder_attr,
+      int folder_attr);
   };
 
   explicit OptionTransfer3Form(QWidget* parent = Q_NULLPTR);
@@ -24,7 +31,15 @@ class OptionTransfer3Form : public BaseForm {
   void updateUi(const BaseForm::Data& data) override;
   void updateData(BaseForm::Data& data) const override;
 
+ private:
+  void updateEnabled();
+  bool askFileAttr(QString& fname, int& attr);
+  void addFileAttr(const QString& fname, int attr);
+
  private slots:
+  void onClick_pushButton_AddAttr();
+  void onClick_pushButton_DelAttr();
+  void onClick_treeView_DefAttrList();
 
  private:
   class Private;

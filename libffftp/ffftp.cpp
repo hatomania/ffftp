@@ -191,6 +191,8 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* o
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_finalize(ffftp_option* opt) {
   delete[] opt->transfer1.ascii_ext;
+  delete[] opt->transfer3.attrlist_fname;
+  delete[] opt->transfer3.attrlist_attr;
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const ffftp_option* opt) {

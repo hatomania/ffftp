@@ -1505,12 +1505,10 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.kanacnv_name = src.NameKanaCnv == YES,
 	};
 	// [ダイアルアップ]タブ
-	dst.dialup = {
-		.dialup = src.Dialup == YES,
-		.dial_entry = src.DialEntry.c_str(),
-		.dialup_always = src.DialupAlways == YES,
-		.dialup_notify = src.DialupNotify == YES,
-	};
+	dst.dialup.dialup = src.Dialup == YES;
+	dst.dialup.dial_entry = src.DialEntry.c_str();
+	dst.dialup.dialup_always = src.DialupAlways == YES;
+	dst.dialup.dialup_notify = src.DialupNotify == YES;
 	delete[] dst.dialup.dial_entries;
 	dst.dialup.dial_entries = nullptr;
 	dst.dialup.dial_entries_cnt = 0;

@@ -46,6 +46,7 @@ IMPL_CONST_QSTRING(kStringDate, "日付");
 IMPL_CONST_QSTRING(kStringSize, "サイズ");
 IMPL_CONST_QSTRING(kStringExtension, "種類");
 IMPL_CONST_QSTRING(kStringPermission, "属性");
+IMPL_CONST_QSTRING(kStringAttribute, "属性");
 IMPL_CONST_QSTRING(kStringOwner, "所有者");
 IMPL_CONST_QSTRING(kStringGroupName, "グループ名");
 IMPL_CONST_QSTRING(kStringGroupNameNew, "グループを追加");

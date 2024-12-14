@@ -44,7 +44,13 @@ struct ffftp_option_transfer2 {
 };
 
 /* [転送3]タブのUIデータ */
-struct ffftp_option_transfer3 {};
+struct ffftp_option_transfer3 {
+  const wchar_t** attrlist_fname;
+  int* attrlist_attr;
+  size_t attrlist_cnt;
+  bool use_folder_attr;
+  int folder_attr;
+};
 
 /* [転送4]タブのUIデータ */
 struct ffftp_option_transfer4 {};

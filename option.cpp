@@ -842,6 +842,18 @@ void setOption(const ffftp_option& opt) {
 	NoRasControl = opt.connecting.no_ras_control ? YES : NO;
 	UPnPEnabled = opt.connecting.upnp_enabled ? YES : NO;
 	// [FireWall]タブ
+	FwallType = opt.firewall.type;
+	FwallHost = opt.firewall.host;
+	FwallPort = opt.firewall.port;
+	FwallUser = opt.firewall.username;
+	FwallPass = opt.firewall.password;
+	FwallDelimiter = opt.firewall.delimiter;
+	FwallSecurity = opt.firewall.security;
+	FwallResolve = opt.firewall.resolve ? YES : NO;
+	FwallLower = opt.firewall.lower ? YES : NO;
+	FwallDefault = opt.firewall.fwall_default ? YES : NO;
+	PasvDefault = opt.firewall.pasv_default ? YES : NO;
+	FwallNoSaveUser = opt.firewall.no_save_user ? YES : NO;
 	// [ツール]タブ
 	// [その他]タブ
 }
@@ -965,6 +977,20 @@ void option(ffftp_option& opt) {
 		.upnp_enabled = UPnPEnabled == YES,
 	};
 	// [FireWall]タブ
+	opt.firewall = {
+		.type = FwallType,
+		.host = FwallHost.c_str(),
+		.port = FwallPort,
+		.username = FwallUser.c_str(),
+		.password = FwallPass.c_str(),
+		.delimiter = static_cast<wchar_t>(FwallDelimiter),
+		.security = FwallSecurity,
+		.resolve = FwallResolve == YES,
+		.lower = FwallLower == YES,
+		.fwall_default = FwallDefault == YES,
+		.pasv_default = PasvDefault == YES,
+		.no_save_user = FwallNoSaveUser == YES,
+	};
 	// [ツール]タブ
 	// [その他]タブ
 }

@@ -12,7 +12,32 @@ class OptionFirewallForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    int type;
+    std::wstring host;
+    int port;
+    std::wstring username;
+    std::wstring password;
+    wchar_t delimiter;
+    int security;
+    bool resolve;
+    bool lower;
+    bool fwall_default;
+    bool pasv_default;
+    bool no_save_user;
     Data();
+    Data(
+      int type,
+      std::wstring host,
+      int port,
+      std::wstring username,
+      std::wstring password,
+      wchar_t delimiter,
+      int security,
+      bool resolve,
+      bool lower,
+      bool fwall_default,
+      bool pasv_default,
+      bool no_save_user);
   };
 
   explicit OptionFirewallForm(QWidget* parent = Q_NULLPTR);
@@ -24,7 +49,11 @@ class OptionFirewallForm : public BaseForm {
   void updateUi(const BaseForm::Data& data) override;
   void updateData(BaseForm::Data& data) const override;
 
- private slots:
+ private:
+  void updateEnabled();
+
+ private Q_SLOTS:
+  void onCurrentIndexChange_comboBox_FwallType();
 
  private:
   class Private;

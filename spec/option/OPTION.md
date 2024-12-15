@@ -276,10 +276,10 @@
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
 | FireWallのタイプ | FwallType | option::option_firewall::type | OptionFirewallForm::Data::type |  |
-| FireWallホスト | FwallHost | option::option_firewall::host | OptionFirewallForm::Data::host |  |
-| ポート | FwallPort | option::option_firewall::port | OptionFirewallForm::Data::port |  |
-| FireWallユーザー名 | FwallUser | option::option_firewall::username | OptionFirewallForm::Data::username |  |
-| FireWallパスワード | FwallPass | option::option_firewall::password | OptionFirewallForm::Data::password |  |
+| FireWallホスト | FwallHost | option::option_firewall::host | OptionFirewallForm::Data::host | 上限文字数=80 |
+| ポート | FwallPort | option::option_firewall::port | OptionFirewallForm::Data::port | 上限文字数=5 |
+| FireWallユーザー名 | FwallUser | option::option_firewall::username | OptionFirewallForm::Data::username | 上限文字数=80 |
+| FireWallパスワード | FwallPass | option::option_firewall::password | OptionFirewallForm::Data::password | 上限文字数=80 |
 | @の変更 | FwallDelimiter | option::option_firewall::delimiter | OptionFirewallForm::Data::delimiter | 上限文字数=1 |
 | セキュリティ | FwallSecurity | option::option_firewall::security | OptionFirewallForm::Data::security |  |
 | ホストの検索はSOCKSサーバーに任せる | FwallResolve | option::option_firewall::resolve | OptionFirewallForm::Data::resolve |  |

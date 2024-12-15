@@ -122,7 +122,20 @@ struct ffftp_option_connecting {
 };
 
 /* [FireWall]タブのUIデータ */
-struct ffftp_option_firewall {};
+struct ffftp_option_firewall {
+  int type;
+  const wchar_t* host;
+  int port;
+  const wchar_t* username;
+  const wchar_t* password;
+  wchar_t delimiter;
+  int security;
+  bool resolve;
+  bool lower;
+  bool fwall_default;
+  bool pasv_default;
+  bool no_save_user;
+};
 
 /* [ツール]タブのUIデータ */
 struct ffftp_option_tool {};

@@ -57,6 +57,9 @@
        <property name="text">
         <string>接続ホストのヒストリ個数(&amp;H)</string>
        </property>
+       <property name="buddy">
+        <cstring>spinBox_FileHist</cstring>
+       </property>
       </widget>
      </item>
      <item>

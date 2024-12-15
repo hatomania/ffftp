@@ -831,6 +831,16 @@ void setOption(const ffftp_option& opt) {
 	AutoRefreshFileList = opt.view2.auto_refresh_filelist ? YES : NO;
 	RemoveOldLog = opt.view2.remove_old_log ? YES : NO;
 	// [接続/切断]タブ
+	ConnectOnStart = opt.connecting.connect_on_start ? YES : NO;
+	ConnectAndSet = opt.connecting.connect_and_set ? YES : NO;
+	RasClose = opt.connecting.ras_close ? YES : NO;
+	RasCloseNotify = opt.connecting.ras_close_notify ? YES : NO;
+	FileHist = opt.connecting.file_hist;
+	PassToHist = opt.connecting.pass_to_hist ? YES : NO;
+	QuickAnonymous = opt.connecting.quick_anonymous ? YES : NO;
+	SendQuit = opt.connecting.send_quit ? YES : NO;
+	NoRasControl = opt.connecting.no_ras_control ? YES : NO;
+	UPnPEnabled = opt.connecting.upnp_enabled ? YES : NO;
 	// [FireWall]タブ
 	// [ツール]タブ
 	// [その他]タブ
@@ -942,6 +952,18 @@ void option(ffftp_option& opt) {
 		.remove_old_log = RemoveOldLog == YES,
 	};
 	// [接続/切断]タブ
+	opt.connecting = {
+		.connect_on_start = ConnectOnStart == YES,
+		.connect_and_set = ConnectAndSet == YES,
+		.ras_close = RasClose == YES,
+		.ras_close_notify = RasCloseNotify == YES,
+		.file_hist = FileHist,
+		.pass_to_hist = PassToHist == YES,
+		.quick_anonymous = QuickAnonymous == YES,
+		.send_quit = SendQuit == YES,
+		.no_ras_control = NoRasControl == YES,
+		.upnp_enabled = UPnPEnabled == YES,
+	};
 	// [FireWall]タブ
 	// [ツール]タブ
 	// [その他]タブ

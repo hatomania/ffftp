@@ -12,7 +12,28 @@ class OptionConnectingForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    bool connect_on_start;
+    bool connect_and_set;
+    bool ras_close;
+    bool ras_close_notify;
+    int file_hist;
+    bool pass_to_hist;
+    bool quick_anonymous;
+    bool send_quit;
+    bool no_ras_control;
+    bool upnp_enabled;
     Data();
+    Data(
+      bool connect_on_start,
+      bool connect_and_set,
+      bool ras_close,
+      bool ras_close_notify,
+      int file_hist,
+      bool pass_to_hist,
+      bool quick_anonymous,
+      bool send_quit,
+      bool no_ras_control,
+      bool upnp_enabled);
   };
 
   explicit OptionConnectingForm(QWidget* parent = Q_NULLPTR);

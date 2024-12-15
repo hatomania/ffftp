@@ -1,5 +1,155 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>OptionConnectingForm</class>
- <widget class="QWidget" name="OptionConnectingForm"/>
+ <widget class="QWidget" name="OptionConnectingForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QCheckBox" name="checkBox_ConnectOnStart">
+     <property name="text">
+      <string>起動時に接続ダイアログを表示する(&amp;C)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_ConnectAndSet">
+     <property name="text">
+      <string>接続ダイアログでホストの設定も行う(&amp;O)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_RasClose">
+     <property name="title">
+      <string>プログラム終了時にダイアルアップ(RAS)を切断する(&amp;D)</string>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+     <property name="checkable">
+      <bool>true</bool>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <widget class="QCheckBox" name="checkBox_RasCloseNotify">
+        <property name="text">
+         <string>ダイアルアップ(RAS)切断の確認を行う(&amp;N)</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="label_1">
+       <property name="text">
+        <string>接続ホストのヒストリ個数(&amp;H)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBox_FileHist">
+       <property name="maximum">
+        <number>20</number>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>(0～20)</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_1">
+       <property name="orientation">
+        <enum>Qt::Orientation::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_PassToHist">
+     <property name="text">
+      <string>接続ヒストリにパスワードも記憶する(&amp;P)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_QuickAnonymous">
+     <property name="text">
+      <string>クイック接続はanonymous-FTPを基本とする(&amp;A)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_SendQuit">
+     <property name="text">
+      <string>切断時にQUITコマンドを送る(&amp;Q)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_NoRasControl">
+     <property name="text">
+      <string>RASの制御を行わない(&amp;R)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_UPnPEnabled">
+     <property name="text">
+      <string>非PASVモード時にUPnPの制御を試行する(&amp;U)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_1">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>204</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>checkBox_ConnectOnStart</tabstop>
+  <tabstop>checkBox_ConnectAndSet</tabstop>
+  <tabstop>groupBox_RasClose</tabstop>
+  <tabstop>checkBox_RasCloseNotify</tabstop>
+  <tabstop>spinBox_FileHist</tabstop>
+  <tabstop>checkBox_PassToHist</tabstop>
+  <tabstop>checkBox_QuickAnonymous</tabstop>
+  <tabstop>checkBox_SendQuit</tabstop>
+  <tabstop>checkBox_NoRasControl</tabstop>
+  <tabstop>checkBox_UPnPEnabled</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
 </ui>

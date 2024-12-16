@@ -144,7 +144,12 @@ struct ffftp_option_tool {
 };
 
 /* [その他]タブのUIデータ */
-struct ffftp_option_other {};
+struct ffftp_option_other {
+  bool save_win_pos;
+  bool reg_type;
+  bool encrypt_all_settings;
+  bool debug_console;
+};
 
 struct ffftp_option {
   ffftp_option_user user;

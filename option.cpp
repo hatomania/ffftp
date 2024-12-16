@@ -859,6 +859,10 @@ void setOption(const ffftp_option& opt) {
 		ViewerName[i] = opt.tool.viewer_name[i];
 	}
 	// [その他]タブ
+	SaveWinPos = opt.other.save_win_pos ? YES : NO;
+	RegType = opt.other.reg_type ? YES : NO;
+	EncryptAllSettings = opt.other.encrypt_all_settings ? YES : NO;
+	DebugConsole = opt.other.debug_console ? YES : NO;
 }
 
 // 現在のオプションを取得する
@@ -999,6 +1003,16 @@ void option(ffftp_option& opt) {
 		opt.tool.viewer_name[i] = ViewerName[i].c_str();
 	}
 	// [その他]タブ
+	opt.other = {
+		.save_win_pos = SaveWinPos == YES,
+		.reg_type = RegType == YES,
+		.encrypt_all_settings = EncryptAllSettings == YES,
+		.debug_console = DebugConsole == YES,
+	};
+}
+
+void showSoundSettings(void) {
+	__pragma(warning(suppress:28159)) WinExec(std::format("{} mmsys.cpl,,2"sv, (systemDirectory() / L"control.exe").string()).c_str(), SW_NORMAL);
 }
 
 } // namespace libffftp

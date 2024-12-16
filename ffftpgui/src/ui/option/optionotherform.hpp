@@ -12,7 +12,16 @@ class OptionOtherForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    bool save_win_pos;
+    bool reg_type;
+    bool encrypt_all_settings;
+    bool debug_console;
     Data();
+    Data(
+      bool save_win_pos,
+      bool reg_type,
+      bool encrypt_all_settings,
+      bool debug_console);
   };
 
   explicit OptionOtherForm(QWidget* parent = Q_NULLPTR);
@@ -24,7 +33,8 @@ class OptionOtherForm : public BaseForm {
   void updateUi(const BaseForm::Data& data) override;
   void updateData(BaseForm::Data& data) const override;
 
- private slots:
+ private Q_SLOTS:
+   void onClick_pushButton_OpenSound();
 
  private:
   class Private;

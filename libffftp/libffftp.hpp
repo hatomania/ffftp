@@ -40,5 +40,6 @@ extern void setAskSaveCryptCallback(bool (*func)());
 // option.cpp
 extern void setOption(const ffftp_option& opt);
 extern void option(ffftp_option& opt);
+extern void showSoundSettings(void);
 
 }  // namespace libffftp

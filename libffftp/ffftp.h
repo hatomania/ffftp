@@ -279,6 +279,11 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const ffftp_option* opt
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(ffftp_option* opt);
 
 /**
+ * @brief サウンドの設定ダイアログを開く。
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showsound(void);
+
+/**
  * @brief ヘルプを表示する。
  *
  * @param[in]  id 表示するヘルプを識別するID

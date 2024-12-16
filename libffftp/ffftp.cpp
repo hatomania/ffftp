@@ -203,6 +203,10 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(ffftp_option* opt) {
   libffftp::option(*opt);
 }
 
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showsound(void) {
+  libffftp::showSoundSettings();
+}
+
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showhelp(int id) {
   libffftp::showHelp(id);
 }

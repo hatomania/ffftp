@@ -12,7 +12,10 @@ class OptionToolForm : public BaseForm {
 
  public:
   struct Data : public BaseForm::Data {
+    enum { kViewerCnt = 3 };
+    std::vector<std::wstring> viewer_name;
     Data();
+    Data(const std::vector<std::wstring>& viewer_name);
   };
 
   explicit OptionToolForm(QWidget* parent = Q_NULLPTR);
@@ -24,7 +27,13 @@ class OptionToolForm : public BaseForm {
   void updateUi(const BaseForm::Data& data) override;
   void updateData(BaseForm::Data& data) const override;
 
- private slots:
+private:
+  bool askFilename(QString& fname, const QString& path_in);
+
+ private Q_SLOTS:
+  void onClick_toolButton_SelectViewer1();
+  void onClick_toolButton_SelectViewer2();
+  void onClick_toolButton_SelectViewer3();
 
  private:
   class Private;

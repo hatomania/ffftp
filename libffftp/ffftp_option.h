@@ -138,7 +138,10 @@ struct ffftp_option_firewall {
 };
 
 /* [ツール]タブのUIデータ */
-struct ffftp_option_tool {};
+struct ffftp_option_tool {
+  enum { VIEWER_CNT = 3 };
+  const wchar_t* viewer_name[VIEWER_CNT];
+};
 
 /* [その他]タブのUIデータ */
 struct ffftp_option_other {};

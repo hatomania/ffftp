@@ -855,6 +855,9 @@ void setOption(const ffftp_option& opt) {
 	PasvDefault = opt.firewall.pasv_default ? YES : NO;
 	FwallNoSaveUser = opt.firewall.no_save_user ? YES : NO;
 	// [ツール]タブ
+	for (int i = 0; i < ffftp_option_tool::VIEWER_CNT; ++i) {
+		ViewerName[i] = opt.tool.viewer_name[i];
+	}
 	// [その他]タブ
 }
 
@@ -992,6 +995,9 @@ void option(ffftp_option& opt) {
 		.no_save_user = FwallNoSaveUser == YES,
 	};
 	// [ツール]タブ
+	for (int i = 0; i < ffftp_option_tool::VIEWER_CNT; ++i) {
+		opt.tool.viewer_name[i] = ViewerName[i].c_str();
+	}
 	// [その他]タブ
 }
 

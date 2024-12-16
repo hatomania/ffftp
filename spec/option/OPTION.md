@@ -326,9 +326,9 @@ OTP SHA-1
 
 | UI部品 | 変数名(ffftp) | 変数名(libffftp) | 変数名(ffftpgui) | 備考 |
 | --- | --- | --- | --- | --- |
-| ビューア1 | ViewerName[0] | option::option_tool::viewer_name[0], viewer_name_cnt[0] | OptionToolForm::Data::viewer_name[0] | 上限文字数=1024 |
-| ビューア2 | ViewerName[1] | option::option_tool::viewer_name[1], viewer_name_cnt[1] | OptionToolForm::Data::viewer_name[1] | 上限文字数=1024 |
-| ビューア3 | ViewerName[2] | option::option_tool::viewer_name[2], viewer_name_cnt[2] | OptionToolForm::Data::viewer_name[2] | 上限文字数=1024 |
+| ビューア1 | ViewerName[0] | option::option_tool::viewer_name[0] | OptionToolForm::Data::viewer_name[0] | 上限文字数=1024 |
+| ビューア2 | ViewerName[1] | option::option_tool::viewer_name[1] | OptionToolForm::Data::viewer_name[1] | 上限文字数=1024 |
+| ビューア3 | ViewerName[2] | option::option_tool::viewer_name[2] | OptionToolForm::Data::viewer_name[2] | 上限文字数=1024 |
 
 ### 各「...」ボタン
 

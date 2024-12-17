@@ -185,6 +185,28 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
     ffftp_setcallback_askretrymasterpassword(bool (*func)()){
         LIBFFFTP_CALLBACK_SETTER(AskRetryMasterPassword)}
 
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* opt) {
+  std::memset(static_cast<void*>(opt), 0, sizeof(ffftp_option));
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_finalize(ffftp_option* opt) {
+  delete[] opt->transfer1.ascii_ext;
+  delete[] opt->transfer3.attrlist_fname;
+  delete[] opt->transfer3.attrlist_attr;
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const ffftp_option* opt) {
+  libffftp::setOption(*opt);
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(ffftp_option* opt) {
+  libffftp::option(*opt);
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showsound(void) {
+  libffftp::showSoundSettings();
+}
+
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showhelp(int id) {
   libffftp::showHelp(id);
 }

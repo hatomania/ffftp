@@ -30,6 +30,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 * [「高度」タブ](#高度タブ)
 * [「暗号化」タブ](#暗号化タブ)
 * [「特殊機能」タブ](#特殊機能タブ)
+* [ヘルプID](#ヘルプid)
 
 ## 「基本」タブ
 
@@ -44,7 +45,7 @@ UI部品設定値のデフォルト値について、デフォルト値はエン
 | ホストの設定名 | HOSTDATA::HostName | hostdata::hostdata_general::host_name | HostSettingGeneralForm::Data::host_name | 上限文字数=40 |
 | ホスト名 | HOSTDATA::HostAdrs | hostdata::hostdata_general::host_adrs | HostSettingGeneralForm::Data::host_adrs | 上限文字数=80 |
 | ユーザー名 | HOSTDATA::UserName | hostdata::hostdata_general::username | HostSettingGeneralForm::Data::username | 上限文字数=80 |
-| パスワード | HOSTDATA::PassWord | hostdata::hostdata_general::password | HostSettingGeneralForm::Data::password | 上限文字数=80 |
+| パスワード | HOSTDATA::PassWord | hostdata::hostdata_general::password, anonymous_password | HostSettingGeneralForm::Data::password, anonymous_password | 上限文字数=80 |
 | anonymous | HOSTDATA::Anonymous | hostdata::hostdata_general::anonymous | HostSettingGeneralForm::Data::anonymous | - |
 | ローカルの初期フォルダ | HOSTDATA::LocalInitDir | hostdata::hostdata_general::initdir_local | HostSettingGeneralForm::Data::initdir_local | 上限文字数=1024-40=984 |
 | ホストの初期フォルダ | HOSTDATA::RemoteInitDir | hostdata::hostdata_general::initdir_remote | HostSettingGeneralForm::Data::initdir_remote | 上限文字数=1024-40=984 |
@@ -57,7 +58,7 @@ OFFからONにしたとき、以下の通り、値を書き換える。
 
 | ユーザー名 | パスワード |
 | --- | --- |
-| anonymous | who\@example.com |
+| anonymous | （オプションダイアログの「ユーザー」タブの「メールアドレス」テキストボックスの値） |
 
 ONからOFFにしたとき、ONしたときに入力されていた「ユーザー名」および「パスワード」をそれぞれ書き戻す。
 
@@ -315,5 +316,19 @@ NonStop Server
 | 全て後で上書き | NO | EXIST_OVW | 1 |
 | 全て後でリジューム | NO | EXIST_RESUME | 2 |
 | 全てスキップ | NO | EXIST_IGNORE | 3 |
+
+## ヘルプID
+
+各タブに対応するヘルプIDを以下に示す。ヘルプ押下時、下記の表のとおり、表示しているタブに対応するヘルプIDをもととしたHTMLヘルプを表示する。
+
+| タブ | ヘルプID |
+| --- | --- |
+| 「基本」タブ | 28 |
+| 「拡張」タブ | 29 |
+| 「文字コード」タブ | 30 |
+| 「ダイアルアップ」タブ | 31 |
+| 「高度」タブ | 32 |
+| 「暗号化」タブ | 65 |
+| 「特殊機能」タブ | 66 |
 
 ### 以上

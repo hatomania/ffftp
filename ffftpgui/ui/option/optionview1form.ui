@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OptionView1Form</class>
+ <widget class="QWidget" name="OptionView1Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout" stretch="1,0">
+     <item>
+      <widget class="QLabel" name="label_Font">
+       <property name="frameShape">
+        <enum>QFrame::Shape::StyledPanel</enum>
+       </property>
+       <property name="text">
+        <string>フォント:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_ChangeFont">
+       <property name="text">
+        <string>変更(&amp;F)</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_DispIgnoreHide">
+     <property name="text">
+      <string>隠し属性のファイル、フォルダは表示しない(&amp;H)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_1">
+     <property name="frameShape">
+      <enum>QFrame::Shape::Box</enum>
+     </property>
+     <property name="text">
+      <string>隠し属性のファイルを表示しないようにすると、ミラーリングアップロードでも隠し属性のファイルはアップロードしないようになります。</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_DispDrives">
+     <property name="text">
+      <string>ローカル側のファイル一覧にドライブ名も表示する(&amp;D)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_DispFileIcon">
+     <property name="text">
+      <string>ローカル側のファイル一覧にアイコンを表示する(&amp;I)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_DispTimeSeconds">
+     <property name="text">
+      <string>ファイルのタイムスタンプの秒単位を表示する(&amp;S)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_2">
+     <property name="frameShape">
+      <enum>QFrame::Shape::Box</enum>
+     </property>
+     <property name="text">
+      <string>タイムスタンプの秒単位を表示するようにすると、ミラーリングアップロード等における更新日時の比較で秒単位を無視しないようになります。</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>251</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_ChangeFont</sender>
+   <signal>clicked()</signal>
+   <receiver>OptionView1Form</receiver>
+   <slot>onClick_pushButton_ChangeFont()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>452</x>
+     <y>22</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onClick_pushButton_ChangeFont()</slot>
+ </slots>
+</ui>

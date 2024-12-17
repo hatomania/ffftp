@@ -3,6 +3,7 @@
 #include "ui_hostsettingsdialog.h"
 
 #include "ffftp.h"
+#include "ui/uicommon.h"
 #include "generaldatatransceiver.hpp"
 #include "advanceddatatransceiver.hpp"
 #include "kanjicodedatatransceiver.hpp"
@@ -34,9 +35,6 @@ class HostSettingsDialog::Private {
 HostSettingsDialog::Private::Private() : ui(), transceiver() {}
 HostSettingsDialog::Private::~Private() {}
 
-#define MAKE_TRANSCEIVER(K, T, F) \
-  d_->transceiver.insert(std::make_pair(K, std::make_unique<T>(F)));
-
 HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
     : QDialog(parent), d_(new Private()) {
   d_->ui.setupUi(this);
@@ -62,6 +60,7 @@ HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
                    HostSettingFeatureFormDataTransceiver,
                    *d_->ui.tab_6);
   setHostData(hdata);
+  d_->ui.tab_0->firstFocus();
 }
 HostSettingsDialog::~HostSettingsDialog() {}
 

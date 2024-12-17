@@ -9,6 +9,7 @@
 #include "stdafx.h"
 #include "ui/host/hostlistdialog.hpp"
 #include "ui_mainwindow.h"
+#include "ui/option/optiondialog.hpp"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
 class MainWindow::Private {
@@ -171,7 +172,17 @@ void MainWindow::actionTaskWithViewer() {}
 void MainWindow::actionReflesh() {}
 void MainWindow::actionCalcOnetimePasswd() {}
 void MainWindow::actionWindowsFWSetting() {}
-void MainWindow::actionPreference() {}
+void MainWindow::actionPreference() {
+  ffftp_option option;
+  ffftp_option_initialize(&option);
+  ffftp_getoption(&option);
+  OptionDialog dialog{option, this};
+  if (dialog.exec() == QDialog::Accepted) {
+    dialog.option(option);
+    ffftp_setoption(&option);
+  }
+  ffftp_option_finalize(&option);
+}
 void MainWindow::actionContents() {}
 void MainWindow::actionOpenWebsite() {}
 void MainWindow::actionAbout() {}

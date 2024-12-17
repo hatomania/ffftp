@@ -8,7 +8,7 @@
 #include "ui/base/baseform.hpp"
 
 class HostSettingGeneralForm : public BaseForm {
-  Q_OBJECT
+  Q_OBJECT;
 
  public:
   struct Data : public BaseForm::Data {
@@ -16,6 +16,7 @@ class HostSettingGeneralForm : public BaseForm {
     std::wstring host_adrs;
     std::wstring username;
     std::wstring password;
+    std::wstring anonymous_password;
     bool anonymous;
     std::wstring initdir_local;
     std::wstring initdir_remote;
@@ -23,16 +24,23 @@ class HostSettingGeneralForm : public BaseForm {
     bool enabled_curdir;
     bool last_dir;
     Data();
-    Data(const std::wstring& host_name, const std::wstring& host_adrs,
-         const std::wstring& username, const std::wstring& password,
-         bool anonymous, const std::wstring& initdir_local,
-         const std::wstring& initdir_remote,
-         const std::wstring& initdir_remote_now, bool enabled_curdir,
-         bool last_dir);
+    Data(
+      const std::wstring& host_name,
+      const std::wstring& host_adrs,
+      const std::wstring& username,
+      const std::wstring& password,
+      const std::wstring& anonymous_password,
+      bool anonymous,
+      const std::wstring& initdir_local,
+      const std::wstring& initdir_remote,
+      const std::wstring& initdir_remote_now,
+      bool enabled_curdir,
+      bool last_dir);
   };
 
   explicit HostSettingGeneralForm(QWidget* parent = Q_NULLPTR);
   virtual ~HostSettingGeneralForm();
+  void firstFocus() const;
   int helpID() const override;
 
  protected:
@@ -51,7 +59,7 @@ class HostSettingGeneralForm : public BaseForm {
  private:
   class Private;
   std::unique_ptr<Private> d_;
-  Q_DISABLE_COPY(HostSettingGeneralForm)
+  Q_DISABLE_COPY_MOVE(HostSettingGeneralForm);
 };
 
 #endif  // FFFTPGUI_UI_HOST_HOSTSETTINGGENERALFORM_HPP_

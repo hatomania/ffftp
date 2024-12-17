@@ -30,7 +30,7 @@ class HostListDialog : public QDialog {
 
  private:
   bool showSettingDialog(hostdata& in_out_data);
-  void enabledUIParts();
+  void updateEnabled();
   bool askGroupName(QString& group_name, const QString& title);
 
  private:

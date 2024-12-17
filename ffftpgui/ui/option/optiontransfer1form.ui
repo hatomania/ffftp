@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OptionTransfer1Form</class>
+ <widget class="QWidget" name="OptionTransfer1Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QGroupBox" name="groupBox_1">
+       <property name="title">
+        <string>転送モード</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QRadioButton" name="radioButton_TransModeASCII">
+          <property name="text">
+           <string>常にアスキーモード(&amp;A)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_TransModeBin">
+          <property name="text">
+           <string>常にバイナリモード(&amp;B)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QRadioButton" name="radioButton_TransModeAuto">
+          <property name="text">
+           <string>ファイル名で切替え(&amp;X)</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_1">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </item>
+     <item>
+      <widget class="AddableListWidget" name="widget_AsciiExt" native="true"/>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_RmEOF">
+     <property name="text">
+      <string>アスキーモードでアップロード時、EOF(Ctrl-Z)を取り除く(&amp;Z)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_SaveTimeStamp">
+     <property name="text">
+      <string>アップロード/ダウンロードするファイルのタイムスタンプを維持(&amp;T)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_VaxSemicolon">
+     <property name="text">
+      <string>ファイル名のセミコロン以降は取り除いてダウンロード(&amp;S)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_MakeAllDir">
+     <property name="text">
+      <string>ファイル名を変えて転送した場合にディレクトリを作成(&amp;D)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_AbortOnListError">
+     <property name="text">
+      <string>ファイル一覧の取得に失敗した場合に転送を中止(&amp;L)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>AddableListWidget</class>
+   <extends>QWidget</extends>
+   <header>ui/common/addablelistwidget.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>radioButton_TransModeASCII</tabstop>
+  <tabstop>radioButton_TransModeBin</tabstop>
+  <tabstop>radioButton_TransModeAuto</tabstop>
+  <tabstop>checkBox_RmEOF</tabstop>
+  <tabstop>checkBox_SaveTimeStamp</tabstop>
+  <tabstop>checkBox_VaxSemicolon</tabstop>
+  <tabstop>checkBox_MakeAllDir</tabstop>
+  <tabstop>checkBox_AbortOnListError</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>radioButton_TransModeASCII</sender>
+   <signal>clicked()</signal>
+   <receiver>OptionTransfer1Form</receiver>
+   <slot>onClick_radioButton_TransModeASCII()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_TransModeBin</sender>
+   <signal>clicked()</signal>
+   <receiver>OptionTransfer1Form</receiver>
+   <slot>onClick_radioButton_TransModeBin()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>72</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_TransModeAuto</sender>
+   <signal>clicked()</signal>
+   <receiver>OptionTransfer1Form</receiver>
+   <slot>onClick_radioButton_TransModeAuto()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>84</x>
+     <y>98</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onClick_radioButton_TransModeASCII()</slot>
+  <slot>onClick_radioButton_TransModeBin()</slot>
+  <slot>onClick_radioButton_TransModeAuto()</slot>
+ </slots>
+</ui>

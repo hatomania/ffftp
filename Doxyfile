@@ -969,6 +969,7 @@ INPUT                  = . \
                          ./spec \
                          ./spec/host-list \
                          ./spec/host-setting \
+                         ./spec/option \
                          ./libffftp
 
 # This tag can be used to specify the character encoding of the source files
@@ -1126,7 +1127,8 @@ EXAMPLE_RECURSIVE      = NO
 
 IMAGE_PATH             = . \
                          ./spec/host-list \
-                         ./spec/host-setting
+                         ./spec/host-setting \
+                         ./spec/option
 
 # The INPUT_FILTER tag can be used to specify a program that Doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program

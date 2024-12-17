@@ -30,6 +30,7 @@
 #define FFFTP_2C8AE9F9_6CDE_41C7_AE02_CE4A7248088A_H_
 
 #include "ffftp_hostdata.h"
+#include "ffftp_option.h"
 
 #ifdef LIBFFFTP_EXPORTS
 #define LIBFFFTP_DECLSPEC __declspec(dllexport)
@@ -243,6 +244,44 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd));
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV
 ffftp_setcallback_askretrymasterpassword(bool (*func)());
+
+/**
+ * @brief ffftp_optionの初期化を行う。
+ *
+ * ffftp_optionを使用する前に、この関数を呼び出してffftp_optionを初期化しなければならない。
+ *
+ * @param[in] opt 初期化するffftp_optionへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* opt);
+
+/**
+ * @brief ffftp_optionの後処理を行う。
+ *
+ * ffftp_optionを使用し終わったらスコープを抜ける前に、この関数を呼び出してffftp_optionの後処理をしなければならない。@n
+ * これを怠るとメモリリークを引き起こす可能性があります。
+ *
+ * @param[in] opt 後処理するffftp_optionへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_finalize(ffftp_option* opt);
+
+/**
+ * @brief 現在のオプションを上書きする。
+ *
+ * @param[in]  opt 上書きするオプションffftp_optionへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const ffftp_option* opt);
+
+/**
+ * @brief 現在のオプションを取得する。
+ *
+ * @param[out]  opt 結果を格納するオプションffftp_optionへのポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(ffftp_option* opt);
+
+/**
+ * @brief サウンドの設定ダイアログを開く。
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_showsound(void);
 
 /**
  * @brief ヘルプを表示する。

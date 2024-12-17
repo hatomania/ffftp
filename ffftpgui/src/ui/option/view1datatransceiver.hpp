@@ -1,0 +1,9 @@
+﻿#ifndef FFFTPGUI_UI_OPTION_VIEW1DATATRANSCEIVER_HPP_
+#define FFFTPGUI_UI_OPTION_VIEW1DATATRANSCEIVER_HPP_
+
+#include "ui/base/formdatatransceiver.hpp"
+#include "optionview1form.hpp"
+
+DECL_DATATRANSCEIVER(OptionView1Form);
+
+#endif  // FFFTPGUI_UI_OPTION_VIEW1DATATRANSCEIVER_HPP_

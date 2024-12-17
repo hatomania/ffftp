@@ -27,7 +27,7 @@ HostListDialog::Private::~Private() {}
 HostListDialog::HostListDialog(QWidget* parent)
     : QDialog(parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  enabledUIParts();
+  updateEnabled();
 }
 HostListDialog::~HostListDialog() {}
 
@@ -53,7 +53,7 @@ void HostListDialog::onClick_pushButton_NewHost() {
     hostcontext_t new_hc = ffftp_hostcontext_new(hc, &hdata);
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(new_hc);
-    enabledUIParts();
+    updateEnabled();
   }
   ffftp_hostdata_finalize(&hdata);
 }
@@ -61,13 +61,12 @@ void HostListDialog::onClick_pushButton_NewHost() {
 // [新規グループ]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_NewGroup() {
   hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
-  QString group_name{};
-  if (askGroupName(group_name, kStringGroupNameNew)) {
+  if (QString group_name{}; askGroupName(group_name, kStringGroupNameNew)) {
     hostcontext_t new_hc =
         ffftp_hostcontext_newgroup(hc, group_name.toStdWString().c_str());
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(new_hc);
-    enabledUIParts();
+    updateEnabled();
   }
 }
 
@@ -75,13 +74,12 @@ void HostListDialog::onClick_pushButton_NewGroup() {
 void HostListDialog::onClick_pushButton_Mod() {
   hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
   if (ffftp_hostcontext_isgroup(hc)) {
-    QString group_name{};
-    if (askGroupName(group_name, kStringGroupNameMod)) {
+    if (QString group_name{}; askGroupName(group_name, kStringGroupNameMod)) {
       hostcontext_t mod_hc =
           ffftp_hostcontext_modifygroup(hc, group_name.toStdWString().c_str());
       d_->ui.treeView_HostList->update();
       d_->ui.treeView_HostList->setCurrentIndex(mod_hc);
-      enabledUIParts();
+      updateEnabled();
     }
   } else {
     hostdata hdata;
@@ -91,7 +89,7 @@ void HostListDialog::onClick_pushButton_Mod() {
       hostcontext_t mod_hc = ffftp_hostcontext_modify(hc, &hdata);
       d_->ui.treeView_HostList->update();
       d_->ui.treeView_HostList->setCurrentIndex(mod_hc);
-      enabledUIParts();
+      updateEnabled();
     }
     ffftp_hostdata_finalize(&hdata);
   }
@@ -103,7 +101,7 @@ void HostListDialog::onClick_pushButton_Copy() {
   hostcontext_t new_hc = ffftp_hostcontext_copy(hc);
   d_->ui.treeView_HostList->update();
   d_->ui.treeView_HostList->setCurrentIndex(new_hc);
-  enabledUIParts();
+  updateEnabled();
 }
 
 // [削除]ボタンを押下したときの処理
@@ -116,7 +114,7 @@ void HostListDialog::onClick_pushButton_Del() {
     hostcontext_t rem_hc = ffftp_hostcontext_delete(hc);
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(rem_hc);
-    enabledUIParts();
+    updateEnabled();
   }
 }
 
@@ -127,7 +125,7 @@ void HostListDialog::onClick_pushButton_Up() {
     ffftp_hostcontext_up(hc);
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(hc);
-    enabledUIParts();
+    updateEnabled();
   }
 }
 
@@ -138,7 +136,7 @@ void HostListDialog::onClick_pushButton_Down() {
     ffftp_hostcontext_down(hc);
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(hc);
-    enabledUIParts();
+    updateEnabled();
   }
 }
 
@@ -161,7 +159,7 @@ void HostListDialog::onClick_pushButton_Help() {
 // ホストリストビューの項目をクリックしたときの処理
 void HostListDialog::onClick_treeView_HostList(QModelIndex index) {
   Q_UNUSED(index);
-  enabledUIParts();
+  updateEnabled();
 }
 
 // 引数in_out_dataを初期データとして[ホストの設定]ダイアログを表示する
@@ -179,7 +177,7 @@ bool HostListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
 }
 
 // 状態に応じてUI部品のEnableを切り替える
-void HostListDialog::enabledUIParts() {
+void HostListDialog::updateEnabled() {
   hostcontext_t current_hc = d_->ui.treeView_HostList->currentHostContext();
   UI_SETENABLED(d_->ui.pushButton_Mod, true);
   UI_SETENABLED(d_->ui.pushButton_Copy, true);

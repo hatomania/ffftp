@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>OptionFirewallForm</class>
+ <widget class="QWidget" name="OptionFirewallForm">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_7">
+   <item>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="label_1">
+       <property name="text">
+        <string>FireWallのタイプ(&amp;T):</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBox_FwallType</cstring>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="comboBox_FwallType">
+       <item>
+        <property name="text">
+         <string>FWユーザー名 → FWパスワード → SITE ホスト名</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>FWユーザー名 → FWパスワード → USER ユーザー名@ホスト名</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>FWユーザー名 → FWパスワード</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>USER ユーザー名@ホスト名</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OPEN ホスト名</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SOCKS4</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SOCKS5 (認証なし)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SOCKS5 (ユーザー名,パスワード認証)</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>USER FWユーザー名:FWパスワード@ホスト名</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="4,1">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="text">
+            <string>FireWallホスト(&amp;H):</string>
+           </property>
+           <property name="buddy">
+            <cstring>lineEdit_FwallHost</cstring>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEdit_FwallHost">
+           <property name="maxLength">
+            <number>80</number>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLabel" name="label_FwallUser">
+             <property name="text">
+              <string>FireWallユーザー名(&amp;U):</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEdit_FwallUser</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_FwallUser">
+             <property name="maxLength">
+              <number>80</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <widget class="QLabel" name="label_FwallPass">
+             <property name="text">
+              <string>FireWallパスワード(&amp;P):</string>
+             </property>
+             <property name="buddy">
+              <cstring>lineEdit_FwallPass</cstring>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEdit_FwallPass">
+             <property name="maxLength">
+              <number>80</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>ポート(&amp;O):</string>
+         </property>
+         <property name="buddy">
+          <cstring>lineEdit_FwallPort</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_FwallPort">
+         <property name="maxLength">
+          <number>5</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_FwallDelimiter">
+         <property name="text">
+          <string>@の変更(&amp;D):</string>
+         </property>
+         <property name="buddy">
+          <cstring>lineEdit_FwallDelimiter</cstring>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_FwallDelimiter">
+         <property name="maxLength">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QGridLayout" name="gridLayout" columnstretch="1,2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_FwallSecurity">
+       <property name="text">
+        <string>セキュリティ(&amp;Q):</string>
+       </property>
+       <property name="buddy">
+        <cstring>comboBox_FwallSecurity</cstring>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QCheckBox" name="checkBox_FwallResolve">
+       <property name="text">
+        <string>ホストの検索はSOCKSサーバーに任せる(&amp;R)</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QComboBox" name="comboBox_FwallSecurity">
+       <item>
+        <property name="text">
+         <string>使用しない</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>自動認識</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OTP MD4,S/KEY</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OTP MD5</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>OTP SHA-1</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QCheckBox" name="checkBox_FwallLower">
+       <property name="text">
+        <string>OPEN/SITEコマンドを小文字にする(&amp;L)</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_FwallDefault">
+     <property name="text">
+      <string>ホスト一覧に未登録のホストはFireWallを使って接続(&amp;E)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_PasvDefault">
+     <property name="text">
+      <string>ホスト一覧に未登録のホストはPASVモードを使う(&amp;V)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QCheckBox" name="checkBox_FwallNoSaveUser">
+     <property name="text">
+      <string>FireWallユーザー名/パスワードを保存しない(&amp;N)</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>comboBox_FwallType</tabstop>
+  <tabstop>lineEdit_FwallHost</tabstop>
+  <tabstop>lineEdit_FwallPort</tabstop>
+  <tabstop>lineEdit_FwallUser</tabstop>
+  <tabstop>lineEdit_FwallPass</tabstop>
+  <tabstop>lineEdit_FwallDelimiter</tabstop>
+  <tabstop>comboBox_FwallSecurity</tabstop>
+  <tabstop>checkBox_FwallResolve</tabstop>
+  <tabstop>checkBox_FwallLower</tabstop>
+  <tabstop>checkBox_FwallDefault</tabstop>
+  <tabstop>checkBox_PasvDefault</tabstop>
+  <tabstop>checkBox_FwallNoSaveUser</tabstop>
+ </tabstops>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>comboBox_FwallType</sender>
+   <signal>currentIndexChanged(int)</signal>
+   <receiver>OptionFirewallForm</receiver>
+   <slot>onCurrentIndexChange_comboBox_FwallType()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>249</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>249</x>
+     <y>250</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>onCurrentIndexChange_comboBox_FwallType()</slot>
+ </slots>
+</ui>

@@ -1,9 +1,9 @@
 ﻿#ifndef FFFTPGUI_UI_BASE_BASEFORM_HPP_
 #define FFFTPGUI_UI_BASE_BASEFORM_HPP_
 
-#include <QWidget>
-
 #include <memory>
+
+#include <QWidget>
 
 class BaseForm : public QWidget {
   Q_OBJECT

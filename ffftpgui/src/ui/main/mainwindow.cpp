@@ -94,6 +94,8 @@ MainWindow::MainWindow(QWidget* parent)
   ffftp_setcallback_asksavecrypt(_AskSaveCryptFunc);
   ffftp_setcallback_askmasterpassword(_AskMasterPassword);
   ffftp_setcallback_askretrymasterpassword(_AskRetryMasterPassword);
+
+  d_->ui.widget->setLocalPath("C:\\");
 }
 
 MainWindow::~MainWindow() {

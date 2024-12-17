@@ -1,33 +1,24 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_MAIN_DIRSANDTASKMSGFORM_HPP_
+#define FFFTPGUI_UI_MAIN_DIRSANDTASKMSGFORM_HPP_
 
 #include <QWidget>
 
 class DirsAndTaskMsgForm : public QWidget {
-  Q_OBJECT
+  Q_OBJECT;
 
  public:
-  explicit DirsAndTaskMsgForm(QWidget* parent = Q_NULLPTR,
-                              bool isshowndot = false);
+  explicit DirsAndTaskMsgForm(QWidget* parent = Q_NULLPTR);
+  virtual ~DirsAndTaskMsgForm();
   void setTaskMessage(const QString& msg) const;
   void addTaskMessage(const QString& msg) const;
   void setDotFileShown(bool isshown);
-  void setPathLocal(const QString& path);
-  void setPathRemote(const QString& path);
-
- private slots:
-  // for Local
-  void onClicked_toolButton_LocalUp();
-  void onClicked_toolButton_LocalOpen();
-  void onCurrentIndexChanged_comboBox_LocalDir(int index);
-  void onDoubleClicked_treeView_LocalDir(const QModelIndex& index);
-  // for Remote
-  void onClicked_toolButton_RemoteUp();
-  void onClicked_toolButton_RemoteOpen();
-  void onCurrentIndexChanged_comboBox_RemoteDir(int index);
-  void onDoubleClicked_treeView_RemoteDir(const QModelIndex& index);
+  void setLocalPath(const QString& path);
+  void setRemotePath(const QString& path);
 
  private:
   class Private;
-  Private* d_;
-  Q_DISABLE_COPY(DirsAndTaskMsgForm)
+  std::unique_ptr<Private> d_;
+  Q_DISABLE_COPY_MOVE(DirsAndTaskMsgForm);
 };
+
+#endif  // FFFTPGUI_UI_MAIN_DIRSANDTASKMSGFORM_HPP_

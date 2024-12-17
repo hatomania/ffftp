@@ -217,7 +217,7 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionConnect">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/connect.png</normaloff>:/connect.png</iconset>
    </property>
    <property name="text">
@@ -235,7 +235,7 @@
   </action>
   <action name="actionQuickConnect">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/quickconnect.png</normaloff>:/quickconnect.png</iconset>
    </property>
    <property name="text">
@@ -253,7 +253,7 @@
   </action>
   <action name="actionDisconnect">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/disconnect.png</normaloff>:/disconnect.png</iconset>
    </property>
    <property name="text">
@@ -349,7 +349,7 @@
   </action>
   <action name="actionDownload">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/arrowdown.png</normaloff>:/arrowdown.png</iconset>
    </property>
    <property name="text">
@@ -367,7 +367,7 @@
   </action>
   <action name="actionUpload">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/arrowup.png</normaloff>:/arrowup.png</iconset>
    </property>
    <property name="text">
@@ -429,7 +429,7 @@
   </action>
   <action name="actionUploadMirroring">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/doublearrowup.png</normaloff>:/doublearrowup.png</iconset>
    </property>
    <property name="text">
@@ -472,7 +472,7 @@
   </action>
   <action name="actionCmdRm">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/cross.png</normaloff>:/cross.png</iconset>
    </property>
    <property name="text">
@@ -490,7 +490,7 @@
   </action>
   <action name="actionCmdRename">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/tag.png</normaloff>:/tag.png</iconset>
    </property>
    <property name="text">
@@ -522,7 +522,7 @@
   </action>
   <action name="actionCmdMkdir">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/folderwithlight.png</normaloff>:/folderwithlight.png</iconset>
    </property>
    <property name="text">
@@ -554,7 +554,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/tagandtag.png</normaloff>:/tagandtag.png</iconset>
    </property>
    <property name="text">
@@ -689,7 +689,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/mosaic1.png</normaloff>:/mosaic1.png</iconset>
    </property>
    <property name="text">
@@ -707,7 +707,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/mosaic2.png</normaloff>:/mosaic2.png</iconset>
    </property>
    <property name="text">
@@ -769,7 +769,7 @@
   </action>
   <action name="actionReflesh">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/arrowcircle.png</normaloff>:/arrowcircle.png</iconset>
    </property>
    <property name="text">
@@ -864,7 +864,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/a.png</normaloff>:/a.png</iconset>
    </property>
    <property name="text">
@@ -879,7 +879,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/b.png</normaloff>:/b.png</iconset>
    </property>
    <property name="text">
@@ -894,7 +894,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/ab.png</normaloff>:/ab.png</iconset>
    </property>
    <property name="text">
@@ -909,7 +909,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/sjis.png</normaloff>:/sjis.png</iconset>
    </property>
    <property name="text">
@@ -924,7 +924,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/euc.png</normaloff>:/euc.png</iconset>
    </property>
    <property name="text">
@@ -939,7 +939,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/jis.png</normaloff>:/jis.png</iconset>
    </property>
    <property name="text">
@@ -954,7 +954,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/utf8.png</normaloff>:/utf8.png</iconset>
    </property>
    <property name="text">
@@ -969,7 +969,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/u8b.png</normaloff>:/u8b.png</iconset>
    </property>
    <property name="text">
@@ -984,7 +984,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/sjis.png</normaloff>:/sjis.png</iconset>
    </property>
    <property name="text">
@@ -999,7 +999,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/euc.png</normaloff>:/euc.png</iconset>
    </property>
    <property name="text">
@@ -1014,7 +1014,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/jis.png</normaloff>:/jis.png</iconset>
    </property>
    <property name="text">
@@ -1029,7 +1029,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/utf8.png</normaloff>:/utf8.png</iconset>
    </property>
    <property name="text">
@@ -1044,7 +1044,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/u8b.png</normaloff>:/u8b.png</iconset>
    </property>
    <property name="text">
@@ -1059,7 +1059,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/mu.png</normaloff>:/mu.png</iconset>
    </property>
    <property name="text">
@@ -1074,7 +1074,7 @@
     <bool>true</bool>
    </property>
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/kana.png</normaloff>:/kana.png</iconset>
    </property>
    <property name="text">
@@ -1086,7 +1086,7 @@
   </action>
   <action name="actionStopReceiving">
    <property name="icon">
-    <iconset resource="../resource/ffftpgui.qrc">
+    <iconset resource="../../resource/ffftpgui.qrc">
      <normaloff>:/roadclosedsign.png</normaloff>:/roadclosedsign.png</iconset>
    </property>
    <property name="text">
@@ -1107,7 +1107,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../resource/ffftpgui.qrc"/>
+  <include location="../../resource/ffftpgui.qrc"/>
  </resources>
  <connections>
   <connection>

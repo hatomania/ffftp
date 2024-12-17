@@ -22,6 +22,17 @@
 #define MAKE_TRANSCEIVER(K, T, F) \
   d_->transceiver.insert(std::make_pair(K, std::make_unique<T>(F)));
 
+#define NEED_CASTDATA(FORM)                                     \
+  namespace {                                                   \
+  using ThisData = FORM::Data;                                  \
+  inline const ThisData& castData(const BaseForm::Data& data) { \
+    return static_cast<const ThisData&>(data);                  \
+  }                                                             \
+  inline ThisData& castData(BaseForm::Data& data) {             \
+    return static_cast<ThisData&>(data);                        \
+  }                                                             \
+  }  // namespace
+
 // ラジオボタンを集合で扱うテンプレート
 template <typename _KEY>
 class RadioButtons {
@@ -48,5 +59,7 @@ class RadioButtons {
  private:
   const std::map<_KEY, QRadioButton&> radios_;
 };
+
+inline constexpr int kUserRole{Qt::UserRole + 1};
 
 #endif /* FFFTPGUI_UI_UICOMMON_H_ */

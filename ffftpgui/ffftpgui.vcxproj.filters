@@ -263,6 +263,9 @@
     <QtUic Include="ui\common\addabletreewidget.ui">
       <Filter>Form Files\common</Filter>
     </QtUic>
+    <QtUic Include="ui\main\filelistform.ui">
+      <Filter>Form Files\main</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -438,6 +441,12 @@
     </ClCompile>
     <ClCompile Include="src\ui\common\fileandattributetreewidget.cpp">
       <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\filelistform.cpp">
+      <Filter>Source Files\ui\main</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\main\filelistlocalform.cpp">
+      <Filter>Source Files\ui\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -619,6 +628,12 @@
     </QtMoc>
     <QtMoc Include="src\ui\common\fileandattributetreewidget.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\main\filelistform.hpp">
+      <Filter>Header Files\ui\main</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\main\filelistlocalform.hpp">
+      <Filter>Header Files\ui\main</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

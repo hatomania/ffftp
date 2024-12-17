@@ -5,10 +5,9 @@
 
 #include "ffftp.h"
 #include "stdafx.h"
+#include "ui/uicommon.h"
 
 namespace {
-
-constexpr int kUserRole = Qt::UserRole + 1;
 
 class HostItemModel : public QStandardItemModel {
  public:

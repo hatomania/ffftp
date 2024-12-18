@@ -58,7 +58,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\;$(ProjectDir)..\boost-regex\include;$(ProjectDir)..\gsl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(ProjectDir)..\boost-regex\include;$(ProjectDir)..\gsl\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\;$(ProjectDir)..\boost-regex\include;$(ProjectDir)..\gsl\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(ProjectDir)..\boost-regex\include;$(ProjectDir)..\gsl\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -100,6 +100,7 @@
     <ClInclude Include="..\OleDragDrop.h" />
     <ClInclude Include="..\Resource\resource.en-US.h" />
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
+    <ClInclude Include="callback.h" />
     <ClInclude Include="ffftp.h" />
     <ClInclude Include="ffftp_hostdata.h" />
     <ClInclude Include="ffftp_option.h" />
@@ -108,7 +109,6 @@
   <ItemGroup>
     <ClCompile Include="..\bookmark.cpp" />
     <ClCompile Include="..\codecnv.cpp" />
-    <ClCompile Include="..\common.cpp" />
     <ClCompile Include="..\connect.cpp" />
     <ClCompile Include="..\filelist.cpp" />
     <ClCompile Include="..\ftpproc.cpp" />
@@ -127,6 +127,7 @@
     <ClCompile Include="..\statuswin.cpp" />
     <ClCompile Include="..\taskwin.cpp" />
     <ClCompile Include="..\toolmenu.cpp" />
+    <ClCompile Include="common.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ffftp.cpp" />
   </ItemGroup>

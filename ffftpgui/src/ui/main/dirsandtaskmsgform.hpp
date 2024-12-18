@@ -14,6 +14,7 @@ class DirsAndTaskMsgForm : public QWidget {
   void setDotFileShown(bool isshown);
   void setLocalPath(const QString& path);
   void setRemotePath(const QString& path);
+  void showDetail(bool is_detail) const;
 
  private:
   class Private;

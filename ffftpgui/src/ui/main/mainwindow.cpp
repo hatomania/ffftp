@@ -1,14 +1,16 @@
 ﻿#include "mainwindow.hpp"
 
 #include <QActionGroup>
+#include <QDir>
 #include <QInputDialog>
 #include <QMessageBox>
 
-#include "core/ffftpthread.hpp"
+#include "ui_mainwindow.h"
+
 #include "ffftp.h"
 #include "stdafx.h"
+#include "core/ffftpthread.hpp"
 #include "ui/host/hostlistdialog.hpp"
-#include "ui_mainwindow.h"
 #include "ui/option/optiondialog.hpp"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
@@ -95,7 +97,14 @@ MainWindow::MainWindow(QWidget* parent)
   ffftp_setcallback_askmasterpassword(_AskMasterPassword);
   ffftp_setcallback_askretrymasterpassword(_AskRetryMasterPassword);
 
-  d_->ui.widget->setLocalPath("C:\\");
+  // ローカルファイルリストの初期化
+  for (const auto& d : QDir::drives()) {
+    d_->ui.widget->setLocalPath(d.path());
+  }
+  d_->ui.widget->setLocalPath(QDir::currentPath());
+
+  // 詳細ボタンを押下させる
+  d_->ui.actionViewFDetail->setChecked(true);
 }
 
 MainWindow::~MainWindow() {
@@ -163,8 +172,12 @@ void MainWindow::actionFind() {}
 void MainWindow::actionFindNext() {}
 void MainWindow::actionSelect() {}
 void MainWindow::actionSelectAll() {}
-void MainWindow::actionViewFList(bool checked) {}
-void MainWindow::actionViewFDetail(bool checked) {}
+void MainWindow::actionViewFList(bool checked) {
+  d_->ui.widget->showDetail(!checked);
+}
+void MainWindow::actionViewFDetail(bool checked) {
+  d_->ui.widget->showDetail(checked);
+}
 void MainWindow::actionSort() {}
 void MainWindow::actionViewDot(bool checked) {
   d_->ui.widget->setDotFileShown(checked);

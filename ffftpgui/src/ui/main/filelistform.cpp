@@ -55,10 +55,8 @@ FileListForm::FileListForm(Data* data, QWidget* parent)
     : BaseForm{data, parent}, d_{new Private{}} {
   d_->ui.setupUi(this);
   d_->model = new QStandardItemModel(parent);
-  d_->ui.treeView_DirView->setModel(d_->model);
   d_->ui.treeView_DirView->setSortingEnabled(true);
-//  d_->ui.listView_DirView->setModel(d_->model);
-  d_->ui.listView_DirView->setVisible(false);
+  showDetail(true);
 }
 FileListForm::~FileListForm() { delete d_->model; }
 
@@ -74,6 +72,20 @@ void FileListForm::setPath(const QString& path) {
     data.path = path;
     setData(data);
     updateHistory(path);
+  }
+}
+
+void FileListForm::showDetail(bool is_detail) const {
+  if (is_detail) {
+    ui().treeView_DirView->setModel(d_->model);
+    ui().treeView_DirView->setVisible(true);
+    ui().listView_DirView->setModel(nullptr);
+    ui().listView_DirView->setVisible(false);
+  } else {
+    ui().treeView_DirView->setModel(nullptr);
+    ui().treeView_DirView->setVisible(false);
+    ui().listView_DirView->setModel(d_->model);
+    ui().listView_DirView->setVisible(true);
   }
 }
 
@@ -116,8 +128,8 @@ void FileListForm::updateHistory(const QString& path) const {
     sl.push_back(cpath);
     std::sort(sl.begin(), sl.end());
   }
-  // テキスト入力がEnterで決定されるとQComboBox内部で勝手に追加されるのでif分の外で再構築する必要がある
-  const QSignalBlocker sblocker(cb);  // 一時的にシグナルの発信を抑制する（これがないと無限ループに陥る）
+  // テキスト入力がEnterで決定されるとQComboBox内部で勝手に追加されるのでif文の外で再構築する必要がある
+  const QSignalBlocker sigblocker(cb);  // 一時的にシグナルの発信を抑制する（これがないと無限ループに陥る）
   cb.clear();
   cb.addItems(sl);
   cb.setCurrentIndex(cb.findText(cpath));

@@ -40,3 +40,8 @@ void DirsAndTaskMsgForm::setLocalPath(const QString& path) {
   d_->ui.widget_FileListLocal->setPath(path);
 }
 void DirsAndTaskMsgForm::setRemotePath(const QString& path) {}
+
+void DirsAndTaskMsgForm::showDetail(bool is_detail) const {
+  d_->ui.widget_FileListLocal->showDetail(is_detail);
+//  d_->ui.widget_FileListRemote->showDetail(is_detail);
+}

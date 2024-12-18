@@ -41,6 +41,7 @@ class FileListForm : public BaseForm {
   int helpID() const override;
   void setPath(const std::wstring& path);
   void setPath(const QString& path);
+  void showDetail(bool is_detail) const;
 
 protected:
   const Ui::FileListForm& ui() const;

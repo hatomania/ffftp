@@ -1429,49 +1429,49 @@ inline static constexpr int index2Timezone(int timezone) {
 }
 inline static constexpr int convertKanjiCode2libffftp(int kanjicode) {
 	return
-		kanjicode == KANJI_NOCNV ? kanjicodes::KC_NOP :
-		kanjicode == KANJI_SJIS ? kanjicodes::KC_SJIS :
-		kanjicode == KANJI_JIS ? kanjicodes::KC_JIS :
-		kanjicode == KANJI_EUC ? kanjicodes::KC_EUC :
-		kanjicode == KANJI_UTF8N ? kanjicodes::KC_UTF8N :
-		kanjicode == KANJI_UTF8BOM ? kanjicodes::KC_UTF8BOM :
+		kanjicode == KANJI_NOCNV ? ffftp_kanjicodes::KC_NOP :
+		kanjicode == KANJI_SJIS ? ffftp_kanjicodes::KC_SJIS :
+		kanjicode == KANJI_JIS ? ffftp_kanjicodes::KC_JIS :
+		kanjicode == KANJI_EUC ? ffftp_kanjicodes::KC_EUC :
+		kanjicode == KANJI_UTF8N ? ffftp_kanjicodes::KC_UTF8N :
+		kanjicode == KANJI_UTF8BOM ? ffftp_kanjicodes::KC_UTF8BOM :
 		-1;
 }
 inline static constexpr int convertNameKanjiCode2libffftp(int kanjicode) {
 	return
-		kanjicode == KANJI_AUTO ? kanjicodes::KC_AUTO :
-		kanjicode == KANJI_SJIS ? kanjicodes::KC_SJIS :
-		kanjicode == KANJI_JIS ? kanjicodes::KC_JIS :
-		kanjicode == KANJI_EUC ? kanjicodes::KC_EUC :
-		kanjicode == KANJI_SMB_HEX ? kanjicodes::KC_SMH :
-		kanjicode == KANJI_SMB_CAP ? kanjicodes::KC_SMC :
-		kanjicode == KANJI_UTF8N ? kanjicodes::KC_UTF8N :
-		kanjicode == KANJI_UTF8HFSX ? kanjicodes::KC_UTF8HFSX :
+		kanjicode == KANJI_AUTO ? ffftp_kanjicodes::KC_AUTO :
+		kanjicode == KANJI_SJIS ? ffftp_kanjicodes::KC_SJIS :
+		kanjicode == KANJI_JIS ? ffftp_kanjicodes::KC_JIS :
+		kanjicode == KANJI_EUC ? ffftp_kanjicodes::KC_EUC :
+		kanjicode == KANJI_SMB_HEX ? ffftp_kanjicodes::KC_SMH :
+		kanjicode == KANJI_SMB_CAP ? ffftp_kanjicodes::KC_SMC :
+		kanjicode == KANJI_UTF8N ? ffftp_kanjicodes::KC_UTF8N :
+		kanjicode == KANJI_UTF8HFSX ? ffftp_kanjicodes::KC_UTF8HFSX :
 		-1;
 }
 inline static constexpr int convertKanjiCode2ffftp(int kanjicode) {
 	return
-		kanjicode == kanjicodes::KC_NOP ? KANJI_NOCNV :
-		kanjicode == kanjicodes::KC_SJIS ? KANJI_SJIS :
-		kanjicode == kanjicodes::KC_JIS ? KANJI_JIS :
-		kanjicode == kanjicodes::KC_EUC ? KANJI_EUC :
-		kanjicode == kanjicodes::KC_UTF8N ? KANJI_UTF8N :
-		kanjicode == kanjicodes::KC_UTF8BOM ? KANJI_UTF8BOM :
+		kanjicode == ffftp_kanjicodes::KC_NOP ? KANJI_NOCNV :
+		kanjicode == ffftp_kanjicodes::KC_SJIS ? KANJI_SJIS :
+		kanjicode == ffftp_kanjicodes::KC_JIS ? KANJI_JIS :
+		kanjicode == ffftp_kanjicodes::KC_EUC ? KANJI_EUC :
+		kanjicode == ffftp_kanjicodes::KC_UTF8N ? KANJI_UTF8N :
+		kanjicode == ffftp_kanjicodes::KC_UTF8BOM ? KANJI_UTF8BOM :
 		-1;
 }
 inline static constexpr int convertNameKanjiCode2ffftp(int kanjicode) {
 	return
-		kanjicode == kanjicodes::KC_AUTO ? KANJI_AUTO :
-		kanjicode == kanjicodes::KC_SJIS ? KANJI_SJIS :
-		kanjicode == kanjicodes::KC_JIS ? KANJI_JIS :
-		kanjicode == kanjicodes::KC_EUC ? KANJI_EUC :
-		kanjicode == kanjicodes::KC_SMH ? KANJI_SMB_HEX :
-		kanjicode == kanjicodes::KC_SMC ? KANJI_SMB_CAP :
-		kanjicode == kanjicodes::KC_UTF8N ? KANJI_UTF8N :
-		kanjicode == kanjicodes::KC_UTF8HFSX ? KANJI_UTF8HFSX :
+		kanjicode == ffftp_kanjicodes::KC_AUTO ? KANJI_AUTO :
+		kanjicode == ffftp_kanjicodes::KC_SJIS ? KANJI_SJIS :
+		kanjicode == ffftp_kanjicodes::KC_JIS ? KANJI_JIS :
+		kanjicode == ffftp_kanjicodes::KC_EUC ? KANJI_EUC :
+		kanjicode == ffftp_kanjicodes::KC_SMH ? KANJI_SMB_HEX :
+		kanjicode == ffftp_kanjicodes::KC_SMC ? KANJI_SMB_CAP :
+		kanjicode == ffftp_kanjicodes::KC_UTF8N ? KANJI_UTF8N :
+		kanjicode == ffftp_kanjicodes::KC_UTF8HFSX ? KANJI_UTF8HFSX :
 		-1;
 }
-void convertHostData(hostdata& dst, const HOSTDATA& src) {
+void convertHostData(ffftp_hostdata& dst, const HOSTDATA& src) {
 	// [基本]タブ
 	dst.general = {
 		.host_name = src.HostName.c_str(),
@@ -1550,7 +1550,7 @@ void convertHostData(hostdata& dst, const HOSTDATA& src) {
 		.reconnect = src.TransferErrorReconnect == YES,
 	};
 }
-void convertHostData(HOSTDATA& dst, const hostdata& src) {
+void convertHostData(HOSTDATA& dst, const ffftp_hostdata& src) {
 	// [基本]タブ
 	dst.HostName = src.general.host_name;
 	dst.HostAdrs = src.general.host_adrs;
@@ -1618,12 +1618,12 @@ void convertHostData(HOSTDATA& dst, const hostdata& src) {
 	}
 	dst.TransferErrorReconnect = src.feature.reconnect;
 }
-hostdata convertHostData(const HOSTDATA& src) {
-	hostdata ret;
+ffftp_hostdata convertHostData(const HOSTDATA& src) {
+	ffftp_hostdata ret;
 	convertHostData(ret, src);
 	return ret;
 }
-const void* hostContextNew(const void* hc, const hostdata* hdata) {
+const void* hostContextNew(const void* hc, const ffftp_hostdata* hdata) {
 	int pos = -1;
 	int index = -1;
 	if (!hc) {
@@ -1666,7 +1666,7 @@ const void* hostContextNewGroup(const void* hc, const wchar_t* group_name) {
 	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
 	return GetNode(CurrentHost).get();
 }
-const void* hostContextModify(const void* hc, const hostdata* hdata) {
+const void* hostContextModify(const void* hc, const ffftp_hostdata* hdata) {
 	CurrentHost = hostIndex(hc);
 	CopyHostFromList(CurrentHost, &TmpHost);
 	convertHostData(TmpHost, *hdata);
@@ -1701,15 +1701,15 @@ void hostContextUp(const void* hc) {
 void hostContextDown(const void* hc) {
 	HostList::HostDown(hostIndex(hc));
 }
-void hostContextSetDataDefault(const hostdata* hdata) {
+void hostContextSetDataDefault(const ffftp_hostdata* hdata) {
 	CopyDefaultHost(&TmpHost);
 	convertHostData(TmpHost, *hdata);
 	SetDefaultHost(&TmpHost);
 }
-void hostContextDataDefault(hostdata* hdata) {
+void hostContextDataDefault(ffftp_hostdata* hdata) {
 	convertHostData(*hdata, DefaultHost);
 }
-void hostContextData(const void* hc, hostdata* hdata) {
+void hostContextData(const void* hc, ffftp_hostdata* hdata) {
 	static HOSTDATA hd; // 文字列へのポインタはライブラリ使用側に返るのでstaticとする
 	CopyHostFromList(hostIndex(hc), &hd);
 	convertHostData(*hdata, hd);

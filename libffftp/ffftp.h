@@ -103,7 +103,7 @@ LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(c
  *
  * @param[in] hdata 初期化するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(ffftp_hostdata* hdata);
 
 /**
  * @brief hostdataの後処理を行う。
@@ -113,7 +113,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(hostdata* hda
  *
  * @param[in] hdata 後処理するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(ffftp_hostdata* hdata);
 
 /**
  * @brief ホストを追加する。
@@ -122,7 +122,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(hostdata* hdata
  * @param[in] hdata 追加するホスト情報hostdataへのポインタ
  * @return 追加されたホストを示すホストコンテキスト
  */
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(const hostcontext_t hc, const ffftp_hostdata* hdata);
 
 /**
  * @brief グループを追加する。
@@ -140,7 +140,7 @@ LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_newgro
  * @param[in] hdata 修正するホスト情報hostdataへのポインタ
  * @return 修正されたホストを示すホストコンテキスト
  */
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(const hostcontext_t hc, const hostdata* hdata);
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(const hostcontext_t hc, const ffftp_hostdata* hdata);
 
 /**
  * @brief グループ名を修正する。
@@ -186,14 +186,14 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_down(const hostcontex
  *
  * @param[out] hdata 結果を格納するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata_default(hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata_default(ffftp_hostdata* hdata);
 
 /**
  * @brief hostdataのデフォルト値を更新する。
  *
  * @param[in] hdata デフォルト値とするhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const ffftp_hostdata* hdata);
 
 /**
  * @brief 指定したホストコンテキストのhostdataを取得する。
@@ -201,7 +201,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const host
  * @param[in]  hc hostdataを取得したいホストのホストコンテキスト
  * @param[out] hdata 結果を格納するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(const hostcontext_t hc, hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(const hostcontext_t hc, ffftp_hostdata* hdata);
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_name(const hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(const hostcontext_t hc);

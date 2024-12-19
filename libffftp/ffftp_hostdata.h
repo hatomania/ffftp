@@ -10,7 +10,7 @@ extern "C" {
 #endif
 
 /* [基本]タブのUIデータ */
-struct hostdata_general {
+struct ffftp_hostdata_general {
   const wchar_t* host_name;
   const wchar_t* host_adrs;
   const wchar_t* username;
@@ -25,7 +25,7 @@ struct hostdata_general {
 };
 
 /* [拡張]タブのUIデータ */
-struct hostdata_advanced {
+struct ffftp_hostdata_advanced {
   bool firewall;
   bool pasv;
   bool syncmove;
@@ -37,7 +37,7 @@ struct hostdata_advanced {
 };
 
 /* 文字コード */
-enum kanjicodes {
+enum ffftp_kanjicodes {
   KC_NOP,
   KC_AUTO,
   KC_JIS,
@@ -51,7 +51,7 @@ enum kanjicodes {
 };
 
 /* [文字コード]タブのUIデータ */
-struct hostdata_kanjicode {
+struct ffftp_hostdata_kanjicode {
   int kanjicode;
   bool kanacnv;
   int kanjicode_name;
@@ -59,7 +59,7 @@ struct hostdata_kanjicode {
 };
 
 /* [ダイアルアップ]タブのUIデータ */
-struct hostdata_dialup {
+struct ffftp_hostdata_dialup {
   bool dialup;
   const wchar_t** dial_entries;
   size_t dial_entries_cnt;
@@ -69,7 +69,7 @@ struct hostdata_dialup {
 };
 
 /* [高度]タブのUIデータ */
-struct hostdata_special {
+struct ffftp_hostdata_special {
   bool list_cmd_only;
   bool use_mlsd;
   bool use_nlst_r;
@@ -80,14 +80,14 @@ struct hostdata_special {
 };
 
 /* [暗号化]タブのUIデータ */
-struct hostdata_encryption {
+struct ffftp_hostdata_encryption {
   bool use_no_encryption;
   bool use_ftp_es;
   bool use_ftp_is;
 };
 
 /* [暗号化]タブのUIデータ */
-struct hostdata_feature {
+struct ffftp_hostdata_feature {
   int max_thread_cnt;
   bool reuse_cmdsocket;
   bool no_pasv_adrs;
@@ -96,14 +96,14 @@ struct hostdata_feature {
   bool reconnect;
 };
 
-struct hostdata {
-  hostdata_general general;
-  hostdata_advanced advanced;
-  hostdata_kanjicode kanjicode;
-  hostdata_dialup dialup;
-  hostdata_special special;
-  hostdata_encryption encryption;
-  hostdata_feature feature;
+struct ffftp_hostdata {
+  ffftp_hostdata_general general;
+  ffftp_hostdata_advanced advanced;
+  ffftp_hostdata_kanjicode kanjicode;
+  ffftp_hostdata_dialup dialup;
+  ffftp_hostdata_special special;
+  ffftp_hostdata_encryption encryption;
+  ffftp_hostdata_feature feature;
 };
 
 #ifdef __cplusplus

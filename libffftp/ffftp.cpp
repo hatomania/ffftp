@@ -75,14 +75,14 @@ LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(c
   return (const hostcontext_t)libffftp::hostContextNext(hc);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(hostdata* hdata) {
-  std::memset(static_cast<void*>(hdata), 0, sizeof(hostdata));
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(ffftp_hostdata* hdata) {
+  std::memset(static_cast<void*>(hdata), 0, sizeof(ffftp_hostdata));
 }
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(hostdata* hdata) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(ffftp_hostdata* hdata) {
   delete[] hdata->dialup.dial_entries;
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(const hostcontext_t hc, const hostdata* hdata) {
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(const hostcontext_t hc, const ffftp_hostdata* hdata) {
   return convhc(libffftp::hostContextNew(hc, hdata));
 }
 
@@ -90,7 +90,7 @@ LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_newgro
   return convhc(libffftp::hostContextNewGroup(hc, group_name));
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(const hostcontext_t hc, const hostdata* hdata) {
+LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(const hostcontext_t hc, const ffftp_hostdata* hdata) {
   return convhc(libffftp::hostContextModify(hc, hdata));
 }
 
@@ -115,15 +115,15 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_down(const hostcontex
   libffftp::hostContextDown(hc);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata_default(hostdata* hdata) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata_default(ffftp_hostdata* hdata) {
   libffftp::hostContextDataDefault(hdata);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const hostdata* hdata) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const ffftp_hostdata* hdata) {
   libffftp::hostContextSetDataDefault(hdata);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(const hostcontext_t hc, hostdata* hdata) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(const hostcontext_t hc, ffftp_hostdata* hdata) {
   libffftp::hostContextData(hc, hdata);
 }
 

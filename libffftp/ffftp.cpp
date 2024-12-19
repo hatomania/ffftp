@@ -31,12 +31,6 @@
 #include "common.h"
 #include "libffftp.hpp"
 
-namespace {
-inline const hostcontext_t convhc(const void* hc) {
-  return const_cast<const hostcontext_t>(hc);
-}
-}  // namespace
-
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
   return libffftp::initialize();
 }
@@ -67,12 +61,12 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle() {
   return windowtitle.c_str();
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first() {
-  return (const hostcontext_t)libffftp::hostContextFirst();
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first() {
+  return libffftp::hostContextFirst();
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(const hostcontext_t hc) {
-  return (const hostcontext_t)libffftp::hostContextNext(hc);
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(ffftp_hostcontext_t hc) {
+  return libffftp::hostContextNext(hc);
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(ffftp_hostdata* hdata) {
@@ -82,36 +76,35 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(ffftp_hostdata*
   delete[] hdata->dialup.dial_entries;
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(const hostcontext_t hc, const ffftp_hostdata* hdata) {
-  return convhc(libffftp::hostContextNew(hc, hdata));
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata) {
+  return libffftp::hostContextNew(hc, hdata);
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_newgroup(const hostcontext_t hc, const wchar_t* group_name) {
-  return convhc(libffftp::hostContextNewGroup(hc, group_name));
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_newgroup(ffftp_hostcontext_t hc, const wchar_t* group_name) {
+  return libffftp::hostContextNewGroup(hc, group_name);
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(const hostcontext_t hc, const ffftp_hostdata* hdata) {
-  return convhc(libffftp::hostContextModify(hc, hdata));
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata) {
+  return libffftp::hostContextModify(hc, hdata);
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modifygroup(const hostcontext_t hc,
-                              const wchar_t* group_name) {
-  return convhc(libffftp::hostContextModifyGroup(hc, group_name));
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modifygroup(ffftp_hostcontext_t hc, const wchar_t* group_name) {
+  return libffftp::hostContextModifyGroup(hc, group_name);
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_copy(const hostcontext_t hc) {
-  return convhc(libffftp::hostContextCopy(hc));
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_copy(ffftp_hostcontext_t hc) {
+  return libffftp::hostContextCopy(hc);
 }
 
-LIBFFFTP_DECLSPEC const hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_delete(const hostcontext_t hc) {
-  return convhc(libffftp::hostContextDelete(hc));
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_delete(ffftp_hostcontext_t hc) {
+  return libffftp::hostContextDelete(hc);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_up(const hostcontext_t hc) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_up(ffftp_hostcontext_t hc) {
   libffftp::hostContextUp(hc);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_down(const hostcontext_t hc) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_down(ffftp_hostcontext_t hc) {
   libffftp::hostContextDown(hc);
 }
 
@@ -123,19 +116,19 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const ffft
   libffftp::hostContextSetDataDefault(hdata);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(const hostcontext_t hc, ffftp_hostdata* hdata) {
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(ffftp_hostcontext_t hc, ffftp_hostdata* hdata) {
   libffftp::hostContextData(hc, hdata);
 }
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_name(const hostcontext_t hc) {
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_name(ffftp_hostcontext_t hc) {
   return libffftp::hostContextName(hc);
 }
 
-LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(const hostcontext_t hc) {
+LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(ffftp_hostcontext_t hc) {
   return libffftp::hostContextLevel(hc);
 }
 
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(const hostcontext_t hc) {
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(ffftp_hostcontext_t hc) {
   return libffftp::hostContext(hc).Level & SET_LEVEL_GROUP;
 }
 
@@ -145,7 +138,7 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage() {
   return msg.c_str();
 }
 
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(const hostcontext_t hc) {
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(ffftp_hostcontext_t hc) {
   return libffftp::connect(hc);
 }
 
@@ -161,8 +154,9 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword2nd(
   LIBFFFTP_CALLBACK_SETTER(AskMasterPassword2nd);
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askretrymasterpassword(bool (*func)()){
-        LIBFFFTP_CALLBACK_SETTER(AskRetryMasterPassword)}
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askretrymasterpassword(bool (*func)()) {
+        LIBFFFTP_CALLBACK_SETTER(AskRetryMasterPassword);
+}
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* opt) {
   std::memset(static_cast<void*>(opt), 0, sizeof(ffftp_option));

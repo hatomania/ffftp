@@ -1391,17 +1391,14 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 
 #ifdef LIBFFFTP_EXPORTS
 
+#include "libffftp/ffftp_common.h"
 #include "libffftp/ffftp_hostdata.h"
 namespace libffftp {
 
-inline static const HOSTLISTDATA* castContext2Host(const void* hc) {
-	return static_cast<const HOSTLISTDATA*>(hc);
-}
-
-inline static HOSTLISTDATA* castContext2Host(void* hc) {
+inline static HOSTLISTDATA* castContext2Host(ffftp_hostcontext_t hc) {
 	return const_cast<HOSTLISTDATA*>(static_cast<const HOSTLISTDATA*>(hc));
 }
-static int hostIndex(const void* hc) {
+static int hostIndex(ffftp_hostcontext_t hc) {
 	auto data = castContext2Host(hc);
 	int _n = 0;
 	for (auto p = HostListTop.get(); p != data; p = p->GetNext().get())
@@ -1412,13 +1409,13 @@ inline static int currentHostIndex() {
 	return CurrentHost;
 }
 
-HOSTDATA hostContext(const void* hc) {
+HOSTDATA hostContext(ffftp_hostcontext_t hc) {
 	return *static_cast<const HOSTLISTDATA*>(hc);
 }
-const void* hostContextFirst() {
+ffftp_hostcontext_t hostContextFirst() {
 	return HostListTop.get();
 }
-const void* hostContextNext(const void* hc) {
+ffftp_hostcontext_t hostContextNext(ffftp_hostcontext_t hc) {
 	return castContext2Host(const_cast<void*>(hc))->GetNext().get();
 }
 inline static constexpr int timezone2Index(int timezone) {
@@ -1623,7 +1620,7 @@ ffftp_hostdata convertHostData(const HOSTDATA& src) {
 	convertHostData(ret, src);
 	return ret;
 }
-const void* hostContextNew(const void* hc, const ffftp_hostdata* hdata) {
+ffftp_hostcontext_t hostContextNew(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata) {
 	int pos = -1;
 	int index = -1;
 	if (!hc) {
@@ -1643,7 +1640,7 @@ const void* hostContextNew(const void* hc, const ffftp_hostdata* hdata) {
 	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
 	return GetNode(CurrentHost).get();
 }
-const void* hostContextNewGroup(const void* hc, const wchar_t* group_name) {
+ffftp_hostcontext_t hostContextNewGroup(ffftp_hostcontext_t hc, const wchar_t* group_name) {
 	int pos = -1;
 	int index = -1;
 	if (!hc) {
@@ -1666,21 +1663,21 @@ const void* hostContextNewGroup(const void* hc, const wchar_t* group_name) {
 	AddHostToList(&TmpHost, pos, SET_LEVEL_SAME);
 	return GetNode(CurrentHost).get();
 }
-const void* hostContextModify(const void* hc, const ffftp_hostdata* hdata) {
+ffftp_hostcontext_t hostContextModify(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata) {
 	CurrentHost = hostIndex(hc);
 	CopyHostFromList(CurrentHost, &TmpHost);
 	convertHostData(TmpHost, *hdata);
 	UpdateHostToList(CurrentHost, &TmpHost);
 	return GetNode(CurrentHost).get();
 }
-const void* hostContextModifyGroup(const void* hc, const wchar_t* group_name) {
+ffftp_hostcontext_t hostContextModifyGroup(ffftp_hostcontext_t hc, const wchar_t* group_name) {
 	CurrentHost = hostIndex(hc);
 	CopyHostFromList(CurrentHost, &TmpHost);
 	TmpHost.HostName = group_name;
 	UpdateHostToList(CurrentHost, &TmpHost);
 	return GetNode(CurrentHost).get();
 }
-const void* hostContextCopy(const void* hc) {
+ffftp_hostcontext_t hostContextCopy(ffftp_hostcontext_t hc) {
 	CurrentHost = hostIndex(hc);
 	CopyHostFromList(CurrentHost, &TmpHost);
 	TmpHost.BookMark = {};
@@ -1688,17 +1685,17 @@ const void* hostContextCopy(const void* hc) {
 	AddHostToList(&TmpHost, CurrentHost, SET_LEVEL_SAME);
 	return GetNode(CurrentHost).get();
 }
-const void* hostContextDelete(const void* hc) {
+ffftp_hostcontext_t hostContextDelete(ffftp_hostcontext_t hc) {
 	CurrentHost = hostIndex(hc);
 	DelHostFromList(CurrentHost);
 	if (CurrentHost >= Hosts)
 		CurrentHost = std::max(0, Hosts - 1);
 	return GetNode(CurrentHost).get();
 }
-void hostContextUp(const void* hc) {
+void hostContextUp(ffftp_hostcontext_t hc) {
 	HostList::HostUp(hostIndex(hc));
 }
-void hostContextDown(const void* hc) {
+void hostContextDown(ffftp_hostcontext_t hc) {
 	HostList::HostDown(hostIndex(hc));
 }
 void hostContextSetDataDefault(const ffftp_hostdata* hdata) {
@@ -1709,20 +1706,20 @@ void hostContextSetDataDefault(const ffftp_hostdata* hdata) {
 void hostContextDataDefault(ffftp_hostdata* hdata) {
 	convertHostData(*hdata, DefaultHost);
 }
-void hostContextData(const void* hc, ffftp_hostdata* hdata) {
+void hostContextData(ffftp_hostcontext_t hc, ffftp_hostdata* hdata) {
 	static HOSTDATA hd; // 文字列へのポインタはライブラリ使用側に返るのでstaticとする
 	CopyHostFromList(hostIndex(hc), &hd);
 	convertHostData(*hdata, hd);
 }
-const wchar_t* hostContextName(const void* hc) {
+const wchar_t* hostContextName(ffftp_hostcontext_t hc) {
 	static HOSTDATA hdata;
 	hdata = hostContext(hc);
 	return hdata.HostName.c_str();
 }
-int hostContextLevel(const void* hc) {
+int hostContextLevel(ffftp_hostcontext_t hc) {
 	return ((HOSTLISTDATA*)hc)->GetLevel();
 }
-bool connect(const void* hc) {
+bool connect(ffftp_hostcontext_t hc) {
 	ConnectProc(DLG_TYPE_CON, hostIndex(hc));
 	return true; // TODO: 接続失敗判定
 }

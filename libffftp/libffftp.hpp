@@ -2,6 +2,7 @@
 
 #include "callback.h"  // コールバック関数プロトタイプ宣言はcallback.hに記載
 #include "common.h"
+#include "ffftp_common.h"
 #include "ffftp_hostdata.h"
 #include "ffftp_option.h"
 
@@ -13,23 +14,23 @@ extern void finalize();
 extern const wchar_t* getApplicationName();
 extern void getWindowTitle(std::wstring& title);
 // hostman.cpp
-extern HOSTDATA hostContext(const void* hc);
-extern const void* hostContextFirst();
-extern const void* hostContextNext(const void* hc);
-extern const void* hostContextNew(const void* hc, const ffftp_hostdata* hdata);
-extern const void* hostContextNewGroup(const void* hc, const wchar_t* group_name);
-extern const void* hostContextModify(const void* hc, const ffftp_hostdata* hdata);
-extern const void* hostContextModifyGroup(const void* hc, const wchar_t* group_name);
-extern const void* hostContextCopy(const void* hc);
-extern const void* hostContextDelete(const void* hc);
-extern void hostContextUp(const void* hc);
-extern void hostContextDown(const void* hc);
+extern HOSTDATA hostContext(ffftp_hostcontext_t hc);
+extern ffftp_hostcontext_t hostContextFirst();
+extern ffftp_hostcontext_t hostContextNext(ffftp_hostcontext_t hc);
+extern ffftp_hostcontext_t hostContextNew(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata);
+extern ffftp_hostcontext_t hostContextNewGroup(ffftp_hostcontext_t hc, const wchar_t* group_name);
+extern ffftp_hostcontext_t hostContextModify(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata);
+extern ffftp_hostcontext_t hostContextModifyGroup(ffftp_hostcontext_t hc, const wchar_t* group_name);
+extern ffftp_hostcontext_t hostContextCopy(ffftp_hostcontext_t hc);
+extern ffftp_hostcontext_t hostContextDelete(ffftp_hostcontext_t hc);
+extern void hostContextUp(ffftp_hostcontext_t hc);
+extern void hostContextDown(ffftp_hostcontext_t hc);
 extern void hostContextSetDataDefault(const ffftp_hostdata* hdata);
 extern void hostContextDataDefault(ffftp_hostdata* hdata);
-extern void hostContextData(const void* hc, ffftp_hostdata* hdata);
-extern const wchar_t* hostContextName(const void* hc);
-extern int hostContextLevel(const void* hc);
-extern bool connect(const void* hc);
+extern void hostContextData(ffftp_hostcontext_t hc, ffftp_hostdata* hdata);
+extern const wchar_t* hostContextName(ffftp_hostcontext_t hc);
+extern int hostContextLevel(ffftp_hostcontext_t hc);
+extern bool connect(ffftp_hostcontext_t hc);
 extern void showHelp(int id);
 // taskwin.cpp
 extern std::wstring getTaskMessage();

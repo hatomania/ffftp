@@ -201,7 +201,7 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_name(ffftp_
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(ffftp_hostcontext_t hc);
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(ffftp_hostcontext_t hc);
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_taskmessage();
 
 /**
  * @brief 指定したホストコンテキストで接続する。

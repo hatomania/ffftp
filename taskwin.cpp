@@ -120,15 +120,8 @@ void Error(std::wstring_view functionName, int lastError) {
 		Debug(L"{} failed(0x{:08X}): {}"sv, functionName, unsigned(lastError), GetErrorMessage(lastError));
 }
 
-namespace libffftp {
-
-std::wstring getTaskMessage() {
-	std::wstring _r;
-	for (std::wstring temp; queue_libffftp.try_pop(temp);) {
-		_r += temp;
-		_r += L"\r\n"sv;
-	}
-	return _r;
-}
-
-}
+#ifdef LIBFFFTP_EXPORTS
+#define LIBFFFTP_IMPL
+#include "taskwin_libffftp.hpp"
+#undef LIBFFFTP_IMPL
+#endif

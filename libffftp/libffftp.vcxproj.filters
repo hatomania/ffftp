@@ -13,33 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\ffftp">
+      <UniqueIdentifier>{93a785e8-7a99-43a6-8e0b-e36bb32e2806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ffftp">
+      <UniqueIdentifier>{8c986e6d-beb4-4cc1-ad4a-2b9cff7f2e38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソース ファイル\ffftp">
+      <UniqueIdentifier>{af946597-5607-4b37-8e32-b5c3b89051b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ffftp.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\common.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\config.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\dialog.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\filelist.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\helpid.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\OleDragDrop.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Resource\resource.en-US.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Resource\resource.ja-JP.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="libffftp.hpp">
@@ -57,6 +42,48 @@
     <ClInclude Include="ffftp_common.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="..\common.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\config.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dialog.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\filelist.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\helpid.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OleDragDrop.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Resource\resource.en-US.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Resource\resource.ja-JP.h">
+      <Filter>ヘッダー ファイル\ffftp</Filter>
+    </ClInclude>
+    <ClInclude Include="hostman_libffftp.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="libffftp_common.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="main_libffftp.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="taskwin_libffftp.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="option_libffftp.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="connect_libffftp.hpp">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -65,68 +92,68 @@
     <ClCompile Include="ffftp.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\bookmark.cpp">
+    <ClCompile Include="common.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\codecnv.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\bookmark.cpp">
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\connect.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\filelist.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\ftpproc.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\getput.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\history.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\hostman.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\local.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\main.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\misc.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\option.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\ras.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\registry.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\remote.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\skey.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\socket.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\statuswin.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\taskwin.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\toolmenu.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="common.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\ffftp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

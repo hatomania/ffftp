@@ -101,11 +101,17 @@
     <ClInclude Include="..\Resource\resource.en-US.h" />
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
     <ClInclude Include="callback.h" />
+    <ClInclude Include="connect_libffftp.hpp" />
     <ClInclude Include="ffftp.h" />
     <ClInclude Include="ffftp_common.h" />
     <ClInclude Include="ffftp_hostdata.h" />
     <ClInclude Include="ffftp_option.h" />
+    <ClInclude Include="hostman_libffftp.hpp" />
     <ClInclude Include="libffftp.hpp" />
+    <ClInclude Include="libffftp_common.hpp" />
+    <ClInclude Include="main_libffftp.hpp" />
+    <ClInclude Include="option_libffftp.hpp" />
+    <ClInclude Include="taskwin_libffftp.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\bookmark.cpp" />

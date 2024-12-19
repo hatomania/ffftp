@@ -29,6 +29,7 @@
 #include "ffftp.h"
 
 #include "common.h"
+#include "callback.h"
 #include "libffftp.hpp"
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
@@ -56,9 +57,7 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_application_name() 
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle() {
-  static std::wstring windowtitle{};
-  libffftp::getWindowTitle(windowtitle);
-  return windowtitle.c_str();
+  return libffftp::getWindowTitle();
 }
 
 LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first() {
@@ -129,13 +128,11 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(ffftp_hostcontex
 }
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(ffftp_hostcontext_t hc) {
-  return libffftp::hostContext(hc).Level & SET_LEVEL_GROUP;
+  return libffftp::hostContextIsGroup(hc);
 }
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_gettaskmessage() {
-  static std::wstring msg{};
-  msg = libffftp::getTaskMessage();
-  return msg.c_str();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_taskmessage() {
+  return libffftp::taskMessage();
 }
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(ffftp_hostcontext_t hc) {

@@ -115,7 +115,6 @@
 #include "dialog.h"
 #include "helpid.h"
 #include "Resource/resource.ja-JP.h"
-#include "callback.h"
 #pragma comment(lib, "bcrypt.lib")
 #pragma comment(lib, "Comctl32.lib")
 #pragma comment(lib, "normaliz.lib")

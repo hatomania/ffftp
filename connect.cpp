@@ -29,6 +29,11 @@
 
 #include "common.h"
 
+#ifdef LIBFFFTP_EXPORTS
+#define LIBFFFTP_OTHER
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_OTHER
+#endif
 
 /*===== プロトタイプ =====*/
 
@@ -81,13 +86,6 @@ static bool SplitUNCpath(std::wstring&& unc, std::wstring& Host, std::wstring& P
 	return false;
 }
 
-// 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
-// libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
-static bool AskSaveCryptDefaultCallback() {
-	return (bool)Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd());
-}
-typedef bool (*AskSaveCryptFunc)();
-static AskSaveCryptFunc asksavecrypt_func = AskSaveCryptDefaultCallback;
 
 /*----- ホスト一覧を使ってホストへ接続 ----------------------------------------
 *
@@ -1513,11 +1511,8 @@ int AskTryingConnect() noexcept {
 	return TryConnect;
 }
 
-// libffftpのために用意されたインターフェース
-namespace libffftp {
-
-void setAskSaveCryptCallback(bool (*func)()) {
-	asksavecrypt_func = func;
-}
-
-}
+#ifdef LIBFFFTP_EXPORTS
+#define LIBFFFTP_IMPL
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_IMPL
+#endif

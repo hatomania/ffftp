@@ -12,7 +12,7 @@ LIBFFFTP_FUNCTION(const wchar_t* taskMessage())
 {
   std::wstring _r{};
   _r.clear();
-  for (std::wstring temp; queue_libffftp.try_pop(temp);) {
+  for (std::wstring temp; queue.try_pop(temp);) {
     _r += temp;
     _r += L"\r\n"sv;
   }

@@ -32,7 +32,6 @@
 #define TASK_BUFSIZE	(16*1024)
 static HWND hWndTask = NULL;
 static Concurrency::concurrent_queue<std::wstring> queue;
-static Concurrency::concurrent_queue<std::wstring> queue_libffftp; // libffftp用に提供するメッセージキュー（内容は単にqueueのコピー）
 
 static VOID CALLBACK Writer(HWND hwnd, UINT, UINT_PTR, DWORD) {
 	std::wstring local;
@@ -101,7 +100,6 @@ void detail::Notice(UINT id, std::wformat_args args) {
 	auto const format = GetString(id);
 	auto message = std::vformat(format, args);
 	_RPTWN(_CRT_WARN, L"N: %s\n", message.c_str());
-	queue_libffftp.push(message);
 	queue.push(std::move(message));
 }
 
@@ -111,7 +109,6 @@ void detail::Debug(std::wstring_view format, std::wformat_args args) {
 	auto message = std::vformat(format, args);
 	_RPTWN(_CRT_WARN, L"D: %s\n", message.c_str());
 	message.insert(0, L"## "sv);
-	queue_libffftp.push(message);
 	queue.push(std::move(message));
 }
 

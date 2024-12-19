@@ -17,11 +17,9 @@ extern HOSTDATA hostContext(const void* hc);
 extern const void* hostContextFirst();
 extern const void* hostContextNext(const void* hc);
 extern const void* hostContextNew(const void* hc, const hostdata* hdata);
-extern const void* hostContextNewGroup(const void* hc,
-                                       const wchar_t* group_name);
+extern const void* hostContextNewGroup(const void* hc, const wchar_t* group_name);
 extern const void* hostContextModify(const void* hc, const hostdata* hdata);
-extern const void* hostContextModifyGroup(const void* hc,
-                                          const wchar_t* group_name);
+extern const void* hostContextModifyGroup(const void* hc, const wchar_t* group_name);
 extern const void* hostContextCopy(const void* hc);
 extern const void* hostContextDelete(const void* hc);
 extern void hostContextUp(const void* hc);

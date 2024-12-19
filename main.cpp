@@ -38,11 +38,9 @@
 #pragma comment(lib, "HtmlHelp.lib")
 #pragma comment(lib, "Version.Lib")
 
-#ifdef LIBFFFTP_EXPORTS
 #define LIBFFFTP_OTHER
-#include "main_libffftp.hpp"
+#include "libffftp/main_libffftp.hpp"
 #undef LIBFFFTP_OTHER
-#endif
 
 /**
  * @name

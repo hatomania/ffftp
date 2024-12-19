@@ -16,6 +16,19 @@ extern "C" {
  */
 typedef void* ffftp_hostcontext_t;
 
+struct ffftp_procparam {
+  void* param1;
+  void* param2;
+  void* param3;
+  void* param4;
+};
+
+enum ffftp_procmsg {
+  SHOW_MESSAGEBOX,
+};
+
+typedef int (*ffftp_proc_callback)(unsigned int msg, ffftp_procparam param);
+
 #ifdef __cplusplus
 }
 #endif

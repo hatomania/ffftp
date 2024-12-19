@@ -68,6 +68,15 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize();
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize();
 
+/**
+ * @brief プロシージャのコールバック関数を登録する。
+ *
+ * ffftpからの通知はこのコールバック関数で受け取ります。
+ *
+ * @param[in] proc 通知を受け取るコールバック関数への関数ポインタ
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_registproc(ffftp_proc_callback proc);
+
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();

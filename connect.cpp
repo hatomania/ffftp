@@ -29,11 +29,9 @@
 
 #include "common.h"
 
-#ifdef LIBFFFTP_EXPORTS
 #define LIBFFFTP_OTHER
-#include "connect_libffftp.hpp"
+#include "libffftp/connect_libffftp.hpp"
 #undef LIBFFFTP_OTHER
-#endif
 
 /*===== プロトタイプ =====*/
 

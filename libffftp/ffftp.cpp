@@ -31,6 +31,7 @@
 #include "common.h"
 #include "callback.h"
 #include "libffftp.hpp"
+#include "libffftp_common.hpp"
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
   return libffftp::initialize();
@@ -38,6 +39,10 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
   libffftp::finalize();
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_registproc(ffftp_proc_callback proc) {
+  ffftp_proc = proc;
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected() {

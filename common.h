@@ -31,6 +31,11 @@
 #define SECURITY_WIN32
 #define WIN32_LEAN_AND_MEAN
 #define UMDF_USING_NTSTATUS
+#ifdef  LIBFFFTP_EXPORTS
+#include "libffftp_windows.hpp"
+#else
+#define LIBFFFTP_WINDOWS
+#endif //  LIBFFFTP_EXPORTS
 #pragma warning(disable: 26426)		// error C26426: Global initializer calls a non-constexpr function 'XXX' (i.22).
 #pragma warning(disable: 26429)		// error C26429: Symbol 'XXX' is never tested for nullness, it can be marked as not_null (f.23).
 #pragma warning(disable: 26432)		// error C26432: If you define or delete any default operation in the type 'XXX', define or delete them all (c.21).
@@ -1331,7 +1336,7 @@ static inline auto replace(std::basic_string_view<Char> input, boost::basic_rege
 template<int captionId = IDS_APP>
 static inline auto Message(HWND owner, int textId, DWORD style) noexcept {
 	MSGBOXPARAMSW msgBoxParams{ sizeof(MSGBOXPARAMSW), owner, GetFtpInst(), MAKEINTRESOURCEW(textId), MAKEINTRESOURCEW(captionId), style, nullptr, 0, nullptr, LANG_NEUTRAL };
-	return MessageBoxIndirectW(&msgBoxParams);
+	return LIBFFFTP_WINDOWS::MessageBoxIndirectW(&msgBoxParams);
 }
 template<int captionId = IDS_APP>
 static inline auto Message(int textId, DWORD style) noexcept {

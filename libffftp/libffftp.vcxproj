@@ -109,6 +109,7 @@
     <ClInclude Include="hostman_libffftp.hpp" />
     <ClInclude Include="libffftp.hpp" />
     <ClInclude Include="libffftp_common.hpp" />
+    <ClInclude Include="libffftp_windows.hpp" />
     <ClInclude Include="main_libffftp.hpp" />
     <ClInclude Include="option_libffftp.hpp" />
     <ClInclude Include="taskwin_libffftp.hpp" />
@@ -137,6 +138,7 @@
     <ClCompile Include="common.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ffftp.cpp" />
+    <ClCompile Include="libffftp_windows.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resource\bitmap1.bmp" />

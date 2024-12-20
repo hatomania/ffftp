@@ -1,7 +1,7 @@
-﻿#if defined(LIBFFFTP_OTHER)
+﻿#ifdef LIBFFFTP_OTHER
 
 
-#elif defined(LIBFFFTP_DECL) || defined(LIBFFFTP_IMPL)
+#else
 
 #include "libffftp_common.hpp"
 #include "ffftp_common.h"
@@ -9,8 +9,9 @@
 
 namespace libffftp {
 
-#ifdef LIBFFFTP_IMPL
+extern const std::vector<std::wstring>& dialupEntries();
 
+#ifndef LIBFFFTP_DECL
 namespace {
 
 HOSTLISTDATA* castContext2Host(ffftp_hostcontext_t hc) {
@@ -227,25 +228,24 @@ inline ffftp_hostdata convertHostData(const HOSTDATA& src) {
 }
 
 } // namespace
-
-#endif // LIBFFFTP_IMPL
+#endif // LIBFFFTP_DECL
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextFirst())
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   return HostListTop.get();
 }
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextNext(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   return castContext2Host(hc)->GetNext().get();
 }
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextNew(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   int pos = -1;
   int index = -1;
@@ -269,7 +269,7 @@ LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextNew(ffftp_hostcontext_t hc, con
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextNewGroup(ffftp_hostcontext_t hc, const wchar_t* group_name))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   int pos = -1;
   int index = -1;
@@ -296,7 +296,7 @@ LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextNewGroup(ffftp_hostcontext_t hc
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextModify(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CurrentHost = hostIndex(hc);
   CopyHostFromList(CurrentHost, &TmpHost);
@@ -307,7 +307,7 @@ LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextModify(ffftp_hostcontext_t hc, 
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextModifyGroup(ffftp_hostcontext_t hc, const wchar_t* group_name))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CurrentHost = hostIndex(hc);
   CopyHostFromList(CurrentHost, &TmpHost);
@@ -318,7 +318,7 @@ LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextModifyGroup(ffftp_hostcontext_t
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextCopy(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CurrentHost = hostIndex(hc);
   CopyHostFromList(CurrentHost, &TmpHost);
@@ -330,7 +330,7 @@ LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextCopy(ffftp_hostcontext_t hc))
 #endif
 
 LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextDelete(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CurrentHost = hostIndex(hc);
   DelHostFromList(CurrentHost);
@@ -341,7 +341,7 @@ LIBFFFTP_FUNCTION(ffftp_hostcontext_t hostContextDelete(ffftp_hostcontext_t hc))
 #endif
 
 LIBFFFTP_FUNCTION(void hostContextUp(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CurrentHost = hostIndex(hc);
 
@@ -405,7 +405,7 @@ LIBFFFTP_FUNCTION(void hostContextUp(ffftp_hostcontext_t hc))
 #endif
 
 LIBFFFTP_FUNCTION(void hostContextDown(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CurrentHost = hostIndex(hc);
 
@@ -493,7 +493,7 @@ LIBFFFTP_FUNCTION(void hostContextDown(ffftp_hostcontext_t hc))
 #endif
 
 LIBFFFTP_FUNCTION(void hostContextSetDataDefault(const ffftp_hostdata* hdata))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   CopyDefaultHost(&TmpHost);
   convertHostData(TmpHost, *hdata);
@@ -502,14 +502,14 @@ LIBFFFTP_FUNCTION(void hostContextSetDataDefault(const ffftp_hostdata* hdata))
 #endif
 
 LIBFFFTP_FUNCTION(void hostContextDataDefault(ffftp_hostdata* hdata))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   convertHostData(*hdata, DefaultHost);
 }
 #endif
 
 LIBFFFTP_FUNCTION(void hostContextData(ffftp_hostcontext_t hc, ffftp_hostdata* hdata))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   static HOSTDATA hd; // 文字列へのポインタはライブラリ使用側に返るのでstaticとする
   CopyHostFromList(hostIndex(hc), &hd);
@@ -518,7 +518,7 @@ LIBFFFTP_FUNCTION(void hostContextData(ffftp_hostcontext_t hc, ffftp_hostdata* h
 #endif
 
 LIBFFFTP_FUNCTION(const wchar_t* hostContextName(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   static std::wstring host_name{};
   host_name = castContext2Host(hc)->HostName.c_str();
@@ -527,21 +527,21 @@ LIBFFFTP_FUNCTION(const wchar_t* hostContextName(ffftp_hostcontext_t hc))
 #endif
 
 LIBFFFTP_FUNCTION(int hostContextLevel(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   return castContext2Host(hc)->GetLevel();
 }
 #endif
 
 LIBFFFTP_FUNCTION(bool hostContextIsGroup(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   return castContext2Host(hc)->GetLevel() & SET_LEVEL_GROUP;
 }
 #endif
 
 LIBFFFTP_FUNCTION(bool connect(ffftp_hostcontext_t hc))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   ConnectProc(DLG_TYPE_CON, hostIndex(hc));
   return AskConnecting() == YES;
@@ -549,7 +549,7 @@ LIBFFFTP_FUNCTION(bool connect(ffftp_hostcontext_t hc))
 #endif
 
 LIBFFFTP_FUNCTION(void showHelp(int id))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   ShowHelp(id);
 }

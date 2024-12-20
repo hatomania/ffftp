@@ -751,7 +751,5 @@ int GetDecimalText(HWND hDlg, int Ctrl) {
 }
 
 #ifdef LIBFFFTP_EXPORTS
-#define LIBFFFTP_IMPL
 #include "option_libffftp.hpp"
-#undef LIBFFFTP_IMPL
 #endif

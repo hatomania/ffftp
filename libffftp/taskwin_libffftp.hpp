@@ -1,14 +1,14 @@
-﻿#if defined(LIBFFFTP_OTHER)
+﻿#ifdef LIBFFFTP_OTHER
 
 
-#elif defined(LIBFFFTP_DECL) || defined(LIBFFFTP_IMPL)
+#else
 
 #include "libffftp_common.hpp"
 
 namespace libffftp {
 
 LIBFFFTP_FUNCTION(const wchar_t* taskMessage())
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   std::wstring _r{};
   _r.clear();

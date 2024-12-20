@@ -139,28 +139,28 @@ void ConnectProc(int Type, int Num)
 				case CRYPT_NONE:
 					if(CurHost.UseFTPIS != NO || CurHost.UseSFTP != NO)
 					{
-						if (asksavecrypt_func())
+						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
 							SetHostEncryption(AskCurrentHost(), CurHost.UseNoEncryption, CurHost.UseFTPES, NO, NO);
 					}
 					break;
 				case CRYPT_FTPES:
 					if(CurHost.UseNoEncryption != NO || CurHost.UseFTPIS != NO || CurHost.UseSFTP != NO)
 					{
-						if (asksavecrypt_func())
+						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
 							SetHostEncryption(AskCurrentHost(), NO, CurHost.UseFTPES, NO, NO);
 					}
 					break;
 				case CRYPT_FTPIS:
 					if(CurHost.UseNoEncryption != NO || CurHost.UseFTPES != NO || CurHost.UseSFTP != NO)
 					{
-						if (asksavecrypt_func())
+						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
 							SetHostEncryption(AskCurrentHost(), NO, NO, CurHost.UseFTPIS, NO);
 					}
 					break;
 				case CRYPT_SFTP:
 					if(CurHost.UseNoEncryption != NO || CurHost.UseFTPES != NO || CurHost.UseFTPIS != NO)
 					{
-						if (asksavecrypt_func())
+						if(Dialog(GetFtpInst(), savecrypt_dlg, GetMainHwnd()))
 							SetHostEncryption(AskCurrentHost(), NO, NO, NO, CurHost.UseSFTP);
 					}
 					break;
@@ -1510,7 +1510,5 @@ int AskTryingConnect() noexcept {
 }
 
 #ifdef LIBFFFTP_EXPORTS
-#define LIBFFFTP_IMPL
 #include "connect_libffftp.hpp"
-#undef LIBFFFTP_IMPL
 #endif

@@ -112,6 +112,7 @@
     <ClInclude Include="libffftp_windows.hpp" />
     <ClInclude Include="main_libffftp.hpp" />
     <ClInclude Include="option_libffftp.hpp" />
+    <ClInclude Include="ras_libffftp.hpp" />
     <ClInclude Include="taskwin_libffftp.hpp" />
   </ItemGroup>
   <ItemGroup>

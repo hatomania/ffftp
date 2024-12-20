@@ -118,7 +118,5 @@ void Error(std::wstring_view functionName, int lastError) {
 }
 
 #ifdef LIBFFFTP_EXPORTS
-#define LIBFFFTP_IMPL
 #include "taskwin_libffftp.hpp"
-#undef LIBFFFTP_IMPL
 #endif

@@ -1,7 +1,7 @@
-﻿#if defined(LIBFFFTP_OTHER)
+﻿#ifdef LIBFFFTP_OTHER
 
 
-#elif defined(LIBFFFTP_DECL) || defined(LIBFFFTP_IMPL)
+#else
 
 #include "ffftp_option.h"
 #include "libffftp_common.hpp"
@@ -10,7 +10,7 @@ namespace libffftp {
 
 // オプションを設定する
 LIBFFFTP_FUNCTION(void setOption(const ffftp_option& opt))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   // wchar_tの配列からvector<wstring>に変換する関数オブジェクト
   auto wchar2VectorWstr = [](std::vector<std::wstring>& out_str, const wchar_t** in_str, size_t in_cnt) {
@@ -124,7 +124,7 @@ LIBFFFTP_FUNCTION(void setOption(const ffftp_option& opt))
 
 // 現在のオプションを取得する
 LIBFFFTP_FUNCTION(void option(ffftp_option& opt))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   // vector<wstring>からwchar_tの配列に変換する関数オブジェクト
   auto vectorWstr2Wchar = [](const wchar_t**& out_str, size_t& out_cnt, const std::vector<std::wstring>& in_str) {
@@ -274,7 +274,7 @@ LIBFFFTP_FUNCTION(void option(ffftp_option& opt))
 #endif
 
 LIBFFFTP_FUNCTION(void showSoundSettings(void))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   __pragma(warning(suppress : 28159))
   WinExec(std::format("{} mmsys.cpl,,2"sv, (systemDirectory() / L"control.exe").string()).c_str(), SW_NORMAL);

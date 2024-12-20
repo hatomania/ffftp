@@ -1,5 +1,4 @@
-﻿/** @file main.cpp */
- /*=============================================================================
+﻿/*=============================================================================
 *
 *									ＦＦＦＴＰ
 *
@@ -29,94 +28,50 @@
 /============================================================================*/
 
 #include "common.h"
-// #pragma hdrstopとは？
-// 共通ヘッダファイルのインクルード直後に記述することで最適なコンパイル結果が得られるらしい
-// https://qiita.com/msnaru/items/bb098447292a20d8faf3
 #pragma hdrstop
-#include <delayimp.h>// 遅延読み込みヘルパー。なくてもビルドは通るが必要なのか？ https://hoshizuki.hateblo.jp/entry/20090531/p1
+#include <delayimp.h>
 #include <HtmlHelp.h>
 #pragma comment(lib, "HtmlHelp.lib")
 #pragma comment(lib, "Version.Lib")
 
-#define LIBFFFTP_OTHER
-#include "libffftp/main_libffftp.hpp"
-#undef LIBFFFTP_OTHER
+#define RESIZE_OFF		0		/* ウインドウの区切り位置変更していない */
+#define RESIZE_ON		1		/* ウインドウの区切り位置変更中 */
+#define RESIZE_PREPARE	2		/* ウインドウの区切り位置変更の準備 */
 
-/**
- * @name
- * @brief ウィンドウのサイズ変更の状態を表すマクロ群
- *
- * cpp内で定義されているマクロなので、このソースファイル内でのみ使用されることに留意してください。\n
- * 参照元: @ref CheckResizeFrame()
- */
- ///@{
-#define RESIZE_OFF		0		/**< @brief ウインドウの区切り位置変更していない */
-#define RESIZE_ON		1		/**< @brief ウインドウの区切り位置変更中 */
-#define RESIZE_PREPARE	2		/**< @brief ウインドウの区切り位置変更の準備 */
-
-#define RESIZE_HPOS		0		/**< @brief ローカル－ホスト間の区切り位置変更 */
-#define RESIZE_VPOS		1		/**< @brief リスト－タスク間の区切り位置の変更 */
-///@}
+#define RESIZE_HPOS		0		/* ローカル－ホスト間の区切り位置変更 */
+#define RESIZE_VPOS		1		/* リスト－タスク間の区切り位置の変更 */
 
 /*===== コマンドラインオプション =====*/
 
-/**
- * @name コマンドラインオプションマクロ
- * @brief コマンドラインオプションの解析に伴うアプリの動作を定義するマクロ軍
- *
- * cpp内で定義されているマクロなので、このソースファイル内でのみ使用されることに留意してください。\n
- * 参照元: @ref FtpWndProc(), @ref AnalyzeComLine()
- */
-///@{
-#define OPT_MIRROR		0x00000001	/**< @brief ミラーリングアップロードを行う */
-#define OPT_FORCE		0x00000002	/**< @brief ミラーリング開始の確認をしない */
-#define OPT_QUIT		0x00000004	/**< @brief 終了後プログラム終了 */
-#define OPT_EUC			0x00000008	/**< @brief 漢字コードはEUC */
-#define OPT_JIS			0x00000010	/**< @brief 漢字コードはJIS */
-#define OPT_ASCII		0x00000020	/**< @brief アスキー転送モード */
-#define OPT_BINARY		0x00000040	/**< @brief バイナリ転送モード */
-#define OPT_AUTO		0x00000080	/**< @brief 自動判別 */
-#define OPT_KANA		0x00000100	/**< @brief 半角かなをそのまま通す */
-#define OPT_EUC_NAME	0x00000200	/**< @brief ファイル名はEUC */
-#define OPT_JIS_NAME	0x00000400	/**< @brief ファイル名はJIS */
-#define OPT_MIRRORDOWN	0x00000800	/**< @brief ミラーリングダウンロードを行う */
-#define OPT_SAVEOFF		0x00001000	/**< @brief 設定の保存を中止する */
-#define OPT_SAVEON		0x00002000	/**< @brief 設定の保存を再開する */
-#define OPT_SJIS		0x00004000	/**< @brief 漢字コードはShift_JIS */
-#define OPT_UTF8N		0x00008000	/**< @brief 漢字コードはUTF-8 */
-#define OPT_UTF8BOM		0x00010000	/**< @brief 漢字コードはUTF-8 BOM */
-#define OPT_SJIS_NAME	0x00020000	/**< @brief ファイル名はShift_JIS */
-#define OPT_UTF8N_NAME	0x00040000	/**< @brief ファイル名はUTF-8 */
-///@}
+#define OPT_MIRROR		0x00000001	/* ミラーリングアップロードを行う */
+#define OPT_FORCE		0x00000002	/* ミラーリング開始の確認をしない */
+#define OPT_QUIT		0x00000004	/* 終了後プログラム終了 */
+#define OPT_EUC			0x00000008	/* 漢字コードはEUC */
+#define OPT_JIS			0x00000010	/* 漢字コードはJIS */
+#define OPT_ASCII		0x00000020	/* アスキー転送モード */
+#define OPT_BINARY		0x00000040	/* バイナリ転送モード */
+#define OPT_AUTO		0x00000080	/* 自動判別 */
+#define OPT_KANA		0x00000100	/* 半角かなをそのまま通す */
+#define OPT_EUC_NAME	0x00000200	/* ファイル名はEUC */
+#define OPT_JIS_NAME	0x00000400	/* ファイル名はJIS */
+#define OPT_MIRRORDOWN	0x00000800	/* ミラーリングダウンロードを行う */
+#define OPT_SAVEOFF		0x00001000	/* 設定の保存を中止する */
+#define OPT_SAVEON		0x00002000	/* 設定の保存を再開する */
+#define OPT_SJIS		0x00004000	/* 漢字コードはShift_JIS */
+#define OPT_UTF8N		0x00008000	/* 漢字コードはUTF-8 */
+#define OPT_UTF8BOM		0x00010000	/* 漢字コードはUTF-8 BOM */
+#define OPT_SJIS_NAME	0x00020000	/* ファイル名はShift_JIS */
+#define OPT_UTF8N_NAME	0x00040000	/* ファイル名はUTF-8 */
 
 
 /*===== プロトタイプ =====*/
 
 static int InitApp(int cmdShow);
 static bool MakeAllWindows(int cmdShow);
-static std::wstring GetWindowTitle();
-static void DeleteAllObject(void);
+static void DeleteAllObject() noexcept;
 static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 static void StartupProc(std::vector<std::wstring_view> const& args);
-/**
- * @addtogroup コマンドライン引数関連
- * @{
- */
-/**
- * @brief コマンドラインを解析
- *
- * @ref ARGUMENTS.md を参照
- * @ref コマンドラインオプションマクロ
- * @param[in]	args		コマンドライン引数（引数文字列の配列）
- * @param[out]	hostname	オプション'-s'または'\--set'を指定したときの、登録ホスト名
- * @param[out]	unc			オプション（'-'または'\--'から始まる引数）を何も指定しなかった場合の第一引数
- *
- * @return 指定されたオプションに対するOPT_～マクロのOR値を、該当するオプションがなかった場合は無効値を返す
- *
- * Win32 APIの有無: 直接はなし
- */
 static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& args, std::wstring& hostname, std::wstring& unc);
-/** @} */
 static void ExitProc(HWND hWnd);
 static void ChangeDir(int Win, std::wstring dir);
 static void ResizeWindowProc(void);
@@ -129,51 +84,48 @@ static int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd);
 
 /*===== ローカルなワーク =====*/
 
-static const wchar_t AppName[] = L"FFFTP";
-static const wchar_t FtpClass[] = L"FFFTPWin"; /**< @brief ウィンドウ作成周りのWin32APIに渡されるクラス名 */
-static const wchar_t WebURL[] = L"https://github.com/ffftp/ffftp"; /**< @brief バージョン情報や公式ホームページ訪問に使用されるURL */
+static const wchar_t FtpClass[] = L"FFFTPWin";
+static const wchar_t WebURL[] = L"https://github.com/ffftp/ffftp";
 
-static HINSTANCE hInstFtp;			/**< @brief 本アプリケーションのインスタンスハンドル */
-static HWND hWndFtp;				/**< @brief メインウィンドウのウィンドウハンドル */
-static HWND hWndCurFocus = NULL;	/**< @brief ローカル側とホスト側、どちら側にカーソルがあるか（どちら側に対する処理か）を判断するために使われる？ */
+static HINSTANCE hInstFtp;
+static HWND hWndFtp;
+static HWND hWndCurFocus = NULL;
 
-static HACCEL Accel;				/**< @brief アクセラレータ（ショートカットキー）ハンドル */
+static HACCEL Accel;
 
-static int Resizing = RESIZE_OFF;	/**< @brief ウィンドウサイズ変更の状態を示す */
-static int ResizePos;				/**< @brief 縦のみを変更したか、あるいは横のみを変更したか？？ */
-static std::vector<fs::path> TempFiles;/**< @brief  */
+static int Resizing = RESIZE_OFF;
+static int ResizePos;
+static std::vector<fs::path> TempFiles;
 
-static int SaveExit = YES;		/**< @brief アプリ終了時、保存処理を行うかどうか */
-static int AutoExit = NO;		/**< @brief コマンドラインの状態がOPT_QUITだった場合、これがYESになり、アプリ起動後自動で終了する */
+static int SaveExit = YES;
+static int AutoExit = NO;
 
-static fs::path IniPath;		/**< @brief  */
+static fs::path IniPath;
 static int ForceIni = NO;
 
 TRANSPACKET MainTransPkt;		/* ファイル転送用パケット */
 								/* これを使って転送を行うと、ツールバーの転送 */
 								/* 中止ボタンで中止できる */
-std::wstring TitleHostName;		/**< @brief メインウィンドウのタイトル文字列。ホストに接続されるとホスト名が表示されたりする */
-std::wstring FilterStr = L"*"s;	/**< @brief ファイルリストの表示フィルタ */
-HANDLE initialized = CreateEventW(nullptr, true, false, nullptr); /**< @brief 転送スレッドの同期待機イベント用？ */
+std::wstring TitleHostName;
+std::wstring FilterStr = L"*"s;
+HANDLE initialized = CreateEventW(nullptr, true, false, nullptr);
 
-int SuppressRefresh = 0;		/**< @brief  */
+int SuppressRefresh = 0;
 
-static DWORD dwCookie;			/**< @brief HtmlHelpで使用 */
+static DWORD dwCookie;
 
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
-static DWORD MainThreadId;		/**< @brief メインスレッドのID */
-HANDLE ChangeNotification = INVALID_HANDLE_VALUE;/**< @brief ファイルを監視のWin32APIで使用されるハンドル？ FindFirstChangeNotificationW()など */
-static int ToolWinHeight = 28;	/**< @brief ツールウィンドウの高さ */
-static HWND hHelpWin = NULL;	/**< @brief 表示されたHTMLHelpのウィンドウハンドル？ */
-static int NoopEnable = NO;		/**< @brief  */
+static DWORD MainThreadId;
+HANDLE ChangeNotification = INVALID_HANDLE_VALUE;
+static int ToolWinHeight = 28;
+static HWND hHelpWin = NULL;
+static int NoopEnable = NO;
+
+#define LIBFFFTP_OTHER
+#include "libffftp/main_libffftp.hpp"
+#undef LIBFFFTP_OTHER
 
 
-/**
- * @brief システムディレクトリのパスを返す
- * @return システムディレクトリのパス (通常は、C:\Windows\System32)
- *
- * @note Win32 APIの有無: あり
- */
 fs::path const& systemDirectory() {
 	static fs::path const directory = [] {
 		std::wstring directory(32768, L'\0');
@@ -186,16 +138,10 @@ fs::path const& systemDirectory() {
 }
 
 
-/**
- * @brief 実行しているEXEファイル名を返す
- * @return 実行しているEXEファイル名
- *
- * @note Win32 APIの有無: あり
- */
 static auto const& moduleFileName() {
 	static fs::path const filename = [] {
 		std::wstring filename(32768, L'\0');
-		auto const length = GetModuleFileNameW(GetFtpInst(), data(filename), size_as<DWORD>(filename));
+		auto const length = GetModuleFileNameW(0, data(filename), size_as<DWORD>(filename));
 		assert(0 < length);
 		filename.resize(length);
 		return filename;
@@ -204,12 +150,6 @@ static auto const& moduleFileName() {
 }
 
 
-/**
- * @brief 独自に生成したテンポラリフォルダへのパスを返す
- * @return 独自に生成したテンポラリフォルダへのパス
- *
- * @note Win32 APIの有無: あり
- */
 fs::path const& tempDirectory() {
 	static auto const directory = [] {
 		auto const path = fs::temp_directory_path() / std::format(L"ffftp{:08x}"sv, GetCurrentProcessId());
@@ -220,13 +160,6 @@ fs::path const& tempDirectory() {
 }
 
 
-/**
- * @brief バージョン文字列を返す
- * @details EXEに埋め込まれているバージョン情報を用いてバージョン文字列を作成している。
- * @return バージョン文字列
- *
- * @note Win32 APIの有無: あり
- */
 static auto version() {
 	auto const size = GetFileVersionInfoSizeW(moduleFileName().c_str(), 0);
 	assert(0 < size);
@@ -244,48 +177,20 @@ static auto version() {
 }
 
 
-/**
- * @brief プログラムがポータブル版かどうかを返す
- * @details EXEファイル名の拡張子を'portable'にしたファイルが存在しているとポータブル版としてtrueを返す。
- * @return true  ポータブル版である
- * @return false ポータブル版でない
- *
- * Win32 APIの有無: 直接はなし
- */
 static auto isPortable() {
 	static auto const isPortable = fs::is_regular_file(fs::path{ moduleFileName() }.replace_filename(L"portable"sv));
 	return isPortable;
 }
 
 
-/**
- * @brief HTMLヘルプファイルへのパスを返す
- * @details EXEファイル名の拡張子を'chm'にしたパスを返す。
- * @return  HTMLヘルプファイルへのパス
- *
- * Win32 APIの有無: 直接はなし
- */
 static auto const& helpPath() {
 	static auto const path = fs::path{ moduleFileName() }.replace_extension(L".chm"sv);
 	return path;
 }
 
-/**
- * @addtogroup サウンド関係
- * @{
- */
 Sound Sound::Connected{ L"FFFTP_Connected", L"Connected", IDS_SOUNDCONNECTED };
 Sound Sound::Transferred{ L"FFFTP_Transferred", L"Transferred", IDS_SOUNDTRANSFERRED };
 Sound Sound::Error{ L"FFFTP_Error", L"Error", IDS_SOUNDERROR };
-/**
- * @brief サウンド関連のレジストリを登録
- *
- * [コントロール パネル] > [ハードウェアとサウンド] > [サウンド] で表示されるシステムダイアログで鳴らす音を設定できるようになる。\n
- * ホストとの接続完了、エラー発生時、ファイル転送完了時にそれぞれ鳴る音を、Windowsのシステムダイアログで設定できるようになる。\n
- * アプリをアンインストールしても残り続ける？
- *
- * @note Win32 APIの有無: あり
- */
 void Sound::Register() {
 	if (HKEY eventlabels; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\EventLabels)", 0, nullptr, 0, KEY_WRITE, nullptr, &eventlabels, nullptr) == ERROR_SUCCESS) {
 		if (HKEY apps; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\Schemes\Apps\ffftp)", 0, nullptr, 0, KEY_WRITE, nullptr, &apps, nullptr) == ERROR_SUCCESS) {
@@ -307,18 +212,10 @@ void Sound::Register() {
 		RegCloseKey(eventlabels);
 	}
 }
-/** @} */
 
-/**
- * @brief プログラムのエントリポイント
- * @details 処理はこの関数から始まります。
- * @note Win32 APIの有無: どっさり
- */
- // メインルーチン
+
+// メインルーチン
 int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPWSTR lpCmdLine, __in int nShowCmd) {
-	//--------------------------------------------------
-	// 初期化
-	//--------------------------------------------------
 	hInstFtp = hInstance;
 
 	Sound::Register();
@@ -343,9 +240,6 @@ int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 		return 0;
 	}
 
-	//--------------------------------------------------
-	// ウィンドウのメインループ
-	//--------------------------------------------------
 	int exitCode = FALSE;
 	if (InitApp(nShowCmd) == FFFTP_SUCCESS) {
 		MSG msg;
@@ -361,10 +255,6 @@ int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 		}
 		exitCode = (int)msg.wParam;
 	}
-
-	//--------------------------------------------------
-	// 後処理
-	//--------------------------------------------------
 	// TODO: グローバルに保持されているSocketContextの解放。遅延させると各種エラーが発生するため明示的にここで行う。
 	MainTransPkt.ctrl_skt.reset();
 	DisconnectSet();
@@ -403,43 +293,35 @@ static int InitApp(int cmdShow)
 		std::copy(std::begin(LocalTabWidthDefault), std::end(LocalTabWidthDefault), std::begin(LocalTabWidth));
 		std::copy(std::begin(RemoteTabWidthDefault), std::end(RemoteTabWidthDefault), std::begin(RemoteTabWidth));
 
-		//--------------------------------------------------
-		// 設定ファイル関連の処理
-		//--------------------------------------------------
 		std::vector<std::wstring_view> args{ __wargv + 1, __wargv + __argc };
-		// コマンドラインオプションを解析して -n か --ini が含まれていたら設定をINIファイルから読み込むようにする(以下、INIモード)
 		if (auto it = std::find_if(begin(args), end(args), [](auto const& arg) { return ieq(arg, L"-n"sv) || ieq(arg, L"--ini"sv); }); it != end(args) && ++it != end(args)) {
 			ForceIni = YES;
 			RegType = REGTYPE_INI;
-			IniPath = *it; // コマンドラインに指定されたINIファイルへのパス？
+			IniPath = *it;
 		} else
-			IniPath = fs::path{ moduleFileName() }.replace_extension(L".ini"sv);// デフォルトのINIファイルのパス？
-		// ポータブル版かどうかの判定（EXEのファイル名で判断してる？）
+			IniPath = fs::path{ moduleFileName() }.replace_extension(L".ini"sv);
 		ImportPortable = NO;
 		if (isPortable()) {
-			// ポータブル版だったら強制的にINIモード
 			ForceIni = YES;
 			RegType = REGTYPE_INI;
 			if(IsRegAvailable() == YES && IsIniAvailable() == NO)
 			{
-				// INIモードで動作しようとしているが、REGも見つかった。REGをINIにインポートする？
 				if (Dialog(GetFtpInst(), ini_from_reg_dlg, GetMainHwnd()))
 					ImportPortable = YES;
 			}
 		} else {
 			if(ReadSettingsVersion() > VER_NUM)
 			{
-				// 新しいバージョンの設定が見つかった
 				if(IsRegAvailable() == YES && IsIniAvailable() == NO)
 				{
 					switch(Message(IDS_FOUND_NEW_VERSION_INI, MB_YESNOCANCEL | MB_DEFBUTTON2))
 					{
-						case IDCANCEL:// 読み取り専用モードにする
+						case IDCANCEL:
 							ReadOnlySettings = YES;
 							break;
-						case IDYES:// そのままREGに新設定を上書き
+						case IDYES:
 							break;
-						case IDNO:// 新設定がREGに上書きされるのを阻止(INIモードにしてINIファイルに保存されるようにする)
+						case IDNO:
 							ImportPortable = YES;
 							break;
 					}
@@ -453,10 +335,7 @@ static int InitApp(int cmdShow)
 			RegType = REGTYPE_REG;
 		}
 
-		//--------------------------------------------------
-		// マスターパスワード関連の処理
-		//--------------------------------------------------
-			/* 2010.02.01 genta マスターパスワードを入力させる
+		/* 2010.02.01 genta マスターパスワードを入力させる
 		  -z オプションがあるときは最初だけスキップ
 		  -z オプションがないときは，デフォルトパスワードをまず試す
 		  LoadRegistry()する
@@ -476,13 +355,13 @@ static int InitApp(int cmdShow)
 		}
 
 		/* パスワードチェックのみ実施 */
-		masterpass = 1;// 0/ユーザキャンセル, 1/設定した, 2/デフォルト設定
+		masterpass = 1;
 		while( ValidateMasterPassword() == YES &&
 				GetMasterPasswordStatus() == PASSWORD_UNMATCH ){
 			
 			if( useDefautPassword != 2 ){
 				/* 再トライするか確認 */
-				if( !AskRetryMasterPassword_func() ){
+				if( Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDNO ){
 					useDefautPassword = 0; /* 不一致なので，もはやデフォルトかどうかは分からない */
 					break;
 				}
@@ -502,7 +381,7 @@ static int InitApp(int cmdShow)
 			}
 		}
 		
-		if(masterpass != 0)// デフォルトマスターパスワードが使われたか、マスターパスワードの確認でキャンセルされなかったら
+		if(masterpass != 0)
 		{
 			// ホスト共通設定機能
 			ResetDefaultHost();
@@ -602,7 +481,6 @@ static bool MakeAllWindows(int cmdShow) {
 	if (!hWndFtp)
 		return false;
 
-	// ウィンドウがのっけから画面外にはみ出ないようにする？
 	RECT workArea;
 	SystemParametersInfoW(SPI_GETWORKAREA, 0, &workArea, 0);
 	RECT windowRect;
@@ -632,20 +510,15 @@ static bool MakeAllWindows(int cmdShow) {
 }
 
 
-// ウインドウのタイトルを取得する
-static std::wstring GetWindowTitle() {
-	return std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
-}
-
-
 // ウインドウのタイトルを表示する
 void DispWindowTitle() {
-	SetWindowTextW(GetMainHwnd(), GetWindowTitle().c_str());
+	auto const text = std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
+	SetWindowTextW(GetMainHwnd(), text.c_str());
 }
 
 
 // 全てのオブジェクトを削除
-static void DeleteAllObject() {
+static void DeleteAllObject() noexcept {
 	WSACleanup();
 	if (hWndFtp != NULL)
 		DestroyWindow(hWndFtp);
@@ -783,7 +656,6 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 				AbortRecoveryProc();
 			switch(LOWORD(wParam))
 			{
-				// メニュー[接続]->[接続]をクリックしたときの処理
 				case MENU_CONNECT :
 					// 自動切断対策
 					NoopEnable = NO;
@@ -792,7 +664,6 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 					NoopEnable = YES;
 					break;
 
-				// 起動時に引数で自動するホストを指定したときの処理？
 				case MENU_CONNECT_NUM :
 					// 自動切断対策
 					NoopEnable = NO;
@@ -1624,8 +1495,8 @@ static void StartupProc(std::vector<std::wstring_view> const& args) {
 		if (opt & OPT_SAVEON)
 			SuppressSave = NO;
 		if (empty(hostname) && empty(unc)) {
-			if (ConnectOnStart == YES && IsWindowVisible(GetMainHwnd()))
-				PostMessageW(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_CONNECT, 0), 0);// 起動時（引数で接続ホスト名を指定しなかった場合）、ホスト一覧ダイアログを表示するためのメッセージを飛ばす
+			if (ConnectOnStart == YES)
+				PostMessageW(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_CONNECT, 0), 0);
 		} else if (empty(hostname) && !empty(unc)) {
 			DirectConnectProc(std::move(unc), Kanji, Kana, FnameKanji, TrMode);
 		} else if (!empty(hostname) && empty(unc)) {
@@ -1675,25 +1546,21 @@ static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& a
 				option |= mapit->second;
 			} else if (key == L"-n"sv || key == L"--ini"sv) {
 				if (++it == end(args)) {
-					// '-n'や'--ini'を指定しているにもかかわらず、INIファイル名を指定していない
 					Notice(IDS_MSGJPN282);
 					return {};
 				}
 			} else if (key == L"-z"sv || key == L"--mpasswd"sv) {
 				if (++it == end(args)) {
-					// '-z'や'--mpasswd'を指定しているにもかかわらず、マスターパスワードを指定していない
 					Notice(IDS_MSGJPN299);
 					return {};
 				}
 			} else if (key == L"-s"sv || key == L"--set"sv) {
 				if (++it == end(args)) {
-					// '-s'や'--set'を指定しているにもかかわらず、登録ホスト名を指定していない
 					Notice(IDS_MSGJPN178);
 					return {};
 				}
 				hostname = *it;
 			} else if (key == L"-h"sv || key == L"--help"sv) {
-				// HTMLヘルプファイルを開く
 				ShowHelp(IDH_HELP_TOPIC_0000024);
 			} else {
 				Notice(IDS_MSGJPN180, *it);
@@ -1898,26 +1765,25 @@ static void CalcWinSize(void)
 	RECT Rect;
 
 	GetWindowRect(GetMainHwnd(), &Rect);
-	// メインウィンドウの非クライアント領域を含めた全体の幅と高さを計算
+
 	if(Sizing != SW_MAXIMIZE)
 	{
 		WinWidth = Rect.right - Rect.left;
 		WinHeight = Rect.bottom - Rect.top;
 	}
 
-	// クライアント領域の幅と高さを計算
 	GetClientRect(GetMainHwnd(), &Rect);
 
 	ClientWidth = Rect.right;
 	int const ClientHeight = Rect.bottom;
 
-	SepaWidth = 4; // ローカル側とリモート側のファイルリストを隔てるセパレータの幅
-	LocalWidth = std::clamp(LocalWidth, 0, ClientWidth - SepaWidth); // ローカル側のファイルストの幅を計算？
-	RemoteWidth = std::max(0, ClientWidth - LocalWidth - SepaWidth); // リモート側のファイルストの幅を計算？
+	SepaWidth = 4;
+	LocalWidth = std::clamp(LocalWidth, 0, ClientWidth - SepaWidth);
+	RemoteWidth = std::max(0, ClientWidth - LocalWidth - SepaWidth);
 
 	GetClientRect(GetSbarWnd(), &Rect);
 
-	ListHeight = std::max(0L, ClientHeight - AskToolWinHeight() * 2 - TaskHeight - SepaWidth - Rect.bottom); // ファイルリスト全体の高さを計算？
+	ListHeight = std::max(0L, ClientHeight - AskToolWinHeight() * 2 - TaskHeight - SepaWidth - Rect.bottom);
 }
 
 
@@ -2160,30 +2026,11 @@ int AskAutoExit() noexcept {
 	return AutoExit;
 }
 
-static bool MasterPasswordInputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) noexcept {
-	bool ret = false;
-	const wchar_t* outpasswd = nullptr;
-	switch (dialogId)
-	{
-	case masterpasswd_dlg:
-		ret = AskMasterPassword_func(&outpasswd);
-		break;
-	case newmasterpasswd_dlg:
-		ret = AskMasterPassword2nd_func(&outpasswd);
-		break;
-	default:
-		break;
-	}
-	if (ret)
-		text = outpasswd;
-	return ret;
-}
-
 // ユーザにパスワードを入力させ，それを設定する
 //   0/ユーザキャンセル, 1/設定した, 2/デフォルト設定
 int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
 	std::wstring pass1;
-	if (!MasterPasswordInputDialog(newpassword ? newmasterpasswd_dlg : masterpasswd_dlg, hWnd, 0, pass1, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064))
+	if (!InputDialog(newpassword ? newmasterpasswd_dlg : masterpasswd_dlg, hWnd, 0, pass1, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064))
 		return 0;
 	if (newpassword) {
 		// 新しいパスワードを2回入力させる
@@ -2264,7 +2111,5 @@ int MainThreadRunner::Run() {
 }
 
 #ifdef LIBFFFTP_EXPORTS
-#define LIBFFFTP_IMPL
 #include "main_libffftp.hpp"
-#undef LIBFFFTP_IMPL
 #endif

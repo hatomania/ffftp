@@ -741,10 +741,7 @@ struct FILELIST {
 	}
 };
 
-/**
- * @addtogroup サウンド関係
- * @{
- */
+
 class Sound {
 	const wchar_t* keyName;
 	const wchar_t* name;
@@ -754,14 +751,9 @@ public:
 	static Sound Connected;
 	static Sound Transferred;
 	static Sound Error;
-	/**
-	 * @brief サウンドを鳴らす
-	 * @note Win32 APIの有無: あり
-	 */
 	void Play() noexcept { PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
 	static void Register();
 };
-/** @} */
 
 
 class MainThreadRunner {
@@ -800,16 +792,10 @@ BOOL IsMainThread() noexcept;
 void Restart() noexcept;
 void Terminate() noexcept;
 // タスクバー進捗表示
-/**
- * @addtogroup タスクバー関係
- * @brief タスクバーのアプリアイコンに通信の進捗を表示する？
- * @{
- */
 int LoadTaskbarList3() noexcept;
 void FreeTaskbarList3();
 int IsTaskbarList3Loaded() noexcept;
 void UpdateTaskbarProgress();
-/** @} */
 // 高DPI対応
 int AskToolWinHeight() noexcept;
 
@@ -978,14 +964,6 @@ void SktShareProh(void);
 int AskShareProh() noexcept;
 void DisconnectProc(void);
 void DisconnectSet() noexcept;
-/**
- * @brief ホストに接続中（接続先問わず）かどうかを返す。
- * @param なし
- * @return @ref YES 接続中
- * @return @ref NO  接続中でない
- *
- * グローバル変数[in] @ref TrnCtrlSocket
- */
 int AskConnecting() noexcept;
 #if defined(HAVE_TANDEM)
 int SetOSS(int wkOss);
@@ -1091,16 +1069,10 @@ LONGLONG AskTransferSizeLeft() noexcept;
 LONGLONG AskTransferSizeTotal() noexcept;
 int AskTransferErrorDisplay() noexcept;
 // ゾーンID設定追加
-/**
- * @addtogroup ゾーン関係
- * @brief ファイルにネットからダウンロードしたファイルであるという属性を付与する？
- * @{
- */
 int LoadZoneID();
 void FreeZoneID();
 int IsZoneIDLoaded() noexcept;
 bool MarkFileAsDownloadedFromInternet(fs::path const& path);
-/** @} */
 
 /*===== codecnv.c =====*/
 
@@ -1218,19 +1190,10 @@ std::vector<HISTORYDATA> const& GetHistories() noexcept;
 
 /*===== socket.c =====*/
 
-/**
- * @addtogroup SSL関係
- * @{
- */
 BOOL LoadSSL();
 void FreeSSL() noexcept;
 void ShowCertificate();
 bool IsSecureConnection();
-/** @} */
-/**
- * @addtogroup NAT関係
- * @{
- */
 // UPnP対応
 int LoadUPnP();
 void FreeUPnP();
@@ -1240,7 +1203,6 @@ bool RemovePortMapping(int port);
 int CheckClosedAndReconnect(void);
 // 同時接続対応
 int CheckClosedAndReconnectTrnSkt(std::shared_ptr<SocketContext>& Skt, int *CancelCheckWork);
-/** @} */
 
 
 template<class Target, class Source>
@@ -1520,10 +1482,3 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
-
-
-// 内部でのみ使用するインターフェースの宣言集
-namespace libffftp {
-// ras.cpp
-extern const std::vector<std::wstring>& dialupEntries();
-}

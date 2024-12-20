@@ -1,4 +1,4 @@
-﻿#if defined(LIBFFFTP_OTHER)
+﻿#ifdef LIBFFFTP_OTHER
 
 // 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
 // libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
@@ -9,7 +9,7 @@ typedef bool (*AskSaveCryptFunc)();
 static AskSaveCryptFunc asksavecrypt_func = AskSaveCryptDefaultCallback;
 
 
-#elif defined(LIBFFFTP_DECL) || defined(LIBFFFTP_IMPL)
+#else
 
 #include "libffftp_common.hpp"
 
@@ -17,7 +17,7 @@ static AskSaveCryptFunc asksavecrypt_func = AskSaveCryptDefaultCallback;
 namespace libffftp {
 
 LIBFFFTP_FUNCTION(void setAskSaveCryptCallback(bool (*func)()))
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   asksavecrypt_func = func;
 }

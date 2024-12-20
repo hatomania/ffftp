@@ -1,4 +1,4 @@
-﻿#if defined(LIBFFFTP_OTHER)
+﻿#ifdef LIBFFFTP_OTHER
 
 #include "callback.h"
 
@@ -23,32 +23,33 @@ LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskRetryMasterPassword, (), {
 	return Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDYES;
 })
 
+std::wstring GetWindowTitle() {
+	return std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
+}
 
-#elif defined(LIBFFFTP_DECL) || defined(LIBFFFTP_IMPL)
+
+#else
 
 #include "libffftp_common.hpp"
 
-// libffftpのために用意されたインターフェース
 namespace libffftp {
 
-static const wchar_t* const kModuleName = L"libffftp";
+#ifndef LIBFFFTP_DECL 
+namespace{
+constexpr const wchar_t* const kModuleName = L"libffftp";
+constexpr const wchar_t* const kAppName = L"FFFTP";
+}
+#endif
 
 LIBFFFTP_FUNCTION(bool initialize())
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
 	hInstFtp = GetModuleHandleW(kModuleName);
-
 	Sound::Register();
-
-	// マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
-//#ifdef DISABLE_MULTI_CPUS
-//	SetProcessAffinityMask(GetCurrentProcess(), 1);
-//#endif
 	MainThreadId = GetCurrentThreadId();
 
-	// S_FALSEはすでに初期化済みの意
-	// ffftpguiから呼び出すとS_FALSEが返る。Qtが自身の初期化ですでに内部的に呼び出してるかもしれない
-	// なのでS_FALSEは失敗扱いにしない
+	// 戻り値S_FALSEはすでにOleInitialize関数呼び出し済みの意味
+	// 他のプラットフォームがすでに呼び出してるかもしれないのでS_FALSEは失敗扱いにしない
 	if (HRESULT hres = OleInitialize(nullptr); hres != S_OK && hres != S_FALSE) {
 		Message(IDS_FAIL_TO_INIT_OLE, MB_OK | MB_ICONERROR);
 		return false;
@@ -72,13 +73,12 @@ LIBFFFTP_FUNCTION(bool initialize())
 #endif
 
 LIBFFFTP_FUNCTION(void finalize())
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
-	// TODO: グローバルに保持されているSocketContextの解放。遅延させると各種エラーが発生するため明示的にここで行う。
 	MainTransPkt.ctrl_skt.reset();
 	DisconnectSet();
 
-	//UnregisterClassW(FtpClass, GetFtpInst());
+	UnregisterClassW(FtpClass, GetFtpInst());
 	FreeSSL();
 	FreeZoneID();
 	FreeTaskbarList3();
@@ -88,14 +88,14 @@ LIBFFFTP_FUNCTION(void finalize())
 #endif
 
 LIBFFFTP_FUNCTION(const wchar_t* applicationName())
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
-	return AppName;
+	return kAppName;
 }
 #endif
 
 LIBFFFTP_FUNCTION(const wchar_t* windowTitle())
-#ifdef LIBFFFTP_IMPL
+#ifndef LIBFFFTP_DECL
 {
   static std::wstring title{};
 	title = GetWindowTitle();

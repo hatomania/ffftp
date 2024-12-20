@@ -33,7 +33,8 @@
 #include "libffftp.hpp"
 #include "libffftp_common.hpp"
 
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize() {
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback proc) {
+  ffftp_proc = proc;
   return libffftp::initialize();
 }
 
@@ -57,12 +58,12 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
   Sound::Error.Play();
 }
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_application_name() {
-  return libffftp::getApplicationName();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_applicationname() {
+  return libffftp::applicationName();
 }
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle() {
-  return libffftp::getWindowTitle();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_windowtitle() {
+  return libffftp::windowTitle();
 }
 
 LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_first() {

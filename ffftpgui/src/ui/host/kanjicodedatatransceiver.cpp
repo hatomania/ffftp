@@ -5,7 +5,7 @@
 IMPL_DATATRANSCEIVER_BEGIN(HostSettingKanjiCodeForm);
 
 IMPL_DATATRANSCEIVER_SEND(hdata_in) {
-  const hostdata& hdata = *static_cast<const hostdata*>(hdata_in);
+  const ffftp_hostdata& hdata = *static_cast<const ffftp_hostdata*>(hdata_in);
   static const std::map<int, HostSettingKanjiCodeForm::KanjiCode> convtable{
       {KC_NOP, HostSettingKanjiCodeForm::KanjiCode::kNOP},
       {KC_SJIS, HostSettingKanjiCodeForm::KanjiCode::kSJIS},
@@ -37,7 +37,7 @@ IMPL_DATATRANSCEIVER_SEND(hdata_in) {
 IMPL_DATATRANSCEIVER_RECEIVE(hdata_out) {
   static ThisData form_data;
   form_data = static_cast<const ThisData&>(form().data());
-  hostdata& hdata = *static_cast<hostdata*>(hdata_out);
+  ffftp_hostdata& hdata = *static_cast<ffftp_hostdata*>(hdata_out);
   static const std::map<HostSettingKanjiCodeForm::KanjiCode, int> convtable{
       {HostSettingKanjiCodeForm::KanjiCode::kNOP, KC_NOP},
       {HostSettingKanjiCodeForm::KanjiCode::kSJIS, KC_SJIS},

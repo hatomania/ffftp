@@ -5,7 +5,7 @@
 IMPL_DATATRANSCEIVER_BEGIN(HostSettingGeneralForm);
 
 IMPL_DATATRANSCEIVER_SEND(hdata_in) {
-  const hostdata& hdata = *static_cast<const hostdata*>(hdata_in);
+  const ffftp_hostdata& hdata = *static_cast<const ffftp_hostdata*>(hdata_in);
   ThisData form_data{
       hdata.general.host_name,
       hdata.general.host_adrs,
@@ -25,7 +25,7 @@ IMPL_DATATRANSCEIVER_SEND(hdata_in) {
 IMPL_DATATRANSCEIVER_RECEIVE(hdata_out) {
   static ThisData form_data;
   form_data = static_cast<const ThisData&>(form().data());
-  hostdata& hdata = *static_cast<hostdata*>(hdata_out);
+  ffftp_hostdata& hdata = *static_cast<ffftp_hostdata*>(hdata_out);
   hdata.general = {
       .host_name = form_data.host_name.c_str(),
       .host_adrs = form_data.host_adrs.c_str(),

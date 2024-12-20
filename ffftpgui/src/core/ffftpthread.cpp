@@ -17,6 +17,6 @@ FFFTPThread::FFFTPThread(QObject* parent)
 
 void FFFTPThread::connect(const void* hc) {
   qDebug() << __FUNCTION__ << " called. " << hc;
-  ffftp_connect(const_cast<const hostcontext_t>(hc));
+  ffftp_connect(const_cast<ffftp_hostcontext_t>(hc));
   qDebug() << __FUNCTION__ << " end.";
 }

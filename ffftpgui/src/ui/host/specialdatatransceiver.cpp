@@ -5,7 +5,7 @@
 IMPL_DATATRANSCEIVER_BEGIN(HostSettingSpecialForm);
 
 IMPL_DATATRANSCEIVER_SEND(hdata_in) {
-  const hostdata& hdata = *static_cast<const hostdata*>(hdata_in);
+  const ffftp_hostdata& hdata = *static_cast<const ffftp_hostdata*>(hdata_in);
   ThisData form_data{
       hdata.special.list_cmd_only, hdata.special.use_mlsd,
       hdata.special.use_nlst_r,    hdata.special.no_fullpath,
@@ -18,7 +18,7 @@ IMPL_DATATRANSCEIVER_SEND(hdata_in) {
 IMPL_DATATRANSCEIVER_RECEIVE(hdata_out) {
   static ThisData form_data;
   form_data = static_cast<const ThisData&>(form().data());
-  hostdata& hdata = *static_cast<hostdata*>(hdata_out);
+  ffftp_hostdata& hdata = *static_cast<ffftp_hostdata*>(hdata_out);
   hdata.special = {
       .list_cmd_only = form_data.list_cmd_only,
       .use_mlsd = form_data.use_mlsd,

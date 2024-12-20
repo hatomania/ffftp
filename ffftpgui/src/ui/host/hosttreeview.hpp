@@ -13,8 +13,8 @@ class HostTreeView : public QTreeView {
   virtual ~HostTreeView();
 
   void update() const;
-  const hostcontext_t currentHostContext() const;
-  void setCurrentIndex(const hostcontext_t hc);
+  ffftp_hostcontext_t currentHostContext() const;
+  void setCurrentIndex(ffftp_hostcontext_t hc);
 
  private:
   Q_DISABLE_COPY_MOVE(HostTreeView);

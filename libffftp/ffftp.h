@@ -55,10 +55,11 @@ extern "C" {
  * 他のインターフェースを使用する前に呼び出さなければならない。@n
  * 呼び出しは1度だけ行う。複数回呼び出した場合の動作は未定義です。
  *
+ * @param[in] proc 通知を受け取るコールバック関数への関数ポインタ。ffftpからの通知はこのコールバック関数で受け取ります。
  * @retval true  成功
  * @retval false 失敗
  */
-LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize();
+LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback proc);
 
 /**
  * @brief libffftpの後処理を行う。
@@ -68,21 +69,12 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize();
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize();
 
-/**
- * @brief プロシージャのコールバック関数を登録する。
- *
- * ffftpからの通知はこのコールバック関数で受け取ります。
- *
- * @param[in] proc 通知を受け取るコールバック関数への関数ポインタ
- */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_registproc(ffftp_proc_callback proc);
-
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
 
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_get_application_name();
-LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_getwindowtitle();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_applicationname();
+LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_windowtitle();
 
 /**
  * @brief 先頭のホストコンテキストを取得する。

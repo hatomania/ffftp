@@ -5,7 +5,7 @@
 IMPL_DATATRANSCEIVER_BEGIN(HostSettingFeatureForm);
 
 IMPL_DATATRANSCEIVER_SEND(hdata_in) {
-  const hostdata& hdata = *static_cast<const hostdata*>(hdata_in);
+  const ffftp_hostdata& hdata = *static_cast<const ffftp_hostdata*>(hdata_in);
   ThisData form_data{
     hdata.feature.max_thread_cnt,
     hdata.feature.reuse_cmdsocket,
@@ -20,7 +20,7 @@ IMPL_DATATRANSCEIVER_SEND(hdata_in) {
 IMPL_DATATRANSCEIVER_RECEIVE(hdata_out) {
   static ThisData form_data;
   form_data = static_cast<const ThisData&>(form().data());
-  hostdata& hdata = *static_cast<hostdata*>(hdata_out);
+  ffftp_hostdata& hdata = *static_cast<ffftp_hostdata*>(hdata_out);
   hdata.feature = {
     .max_thread_cnt = form_data.max_thread_cnt,
     .reuse_cmdsocket = form_data.reuse_cmdsocket,

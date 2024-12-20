@@ -5,7 +5,7 @@
 IMPL_DATATRANSCEIVER_BEGIN(HostSettingAdvancedForm);
 
 IMPL_DATATRANSCEIVER_SEND(hdata_in) {
-  const hostdata& hdata = *static_cast<const hostdata*>(hdata_in);
+  const ffftp_hostdata& hdata = *static_cast<const ffftp_hostdata*>(hdata_in);
   ThisData form_data{
       hdata.advanced.firewall, hdata.advanced.pasv,    hdata.advanced.syncmove,
       hdata.advanced.port,     hdata.advanced.account, hdata.advanced.timezone,
@@ -17,7 +17,7 @@ IMPL_DATATRANSCEIVER_SEND(hdata_in) {
 IMPL_DATATRANSCEIVER_RECEIVE(hdata_out) {
   static ThisData form_data;
   form_data = static_cast<const ThisData&>(form().data());
-  hostdata& hdata = *static_cast<hostdata*>(hdata_out);
+  ffftp_hostdata& hdata = *static_cast<ffftp_hostdata*>(hdata_out);
   hdata.advanced = {
       .firewall = form_data.firewall,
       .pasv = form_data.pasv,

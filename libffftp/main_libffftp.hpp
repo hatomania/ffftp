@@ -87,14 +87,14 @@ LIBFFFTP_FUNCTION(void finalize())
 }
 #endif
 
-LIBFFFTP_FUNCTION(const wchar_t* getApplicationName())
+LIBFFFTP_FUNCTION(const wchar_t* applicationName())
 #ifdef LIBFFFTP_IMPL
 {
 	return AppName;
 }
 #endif
 
-LIBFFFTP_FUNCTION(const wchar_t* getWindowTitle())
+LIBFFFTP_FUNCTION(const wchar_t* windowTitle())
 #ifdef LIBFFFTP_IMPL
 {
   static std::wstring title{};

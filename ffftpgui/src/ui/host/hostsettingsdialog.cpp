@@ -35,7 +35,7 @@ class HostSettingsDialog::Private {
 HostSettingsDialog::Private::Private() : ui(), transceiver() {}
 HostSettingsDialog::Private::~Private() {}
 
-HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
+HostSettingsDialog::HostSettingsDialog(const ffftp_hostdata& hdata, QWidget* parent)
     : QDialog(parent), d_(new Private()) {
   d_->ui.setupUi(this);
   MAKE_TRANSCEIVER(Form::kGeneral,
@@ -64,13 +64,13 @@ HostSettingsDialog::HostSettingsDialog(const hostdata& hdata, QWidget* parent)
 }
 HostSettingsDialog::~HostSettingsDialog() {}
 
-void HostSettingsDialog::setHostData(const hostdata& hdata) {
+void HostSettingsDialog::setHostData(const ffftp_hostdata& hdata) {
   for (auto& [k, form] : d_->transceiver) {
     form->send(&hdata);
   }
 }
 
-void HostSettingsDialog::hostData(hostdata& hdata) const {
+void HostSettingsDialog::hostData(ffftp_hostdata& hdata) const {
   for (auto& [k, form] : d_->transceiver) {
     form->receive(&hdata);
   }

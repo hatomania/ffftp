@@ -19,7 +19,7 @@ class HostListDialog::Private {
   Private();
   ~Private();
   Ui::HostListDialogClass ui;
-  hostcontext_t selected_hc;
+  ffftp_hostcontext_t selected_hc;
 };
 HostListDialog::Private::Private() : ui(), selected_hc(nullptr) {}
 HostListDialog::Private::~Private() {}
@@ -32,7 +32,7 @@ HostListDialog::HostListDialog(QWidget* parent)
 HostListDialog::~HostListDialog() {}
 
 // リスト選択中のホストを示すホストコンテキストを返す
-const hostcontext_t HostListDialog::hostcontext() const {
+ffftp_hostcontext_t HostListDialog::hostcontext() const {
   return d_->selected_hc;
 }
 
@@ -45,12 +45,12 @@ void HostListDialog::accept() {
 
 // [新規ホスト]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_NewHost() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
-  hostdata hdata;
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostdata hdata;
   ffftp_hostdata_initialize(&hdata);
   ffftp_hostcontext_hostdata_default(&hdata);
   if (showSettingDialog(hdata)) {
-    hostcontext_t new_hc = ffftp_hostcontext_new(hc, &hdata);
+    ffftp_hostcontext_t new_hc = ffftp_hostcontext_new(hc, &hdata);
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(new_hc);
     updateEnabled();
@@ -60,9 +60,9 @@ void HostListDialog::onClick_pushButton_NewHost() {
 
 // [新規グループ]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_NewGroup() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
   if (QString group_name{}; askGroupName(group_name, kStringGroupNameNew)) {
-    hostcontext_t new_hc =
+    ffftp_hostcontext_t new_hc =
         ffftp_hostcontext_newgroup(hc, group_name.toStdWString().c_str());
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(new_hc);
@@ -72,21 +72,21 @@ void HostListDialog::onClick_pushButton_NewGroup() {
 
 // [設定変更]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_Mod() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
   if (ffftp_hostcontext_isgroup(hc)) {
     if (QString group_name{}; askGroupName(group_name, kStringGroupNameMod)) {
-      hostcontext_t mod_hc =
+      ffftp_hostcontext_t mod_hc =
           ffftp_hostcontext_modifygroup(hc, group_name.toStdWString().c_str());
       d_->ui.treeView_HostList->update();
       d_->ui.treeView_HostList->setCurrentIndex(mod_hc);
       updateEnabled();
     }
   } else {
-    hostdata hdata;
+    ffftp_hostdata hdata;
     ffftp_hostdata_initialize(&hdata);
     ffftp_hostcontext_hostdata(hc, &hdata);
     if (showSettingDialog(hdata)) {
-      hostcontext_t mod_hc = ffftp_hostcontext_modify(hc, &hdata);
+      ffftp_hostcontext_t mod_hc = ffftp_hostcontext_modify(hc, &hdata);
       d_->ui.treeView_HostList->update();
       d_->ui.treeView_HostList->setCurrentIndex(mod_hc);
       updateEnabled();
@@ -97,8 +97,8 @@ void HostListDialog::onClick_pushButton_Mod() {
 
 // [コピー]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_Copy() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
-  hostcontext_t new_hc = ffftp_hostcontext_copy(hc);
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t new_hc = ffftp_hostcontext_copy(hc);
   d_->ui.treeView_HostList->update();
   d_->ui.treeView_HostList->setCurrentIndex(new_hc);
   updateEnabled();
@@ -106,12 +106,12 @@ void HostListDialog::onClick_pushButton_Copy() {
 
 // [削除]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_Del() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
   bool isgroup = ffftp_hostcontext_isgroup(hc);
   QString title{isgroup ? kStringDeleteGroup : kStringDeleteHost};
   QString message{isgroup ? kStringDeleteGroupMsg : kStringDeleteHostMsg};
   if (QMessageBox::question(this, title, message) == QMessageBox::Yes) {
-    hostcontext_t rem_hc = ffftp_hostcontext_delete(hc);
+    ffftp_hostcontext_t rem_hc = ffftp_hostcontext_delete(hc);
     d_->ui.treeView_HostList->update();
     d_->ui.treeView_HostList->setCurrentIndex(rem_hc);
     updateEnabled();
@@ -120,7 +120,7 @@ void HostListDialog::onClick_pushButton_Del() {
 
 // [↑]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_Up() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
   if (hc) {
     ffftp_hostcontext_up(hc);
     d_->ui.treeView_HostList->update();
@@ -131,7 +131,7 @@ void HostListDialog::onClick_pushButton_Up() {
 
 // [↓]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_Down() {
-  hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t hc = d_->ui.treeView_HostList->currentHostContext();
   if (hc) {
     ffftp_hostcontext_down(hc);
     d_->ui.treeView_HostList->update();
@@ -142,7 +142,7 @@ void HostListDialog::onClick_pushButton_Down() {
 
 // [既定の設定]ボタンを押下したときの処理
 void HostListDialog::onClick_pushButton_Default() {
-  hostdata hdata;
+  ffftp_hostdata hdata;
   ffftp_hostdata_initialize(&hdata);
   ffftp_hostcontext_hostdata_default(&hdata);
   if (showSettingDialog(hdata)) {
@@ -164,7 +164,7 @@ void HostListDialog::onClick_treeView_HostList(QModelIndex index) {
 
 // 引数in_out_dataを初期データとして[ホストの設定]ダイアログを表示する
 // 編集結果はそのまま引数in_out_dataに返る
-bool HostListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
+bool HostListDialog::showSettingDialog(ffftp_hostdata& in_out_data) /* const */ {
   bool ret = false;
   HostSettingsDialog setting_dlg(
       in_out_data,
@@ -178,7 +178,7 @@ bool HostListDialog::showSettingDialog(hostdata& in_out_data) /* const */ {
 
 // 状態に応じてUI部品のEnableを切り替える
 void HostListDialog::updateEnabled() {
-  hostcontext_t current_hc = d_->ui.treeView_HostList->currentHostContext();
+  ffftp_hostcontext_t current_hc = d_->ui.treeView_HostList->currentHostContext();
   UI_SETENABLED(d_->ui.pushButton_Mod, true);
   UI_SETENABLED(d_->ui.pushButton_Copy, true);
   UI_SETENABLED(d_->ui.pushButton_Del, true);
@@ -201,7 +201,6 @@ void HostListDialog::updateEnabled() {
 // グループ名を訪ねるダイアログを表示する
 bool HostListDialog::askGroupName(QString& group_name, const QString& title) {
   bool ok = false;
-  group_name = QInputDialog::getText(this, title, kStringGroupNameAccess,
-                                     QLineEdit::Normal, kEmptyString, &ok);
+  group_name = QInputDialog::getText(this, title, kStringGroupNameAccess, QLineEdit::Normal, kEmptyString, &ok);
   return ok;
 }

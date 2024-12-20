@@ -13,7 +13,7 @@ class HostListDialog : public QDialog {
  public:
   explicit HostListDialog(QWidget* parent = Q_NULLPTR);
   virtual ~HostListDialog();
-  const hostcontext_t hostcontext() const;
+  ffftp_hostcontext_t hostcontext() const;
 
  public slots:
   void accept() override;
@@ -29,7 +29,7 @@ class HostListDialog : public QDialog {
   void onClick_treeView_HostList(QModelIndex);
 
  private:
-  bool showSettingDialog(hostdata& in_out_data);
+  bool showSettingDialog(ffftp_hostdata& in_out_data);
   void updateEnabled();
   bool askGroupName(QString& group_name, const QString& title);
 

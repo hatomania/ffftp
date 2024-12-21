@@ -8,21 +8,15 @@
 
 namespace LIBFFFTP_WINDOWS {
 
-int MessageBoxIndirectW(const MSGBOXPARAMSW *lpmbp) {
-  return ffftp_proc(
-    SHOW_MESSAGEBOX,
-    { const_cast<void*>(reinterpret_cast<const void*>(lpmbp->lpszText)),
-      const_cast<void*>(reinterpret_cast<const void*>(lpmbp->lpszCaption)),
-      reinterpret_cast<void*>(static_cast<unsigned long long>(lpmbp->dwStyle)),
-      nullptr});
-}
-
+#define SHOWMESSAGEBOX_CALLPROC(P1, P2, P3, P4) static_cast<int>(ffftp_proc(SHOW_MESSAGEBOX, { const_cast<void*>(reinterpret_cast<const void*>(P1)), const_cast<void*>(reinterpret_cast<const void*>(P2)), const_cast<void*>(reinterpret_cast<const void*>(P3)), const_cast<void*>(reinterpret_cast<const void*>(P4)) }))
 #define SHOWDIALOGBOX_CALLPROC(P1, P2, P3, P4) static_cast<INT_PTR>(ffftp_proc(SHOW_DIALOGBOX, { reinterpret_cast<void*>(P1), reinterpret_cast<void*>(P2), reinterpret_cast<void*>(P3), reinterpret_cast<void*>(P4) }))
 
-template <unsigned long long DID>
-INT_PTR Dialog(unsigned long long dialogid, LPARAM dwInitParam) {
-  return -1;
+int MessageBoxIndirectW(const MSGBOXPARAMSW *lpmbp) {
+  return SHOWMESSAGEBOX_CALLPROC(lpmbp->lpszText, lpmbp->lpszCaption, NULL, NULL);
 }
+
+template <unsigned long long>
+INT_PTR Dialog(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<about_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<account_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<bmark_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
@@ -103,7 +97,10 @@ template <> INT_PTR Dialog<rasreconnect_dlg>(unsigned long long dialogid, LPARAM
 template <> INT_PTR Dialog<re_passwd_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<reginit_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<rename_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<savecrypt_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
+template <> INT_PTR Dialog<savecrypt_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+  // TODO: たぶん特殊化不要
+    return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
+}
 template <> INT_PTR Dialog<savepass_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<sel_local_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<sel_remote_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
@@ -195,7 +192,9 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   case re_passwd_dlg: break;
   case reginit_dlg: break;
   case rename_dlg: break;
-  case savecrypt_dlg: break;
+  case savecrypt_dlg:
+    ret = Dialog<savecrypt_dlg>(dialogid, dwInitParam);
+    break;
   case savepass_dlg: break;
   case sel_local_dlg: break;
   case sel_remote_dlg: break;

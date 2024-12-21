@@ -30,7 +30,7 @@ bool _AskSaveCryptFunc() {
   bool _r = false;
   // Qt::BlockingQueuedConnectionは、他のスレッドからinvokeMethodする場合に必要
   // see https://stackoverflow.com/questions/18725727/how-to-get-a-return-value-from-qmetaobjectinvokemethod
-  QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, _r));
+  QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::AutoConnection, Q_RETURN_ARG(bool, _r));
   return _r;
 }
 bool _AskMasterPassword(std::wstring& passwd) {
@@ -53,6 +53,9 @@ bool _AskRetryMasterPassword() {
 unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procparam param) {
   unsigned long long ret{0};
   switch (msg) {
+  case ffftp_procmsg::SHOW_MESSAGEBOX:
+    ret = MainWindow::messageBox(reinterpret_cast<unsigned long long>(param.param1), reinterpret_cast<unsigned long long>(param.param2));
+    break;
   case ffftp_procmsg::SHOW_DIALOGBOX:
     unsigned long long msgid = reinterpret_cast<unsigned long long>(param.param1);
     switch (msgid) {
@@ -144,7 +147,7 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     case ffftp_dialogid::MOVE_NOTIFY_DLG: break;
     case ffftp_dialogid::FORCEPASSCHANGE_DLG: break;
     case ffftp_dialogid::NEWMASTERPASSWD_DLG:
-      ret = static_cast<int>(_AskRetryMasterPassword());
+      ret = static_cast<unsigned long long>(_AskRetryMasterPassword());
       break;
     case ffftp_dialogid::MASTERPASSWD_DLG: {
       std::wstring* passwd = reinterpret_cast<std::wstring*>(param.param2);
@@ -351,4 +354,57 @@ bool MainWindow::askRetryMasterPassword() {
   if (QMessageBox::question(this, QString(ffftp_applicationname()), kAskRetryInputYourMasterPwd) == QMessageBox::Yes)
     return true;
   return false;
+}
+
+#define MsgBoxX(X)\
+  struct MsgBox_##X : public MsgBox {\
+    inline QMessageBox::StandardButton box(const QString& title, const QString& text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton) const override {\
+      return QMessageBox::X(_mainwindow, title, text, buttons, defaultButton);\
+    }\
+  }
+
+int MainWindow::messageBox(unsigned long long msgid, unsigned long long capid) {
+  struct MsgBox { virtual inline QMessageBox::StandardButton box(const QString& title, const QString& text, QMessageBox::StandardButtons buttons, QMessageBox::StandardButton defaultButton) const = 0; };
+  MsgBoxX(critical);
+  MsgBoxX(information);
+  MsgBoxX(question);
+  MsgBoxX(warning);
+  static const MsgBox* msgc = new MsgBox_critical{};
+  static const MsgBox* msgi = new MsgBox_information{};
+  static const MsgBox* msgq = new MsgBox_question{};
+  static const MsgBox* msgw = new MsgBox_warning{};
+  struct Msg {
+    const MsgBox* box;
+    QString title;
+    QString text;
+    QMessageBox::StandardButtons buttons;
+    QMessageBox::StandardButton defaultButton;
+  };
+  static QMap<QMessageBox::StandardButton, int> ret_table{
+    { QMessageBox::Ok,     1 }, // means IDOK
+    { QMessageBox::Cancel, 2 }, // means IDCANCEL
+    { QMessageBox::Yes,    6 }, // means IDYES
+    { QMessageBox::No,     7 }, // means IDNO
+  };
+  static constexpr QMessageBox::StandardButtons kOk          = QMessageBox::Ok;
+  static constexpr QMessageBox::StandardButtons kYesNo       = QMessageBox::Yes | QMessageBox::No;
+  static constexpr QMessageBox::StandardButtons kYesNoCancel = QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel;
+  static QMap<unsigned long long, Msg> table{
+    { SID_REMOVE_READONLY,             { msgq, tr("ダウンロード"), MainWindow::tr("読み取り専用ファイルです。読み取り専用属性を解除しますか？"), kYesNo, QMessageBox::NoButton } },
+    { SID_MASTER_PASSWORD_INCORRECT,   { msgw, kStringFFFTP, kAskRetryInputYourMasterPwd, kYesNo, QMessageBox::NoButton } },
+    { SID_FAIL_TO_INIT_OLE,            { msgc, kStringFFFTP, MainWindow::tr("OLEの初期化に失敗しました。"), kOk, QMessageBox::NoButton } },
+    { SID_ERR_SSL,                     { msgc, kStringFFFTP, MainWindow::tr("SSLの初期化に失敗しました。\nアプリケーションを終了します。"), kOk, QMessageBox::NoButton } },
+    { SID_FOUND_NEW_VERSION_INI,       { msgq, kStringFFFTP, kMsgFoundNewVerSettings, kYesNoCancel, QMessageBox::No } },
+    { SID_MANAGE_STATEFUL_FTP,         { msgi, kStringFFFTP, MainWindow::tr("WindowsファイアウォールのステートフルFTPフィルタの有効無効を設定します。\nこれはWindows Vista以降でのみ動作します。\n有効化または無効化することで通信状態が改善されることがあります。\n有効化するには「はい」、無効化するには「いいえ」を選択してください。"), kYesNoCancel, QMessageBox::NoButton } },
+    { SID_FAIL_TO_MANAGE_STATEFUL_FTP, { msgc, kStringFFFTP, MainWindow::tr("ステートフルFTPフィルタを設定できませんでした。"), kOk, QMessageBox::NoButton } },
+    { SID_NEED_RESTART,                { msgi, kStringFFFTP, MainWindow::tr("設定をファイルから復元するためには,FFFTPを再起動してください。"), kOk, QMessageBox::NoButton } },
+    { SID_PASSWORD_ISNOT_IDENTICAL,    { msgc, kStringFFFTP, MainWindow::tr("新しいマスターパスワードが一致しません。"), kOk, QMessageBox::NoButton } },
+    { SID_FAIL_TO_EXEC_REDEDIT,        { msgc, kStringFFFTP, MainWindow::tr("レジストリエディタが起動できませんでした。"), kOk, QMessageBox::NoButton } },
+    { SID_MUST_BE_REG_OR_INI,          { msgc, kStringFFFTP, MainWindow::tr("設定ファイルは拡張子が.regか.iniでなければなりません。"), kOk, QMessageBox::NoButton } },
+    { SID_CANT_SAVE_TO_INI,            { msgc, kStringFFFTP, MainWindow::tr("INIファイルに設定が保存できません。"), kOk, QMessageBox::NoButton } },
+    { SID_FAIL_TO_EXPORT,              { msgc, kStringFFFTP, MainWindow::tr("設定のエクスポートに失敗しました。\n保存する場所や形式を変更してください。"), kOk, QMessageBox::NoButton } },
+    { SID_NEED_EXSITING_WINSCP_INI,    { msgi, kStringFFFTP, MainWindow::tr("この機能で新規作成したINIファイルをWinSCPで読み込むと全ての設定が失われます。\nすでにWinSCPをお使いでありホストの設定のみ移行したい場合は既存のWinSCP.iniを選択してください。"), kOk, QMessageBox::NoButton } },
+  };
+  Msg& msg = table[msgid];
+  return ret_table[msg.box->box(msg.title, msg.text, msg.buttons, msg.defaultButton)];
 }

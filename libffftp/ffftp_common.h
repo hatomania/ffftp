@@ -1,6 +1,14 @@
 ﻿#ifndef FFFTP_COMMON_BB06576E_ED0F_43DD_98E3_B0A1925B1EAC_H_
 #define FFFTP_COMMON_BB06576E_ED0F_43DD_98E3_B0A1925B1EAC_H_
 
+#ifdef LIBFFFTP_EXPORTS
+#define LIBFFFTP_DECLSPEC __declspec(dllexport)
+#else
+#define LIBFFFTP_DECLSPEC __declspec(dllimport)
+#endif
+
+#define LIBFFFTP_CALLCONV __stdcall
+
 #ifndef __cplusplus
 #include <wchar.h>
 #endif
@@ -28,7 +36,7 @@ enum ffftp_procmsg {
   SHOW_DIALOGBOX,
 };
 
-typedef unsigned long long (*ffftp_proc_callback)(unsigned long long msg, ffftp_procparam param);
+typedef unsigned long long (LIBFFFTP_CALLCONV *ffftp_proc_callback)(unsigned long long msg, ffftp_procparam param);
 
 enum ffftp_dialogid {
   ABOUT_DLG =                       104,
@@ -122,6 +130,23 @@ enum ffftp_dialogid {
   OPT_DISP2_DLG =                   196,
   CORRUPTSETTINGS_DLG =             198,
   CERTERR_DLG =                     199,
+};
+
+enum ffftp_messageid {
+  SID_REMOVE_READONLY             = 223,
+  SID_MASTER_PASSWORD_INCORRECT   = 225,
+  SID_FAIL_TO_INIT_OLE            = 224,
+  SID_ERR_SSL                     = 202,
+  SID_FOUND_NEW_VERSION_INI       = 229,
+  SID_MANAGE_STATEFUL_FTP         = 227,
+  SID_FAIL_TO_MANAGE_STATEFUL_FTP = 228,
+  SID_NEED_RESTART                = 221,
+  SID_PASSWORD_ISNOT_IDENTICAL    = 226,
+  SID_FAIL_TO_EXEC_REDEDIT        = 220,
+  SID_MUST_BE_REG_OR_INI          = 222,
+  SID_CANT_SAVE_TO_INI            = 219,
+  SID_FAIL_TO_EXPORT              = 230,
+  SID_NEED_EXSITING_WINSCP_INI    = 231,
 };
 
 enum ffftp_eventid {

@@ -33,14 +33,6 @@
 #include "ffftp_hostdata.h"
 #include "ffftp_option.h"
 
-#ifdef LIBFFFTP_EXPORTS
-#define LIBFFFTP_DECLSPEC __declspec(dllexport)
-#else
-#define LIBFFFTP_DECLSPEC __declspec(dllimport)
-#endif
-
-#define LIBFFFTP_CALLCONV __cdecl
-
 #ifndef __cplusplus
 #include <wchar.h>
 #endif

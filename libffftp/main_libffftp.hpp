@@ -49,7 +49,7 @@ LIBFFFTP_FUNCTION(bool initialize())
 	MainThreadId = GetCurrentThreadId();
 
 	// 戻り値S_FALSEはすでにOleInitialize関数呼び出し済みの意味
-	// 他のプラットフォームがすでに呼び出してるかもしれないのでS_FALSEは失敗扱いにしない
+	// 他のプラットフォームがすでに呼び出してるだけかもしれないのでS_FALSEは失敗扱いにしない
 	if (HRESULT hres = OleInitialize(nullptr); hres != S_OK && hres != S_FALSE) {
 		Message(IDS_FAIL_TO_INIT_OLE, MB_OK | MB_ICONERROR);
 		return false;

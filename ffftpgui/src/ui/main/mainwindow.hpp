@@ -12,7 +12,7 @@ class MainWindow : public QMainWindow {
   virtual ~MainWindow();
   static unsigned long long ffftp_proc(unsigned long long msg, ffftp_procparam param);
 
- public slots:
+ private slots:
   // actions and invoked actions
   void actionConnect();
   bool actionConnectInvoked(bool editable);
@@ -88,6 +88,9 @@ class MainWindow : public QMainWindow {
 
  protected:
   void timerEvent(QTimerEvent* event) override;
+
+private:
+  static int messageBox(unsigned long long msgid, unsigned long long capid);
 
  private:
   class Private;

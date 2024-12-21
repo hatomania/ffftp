@@ -1,6 +1,8 @@
 ﻿#ifndef LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_
 #define LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_
 
+// Win32 APIの呼び出しを横取りする
+
 #define LIBFFFTP_WINDOWS libffftp_windows
 
 #include <windows.h>// TODO: 要削除

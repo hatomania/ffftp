@@ -14,7 +14,9 @@ DECL_CONST_QSTRING(kAskSaveCryptTitle);
 DECL_CONST_QSTRING(kAskSaveCryptBody);
 DECL_CONST_QSTRING(kPlzInputYourMasterPwd);
 DECL_CONST_QSTRING(kAskRetryInputYourMasterPwd);
+DECL_CONST_QSTRING(kMsgFoundNewVerSettings);
 
+DECL_CONST_QSTRING(kStringFFFTP);
 DECL_CONST_QSTRING(kStringName);
 DECL_CONST_QSTRING(kStringDate);
 DECL_CONST_QSTRING(kStringSize);

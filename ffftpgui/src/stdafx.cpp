@@ -40,7 +40,14 @@ IMPL_CONST_QSTRING(
     "指定されたマスターパスワードが登録されたものと一致しません。"
     "再度入力しますか？\n"
     "「いいえ」を選ぶと記憶されたFTPパスワードは利用できません。");
+IMPL_CONST_QSTRING(kMsgFoundNewVerSettings,
+  "新しいバージョンの設定が検出されました。\n"
+  "このバージョンでは一部の設定が正しく読み込まれない、またはこのバージョンで設定を上書きすると設定が変化する可能性があります。\n"
+  "このバージョン用に設定を上書きして保存するには「はい」を選択してください。\n"
+  "設定をレジストリではなくINIファイルに保存するには「いいえ」を選択してください。\n"
+  "読み取り専用で設定を読み込むには「キャンセル」を選択してください。");
 
+IMPL_CONST_QSTRING(kStringFFFTP, "FFFTP");
 IMPL_CONST_QSTRING(kStringName, "名前");
 IMPL_CONST_QSTRING(kStringDate, "日付");
 IMPL_CONST_QSTRING(kStringSize, "サイズ");

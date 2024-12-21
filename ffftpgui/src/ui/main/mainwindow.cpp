@@ -110,9 +110,6 @@ MainWindow::MainWindow(QWidget* parent)
   d_->ffftpt->start();
 
   _mainwindow = this;
-  ffftp_setcallback_asksavecrypt(_AskSaveCryptFunc);
-//  ffftp_setcallback_askmasterpassword(_AskMasterPassword);
-  ffftp_setcallback_askretrymasterpassword(_AskRetryMasterPassword);
 
   // ローカルファイルリストの初期化
   for (const auto& d : QDir::drives()) {

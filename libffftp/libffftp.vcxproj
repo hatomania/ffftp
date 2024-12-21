@@ -100,7 +100,6 @@
     <ClInclude Include="..\OleDragDrop.h" />
     <ClInclude Include="..\Resource\resource.en-US.h" />
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
-    <ClInclude Include="callback.h" />
     <ClInclude Include="connect_libffftp.hpp" />
     <ClInclude Include="ffftp.h" />
     <ClInclude Include="ffftp_common.h" />

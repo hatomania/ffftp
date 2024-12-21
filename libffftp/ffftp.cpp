@@ -29,7 +29,6 @@
 #include "ffftp.h"
 
 #include "common.h"
-#include "callback.h"
 #include "libffftp.hpp"
 #include "libffftp_common.hpp"
 
@@ -143,22 +142,6 @@ LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_taskmessage() {
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(ffftp_hostcontext_t hc) {
   return libffftp::connect(hc);
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_asksavecrypt(bool (*func)()) {
-  libffftp::setAskSaveCryptCallback(func);
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword(bool (*func)(const wchar_t** passwd)) {
-    LIBFFFTP_CALLBACK_SETTER(AskMasterPassword);
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askmasterpassword2nd(bool (*func)(const wchar_t** passwd)) {
-  LIBFFFTP_CALLBACK_SETTER(AskMasterPassword2nd);
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setcallback_askretrymasterpassword(bool (*func)()) {
-        LIBFFFTP_CALLBACK_SETTER(AskRetryMasterPassword);
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* opt) {

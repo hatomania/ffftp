@@ -1,10 +1,10 @@
 # ダイアログ
 
-## InputDialog
+## InputDialog関数
 
-common.h: 1371
+common.h: 1371行目で定義
 
-一つの文字列の入力を求めるダイアログを表示する関数。マスターパスワードの入力やユーザー名の入力など一つのテキストの入力を求める。多彩な種類があるためここにまとめておく。
+単に一つの文字列の入力を求めるダイアログを表示する関数。マスターパスワードの入力やユーザー名の入力など一つのテキストの入力を求める。オプションでチェックボックスを一つ設けることができる。表示にはWin32 APIのDialogBoxParamW関数を使用。
 
 | Dialog-ID | イメージ画像 | 備考 |
 | --- | --- | --- |
@@ -23,9 +23,11 @@ common.h: 1371
 | somecmd_dlg | ![InputDialog somecmd_dlg](./inputdialog-somecmd_dlg.png) | ヘルプID=23 |
 | username_dlg | ![InputDialog username_dlg](./inputdialog-username_dlg.png) |  |
 
-## Dialog
+## Dialog関数
 
-dialog.h: 163
+dialog.h: 163行目で定義
+
+Win32 APIのDialogBoxParamW関数を使用してダイアログを表示する関数。InputDialogとは異なり多数のUI部品を配置した自由で複雑な機能を持つダイアログを定義できる。
 
 | Dialog-ID | イメージ画像 | 備考 |
 | --- | --- | --- |
@@ -76,14 +78,18 @@ dialog.h: 163
 
 ## （参考）未使用Dialog
 
+ダイアログIDが定義されているにもかかわらず、どこからも参照がされていないダイアログ。
+
 | Dialog-ID | イメージ画像 | 備考 |
 | --- | --- | --- |
 | chdir_br_dlg | ![unused Dialog chdir_br_dlg](./unuseddialog-chdir_br_dlg.png) |  |
 | diskfull_dlg | ![unused Dialog diskfull_dlg](./unuseddialog-diskfull_dlg.png) |  |
-| FILEOPENORD_1 | ![unused Dialog ](./unuseddialog-fileopenord_1.png) |  |
+| FILEOPENORD_1 | ![unused Dialog FILEOPENORD_1](./unuseddialog-fileopenord_1.png) |  |
 | updatesslroot_dlg | ![unused Dialog updatesslroot_dlg](./unuseddialog-updatesslroot_dlg.png) |  |
 
 ## （参考）プロパティシートのタブページとして組み込まれるDialog
+
+プロパティシートのタブページとして組み込まれることを予定されたダイアログ。ホスト設定ダイアログとオプションダイアログで使用される。
 
 | Dialog-ID | イメージ画像 | 備考 |
 | --- | --- | --- |
@@ -107,5 +113,28 @@ dialog.h: 163
 | opt_trmode3_dlg | ![Form Dialog opt_trmode3_dlg](./formdialog-opt_trmode3_dlg.png) |  |
 | opt_trmode4_dlg | ![Form Dialog opt_trmode4_dlg](./formdialog-opt_trmode4_dlg.png) |  |
 | opt_user_dlg | ![Form Dialog opt_user_dlg](./formdialog-opt_user_dlg.png) |  |
+
+## Message関数
+
+common.h: 1304行目で定義
+
+Win32 APIのMessageBoxIndirectW関数を使用して単純なモーダルのメッセージボックスを表示する関数。[OK]ボタンのみを配置したメッセージや、加えて[キャンセル]ボタンを配置したメッセージなどがある。キャプションは特に指定がない限りすべて`FFFTP`である。
+
+| Message-ID | メッセージ | スタイル | 備考 |
+| --- | --- | --- | --- |
+| IDS_REMOVE_READONLY | `読み取り専用ファイルです.読み取り専用属性を解除しますか？` | MB_YESNO | キャプションID=IDS_MSGJPN086=`ダウンロード` |
+| IDS_MASTER_PASSWORD_INCORRECT | `指定されたマスターパスワードが登録されたものと一致しません.\r\n再度入力しますか？\r\n「いいえ」を選ぶと記憶されたFTPパスワードは利用できません.` | MB_YESNO \| MB_ICONEXCLAMATION |  |
+| IDS_FAIL_TO_INIT_OLE | `OLEの初期化に失敗しました.` | MB_OK \| MB_ICONERROR |  |
+| IDS_ERR_SSL | `SSLの初期化に失敗しました.\nアプリケーションを終了します.` | MB_OK \| MB_ICONERROR |  |
+| IDS_FOUND_NEW_VERSION_INI | `新しいバージョンの設定が検出されました.\nこのバージョンでは一部の設定が正しく読み込まれない,またはこのバージョンで設定を上書きすると設定が変化する可能性があります.\nこのバージョン用に設定を上書きして保存するには「はい」を選択してください.\n設定をレジストリではなくINIファイルに保存するには「いいえ」を選択してください.\n読み取り専用で設定を読み込むには「キャンセル」を選択してください.` | MB_YESNOCANCEL \| MB_DEFBUTTON2 |  |
+| IDS_MANAGE_STATEFUL_FTP | `WindowsファイアウォールのステートフルFTPフィルタの有効無効を設定します.\nこれはWindows Vista以降でのみ動作します.\n有効化または無効化することで通信状態が改善されることがあります.\n有効化するには「はい」,無効化するには「いいえ」を選択してください.` | MB_YESNOCANCEL |  |
+| IDS_FAIL_TO_MANAGE_STATEFUL_FTP | `ステートフルFTPフィルタを設定できませんでした.` | MB_OK \| MB_ICONERROR |  |
+| IDS_NEED_RESTART | `設定をファイルから復元するためには,FFFTPを再起動してください.` | MB_OK |  |
+| IDS_PASSWORD_ISNOT_IDENTICAL | `新しいマスターパスワードが一致しません.` | MB_OK \| MB_ICONERROR |  |
+| IDS_FAIL_TO_EXEC_REDEDIT | `レジストリエディタが起動できませんでした` | MB_OK \| MB_ICONERROR |  |
+| IDS_MUST_BE_REG_OR_INI | `設定ファイルは拡張子が.regか.iniでなければなりません.` | MB_OK \| MB_ICONERROR |  |
+| IDS_CANT_SAVE_TO_INI | `INIファイルに設定が保存できません` | MB_OK \| MB_ICONERROR |  |
+| IDS_FAIL_TO_EXPORT | `設定のエクスポートに失敗しました.\n保存する場所や形式を変更してください.` | MB_OK \| MB_ICONERROR |  |
+| IDS_NEED_EXSITING_WINSCP_INI | `この機能で新規作成したINIファイルをWinSCPで読み込むと全ての設定が失われます.\nすでにWinSCPをお使いでありホストの設定のみ移行したい場合は既存のWinSCP.iniを選択してください.` | MB_OK |  |
 
 ### 以上

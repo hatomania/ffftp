@@ -36,9 +36,6 @@
     <ClInclude Include="ffftp_option.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="callback.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ffftp_common.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>

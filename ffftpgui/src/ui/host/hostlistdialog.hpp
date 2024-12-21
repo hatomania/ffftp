@@ -11,11 +11,11 @@ class HostListDialog : public QDialog {
   Q_OBJECT
 
  public:
-  explicit HostListDialog(QWidget* parent = Q_NULLPTR);
+  explicit HostListDialog(bool editable = true, QWidget* parent = Q_NULLPTR);
   virtual ~HostListDialog();
   ffftp_hostcontext_t hostcontext() const;
 
- public slots:
+ private slots:
   void accept() override;
   void onClick_pushButton_NewHost();
   void onClick_pushButton_NewGroup();

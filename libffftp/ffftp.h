@@ -69,6 +69,14 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback pr
  */
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize();
 
+/**
+ * @brief ffftpにイベントが発生したことを通知する。
+ *
+ * @param[in] eventid 発生を通知するイベントID
+ * @return イベントIDによって異なります。
+ */
+LIBFFFTP_DECLSPEC long long LIBFFFTP_CALLCONV ffftp_notify_event(int eventid, long long param1 = 0, long long param2 = 0);
+
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
@@ -203,6 +211,13 @@ LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(ffftp_hostcontex
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(ffftp_hostcontext_t hc);
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_taskmessage();
+
+/**
+ * @brief 接続の前準備を行う。
+ *
+ * @param[in]  hc 前準備を行う接続予定のホストコンテキスト
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_preconnect(ffftp_hostcontext_t hc);
 
 /**
  * @brief 指定したホストコンテキストで接続する。

@@ -146,6 +146,7 @@
     <ClCompile Include="src\ui\option\view2datatransceiver.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource\resource.h" />
     <ClInclude Include="src\ui\base\datatransceiver.hpp" />
     <ClInclude Include="src\ui\base\formdatatransceiver.hpp" />
     <QtMoc Include="src\ui\common\fileattributesettingdialog.hpp" />
@@ -208,6 +209,9 @@
     <QtMoc Include="src\ui\host\hostsettingsdialog.hpp" />
     <QtMoc Include="src\core\ffftpthread.hpp" />
     <ClInclude Include="src\stdafx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource\Resource.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{6A73D506-C2D0-4912-B2C2-408F2BC027FD}</ProjectGuid>

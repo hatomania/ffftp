@@ -56,16 +56,112 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
   case ffftp_procmsg::SHOW_DIALOGBOX:
     unsigned long long msgid = reinterpret_cast<unsigned long long>(param.param1);
     switch (msgid) {
-    case ffftp_dialogid::SAVECRYPT_DLG:
-      ret = static_cast<int>(_AskSaveCryptFunc());
+    case ffftp_dialogid::ABOUT_DLG: break;
+    case ffftp_dialogid::TRANSFER_DLG: break;
+    case ffftp_dialogid::RENAME_DLG: break;
+    case ffftp_dialogid::DELETE_DLG: break;
+    case ffftp_dialogid::HOSTLIST_DLG: {
+      bool _r{false};
+      QMetaObject::invokeMethod(_mainwindow, "actionConnectInvoked", Qt::AutoConnection, Q_RETURN_ARG(bool, _r), Q_ARG(bool, true));
+      ret = _r;
+    } break;
+    case ffftp_dialogid::HOSTSET_DLG: break;
+    //case ffftp_dialogid::HSET_MAIN_DLG: break;
+    case ffftp_dialogid::USER_DLG: break;
+    //case ffftp_dialogid::OPT_USER_DLG: break;
+    case ffftp_dialogid::TOOL_DLG: break;
+    //case ffftp_dialogid::OPT_TOOL_DLG: break;
+    case ffftp_dialogid::PERMIT_DLG: break;
+    //case ffftp_dialogid::CHMOD_DLG: break;
+    case ffftp_dialogid::SORT_DLG: break;
+    case ffftp_dialogid::TRMODE_DLG: break;
+    case ffftp_dialogid::MKDIR_DLG: break;
+    case ffftp_dialogid::OPT_MISC_DLG: break;
+    case ffftp_dialogid::HOSTNAME_DLG: break;
+    case ffftp_dialogid::PASSWD_DLG: break;
+    case ffftp_dialogid::USERNAME_DLG: break;
+    case ffftp_dialogid::CHDIR_DLG: break;
+    case ffftp_dialogid::EXIT_DLG: break;
+    case ffftp_dialogid::EXIST_DLG: break;
+    //case ffftp_dialogid::DOWN_EXIST_DLG: break;
+    case ffftp_dialogid::OPT_TRMODE_DLG: break;
+    //case ffftp_dialogid::OPT_TRMODE2_DLG: break;
+    case ffftp_dialogid::OPT_NOTIFY_DLG: break;
+    case ffftp_dialogid::BMARK_DLG: break;
+    case ffftp_dialogid::OPT_FIRE_DLG: break;
+    case ffftp_dialogid::HSET_ADV_DLG: break;
+    case ffftp_dialogid::DISKFULL_DLG: break;
+    case ffftp_dialogid::FIND_DLG: break;
+    case ffftp_dialogid::DOWNERR_DLG: break;
+    case ffftp_dialogid::UPERR_DLG: break;
+    case ffftp_dialogid::HSET_CODE_DLG: break;
+    case ffftp_dialogid::OPT_TRMODE_DLG1: break;
+    //case ffftp_dialogid::OPT_TRMODE1_DLG: break;
+    case ffftp_dialogid::EXIST_DLG1: break;
+    case ffftp_dialogid::UP_EXIST_DLG: break;
+    case ffftp_dialogid::REGINIT_DLG: break;
+    case ffftp_dialogid::HOSTCONNECT_DLG: {
+      bool _r{false};
+      QMetaObject::invokeMethod(_mainwindow, "actionConnectInvoked", Qt::AutoConnection, Q_RETURN_ARG(bool, _r), Q_ARG(bool, false));
+      ret = _r;
+    } break;
+    case ffftp_dialogid::UPDOWN_AS_DLG: break;
+    case ffftp_dialogid::RE_PASSWD_DLG: break;
+    case ffftp_dialogid::SAVEPASS_DLG: break;
+    case ffftp_dialogid::SEL_LOCAL_DLG: break;
+    case ffftp_dialogid::SEL_REMOTE_DLG: break;
+    case ffftp_dialogid::MIRROR_UP_DLG: break;
+    case ffftp_dialogid::ACCOUNT_DLG: break;
+    case ffftp_dialogid::OPT_MIRROR_DLG: break;
+    case ffftp_dialogid::SOMECMD_DLG: break;
+    case ffftp_dialogid::DOWNNAME_DLG: break;
+    case ffftp_dialogid::OPT_CONNECT_DLG: break;
+    case ffftp_dialogid::RASNOTIFY_DLG: break;
+    case ffftp_dialogid::FILESIZE_DLG: break;
+    case ffftp_dialogid::FILESIZE_NOTIFY_DLG: break;
+    case ffftp_dialogid::HSET_ADV2_DLG: break;
+    case ffftp_dialogid::CWDERR_DLG: break;
+    case ffftp_dialogid::OPT_TRMODE3_DLG: break;
+    case ffftp_dialogid::DEF_ATTR_DLG: break;
+    case ffftp_dialogid::FNAME_IN_DLG: break;
+    case ffftp_dialogid::OTP_NOTIFY_DLG: break;
+    case ffftp_dialogid::OTP_CALC_DLG: break;
+    case ffftp_dialogid::MIRROR_NOTIFY_DLG: break;
+    case ffftp_dialogid::MIRRORDOWN_NOTIFY_DLG: break;
+    case ffftp_dialogid::MIRROR_DOWN_DLG: break;
+    case ffftp_dialogid::CHDIR_BR_DLG: break;
+    case ffftp_dialogid::FILTER_DLG: break;
+    case ffftp_dialogid::GROUP_DLG: break;
+    case ffftp_dialogid::HOSTDEL_DLG: break;
+    case ffftp_dialogid::GROUPDEL_DLG: break;
+    case ffftp_dialogid::NORESUME_DLG: break;
+    case ffftp_dialogid::FORCERENAME_DLG: break;
+    case ffftp_dialogid::HSET_DIALUP_DLG: break;
+    case ffftp_dialogid::RASRECONNECT_DLG: break;
+    case ffftp_dialogid::OPT_DISP1_DLG: break;
+    case ffftp_dialogid::BMARK_EDIT_DLG: break;
+    case ffftp_dialogid::OPT_TOOL_DLG1: break;
+    case ffftp_dialogid::MOVE_NOTIFY_DLG: break;
+    case ffftp_dialogid::FORCEPASSCHANGE_DLG: break;
+    case ffftp_dialogid::NEWMASTERPASSWD_DLG:
+      ret = static_cast<int>(_AskRetryMasterPassword());
       break;
     case ffftp_dialogid::MASTERPASSWD_DLG: {
       std::wstring* passwd = reinterpret_cast<std::wstring*>(param.param2);
       ret = static_cast<unsigned long long>(_AskMasterPassword(*passwd));
-    }
+    } break;
+    case ffftp_dialogid::HSET_CRYPT_DLG: break;
+    case ffftp_dialogid::HSET_ADV3_DLG: break;
+    case ffftp_dialogid::SAVECRYPT_DLG:
+      ret = static_cast<int>(_AskSaveCryptFunc());
       break;
-    case ffftp_dialogid::NEWMASTERPASSWD_DLG:
-      ret = static_cast<int>(_AskRetryMasterPassword());
+    case ffftp_dialogid::UPDATESSLROOT_DLG: break;
+    case ffftp_dialogid::UPDOWN_AS_WITH_EXT_DLG: break;
+    case ffftp_dialogid::INI_FROM_REG_DLG: break;
+    case ffftp_dialogid::OPT_TRMODE4_DLG: break;
+    case ffftp_dialogid::OPT_DISP2_DLG: break;
+    case ffftp_dialogid::CORRUPTSETTINGS_DLG: break;
+    case ffftp_dialogid::CERTERR_DLG: break;
     }
   }
   return ret;
@@ -138,15 +234,16 @@ void MainWindow::timerEvent(QTimerEvent* event) {
 }
 
 void MainWindow::actionConnect() {
-  qDebug() << __FUNCTION__ << " called.";
-  HostListDialog dialog{this};
-  if (dialog.exec() == QDialog::Accepted) {
-    qDebug() << "Accepted.";
-    // 接続処理は別スレッドへ
-    QMetaObject::invokeMethod(d_->ffftpt, "connect", Qt::QueuedConnection, Q_ARG(const void*, dialog.hostcontext()));
-  }
+  ffftp_notify_event(ffftp_eventid::EID_MENU_CONNECT);
 }
-
+bool MainWindow::actionConnectInvoked(bool editable) {
+  bool ret{false};
+  HostListDialog dialog{editable, this};
+  if (ret = dialog.exec() == QDialog::Accepted) {
+    ffftp_preconnect(dialog.hostcontext());
+  }
+  return ret;
+}
 void MainWindow::actionQuickConnect() {}
 void MainWindow::actionDisconnect() {}
 void MainWindow::actionHostSettings() {}

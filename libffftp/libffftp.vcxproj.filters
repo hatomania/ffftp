@@ -163,44 +163,44 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\Resource\toolbar1.bmp">
+      <Filter>リソース ファイル\ffftp</Filter>
+    </Image>
     <Image Include="..\Resource\bitmap1.bmp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\icon1.ico">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\icon2.ico">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\list_16.bmp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\list_bmp.bmp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\main_too.bmp">
-      <Filter>リソース ファイル</Filter>
-    </Image>
-    <Image Include="..\Resource\toolbar1.bmp">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Resource\ffftp.en-US.rc">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </ResourceCompile>
     <ResourceCompile Include="..\Resource\ffftp.ja-JP.rc">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\Resource\ffftp.rcconfig">
-      <Filter>リソース ファイル</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="..\Resource\ffftp.exe.manifest">
-      <Filter>リソース ファイル</Filter>
+      <Filter>リソース ファイル\ffftp</Filter>
     </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resource\ffftp.rcconfig">
+      <Filter>リソース ファイル\ffftp</Filter>
+    </None>
   </ItemGroup>
 </Project>

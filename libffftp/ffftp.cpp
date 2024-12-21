@@ -41,8 +41,8 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
   libffftp::finalize();
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_registproc(ffftp_proc_callback proc) {
-  ffftp_proc = proc;
+LIBFFFTP_DECLSPEC long long LIBFFFTP_CALLCONV ffftp_notify_event(int eventid, long long param1, long long param2) {
+  return libffftp::notifyEvent(eventid, param1, param2);
 }
 
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected() {
@@ -138,6 +138,10 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_hostcontext_isgroup(ffftp_hostcon
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_taskmessage() {
   return libffftp::taskMessage();
+}
+
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_preconnect(ffftp_hostcontext_t hc) {
+  libffftp::preconnect(hc);
 }
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(ffftp_hostcontext_t hc) {

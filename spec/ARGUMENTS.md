@@ -7,12 +7,12 @@
 まだ解析途中のため、間違えている可能性があります。
 
 ```[text]
-[<ftp-server-addr>]         FTPサーバー<ftp-server-addr>に接続する。
+[<ftp-server-addr>[:<port>]] FTPサーバー<ftp-server-addr>にポート番号<port>で接続を試みる。[:<port>]が省略されていれば21を使用する。
 [-n, --ini <inifile-path>]  設定をINIファイル<inifile-path>から読み書きするようにする。省略するとレジストリから読み書きする。
 [-z, --mpasswd <mpasswd>]   マスターパスワード<mpasswd>を指定する。
 [-s, --set <host-name>]     登録したホスト情報<host-name>に接続する。
-[-m, --mirror]              ミラーリングアップロードを行う。
-[-d, --mirrordown]          ミラーリングダウンロードを行う。
+[-m, --mirror]              ミラーリングアップロードを行う。-dまたは--mirrordownと同時に指定した場合は、そのオプション(-dまたは--mirrordown)は無視される。
+[-d, --mirrordown]          ミラーリングダウンロードを行う。-mまたは--mirrorと同時に指定した場合は、このオプション(-dまたは--mirrordown)は無視される。
 [-eu, -e, --euc]            転送時の漢字コードをEUCとする。
 [-ji, -j, --jis]            転送時の漢字コードをJISとする。
 [-a, --ascii]               アスキー転送モードで転送する。

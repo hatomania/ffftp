@@ -525,6 +525,9 @@
     <ClInclude Include="src\ui\option\view2datatransceiver.hpp">
       <Filter>Header Files\ui\option</Filter>
     </ClInclude>
+    <ClInclude Include="resource\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="src\core\ffftpthread.hpp">
@@ -641,5 +644,10 @@
     <QtMoc Include="src\ui\common\inputdialog.hpp">
       <Filter>Header Files\ui\common</Filter>
     </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resource\Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

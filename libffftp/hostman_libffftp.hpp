@@ -540,6 +540,14 @@ LIBFFFTP_FUNCTION(bool hostContextIsGroup(ffftp_hostcontext_t hc))
 }
 #endif
 
+LIBFFFTP_FUNCTION(void preconnect(ffftp_hostcontext_t hc))
+#ifndef LIBFFFTP_DECL
+{
+  CurrentHost = hostIndex(hc);
+  ConnectingHost = CurrentHost;
+}
+#endif
+
 LIBFFFTP_FUNCTION(bool connect(ffftp_hostcontext_t hc))
 #ifndef LIBFFFTP_DECL
 {

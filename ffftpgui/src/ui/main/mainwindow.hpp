@@ -13,8 +13,9 @@ class MainWindow : public QMainWindow {
   static unsigned long long ffftp_proc(unsigned long long msg, ffftp_procparam param);
 
  public slots:
-  // actions
+  // actions and invoked actions
   void actionConnect();
+  bool actionConnectInvoked(bool editable);
   void actionQuickConnect();
   void actionDisconnect();
   void actionHostSettings();

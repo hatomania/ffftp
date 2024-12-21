@@ -2,12 +2,15 @@
 
 #include <QMainWindow>
 
+#include "ffftp_common.h"
+
 class MainWindow : public QMainWindow {
   Q_OBJECT
 
  public:
   explicit MainWindow(QWidget* parent = Q_NULLPTR);
   virtual ~MainWindow();
+  static unsigned long long ffftp_proc(unsigned long long msg, ffftp_procparam param);
 
  public slots:
   // actions

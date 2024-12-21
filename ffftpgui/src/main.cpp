@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
   // QApplication::setStyle(QStyleFactory::create("Fusion"));
   int ret = 1;
   MainWindow w;
-  if (ffftp_initialize()) {
+  if (ffftp_initialize(MainWindow::ffftp_proc)) {
     w.show();
     QMetaObject::invokeMethod(&w, &MainWindow::actionConnect);
     ret = a.exec();

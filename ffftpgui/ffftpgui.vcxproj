@@ -93,6 +93,7 @@
     <ClCompile Include="src\ui\common\fileandattributesettingdialog.cpp" />
     <ClCompile Include="src\ui\common\fileandattributetreewidget.cpp" />
     <ClCompile Include="src\ui\common\fileattributesettingdialog.cpp" />
+    <ClCompile Include="src\ui\common\inputdialog.cpp" />
     <ClCompile Include="src\ui\host\advanceddatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\dialupdatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp" />
@@ -152,6 +153,7 @@
     <QtMoc Include="src\ui\common\addablelistwidget.hpp" />
     <QtMoc Include="src\ui\common\addabletreewidget.hpp" />
     <QtMoc Include="src\ui\common\fileandattributetreewidget.hpp" />
+    <QtMoc Include="src\ui\common\inputdialog.hpp" />
     <ClInclude Include="src\ui\host\advanceddatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\dialupdatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\encryptiondatatransceiver.hpp" />

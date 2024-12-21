@@ -10,6 +10,7 @@
 #include "ffftp.h"
 #include "stdafx.h"
 #include "core/ffftpthread.hpp"
+#include "ui/common/inputdialog.hpp"
 #include "ui/host/hostlistdialog.hpp"
 #include "ui/option/optiondialog.hpp"
 
@@ -22,30 +23,52 @@ class MainWindow::Private {
   FFFTPThread* ffftpt;
 };
 
-static MainWindow* _mainwindow = nullptr;
-static bool _AskSaveCryptFunc() {
+namespace {
+
+MainWindow* _mainwindow = nullptr;
+bool _AskSaveCryptFunc() {
   bool _r = false;
   // Qt::BlockingQueuedConnectionは、他のスレッドからinvokeMethodする場合に必要
   // see https://stackoverflow.com/questions/18725727/how-to-get-a-return-value-from-qmetaobjectinvokemethod
   QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, _r));
   return _r;
 }
-static bool _AskMasterPassword(const wchar_t** passwd) {
+bool _AskMasterPassword(std::wstring& passwd) {
   qDebug() << __FUNCTION__ << " called.";
   bool _r = false;
   QString passwd_;
   QMetaObject::invokeMethod(_mainwindow, "askMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, _r), Q_ARG(QString&, passwd_));
   qDebug() << __FUNCTION__ << _r << " " << passwd_;
-  static std::wstring
-      static_pwd;  // staticなので実体はこの関数に残り続ける。ffftp-origin側は結果的にこのポインタを参照することとなる
-  static_pwd = passwd_.toStdWString();
-  *passwd = static_pwd.c_str();
+  passwd = passwd_.toStdWString();
   return _r;
 }
-static bool _AskRetryMasterPassword() {
+bool _AskRetryMasterPassword() {
   bool _r = false;
   QMetaObject::invokeMethod(_mainwindow, "askRetryMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, _r));
   return _r;
+}
+
+}  // namespace
+
+unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procparam param) {
+  unsigned long long ret{0};
+  switch (msg) {
+  case ffftp_procmsg::SHOW_DIALOGBOX:
+    unsigned long long msgid = reinterpret_cast<unsigned long long>(param.param1);
+    switch (msgid) {
+    case ffftp_dialogid::SAVECRYPT_DLG:
+      ret = static_cast<int>(_AskSaveCryptFunc());
+      break;
+    case ffftp_dialogid::MASTERPASSWD_DLG: {
+      std::wstring* passwd = reinterpret_cast<std::wstring*>(param.param2);
+      ret = static_cast<unsigned long long>(_AskMasterPassword(*passwd));
+    }
+      break;
+    case ffftp_dialogid::NEWMASTERPASSWD_DLG:
+      ret = static_cast<int>(_AskRetryMasterPassword());
+    }
+  }
+  return ret;
 }
 
 MainWindow::MainWindow(QWidget* parent)
@@ -88,7 +111,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   _mainwindow = this;
   ffftp_setcallback_asksavecrypt(_AskSaveCryptFunc);
-  ffftp_setcallback_askmasterpassword(_AskMasterPassword);
+//  ffftp_setcallback_askmasterpassword(_AskMasterPassword);
   ffftp_setcallback_askretrymasterpassword(_AskRetryMasterPassword);
 
   // ローカルファイルリストの初期化
@@ -107,11 +130,11 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::timerEvent(QTimerEvent* event) {
-  QString msg = QString::fromWCharArray(ffftp_taskmessage());
+  QString msg = QString(ffftp_taskmessage());
   if (!msg.isEmpty()) {
     d_->ui.widget->addTaskMessage(msg);
   }
-  QString title = QString::fromWCharArray(ffftp_windowtitle());
+  QString title = QString(ffftp_windowtitle());
   if (this->windowTitle() != title) {
     this->setWindowTitle(title);
   }
@@ -226,7 +249,7 @@ bool MainWindow::askSaveCryptFunc() {
 bool MainWindow::askMasterPassword(QString& passwd) {
   qDebug() << __FUNCTION__ << " called.";
   bool ok = false;
-  passwd = QInputDialog::getText(this, QString(ffftp_applicationname()), kPlzInputYourMasterPwd, QLineEdit::Password, kEmptyString, &ok);
+  passwd = InputDialog::getText(this, QString(ffftp_applicationname()), kPlzInputYourMasterPwd, QLineEdit::Password, kEmptyString, &ok, 64/*TODO: helpID */);
   return ok;
 }
 

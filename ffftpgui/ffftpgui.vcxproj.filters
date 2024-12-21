@@ -448,6 +448,9 @@
     <ClCompile Include="src\ui\main\filelistlocalform.cpp">
       <Filter>Source Files\ui\main</Filter>
     </ClCompile>
+    <ClCompile Include="src\ui\common\inputdialog.cpp">
+      <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -634,6 +637,9 @@
     </QtMoc>
     <QtMoc Include="src\ui\main\filelistlocalform.hpp">
       <Filter>Header Files\ui\main</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\common\inputdialog.hpp">
+      <Filter>Header Files\ui\common</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

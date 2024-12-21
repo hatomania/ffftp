@@ -29,6 +29,12 @@
 
 #include "common.h"
 
+#ifdef LIBFFFTP_EXPORTS
+#define LIBFFFTP_OTHER
+#include "taskwin_libffftp.hpp"
+#undef LIBFFFTP_OTHER
+#endif
+
 #define TASK_BUFSIZE	(16*1024)
 static HWND hWndTask = NULL;
 static Concurrency::concurrent_queue<std::wstring> queue;
@@ -95,7 +101,7 @@ void DispTaskMsg() {
 	ExecViewer(temp, 0);
 }
 
-
+#ifndef LIBFFFTP_EXPORTS
 void detail::Notice(UINT id, std::wformat_args args) {
 	auto const format = GetString(id);
 	auto message = std::vformat(format, args);
@@ -111,6 +117,7 @@ void detail::Debug(std::wstring_view format, std::wformat_args args) {
 	message.insert(0, L"## "sv);
 	queue.push(std::move(message));
 }
+#endif // LIBFFFTP_EXPORTS
 
 void Error(std::wstring_view functionName, int lastError) {
 	if (DebugConsole == YES)

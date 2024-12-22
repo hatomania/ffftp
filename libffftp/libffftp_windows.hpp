@@ -13,6 +13,7 @@ namespace LIBFFFTP_WINDOWS {
 
 extern int MessageBoxIndirectW(const MSGBOXPARAMSW* lpmbp);
 extern INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndParent, DLGPROC lpDialogFunc, LPARAM dwInitParam);
+extern void SetOption();
 
 }  // namespace LIBFFFTP_WINDOWS
 

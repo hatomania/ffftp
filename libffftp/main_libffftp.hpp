@@ -1,28 +1,5 @@
 ﻿#ifdef LIBFFFTP_OTHER
 
-#include "callback.h"
-
-// 途中でダイアログを表示してユーザに問い合わせる部分の実装はコールバック関数に委ねる
-// libffftpを使う側が責任をもって自前のGUIフレームワークに合わせた実装をする
-
-// 起動時にマスターパスワードを求めるダイアログを表示する
-LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskMasterPassword, (const wchar_t** passwd), {
-	static std::wstring passwd_;
-	*passwd = passwd_.c_str();
-	return InputDialog(188, GetMainHwnd(), 0, passwd_, 128 + 1, nullptr, 64);
-})
-// 2回目のマスターパスワード入力を求めるダイアログを表示する
-LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskMasterPassword2nd, (const wchar_t** passwd), {
-	static std::wstring passwd_;
-	*passwd = passwd_.c_str();
-	return InputDialog(newmasterpasswd_dlg, GetMainHwnd(), 0, passwd_, MAX_PASSWORD_LEN + 1, nullptr, IDH_HELP_TOPIC_0000064);
-})
-// 入力したマスターパスワードが間違えていた場合に再度入力するか問い合わせるダイアログを表示する
-// true: はい、false: いいえ
-LIBFFFTP_IMPLEMENT_CALLBACK(bool, AskRetryMasterPassword, (), {
-	return Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDYES;
-})
-
 std::wstring GetWindowTitle() {
 	return std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
 }
@@ -115,14 +92,22 @@ LIBFFFTP_FUNCTION(long long notifyEvent(int eventid, long long param1, long long
     (void)param2;
     ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_CONNECT, 0), 0);
     break;
-  case EID_MENU_CONNECT_NUM: break;
-  case EID_MENU_SET_CONNECT: break;
+  case EID_MENU_CONNECT_NUM:
+  case EID_MENU_SET_CONNECT:
+    (void)param1;
+    (void)param2;
+    ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_SET_CONNECT, 0), 0);
+    break;
   case EID_MENU_QUICK:
     (void)param1;
     (void)param2;
     ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_QUICK, 0), 0);
     break;
-  case EID_MENU_DISCONNECT: break;
+  case EID_MENU_DISCONNECT:
+    (void)param1;
+    (void)param2;
+    ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_DISCONNECT, 0), 0);
+    break;
   case EID_MENU_HIST_01: break;
   case EID_MENU_HIST_02: break;
   case EID_MENU_HIST_03: break;
@@ -169,10 +154,18 @@ LIBFFFTP_FUNCTION(long long notifyEvent(int eventid, long long param1, long long
   case EID_MENU_MKDIR: break;
   case EID_MENU_CHMOD: break;
   case EID_MENU_SOMECMD: break;
-  case EID_MENU_OPTION: break;
+  case EID_MENU_OPTION:
+    (void)param1;
+    (void)param2;
+    ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_OPTION, 0), 0);
+    break;
   case EID_MENU_FILTER: break;
   case EID_MENU_SORT: break;
-  case EID_MENU_EXIT: break;
+  case EID_MENU_EXIT:
+    (void)param1;
+    (void)param2;
+    ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_EXIT, 0), 0);
+    break;
   case EID_MENU_AUTO_EXIT: break;
   case EID_MENU_ABOUT: break;
   case EID_MENU_TEXT: break;

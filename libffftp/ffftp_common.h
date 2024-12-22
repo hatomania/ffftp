@@ -130,6 +130,7 @@ enum ffftp_dialogid {
   OPT_DISP2_DLG =                   196,
   CORRUPTSETTINGS_DLG =             198,
   CERTERR_DLG =                     199,
+  OPTION_DLG,
 };
 
 enum ffftp_messageid {

@@ -56,7 +56,7 @@
      <addaction name="actionExportFileZillaXML"/>
      <addaction name="actionExportWinSCPINI"/>
      <addaction name="separator"/>
-     <addaction name="actionResetSettings"/>
+     <addaction name="actionResetAllSettings"/>
     </widget>
     <addaction name="actionConnect"/>
     <addaction name="actionQuickConnect"/>
@@ -342,7 +342,7 @@
     <string>WinSCP INIに設定をエクスポート...</string>
    </property>
   </action>
-  <action name="actionResetSettings">
+  <action name="actionResetAllSettings">
    <property name="text">
     <string>全設定の消去...</string>
    </property>
@@ -1287,10 +1287,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionResetSettings</sender>
+   <sender>actionResetAllSettings</sender>
    <signal>triggered()</signal>
    <receiver>MainWindowClass</receiver>
-   <slot>actionResetSettings()</slot>
+   <slot>actionResetAllSettings()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -2179,7 +2179,7 @@
   <slot>actionModifyMasterPassword()</slot>
   <slot>actionExportFileZillaXML()</slot>
   <slot>actionExportWinSCPINI()</slot>
-  <slot>actionResetSettings()</slot>
+  <slot>actionResetAllSettings()</slot>
   <slot>actionDownload()</slot>
   <slot>actionUpload()</slot>
   <slot>actionDownloadRename()</slot>

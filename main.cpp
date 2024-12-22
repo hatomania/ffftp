@@ -929,7 +929,7 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 					break;
 
 				case MENU_OPTION :
-					SetOption();
+					LIBFFFTP_WINDOWS::SetOption();
 					if(ListFont != NULL)
 					{
 						SendMessageW(GetLocalHwnd(), WM_SETFONT, (WPARAM)ListFont, MAKELPARAM(TRUE, 0));

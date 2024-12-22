@@ -260,4 +260,8 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   return ret;
 }
 
+void SetOption() {
+  SHOWDIALOGBOX_CALLPROC(ffftp_dialogid::OPTION_DLG, NULL, NULL, NULL);
+}
+
 }  // namespace LIBFFFTP_WINDOWS

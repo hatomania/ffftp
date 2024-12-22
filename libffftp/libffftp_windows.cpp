@@ -1,8 +1,12 @@
-﻿#include "libffftp_windows.hpp"
+﻿#define NOMINMAX
+#define SECURITY_WIN32
+#define WIN32_LEAN_AND_MEAN
+#define UMDF_USING_NTSTATUS
 
-#include <string>
+#include "libffftp_windows.hpp"
 
-#include "../Resource/resource.ja-JP.h"
+#include "common.h"
+
 #include "ffftp_common.h"
 #include "libffftp_common.hpp"
 
@@ -44,14 +48,53 @@ template <> INT_PTR Dialog<forcerename_dlg>(unsigned long long dialogid, LPARAM 
 template <> INT_PTR Dialog<group_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<groupdel_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<hostconnect_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
-    return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
-
+  return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
 }
 template <> INT_PTR Dialog<hostdel_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<hostlist_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
-    return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
+  return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
 }
-template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
+template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+  struct QuickCon {
+    std::wstring hostname;
+    std::wstring username;
+    std::wstring password;
+    bool firewall;
+    bool passive;
+  };
+  QuickCon* in_out_param = reinterpret_cast<QuickCon*>(dwInitParam);
+  in_out_param->hostname = L"";
+  if (QuickAnonymous == YES) {
+    in_out_param->username = L"anonymous";
+    in_out_param->password = UserMailAdrs;
+  } else {
+    in_out_param->username = L"";
+    in_out_param->password = L"";
+  }
+  in_out_param->firewall = FwallDefault == YES;
+  in_out_param->passive  = PasvDefault  == YES;
+  ffftp_procparam_quickconnect in_param;
+  const std::vector<HISTORYDATA>& hist = GetHistories();
+  assert(hist.size() < 20);
+  for (int i = 0; const auto& hdata: hist) {
+    in_param.history[i++] = hdata.HostAdrs.c_str();
+  }
+  in_param.history_cnt   = hist.size();
+  in_param.username      = in_out_param->username.c_str();
+  in_param.password      = in_out_param->password.c_str();
+  in_param.use_firewall  = in_out_param->firewall;
+  in_param.use_passive   = in_out_param->passive;
+  ffftp_procparam_quickconnect out_param;
+  const INT_PTR ret{SHOWDIALOGBOX_CALLPROC(dialogid, &in_param, &out_param, NULL)};
+  if (ret) {
+    in_out_param->hostname = out_param.hostname;
+    in_out_param->username = out_param.username;
+    in_out_param->password = out_param.password;
+    in_out_param->firewall = out_param.use_firewall;
+    in_out_param->passive  = out_param.use_passive;
+  }
+  return ret;
+}
 template <> INT_PTR Dialog<hset_adv_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<hset_adv2_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<hset_adv3_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
@@ -151,7 +194,9 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   case hostlist_dlg:
     ret = Dialog<hostlist_dlg>(dialogid, dwInitParam);
     break;
-  case hostname_dlg: break;
+  case hostname_dlg:
+    ret = Dialog<hostname_dlg>(dialogid, dwInitParam);
+    break;
   case hset_adv_dlg: break;
   case hset_adv2_dlg: break;
   case hset_adv3_dlg: break;
@@ -207,6 +252,10 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   case updown_as_with_ext_dlg: break;
   case uperr_dlg: break;
   case username_dlg: break;
+  default: {
+    const static bool unknown_dialog_id{false};
+    assert(unknown_dialog_id);
+  } break;
   }
   return ret;
 }

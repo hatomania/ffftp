@@ -12,6 +12,7 @@
 #include "core/ffftpthread.hpp"
 #include "ui/common/inputdialog.hpp"
 #include "ui/host/hostlistdialog.hpp"
+#include "ui/host/hostquickdialog.hpp"
 #include "ui/option/optiondialog.hpp"
 
 // D-Pointer(PImplメカニズム)による隠ぺいの実装
@@ -80,7 +81,13 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     case ffftp_dialogid::TRMODE_DLG: break;
     case ffftp_dialogid::MKDIR_DLG: break;
     case ffftp_dialogid::OPT_MISC_DLG: break;
-    case ffftp_dialogid::HOSTNAME_DLG: break;
+    case ffftp_dialogid::HOSTNAME_DLG: {
+      bool _r{false};
+      const ffftp_procparam_quickconnect* param2 = static_cast<decltype(param2)>(param.param2);
+      ffftp_procparam_quickconnect* param3 = static_cast<decltype(param3)>(param.param3);
+      QMetaObject::invokeMethod(_mainwindow, "actionQuickConnectInvoked", Qt::AutoConnection, Q_RETURN_ARG(bool, _r), Q_ARG(const ffftp_procparam_quickconnect&, *param2), Q_ARG(ffftp_procparam_quickconnect&, *param3));
+      ret = _r;
+    } break;
     case ffftp_dialogid::PASSWD_DLG: break;
     case ffftp_dialogid::USERNAME_DLG: break;
     case ffftp_dialogid::CHDIR_DLG: break;
@@ -202,9 +209,8 @@ MainWindow::MainWindow(QWidget* parent)
   startTimer(500);
   emit timerEvent(nullptr);
 
-  d_->ffftpt =
-      new FFFTPThread();  // スレッド化するためにはコンストラクタにparentを渡してはいけない
-  // d_->ffftpt = new FFFTPThread(this); // これはNG
+  d_->ffftpt = new FFFTPThread();  // スレッド化するためにはコンストラクタにparentを渡してはいけない
+  //d_->ffftpt = new FFFTPThread(this); // これはNG
   d_->ffftpt->moveToThread(d_->ffftpt);
   d_->ffftpt->start();
 
@@ -236,9 +242,7 @@ void MainWindow::timerEvent(QTimerEvent* event) {
   }
 }
 
-void MainWindow::actionConnect() {
-  ffftp_notify_event(ffftp_eventid::EID_MENU_CONNECT);
-}
+void MainWindow::actionConnect() { ffftp_notify_event(ffftp_eventid::EID_MENU_CONNECT); }
 bool MainWindow::actionConnectInvoked(bool editable) {
   bool ret{false};
   HostListDialog dialog{editable, this};
@@ -247,8 +251,35 @@ bool MainWindow::actionConnectInvoked(bool editable) {
   }
   return ret;
 }
-void MainWindow::actionQuickConnect() {}
-void MainWindow::actionDisconnect() {}
+void MainWindow::actionQuickConnect() { ffftp_notify_event(ffftp_eventid::EID_MENU_QUICK); }
+bool MainWindow::actionQuickConnectInvoked(const ffftp_procparam_quickconnect& inparam, ffftp_procparam_quickconnect& outparam) {
+  HostQuickDialog dialog{{
+      [&inparam](){
+        QStringList ret{};
+        for (int i = 0; i < inparam.history_cnt; ++i) {
+          ret.push_back(QString(inparam.history[i]));
+        }
+        return ret;
+      }(),
+      QString(inparam.username), QString(inparam.password),
+      inparam.use_firewall, inparam.use_passive }, this};
+  const bool ret = dialog.exec() == QDialog::Accepted;
+  if (ret) {
+    static HostQuickDialog::Data data{};
+    static std::wstring hostname{}, username{}, password{};
+    data = dialog.data();
+    hostname = data.hostname.toStdWString();
+    username = data.username.toStdWString();
+    password = data.password.toStdWString();
+    outparam.hostname = hostname.c_str();
+    outparam.username = username.c_str();
+    outparam.password = password.c_str();
+    outparam.use_firewall = data.use_firewall;
+    outparam.use_passive = data.use_passive;
+  }
+  return ret;
+}
+void MainWindow::actionDisconnect() { ffftp_notify_event(ffftp_eventid::EID_MENU_DISCONNECT); }
 void MainWindow::actionHostSettings() {}
 void MainWindow::actionExit() {
   qDebug() << __FUNCTION__ << " called.";
@@ -390,20 +421,20 @@ int MainWindow::messageBox(unsigned long long msgid, unsigned long long capid) {
   static constexpr QMessageBox::StandardButtons kYesNo       = QMessageBox::Yes | QMessageBox::No;
   static constexpr QMessageBox::StandardButtons kYesNoCancel = QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel;
   static QMap<unsigned long long, Msg> table{
-    { SID_REMOVE_READONLY,             { msgq, tr("ダウンロード"), MainWindow::tr("読み取り専用ファイルです。読み取り専用属性を解除しますか？"), kYesNo, QMessageBox::NoButton } },
+    { SID_REMOVE_READONLY,             { msgq, tr("ダウンロード"), tr("読み取り専用ファイルです。読み取り専用属性を解除しますか？"), kYesNo, QMessageBox::NoButton } },
     { SID_MASTER_PASSWORD_INCORRECT,   { msgw, kStringFFFTP, kAskRetryInputYourMasterPwd, kYesNo, QMessageBox::NoButton } },
-    { SID_FAIL_TO_INIT_OLE,            { msgc, kStringFFFTP, MainWindow::tr("OLEの初期化に失敗しました。"), kOk, QMessageBox::NoButton } },
-    { SID_ERR_SSL,                     { msgc, kStringFFFTP, MainWindow::tr("SSLの初期化に失敗しました。\nアプリケーションを終了します。"), kOk, QMessageBox::NoButton } },
+    { SID_FAIL_TO_INIT_OLE,            { msgc, kStringFFFTP, tr("OLEの初期化に失敗しました。"), kOk, QMessageBox::NoButton } },
+    { SID_ERR_SSL,                     { msgc, kStringFFFTP, tr("SSLの初期化に失敗しました。\nアプリケーションを終了します。"), kOk, QMessageBox::NoButton } },
     { SID_FOUND_NEW_VERSION_INI,       { msgq, kStringFFFTP, kMsgFoundNewVerSettings, kYesNoCancel, QMessageBox::No } },
-    { SID_MANAGE_STATEFUL_FTP,         { msgi, kStringFFFTP, MainWindow::tr("WindowsファイアウォールのステートフルFTPフィルタの有効無効を設定します。\nこれはWindows Vista以降でのみ動作します。\n有効化または無効化することで通信状態が改善されることがあります。\n有効化するには「はい」、無効化するには「いいえ」を選択してください。"), kYesNoCancel, QMessageBox::NoButton } },
-    { SID_FAIL_TO_MANAGE_STATEFUL_FTP, { msgc, kStringFFFTP, MainWindow::tr("ステートフルFTPフィルタを設定できませんでした。"), kOk, QMessageBox::NoButton } },
-    { SID_NEED_RESTART,                { msgi, kStringFFFTP, MainWindow::tr("設定をファイルから復元するためには,FFFTPを再起動してください。"), kOk, QMessageBox::NoButton } },
-    { SID_PASSWORD_ISNOT_IDENTICAL,    { msgc, kStringFFFTP, MainWindow::tr("新しいマスターパスワードが一致しません。"), kOk, QMessageBox::NoButton } },
-    { SID_FAIL_TO_EXEC_REDEDIT,        { msgc, kStringFFFTP, MainWindow::tr("レジストリエディタが起動できませんでした。"), kOk, QMessageBox::NoButton } },
-    { SID_MUST_BE_REG_OR_INI,          { msgc, kStringFFFTP, MainWindow::tr("設定ファイルは拡張子が.regか.iniでなければなりません。"), kOk, QMessageBox::NoButton } },
-    { SID_CANT_SAVE_TO_INI,            { msgc, kStringFFFTP, MainWindow::tr("INIファイルに設定が保存できません。"), kOk, QMessageBox::NoButton } },
-    { SID_FAIL_TO_EXPORT,              { msgc, kStringFFFTP, MainWindow::tr("設定のエクスポートに失敗しました。\n保存する場所や形式を変更してください。"), kOk, QMessageBox::NoButton } },
-    { SID_NEED_EXSITING_WINSCP_INI,    { msgi, kStringFFFTP, MainWindow::tr("この機能で新規作成したINIファイルをWinSCPで読み込むと全ての設定が失われます。\nすでにWinSCPをお使いでありホストの設定のみ移行したい場合は既存のWinSCP.iniを選択してください。"), kOk, QMessageBox::NoButton } },
+    { SID_MANAGE_STATEFUL_FTP,         { msgi, kStringFFFTP, tr("WindowsファイアウォールのステートフルFTPフィルタの有効無効を設定します。\nこれはWindows Vista以降でのみ動作します。\n有効化または無効化することで通信状態が改善されることがあります。\n有効化するには「はい」、無効化するには「いいえ」を選択してください。"), kYesNoCancel, QMessageBox::NoButton } },
+    { SID_FAIL_TO_MANAGE_STATEFUL_FTP, { msgc, kStringFFFTP, tr("ステートフルFTPフィルタを設定できませんでした。"), kOk, QMessageBox::NoButton } },
+    { SID_NEED_RESTART,                { msgi, kStringFFFTP, tr("設定をファイルから復元するためには,FFFTPを再起動してください。"), kOk, QMessageBox::NoButton } },
+    { SID_PASSWORD_ISNOT_IDENTICAL,    { msgc, kStringFFFTP, tr("新しいマスターパスワードが一致しません。"), kOk, QMessageBox::NoButton } },
+    { SID_FAIL_TO_EXEC_REDEDIT,        { msgc, kStringFFFTP, tr("レジストリエディタが起動できませんでした。"), kOk, QMessageBox::NoButton } },
+    { SID_MUST_BE_REG_OR_INI,          { msgc, kStringFFFTP, tr("設定ファイルは拡張子が.regか.iniでなければなりません。"), kOk, QMessageBox::NoButton } },
+    { SID_CANT_SAVE_TO_INI,            { msgc, kStringFFFTP, tr("INIファイルに設定が保存できません。"), kOk, QMessageBox::NoButton } },
+    { SID_FAIL_TO_EXPORT,              { msgc, kStringFFFTP, tr("設定のエクスポートに失敗しました。\n保存する場所や形式を変更してください。"), kOk, QMessageBox::NoButton } },
+    { SID_NEED_EXSITING_WINSCP_INI,    { msgi, kStringFFFTP, tr("この機能で新規作成したINIファイルをWinSCPで読み込むと全ての設定が失われます。\nすでにWinSCPをお使いでありホストの設定のみ移行したい場合は既存のWinSCP.iniを選択してください。"), kOk, QMessageBox::NoButton } },
   };
   Msg& msg = table[msgid];
   return ret_table[msg.box->box(msg.title, msg.text, msg.buttons, msg.defaultButton)];

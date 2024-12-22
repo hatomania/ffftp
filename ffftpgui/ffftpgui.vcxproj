@@ -52,6 +52,7 @@
     <QtUic Include="ui\common\addabletreewidget.ui" />
     <QtUic Include="ui\common\fileandattributesettingdialog.ui" />
     <QtUic Include="ui\common\fileattributesettingdialog.ui" />
+    <QtUic Include="ui\host\hostquickdialog.ui" />
     <QtUic Include="ui\host\hostsettingadvancedform.ui" />
     <QtUic Include="ui\host\hostsettingdialupform.ui" />
     <QtUic Include="ui\host\hostsettingencryptionform.ui" />
@@ -99,6 +100,7 @@
     <ClCompile Include="src\ui\host\encryptiondatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\featuredatatransceiver.cpp" />
     <ClCompile Include="src\ui\host\generaldatatransceiver.cpp" />
+    <ClCompile Include="src\ui\host\hostquickdialog.cpp" />
     <ClCompile Include="src\ui\host\hosttreeview.cpp" />
     <ClCompile Include="src\ui\host\hostsettingadvancedform.cpp" />
     <ClCompile Include="src\ui\host\hostsettingdialupform.cpp" />
@@ -161,6 +163,7 @@
     <ClInclude Include="src\ui\host\featuredatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\generaldatatransceiver.hpp" />
     <QtMoc Include="src\ui\host\hosttreeview.hpp" />
+    <QtMoc Include="src\ui\host\hostquickdialog.hpp" />
     <ClInclude Include="src\ui\host\kanjicodedatatransceiver.hpp" />
     <ClInclude Include="src\ui\host\specialdatatransceiver.hpp" />
     <QtMoc Include="src\ui\option\optiondialog.hpp" />

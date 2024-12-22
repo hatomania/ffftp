@@ -266,6 +266,9 @@
     <QtUic Include="ui\main\filelistform.ui">
       <Filter>Form Files\main</Filter>
     </QtUic>
+    <QtUic Include="ui\host\hostquickdialog.ui">
+      <Filter>Form Files\host</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -450,6 +453,9 @@
     </ClCompile>
     <ClCompile Include="src\ui\common\inputdialog.cpp">
       <Filter>Source Files\ui\common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ui\host\hostquickdialog.cpp">
+      <Filter>Source Files\ui\host</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -643,6 +649,9 @@
     </QtMoc>
     <QtMoc Include="src\ui\common\inputdialog.hpp">
       <Filter>Header Files\ui\common</Filter>
+    </QtMoc>
+    <QtMoc Include="src\ui\host\hostquickdialog.hpp">
+      <Filter>Header Files\ui\host</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

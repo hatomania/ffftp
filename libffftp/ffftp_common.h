@@ -281,6 +281,16 @@ enum ffftp_eventid {
   EID_CLOSE,
 };
 
+struct ffftp_procparam_quickconnect {
+  const wchar_t* history[20];
+  size_t history_cnt;
+  const wchar_t* hostname;
+  const wchar_t* username;
+  const wchar_t* password;
+  bool use_firewall;
+  bool use_passive;
+};
+
 #ifdef __cplusplus
 }
 #endif

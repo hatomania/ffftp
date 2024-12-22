@@ -3,7 +3,9 @@
 
 // Win32 APIの呼び出しを横取りする
 
+#ifndef LIBFFFTP_WINDOWS
 #define LIBFFFTP_WINDOWS libffftp_windows
+#endif
 
 #include <windows.h>// TODO: 要削除
 

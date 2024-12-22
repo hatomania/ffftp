@@ -117,7 +117,11 @@ LIBFFFTP_FUNCTION(long long notifyEvent(int eventid, long long param1, long long
     break;
   case EID_MENU_CONNECT_NUM: break;
   case EID_MENU_SET_CONNECT: break;
-  case EID_MENU_QUICK: break;
+  case EID_MENU_QUICK:
+    (void)param1;
+    (void)param2;
+    ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_QUICK, 0), 0);
+    break;
   case EID_MENU_DISCONNECT: break;
   case EID_MENU_HIST_01: break;
   case EID_MENU_HIST_02: break;

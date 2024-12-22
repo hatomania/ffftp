@@ -18,7 +18,7 @@ class HostListDialog::Private {
  public:
   Private();
   ~Private();
-  Ui::HostListDialogClass ui;
+  Ui::HostListDialog ui;
   ffftp_hostcontext_t selected_hc;
 };
 HostListDialog::Private::Private() : ui(), selected_hc(nullptr) {}
@@ -27,7 +27,7 @@ HostListDialog::Private::~Private() {}
 HostListDialog::HostListDialog(bool editable, QWidget* parent)
     : QDialog(parent), d_(new Private()) {
   d_->ui.setupUi(this);
-  d_->ui.groupBox_1->setStyleSheet("QGroupBox#groupBox_1 {border:0;}");
+  d_->ui.groupBox_1->setStyleSheet("QGroupBox#groupBox_1 {border:0;}");// ボーダーを非表示
   d_->ui.groupBox_1->setVisible(editable);
   updateEnabled();
 }

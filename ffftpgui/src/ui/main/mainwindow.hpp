@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow {
   void actionConnect();
   bool actionConnectInvoked(bool editable);
   void actionQuickConnect();
+  bool actionQuickConnectInvoked(const ffftp_procparam_quickconnect& inparam, ffftp_procparam_quickconnect& outparam);
   void actionDisconnect();
   void actionHostSettings();
   void actionExit();

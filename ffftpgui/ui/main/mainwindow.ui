@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindowClass</class>
- <widget class="QMainWindow" name="MainWindowClass">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -1113,7 +1113,7 @@
   <connection>
    <sender>actionConnect</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionConnect()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1129,7 +1129,7 @@
   <connection>
    <sender>actionQuickConnect</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionQuickConnect()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1145,7 +1145,7 @@
   <connection>
    <sender>actionDisconnect</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDisconnect()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1161,7 +1161,7 @@
   <connection>
    <sender>actionHostSettings</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostSettings()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1177,7 +1177,7 @@
   <connection>
    <sender>actionExit</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionExit()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1193,7 +1193,7 @@
   <connection>
    <sender>actionImportFromWS_FTP</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionImportFromWS_FTP()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1209,7 +1209,7 @@
   <connection>
    <sender>actionSaveSettingsToFile</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionSaveSettingsToFile()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1225,7 +1225,7 @@
   <connection>
    <sender>actionLoadSettingsFromFile</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionLoadSettingsFromFile()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1241,7 +1241,7 @@
   <connection>
    <sender>actionModifyMasterPassword</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionModifyMasterPassword()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1257,7 +1257,7 @@
   <connection>
    <sender>actionExportFileZillaXML</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionExportFileZillaXML()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1273,7 +1273,7 @@
   <connection>
    <sender>actionExportWinSCPINI</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionExportWinSCPINI()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1289,7 +1289,7 @@
   <connection>
    <sender>actionResetAllSettings</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionResetAllSettings()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1305,7 +1305,7 @@
   <connection>
    <sender>actionDownload</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDownload()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1321,7 +1321,7 @@
   <connection>
    <sender>actionUpload</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionUpload()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1337,7 +1337,7 @@
   <connection>
    <sender>actionDownloadRename</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDownloadRename()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1353,7 +1353,7 @@
   <connection>
    <sender>actionUploadRename</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionUploadRename()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1369,7 +1369,7 @@
   <connection>
    <sender>actionDownloadRespecify</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDownloadRespecify()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1385,7 +1385,7 @@
   <connection>
    <sender>actionDownloadAsFile</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDownloadAsFile()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1401,7 +1401,7 @@
   <connection>
    <sender>actionUploadMirroring</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionUploadMirroring()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1417,7 +1417,7 @@
   <connection>
    <sender>actionCalcFilesSize</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCalcFilesSize()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1433,7 +1433,7 @@
   <connection>
    <sender>actionDownloadMirroring</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDownloadMirroring()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1449,7 +1449,7 @@
   <connection>
    <sender>actionCmdRm</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCmdRm()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1465,7 +1465,7 @@
   <connection>
    <sender>actionCmdRename</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCmdRename()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1481,7 +1481,7 @@
   <connection>
    <sender>actionCmdReattribute</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCmdReattribute()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1497,7 +1497,7 @@
   <connection>
    <sender>actionCmdMkdir</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCmdMkdir()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1513,7 +1513,7 @@
   <connection>
    <sender>actionCommand</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCommand()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1529,7 +1529,7 @@
   <connection>
    <sender>actionDirSync</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionDirSync(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1545,7 +1545,7 @@
   <connection>
    <sender>actionBmarkAddHost</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionBmarkAddHost()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1561,7 +1561,7 @@
   <connection>
    <sender>actionBmarkAddLocal</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionBmarkAddLocal()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1577,7 +1577,7 @@
   <connection>
    <sender>actionBmarkAddBoth</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionBmarkAddBoth()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1593,7 +1593,7 @@
   <connection>
    <sender>actionBmarkEdit</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionBmarkEdit()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1609,7 +1609,7 @@
   <connection>
    <sender>actionFilter</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionFilter()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1625,7 +1625,7 @@
   <connection>
    <sender>actionFind</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionFind()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1641,7 +1641,7 @@
   <connection>
    <sender>actionFindNext</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionFindNext()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1657,7 +1657,7 @@
   <connection>
    <sender>actionSelect</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionSelect()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1673,7 +1673,7 @@
   <connection>
    <sender>actionSelectAll</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionSelectAll()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1689,7 +1689,7 @@
   <connection>
    <sender>actionViewFList</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionViewFList(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1705,7 +1705,7 @@
   <connection>
    <sender>actionViewFDetail</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionViewFDetail(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1721,7 +1721,7 @@
   <connection>
    <sender>actionSort</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionSort()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1737,7 +1737,7 @@
   <connection>
    <sender>actionViewDot</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionViewDot(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1753,7 +1753,7 @@
   <connection>
    <sender>actionListWithViewer</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionListWithViewer()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1769,7 +1769,7 @@
   <connection>
    <sender>actionTaskWithViewer</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionTaskWithViewer()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1785,7 +1785,7 @@
   <connection>
    <sender>actionReflesh</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionReflesh()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1801,7 +1801,7 @@
   <connection>
    <sender>actionCalcOnetimePasswd</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionCalcOnetimePasswd()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1817,7 +1817,7 @@
   <connection>
    <sender>actionWindowsFWSetting</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionWindowsFWSetting()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1833,7 +1833,7 @@
   <connection>
    <sender>actionPreference</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionPreference()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1849,7 +1849,7 @@
   <connection>
    <sender>actionContents</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionContents()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1865,7 +1865,7 @@
   <connection>
    <sender>actionOpenWebsite</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionOpenWebsite()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1881,7 +1881,7 @@
   <connection>
    <sender>actionAbout</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionAbout()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1897,7 +1897,7 @@
   <connection>
    <sender>actionAboutQt</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionAboutQt()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1913,7 +1913,7 @@
   <connection>
    <sender>actionModeAscii</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionModeAscii(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1929,7 +1929,7 @@
   <connection>
    <sender>actionModeBinary</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionModeBinary(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1945,7 +1945,7 @@
   <connection>
    <sender>actionModeAuto</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionModeAuto(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1961,7 +1961,7 @@
   <connection>
    <sender>actionLocalSJIS</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionLocalSJIS(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1977,7 +1977,7 @@
   <connection>
    <sender>actionLocalEUC</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionLocalEUC(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -1993,7 +1993,7 @@
   <connection>
    <sender>actionLocalJIS</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionLocalJIS(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2009,7 +2009,7 @@
   <connection>
    <sender>actionLocalUTF8</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionLocalUTF8(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2025,7 +2025,7 @@
   <connection>
    <sender>actionLocalUTF8BOM</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionLocalUTF8BOM(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2041,7 +2041,7 @@
   <connection>
    <sender>actionHostSJIS</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostSJIS(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2057,7 +2057,7 @@
   <connection>
    <sender>actionHostEUC</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostEUC(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2073,7 +2073,7 @@
   <connection>
    <sender>actionHostJIS</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostJIS(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2089,7 +2089,7 @@
   <connection>
    <sender>actionHostUTF8</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostUTF8(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2105,7 +2105,7 @@
   <connection>
    <sender>actionHostUTF8BOM</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostUTF8BOM(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2121,7 +2121,7 @@
   <connection>
    <sender>actionHostNocode</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHostNocode(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2137,7 +2137,7 @@
   <connection>
    <sender>actionHalfKana2Full</sender>
    <signal>triggered(bool)</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionHalfKana2Full(bool)</slot>
    <hints>
     <hint type="sourcelabel">
@@ -2153,7 +2153,7 @@
   <connection>
    <sender>actionStopReceiving</sender>
    <signal>triggered()</signal>
-   <receiver>MainWindowClass</receiver>
+   <receiver>MainWindow</receiver>
    <slot>actionStopReceiving()</slot>
    <hints>
     <hint type="sourcelabel">

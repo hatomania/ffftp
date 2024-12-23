@@ -109,6 +109,7 @@ class MainWindow : public QMainWindow {
 
  private:
   void timerEvent(QTimerEvent* event) override;
+  void closeEvent(QCloseEvent* event) override;
   static int messageBox(unsigned long long msgid, unsigned long long capid);
 
  private:

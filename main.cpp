@@ -513,7 +513,7 @@ static bool MakeAllWindows(int cmdShow) {
 // ウインドウのタイトルを表示する
 void DispWindowTitle() {
 	auto const text = std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
-	SetWindowTextW(GetMainHwnd(), text.c_str());
+	LIBFFFTP_WINDOWS::SetWindowTextW(GetMainHwnd(), text.c_str());
 }
 
 

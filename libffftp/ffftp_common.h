@@ -34,6 +34,7 @@ struct ffftp_procparam {
 enum ffftp_procmsg {
   SHOW_MESSAGEBOX,
   SHOW_DIALOGBOX,
+  SETWINDOWTITLE,
 };
 
 typedef unsigned long long (LIBFFFTP_CALLCONV *ffftp_proc_callback)(unsigned long long msg, ffftp_procparam param);

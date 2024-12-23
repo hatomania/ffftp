@@ -20,7 +20,7 @@ class MainWindow::Private {
  public:
   Private() : ffftpt(nullptr) {}
   ~Private() {}
-  Ui::MainWindowClass ui;
+  Ui::MainWindow ui;
   FFFTPThread* ffftpt;
 };
 
@@ -38,7 +38,7 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     break;
 
   // ffftpからダイアログの表示依頼の通知が来た
-  case ffftp_procmsg::SHOW_DIALOGBOX:
+  case ffftp_procmsg::SHOW_DIALOGBOX: {
     unsigned long long msgid = reinterpret_cast<unsigned long long>(param.param1);
     switch (msgid) {
     case ffftp_dialogid::HOSTLIST_DLG:
@@ -162,6 +162,12 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
       ret = ret_bool;
       break;
     }
+  } break; // case ffftp_procmsg::SHOW_DIALOGBOX
+
+  // ffftpからキャプション変更依頼の通知が来た
+  case ffftp_procmsg::SETWINDOWTITLE:
+    _mainwindow->setWindowTitle(QString(reinterpret_cast<const wchar_t*>(param.param1)));
+    break;
   }
   return ret;
 }
@@ -383,10 +389,11 @@ void MainWindow::timerEvent(QTimerEvent* event) {
   if (!msg.isEmpty()) {
     d_->ui.widget->addTaskMessage(msg);
   }
-  QString title = QString(ffftp_windowtitle());
-  if (this->windowTitle() != title) {
-    this->setWindowTitle(title);
-  }
+}
+
+// ウィンドウを[閉じる]したときの処理
+void MainWindow::closeEvent(QCloseEvent* event) {
+  actionExit();
 }
 
 // ffftpからメッセージボックスの表示依頼の通知が来た時に行う処理

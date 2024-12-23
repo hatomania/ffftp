@@ -260,6 +260,13 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   return ret;
 }
 
+BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString) {
+  if (hWnd == GetMainHwnd()) {
+    ffftp_proc(ffftp_procmsg::SETWINDOWTITLE, { const_cast<void*>(reinterpret_cast<const void*>(lpString)), NULL, NULL, NULL });
+  }
+  return TRUE;
+}
+
 void SetOption() {
   SHOWDIALOGBOX_CALLPROC(ffftp_dialogid::OPTION_DLG, NULL, NULL, NULL);
 }

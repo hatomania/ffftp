@@ -621,6 +621,14 @@ int SocketContext::Send(const char* buf, int len, int flags, int* CancelCheckWor
 }
 
 
+// USE_MINIUPNPCスイッチを定義した場合は、プラットフォームを問わず、UPnPの実装にminiupnpcを使用します。
+// 未定義かつプラットフォームがWindowsの場合は従来通りCOMを使用します。
+// 未定義かつプラットフォームがWindows以外の場合は、USE_MINIUPNPCスイッチが強制的に定義され、結果miniupnpcを使用することとなります。
+#if !defined(USE_MINIUPNPC) && !defined(_WINDOWS)
+#define USE_MINIUPNPC
+#endif
+
+#ifndef USE_MINIUPNPC
 // UPnP対応
 static ComPtr<IUPnPNAT> upnpNAT;
 static ComPtr<IStaticPortMappingCollection> staticPortMappingCollection;
@@ -678,6 +686,9 @@ bool RemovePortMapping(int port) {
 	auto const result = (HRESULT)data.Run();
 	return result == S_OK;
 }
+#else
+#include "upnp_libffftp.hpp"
+#endif // USE_MINIUPNPC
 
 
 int CheckClosedAndReconnect() {

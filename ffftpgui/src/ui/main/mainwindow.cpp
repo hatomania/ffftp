@@ -2,6 +2,7 @@
 
 #include <QActionGroup>
 #include <QDir>
+#include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
 
@@ -26,20 +27,72 @@ class MainWindow::Private {
 
 namespace {
 MainWindow* _mainwindow{nullptr};
+const QString& fileFilter(unsigned long long filter) {
+  static const QMap<ffftp_filetype, QString> filter_map{
+    { ffftp_filetype::EXECUTABLE, MainWindow::tr("実行可能ファイル (*.exe;*.com;*.bat)") },
+    { ffftp_filetype::REG, MainWindow::tr("登録ファイル (*.reg)") },
+    { ffftp_filetype::INI, MainWindow::tr("INIファイル (*.ini)") },
+    { ffftp_filetype::XML, MainWindow::tr("XMLファイル (*.xml)") },
+    { ffftp_filetype::ALL, MainWindow::tr("すべてのファイル (*.*)") },
+  }; 
+  static QString ret{};
+  ret.clear();
+  for (auto i = filter_map.cbegin(), end = filter_map.cend(); i != end; ++i) {
+    bool added{false};
+    if (filter & i.key()) { ret += i.value(); added = true; }
+    auto check_i = i; 
+    if (added && ++check_i != end) { ret += ";;"; }
+  }
+  return ret;
+}
+const QString& fileCaption(unsigned long long forwhat) {
+  static const QMap<ffftp_information, QString> caption_map{
+    { ffftp_information::FOR_OPENWSFTPINI, MainWindow::tr("WS_FTP.INIを開く") },
+    { ffftp_information::FOR_SELECTVIEWER, MainWindow::tr("ビューアを選択する") },
+    { ffftp_information::FOR_SAVESETTING,  MainWindow::tr("設定を保存する") },
+    { ffftp_information::FOR_LOADSETTING,  MainWindow::tr("設定を読み込む") },
+  };
+  static QString ret{};
+  ret = caption_map.value(static_cast<ffftp_information>(forwhat));
+  return ret;
+} 
 }  // namespace
 
-unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procparam param) {
+unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procparam* param) {
   unsigned long long ret{0};
   bool ret_bool{false};
   switch (msg) {
   // ffftpからメッセージボックスの表示依頼の通知が来た
   case ffftp_procmsg::SHOW_MESSAGEBOX:
-    ret = MainWindow::messageBox(reinterpret_cast<unsigned long long>(param.param1), reinterpret_cast<unsigned long long>(param.param2));
+    ret = MainWindow::messageBox(reinterpret_cast<unsigned long long>(param->param1), reinterpret_cast<unsigned long long>(param->param2));
     break;
+
+  // ffftpからオープンファイル指定依頼の通知が来た
+  case GIVE_A_OPENFILEPATH:
+  // ffftpからセーブファイル指定依頼の通知が来た
+  case GIVE_A_SAVEFILEPATH: {
+    // param1: 出力
+    // param2: デフォルトのファイルパス
+    // param3: ファイルフィルタ
+    // param4: キャプション
+    const QString path{reinterpret_cast<const wchar_t*>(param->param2)};
+    const QString filter{fileFilter(reinterpret_cast<unsigned long long>(param->param3))};
+    const QString caption{fileCaption(reinterpret_cast<unsigned long long>(param->param4))};
+    QString filepath{};
+    QMetaObject::invokeMethod(_mainwindow, msg == GIVE_A_OPENFILEPATH ? "openFileName" : "saveFileName", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, filepath), Q_ARG(const QString&, path), Q_ARG(const QString&, filter), Q_ARG(const QString&, caption));
+    static std::wstring out_filepath{};
+    out_filepath.clear();
+    param->param1 = nullptr;
+    if (ret_bool) {
+      out_filepath = filepath.toStdWString();
+      param->param1 = const_cast<void*>(reinterpret_cast<const void*>(out_filepath.c_str()));
+    }
+    ret = ret_bool;
+  } break;
 
   // ffftpからダイアログの表示依頼の通知が来た
   case ffftp_procmsg::SHOW_DIALOGBOX: {
-    unsigned long long msgid = reinterpret_cast<unsigned long long>(param.param1);
+    unsigned long long msgid = reinterpret_cast<unsigned long long>(param->param1);
     switch (msgid) {
     case ffftp_dialogid::HOSTLIST_DLG:
       // ホスト設定ダイアログを表示する
@@ -53,8 +106,8 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
       break;
     case ffftp_dialogid::HOSTNAME_DLG: {
       // クイック接続ダイアログを表示する
-      const ffftp_procparam_quickconnect* param2 = static_cast<decltype(param2)>(param.param2);
-      ffftp_procparam_quickconnect* param3 = static_cast<decltype(param3)>(param.param3);
+      const ffftp_procparam_quickconnect* param2 = static_cast<decltype(param2)>(param->param2);
+      ffftp_procparam_quickconnect* param3 = static_cast<decltype(param3)>(param->param3);
       QMetaObject::invokeMethod(_mainwindow, "showHostQuickConnectDialog", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(const ffftp_procparam_quickconnect&, *param2), Q_ARG(ffftp_procparam_quickconnect&, *param3));
       ret = ret_bool;
       } break;
@@ -141,7 +194,7 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     case ffftp_dialogid::MASTERPASSWD_DLG: {
       QString passwd_{};
       QMetaObject::invokeMethod(_mainwindow, "askMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, passwd_));
-      *reinterpret_cast<std::wstring*>(param.param2) = passwd_.toStdWString();
+      *reinterpret_cast<std::wstring*>(param->param2) = passwd_.toStdWString();
       ret = ret_bool;
     } break;
     case ffftp_dialogid::HSET_CRYPT_DLG: break;
@@ -166,7 +219,7 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
 
   // ffftpからキャプション変更依頼の通知が来た
   case ffftp_procmsg::SETWINDOWTITLE:
-    _mainwindow->setWindowTitle(QString(reinterpret_cast<const wchar_t*>(param.param1)));
+    _mainwindow->setWindowTitle(QString(reinterpret_cast<const wchar_t*>(param->param1)));
     break;
   }
   return ret;
@@ -235,7 +288,7 @@ void MainWindow::actionImportFromWS_FTP() {}
 void MainWindow::actionSaveSettingsToFile() {}
 void MainWindow::actionLoadSettingsFromFile() {}
 void MainWindow::actionModifyMasterPassword() {}
-void MainWindow::actionExportFileZillaXML() {}
+void MainWindow::actionExportFileZillaXML() { ffftp_notify_event(ffftp_eventid::EID_MENU_EXPORT_FILEZILLA_XML); }
 void MainWindow::actionExportWinSCPINI() {}
 void MainWindow::actionResetAllSettings() {}
 // [コマンド]メニュー
@@ -305,6 +358,21 @@ void MainWindow::actionHostUTF8BOM(bool checked) {}
 void MainWindow::actionHostNocode(bool checked) {}
 void MainWindow::actionHalfKana2Full(bool checked) {}
 void MainWindow::actionStopReceiving() {}
+
+// コモンダイアログの表示系
+bool MainWindow::openFileName(QString& out_filepath, const QString& path, const QString& filter, const QString& caption) {
+  QString fname_tmp = QFileDialog::getOpenFileName(this, caption, path, filter);
+  bool ok = !fname_tmp.isNull();
+  if (ok) { out_filepath = fname_tmp; }
+  return ok;
+}
+
+bool MainWindow::saveFileName(QString& out_filepath, const QString& path, const QString& filter, const QString& caption) {
+  QString fname_tmp = QFileDialog::getSaveFileName(this, caption, path, filter);
+  bool ok = !fname_tmp.isNull();
+  if (ok) { out_filepath = fname_tmp; }
+  return ok;
+}
 
 // ダイアログの表示系
 bool MainWindow::showHostListDialog() {

@@ -10,5 +10,6 @@ int IsZoneIDLoaded() noexcept {
 }
 
 bool MarkFileAsDownloadedFromInternet(fs::path const& path) {
+  (void)path;
   return true;
 }

@@ -65,7 +65,7 @@ void OptionToolForm::updateData(BaseForm::Data& data) const {
 }
 
 bool OptionToolForm::askFilename(QString& fname, const QString& path) {
-  QString fname_tmp = QFileDialog::getOpenFileName(this, QString(), path, tr("実行可能ファイル (*.exe;*.com;*.bat)"));
+  QString fname_tmp = QFileDialog::getOpenFileName(this, QString(), path, tr("実行可能ファイル (*.exe;*.com;*.bat);;すべてのファイル (*.*)"));
   bool ok = !fname_tmp.isNull();
   if (ok) { fname = fname_tmp; }
   return ok;

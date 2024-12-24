@@ -128,6 +128,7 @@ static auto GetFilterString(std::initializer_list<FileType> fileTypes) {
 }
 
 // ファイル選択
+#ifndef LIBFFFTP_EXPORTS
 fs::path SelectFile(bool open, HWND hWnd, UINT titleId, const wchar_t* initialFileName, const wchar_t* extension, std::initializer_list<FileType> fileTypes) {
 	auto const filter = GetFilterString(fileTypes);
 	wchar_t buffer[FMAX_PATH + 1];
@@ -142,6 +143,7 @@ fs::path SelectFile(bool open, HWND hWnd, UINT titleId, const wchar_t* initialFi
 		return {};
 	return buffer;
 }
+#endif
 
 
 // ディレクトリを選択
@@ -183,4 +185,8 @@ void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size) noexcept {
 		Pkt->MaxExt = DEF_MAXEXT;
 	}
 }
+#endif
+
+#ifdef LIBFFFTP_EXPORTS
+#include "misc_libffftp.hpp"
 #endif

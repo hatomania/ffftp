@@ -11,7 +11,7 @@ class MainWindow : public QMainWindow {
   explicit MainWindow(QWidget* parent = Q_NULLPTR);
   virtual ~MainWindow();
 
-  static unsigned long long ffftp_proc(unsigned long long msg, ffftp_procparam param);
+  static unsigned long long ffftp_proc(unsigned long long msg, ffftp_procparam* param);
 
  private Q_SLOTS:
   // [接続]メニュー
@@ -95,6 +95,10 @@ class MainWindow : public QMainWindow {
   void actionHostNocode(bool checked);    // [漢字コードの変換なし]
   void actionHalfKana2Full(bool checked); // [半角カナを全角に変換]
   void actionStopReceiving();             // [受信中止]
+
+  // コモンダイアログの表示系
+  bool openFileName(QString& out_filepath, const QString& path, const QString& filter, const QString& caption = QString());
+  bool saveFileName(QString& out_filepath, const QString& path, const QString& filter, const QString& caption = QString());
 
   // ダイアログの表示系
   bool showHostListDialog();

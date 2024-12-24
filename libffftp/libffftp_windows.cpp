@@ -12,11 +12,13 @@
 
 namespace LIBFFFTP_WINDOWS {
 
-#define SHOWMESSAGEBOX_CALLPROC(P1, P2, P3, P4) static_cast<int>(ffftp_proc(SHOW_MESSAGEBOX, { const_cast<void*>(reinterpret_cast<const void*>(P1)), const_cast<void*>(reinterpret_cast<const void*>(P2)), const_cast<void*>(reinterpret_cast<const void*>(P3)), const_cast<void*>(reinterpret_cast<const void*>(P4)) }))
-#define SHOWDIALOGBOX_CALLPROC(P1, P2, P3, P4) static_cast<INT_PTR>(ffftp_proc(SHOW_DIALOGBOX, { reinterpret_cast<void*>(P1), reinterpret_cast<void*>(P2), reinterpret_cast<void*>(P3), reinterpret_cast<void*>(P4) }))
+#define MAKEPARAM(P1, P2, P3, P4) ffftp_procparam _param{ const_cast<void*>(reinterpret_cast<const void*>(P1)), const_cast<void*>(reinterpret_cast<const void*>(P2)), const_cast<void*>(reinterpret_cast<const void*>(P3)), const_cast<void*>(reinterpret_cast<const void*>(P4)) }
+#define SHOWMESSAGEBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_MESSAGEBOX, &_param));
+#define SHOWDIALOGBOX_CALLPROC() static_cast<INT_PTR>(ffftp_proc(SHOW_DIALOGBOX, &_param))
 
 int MessageBoxIndirectW(const MSGBOXPARAMSW *lpmbp) {
-  return SHOWMESSAGEBOX_CALLPROC(lpmbp->lpszText, lpmbp->lpszCaption, NULL, NULL);
+  MAKEPARAM(lpmbp->lpszText, lpmbp->lpszCaption, NULL, NULL);
+  return SHOWMESSAGEBOX_CALLPROC();
 }
 
 template <unsigned long long>
@@ -48,11 +50,13 @@ template <> INT_PTR Dialog<forcerename_dlg>(unsigned long long dialogid, LPARAM 
 template <> INT_PTR Dialog<group_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<groupdel_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<hostconnect_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
-  return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
+  MAKEPARAM(dialogid, NULL, NULL, NULL);
+  return SHOWDIALOGBOX_CALLPROC();
 }
 template <> INT_PTR Dialog<hostdel_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<hostlist_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
-  return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
+  MAKEPARAM(dialogid, NULL, NULL, NULL);
+  return SHOWDIALOGBOX_CALLPROC();
 }
 template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
   struct QuickCon {
@@ -85,7 +89,8 @@ template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwI
   in_param.use_firewall  = in_out_param->firewall;
   in_param.use_passive   = in_out_param->passive;
   ffftp_procparam_quickconnect out_param;
-  const INT_PTR ret{SHOWDIALOGBOX_CALLPROC(dialogid, &in_param, &out_param, NULL)};
+  MAKEPARAM(dialogid, &in_param, &out_param, NULL);
+  const INT_PTR ret{SHOWDIALOGBOX_CALLPROC()};
   if (ret) {
     in_out_param->hostname = out_param.hostname;
     in_out_param->username = out_param.username;
@@ -109,7 +114,8 @@ template <> INT_PTR Dialog<masterpasswd_dlg>(unsigned long long dialogid, LPARAM
     std::wstring& text;
   };
   Data* p = reinterpret_cast<Data*>(dwInitParam);
-  return SHOWDIALOGBOX_CALLPROC(dialogid, &p->text, NULL, NULL);
+  MAKEPARAM(dialogid, &p->text, NULL, NULL);
+  return SHOWDIALOGBOX_CALLPROC();
 }
 template <> INT_PTR Dialog<mirror_down_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<mirror_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
@@ -142,7 +148,8 @@ template <> INT_PTR Dialog<reginit_dlg>(unsigned long long dialogid, LPARAM dwIn
 template <> INT_PTR Dialog<rename_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<savecrypt_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
   // TODO: たぶん特殊化不要
-    return SHOWDIALOGBOX_CALLPROC(dialogid, NULL, NULL, NULL);
+  MAKEPARAM(dialogid, NULL, NULL, NULL);
+    return SHOWDIALOGBOX_CALLPROC();
 }
 template <> INT_PTR Dialog<savepass_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
 template <> INT_PTR Dialog<sel_local_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
@@ -262,13 +269,15 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
 
 BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString) {
   if (hWnd == GetMainHwnd()) {
-    ffftp_proc(ffftp_procmsg::SETWINDOWTITLE, { const_cast<void*>(reinterpret_cast<const void*>(lpString)), NULL, NULL, NULL });
+    MAKEPARAM(lpString, NULL, NULL, NULL);
+    ffftp_proc(ffftp_procmsg::SETWINDOWTITLE, &_param);
   }
   return TRUE;
 }
 
 void SetOption() {
-  SHOWDIALOGBOX_CALLPROC(ffftp_dialogid::OPTION_DLG, NULL, NULL, NULL);
+  MAKEPARAM(ffftp_dialogid::OPTION_DLG, NULL, NULL, NULL);
+  SHOWDIALOGBOX_CALLPROC();
 }
 
 }  // namespace LIBFFFTP_WINDOWS

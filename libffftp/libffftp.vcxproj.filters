@@ -101,6 +101,9 @@
     <ClInclude Include="getput_libffftp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="misc_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\toolmenu.cpp">

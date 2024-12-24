@@ -35,9 +35,12 @@ enum ffftp_procmsg {
   SHOW_MESSAGEBOX,
   SHOW_DIALOGBOX,
   SETWINDOWTITLE,
+  GIVE_A_OPENFILEPATH,
+  GIVE_A_SAVEFILEPATH,
+  GIVE_A_DIRPATH,
 };
 
-typedef unsigned long long (LIBFFFTP_CALLCONV *ffftp_proc_callback)(unsigned long long msg, ffftp_procparam param);
+typedef unsigned long long (LIBFFFTP_CALLCONV *ffftp_proc_callback)(unsigned long long msg, ffftp_procparam* param);
 
 enum ffftp_dialogid {
   ABOUT_DLG =                       104,
@@ -291,6 +294,21 @@ struct ffftp_procparam_quickconnect {
   const wchar_t* password;
   bool use_firewall;
   bool use_passive;
+};
+
+enum ffftp_filetype {
+  ALL         = 0x10,
+  EXECUTABLE  = 0x01,
+  REG         = 0x02,
+  INI         = 0x04,
+  XML         = 0x08,
+};
+
+enum ffftp_information {
+  FOR_OPENWSFTPINI = 211,
+  FOR_SELECTVIEWER = 212,
+  FOR_SAVESETTING  = 214,
+  FOR_LOADSETTING  = 215,
 };
 
 #ifdef __cplusplus

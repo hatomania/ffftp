@@ -125,6 +125,7 @@
     <ClInclude Include="libffftp_common.hpp" />
     <ClInclude Include="libffftp_windows.hpp" />
     <ClInclude Include="main_libffftp.hpp" />
+    <ClInclude Include="misc_libffftp.hpp" />
     <ClInclude Include="option_libffftp.hpp" />
     <ClInclude Include="ras_libffftp.hpp" />
     <ClInclude Include="taskwin_libffftp.hpp" />

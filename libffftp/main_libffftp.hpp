@@ -217,7 +217,11 @@ LIBFFFTP_FUNCTION(long long notifyEvent(int eventid, long long param1, long long
   case EID_MENU_APPKEY: break;
   case EID_MENU_SWITCH_OSS: break;
   case EID_MENU_REMOTE_MOVE_UPDIR: break;
-  case EID_MENU_EXPORT_FILEZILLA_XML: break;
+  case EID_MENU_EXPORT_FILEZILLA_XML:
+    (void)param1;
+    (void)param2;
+    ret = FtpWndProc(GetMainHwnd(), WM_COMMAND, MAKEWPARAM(MENU_EXPORT_FILEZILLA_XML, 0), 0);
+    break;
   case EID_MENU_EXPORT_WINSCP_INI: break;
   case EID_TTN_GETDISPINFOW: break;
   case EID_LVN_COLUMNCLICK: break;

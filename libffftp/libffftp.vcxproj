@@ -119,6 +119,7 @@
     <ClInclude Include="ffftp_common.h" />
     <ClInclude Include="ffftp_hostdata.h" />
     <ClInclude Include="ffftp_option.h" />
+    <ClInclude Include="getput_libffftp.hpp" />
     <ClInclude Include="hostman_libffftp.hpp" />
     <ClInclude Include="libffftp.hpp" />
     <ClInclude Include="libffftp_common.hpp" />

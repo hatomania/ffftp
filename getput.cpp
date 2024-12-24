@@ -1694,6 +1694,8 @@ int AskTransferErrorDisplay() noexcept {
 	return TransferErrorDisplay;
 }
 
+// ゾーンID設定はWindowsでのみ機能する
+#ifdef _WINDOWS
 // ゾーンID設定
 static ComPtr<IZoneIdentifier> zoneIdentifier;
 static ComPtr<IPersistFile> persistFile;
@@ -1729,3 +1731,6 @@ bool MarkFileAsDownloadedFromInternet(fs::path const& path) {
 	auto const result = (HRESULT)data.Run();
 	return result == S_OK;
 }
+#else
+#include "getput_libffftp.hpp"
+#endif // _WINDOWS

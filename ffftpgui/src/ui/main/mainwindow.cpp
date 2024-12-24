@@ -202,7 +202,6 @@ MainWindow::MainWindow(QWidget* parent)
   ag4->setExclusive(true);
 
   startTimer(500);
-  emit timerEvent(nullptr);
 
   d_->ffftpt = new FFFTPThread();  // スレッド化するためにはコンストラクタにparentを渡してはいけない
   //d_->ffftpt = new FFFTPThread(this); // これはNG

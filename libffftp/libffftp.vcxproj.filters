@@ -1,209 +1,217 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
+    <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
+    <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル">
+    <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+      <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\ffftp">
-      <UniqueIdentifier>{93a785e8-7a99-43a6-8e0b-e36bb32e2806}</UniqueIdentifier>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル\ffftp">
-      <UniqueIdentifier>{8c986e6d-beb4-4cc1-ad4a-2b9cff7f2e38}</UniqueIdentifier>
+    <Filter Include="Translation Files">
+      <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
+      <Extensions>ts</Extensions>
     </Filter>
-    <Filter Include="リソース ファイル\ffftp">
-      <UniqueIdentifier>{af946597-5607-4b37-8e32-b5c3b89051b7}</UniqueIdentifier>
+    <Filter Include="Header Files\ffftp">
+      <UniqueIdentifier>{a41453c7-0545-4773-b6c8-7b98479054c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\ffftp">
+      <UniqueIdentifier>{b62dd826-6602-45fb-baf8-b8ba4b757ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ffftp">
+      <UniqueIdentifier>{9aa8c72e-fe24-4a04-a5d0-5efe8f93c65d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ffftp.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ffftp_hostdata.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ffftp_option.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="ffftp_common.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\common.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\config.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\dialog.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\filelist.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\helpid.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\OleDragDrop.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\Resource\resource.en-US.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="..\Resource\resource.ja-JP.h">
-      <Filter>ヘッダー ファイル\ffftp</Filter>
-    </ClInclude>
-    <ClInclude Include="hostman_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="libffftp_common.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="main_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="taskwin_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="option_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Header Files\ffftp</Filter>
     </ClInclude>
     <ClInclude Include="connect_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ffftp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ffftp_common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ffftp_hostdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ffftp_option.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="hostman_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="libffftp_common.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="libffftp_windows.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="main_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="option_libffftp.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ras_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="taskwin_libffftp.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="upnp_libffftp.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="ffftp.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="common.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="..\codecnv.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+    <ClCompile Include="..\toolmenu.cpp">
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\bookmark.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codecnv.cpp">
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\connect.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\filelist.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\ftpproc.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\getput.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\history.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\hostman.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\local.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\main.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\misc.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\option.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\ras.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\registry.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\remote.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\skey.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\socket.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\statuswin.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
     <ClCompile Include="..\taskwin.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+      <Filter>Source Files\ffftp</Filter>
     </ClCompile>
-    <ClCompile Include="..\toolmenu.cpp">
-      <Filter>ソース ファイル\ffftp</Filter>
+    <ClCompile Include="common.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ffftp.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="libffftp_windows.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resource\toolbar1.bmp">
-      <Filter>リソース ファイル\ffftp</Filter>
-    </Image>
     <Image Include="..\Resource\bitmap1.bmp">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\icon1.ico">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\icon2.ico">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\list_16.bmp">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\list_bmp.bmp">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </Image>
     <Image Include="..\Resource\main_too.bmp">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
+    </Image>
+    <Image Include="..\Resource\toolbar1.bmp">
+      <Filter>Resource Files\ffftp</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="..\Resource\ffftp.en-US.rc">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </ResourceCompile>
     <ResourceCompile Include="..\Resource\ffftp.ja-JP.rc">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="..\Resource\ffftp.exe.manifest">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </Manifest>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resource\ffftp.rcconfig">
-      <Filter>リソース ファイル\ffftp</Filter>
+      <Filter>Resource Files\ffftp</Filter>
     </None>
   </ItemGroup>
 </Project>

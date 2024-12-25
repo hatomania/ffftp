@@ -1,4 +1,4 @@
-﻿#ifdef LIBFFFTP_USE_QT
+﻿#ifndef LIBFFFTP_REALLY_NOTUSE_QT
 // Qt XMLを使用してFileZilla用の設定形式(XML)にエクスポートを行う
 #include <QFile>
 #include <QTimeZone>

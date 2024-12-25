@@ -33,14 +33,12 @@
 #define UMDF_USING_NTSTATUS
 
 #ifdef LIBFFFTP
-#ifndef _WINDOWS
-#define LIBFFFTP_USE_MINIUPNPC
-#define LIBFFFTP_USE_QT
+#ifdef LIBFFFTP_NOTUSE_QT
+#define LIBFFFTP_REALLY_NOTUSE_QT 
 #endif
 #include "libffftp_windows.hpp"
 #else
-#undef LIBFFFTP_USE_MINIUPNPC
-#undef LIBFFFTP_USE_QT
+#undef LIBFFFTP_REALLY_NOTUSE_QT
 #define LIBFFFTP_WINDOWS
 #endif
 

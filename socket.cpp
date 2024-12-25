@@ -621,7 +621,7 @@ int SocketContext::Send(const char* buf, int len, int flags, int* CancelCheckWor
 }
 
 
-#ifndef LIBFFFTP_USE_MINIUPNPC
+#ifdef LIBFFFTP_REALLY_NOTUSE_QT
 // UPnP対応
 static ComPtr<IUPnPNAT> upnpNAT;
 static ComPtr<IStaticPortMappingCollection> staticPortMappingCollection;
@@ -681,7 +681,7 @@ bool RemovePortMapping(int port) {
 }
 #else
 #include "upnp_libffftp.hpp"
-#endif // LIBFFFTP_USE_MINIUPNPC
+#endif
 
 
 int CheckClosedAndReconnect() {

@@ -1215,6 +1215,6 @@ int SetHostEncryption(int Num, int UseNoEncryption, int UseFTPES, int UseFTPIS, 
 	return FFFTP_SUCCESS;
 }
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "hostman_libffftp.hpp"
 #endif

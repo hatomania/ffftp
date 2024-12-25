@@ -128,7 +128,7 @@ static auto GetFilterString(std::initializer_list<FileType> fileTypes) {
 }
 
 // ファイル選択
-#ifndef LIBFFFTP_EXPORTS
+#ifndef LIBFFFTP
 fs::path SelectFile(bool open, HWND hWnd, UINT titleId, const wchar_t* initialFileName, const wchar_t* extension, std::initializer_list<FileType> fileTypes) {
 	auto const filter = GetFilterString(fileTypes);
 	wchar_t buffer[FMAX_PATH + 1];
@@ -187,6 +187,6 @@ void CalcExtentSize(TRANSPACKET *Pkt, LONGLONG Size) noexcept {
 }
 #endif
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "misc_libffftp.hpp"
 #endif

@@ -67,14 +67,14 @@
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(ProjectDir)..\boost-regex\include;$(ProjectDir)..\gsl\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIBFFFTP_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBFFFTP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..;$(ProjectDir)..\boost-regex\include;$(ProjectDir)..\gsl\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LIBFFFTP_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LIBFFFTP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -121,7 +121,6 @@
     <ClInclude Include="ffftp_option.h" />
     <ClInclude Include="getput_libffftp.hpp" />
     <ClInclude Include="hostman_libffftp.hpp" />
-    <ClInclude Include="libffftp.hpp" />
     <ClInclude Include="libffftp_common.hpp" />
     <ClInclude Include="libffftp_windows.hpp" />
     <ClInclude Include="main_libffftp.hpp" />

@@ -750,6 +750,6 @@ int GetDecimalText(HWND hDlg, int Ctrl) {
 	return !empty(text) && std::iswdigit(text[0]) ? stoi(text) : 0;
 }
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "option_libffftp.hpp"
 #endif

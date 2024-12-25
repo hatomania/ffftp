@@ -31,11 +31,19 @@
 #define SECURITY_WIN32
 #define WIN32_LEAN_AND_MEAN
 #define UMDF_USING_NTSTATUS
-#ifdef  LIBFFFTP_EXPORTS
+
+#ifdef LIBFFFTP
+#ifndef _WINDOWS
+#define LIBFFFTP_USE_MINIUPNPC
+#define LIBFFFTP_USE_QT
+#endif
 #include "libffftp_windows.hpp"
 #else
+#undef LIBFFFTP_USE_MINIUPNPC
+#undef LIBFFFTP_USE_QT
 #define LIBFFFTP_WINDOWS
-#endif //  LIBFFFTP_EXPORTS
+#endif
+
 #pragma warning(disable: 26426)		// error C26426: Global initializer calls a non-constexpr function 'XXX' (i.22).
 #pragma warning(disable: 26429)		// error C26429: Symbol 'XXX' is never tested for nullness, it can be marked as not_null (f.23).
 #pragma warning(disable: 26432)		// error C26432: If you define or delete any default operation in the type 'XXX', define or delete them all (c.21).

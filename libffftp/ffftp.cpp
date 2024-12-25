@@ -28,9 +28,19 @@
 
 #include "ffftp.h"
 
-#include "common.h"
-#include "libffftp.hpp"
+#include <memory>
+#include <string>
+#include <vector>
+
+#define LIBFFFTP_DECL
 #include "libffftp_common.hpp"
+#include "main_libffftp.hpp"
+#include "connect_libffftp.hpp"
+#include "hostman_libffftp.hpp"
+#include "option_libffftp.hpp"
+#include "ras_libffftp.hpp"
+#include "taskwin_libffftp.hpp"
+#undef LIBFFFTP_DECL
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback proc) {
   ffftp_proc = proc;
@@ -43,18 +53,6 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
 
 LIBFFFTP_DECLSPEC long long LIBFFFTP_CALLCONV ffftp_notify_event(int eventid, long long param1, long long param2) {
   return libffftp::notifyEvent(eventid, param1, param2);
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected() {
-  Sound::Connected.Play();
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred() {
-  Sound::Transferred.Play();
-}
-
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error() {
-  Sound::Error.Play();
 }
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_applicationname() {

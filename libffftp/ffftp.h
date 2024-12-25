@@ -69,10 +69,6 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize();
  */
 LIBFFFTP_DECLSPEC long long LIBFFFTP_CALLCONV ffftp_notify_event(int eventid, long long param1 = 0, long long param2 = 0);
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_connected();
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_transferred();
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_playsound_error();
-
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_applicationname();
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_windowtitle();
 

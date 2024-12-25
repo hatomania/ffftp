@@ -105,6 +105,6 @@ bool ConnectRas(bool dialup, bool explicitly, bool confirm, std::wstring const& 
 	return RasDialDlgW(nullptr, const_cast<LPWSTR>(name.c_str()), nullptr, &info);
 }
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "ras_libffftp.hpp"
 #endif

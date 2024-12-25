@@ -29,7 +29,7 @@
 
 #include "common.h"
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #define LIBFFFTP_OTHER
 #include "taskwin_libffftp.hpp"
 #undef LIBFFFTP_OTHER
@@ -101,7 +101,7 @@ void DispTaskMsg() {
 	ExecViewer(temp, 0);
 }
 
-#ifndef LIBFFFTP_EXPORTS
+#ifndef LIBFFFTP
 void detail::Notice(UINT id, std::wformat_args args) {
 	auto const format = GetString(id);
 	auto message = std::vformat(format, args);
@@ -117,13 +117,13 @@ void detail::Debug(std::wstring_view format, std::wformat_args args) {
 	message.insert(0, L"## "sv);
 	queue.push(std::move(message));
 }
-#endif // LIBFFFTP_EXPORTS
+#endif // LIBFFFTP
 
 void Error(std::wstring_view functionName, int lastError) {
 	if (DebugConsole == YES)
 		Debug(L"{} failed(0x{:08X}): {}"sv, functionName, unsigned(lastError), GetErrorMessage(lastError));
 }
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "taskwin_libffftp.hpp"
 #endif

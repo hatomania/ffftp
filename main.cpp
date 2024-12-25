@@ -2110,6 +2110,6 @@ int MainThreadRunner::Run() {
 	return IsMainThread() ? DoWork() : (int)SendMessageW(GetMainHwnd(), WM_MAINTHREADRUNNER, 0, (LPARAM)this);
 }
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "main_libffftp.hpp"
 #endif

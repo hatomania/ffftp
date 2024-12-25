@@ -74,9 +74,6 @@
     <ClInclude Include="hostman_libffftp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="libffftp_common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

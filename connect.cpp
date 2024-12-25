@@ -1509,6 +1509,6 @@ int AskTryingConnect() noexcept {
 	return TryConnect;
 }
 
-#ifdef LIBFFFTP_EXPORTS
+#ifdef LIBFFFTP
 #include "connect_libffftp.hpp"
 #endif

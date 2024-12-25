@@ -1128,6 +1128,7 @@ int ReadSettingsVersion() {
 	return Version;
 }
 
+#ifndef LIBFFFTP_USE_QT
 // FileZilla XML形式エクスポート対応
 void SaveSettingsToFileZillaXml() {
 	static boost::wregex unix{ LR"([^/]+)" }, dos{ LR"([^/\\]+)" };
@@ -1214,6 +1215,7 @@ void SaveSettingsToFileZillaXml() {
 		Message(IDS_FAIL_TO_EXPORT, MB_OK | MB_ICONERROR);
 	}
 }
+#endif
 
 void SaveSettingsToWinSCPIni() {
 	auto const escape = [](std::wstring_view wstr) {
@@ -1292,3 +1294,7 @@ void SaveSettingsToWinSCPIni() {
 			Message(IDS_FAIL_TO_EXPORT, MB_OK | MB_ICONERROR);
 	}
 }
+
+#ifdef LIBFFFTP
+#include "registry_libffftp.hpp"
+#endif

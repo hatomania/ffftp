@@ -98,7 +98,7 @@ LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_next(f
  *
  * @param[in] hdata 初期化するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(struct ffftp_hostdata* hdata);
 
 /**
  * @brief hostdataの後処理を行う。
@@ -108,7 +108,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_initialize(ffftp_hostdat
  *
  * @param[in] hdata 後処理するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(struct ffftp_hostdata* hdata);
 
 /**
  * @brief ホストを追加する。
@@ -117,7 +117,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostdata_finalize(ffftp_hostdata*
  * @param[in] hdata 追加するホスト情報hostdataへのポインタ
  * @return 追加されたホストを示すホストコンテキスト
  */
-LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_new(ffftp_hostcontext_t hc, const struct ffftp_hostdata* hdata);
 
 /**
  * @brief グループを追加する。
@@ -135,7 +135,7 @@ LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_newgro
  * @param[in] hdata 修正するホスト情報hostdataへのポインタ
  * @return 修正されたホストを示すホストコンテキスト
  */
-LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(ffftp_hostcontext_t hc, const ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC ffftp_hostcontext_t LIBFFFTP_CALLCONV ffftp_hostcontext_modify(ffftp_hostcontext_t hc, const struct ffftp_hostdata* hdata);
 
 /**
  * @brief グループ名を修正する。
@@ -181,14 +181,14 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_down(ffftp_hostcontex
  *
  * @param[out] hdata 結果を格納するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata_default(ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata_default(struct ffftp_hostdata* hdata);
 
 /**
  * @brief hostdataのデフォルト値を更新する。
  *
  * @param[in] hdata デフォルト値とするhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const struct ffftp_hostdata* hdata);
 
 /**
  * @brief 指定したホストコンテキストのhostdataを取得する。
@@ -196,7 +196,7 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_setdefault(const ffft
  * @param[in]  hc hostdataを取得したいホストのホストコンテキスト
  * @param[out] hdata 結果を格納するhostdataへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(ffftp_hostcontext_t hc, ffftp_hostdata* hdata);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_hostcontext_hostdata(ffftp_hostcontext_t hc, struct ffftp_hostdata* hdata);
 
 LIBFFFTP_DECLSPEC const wchar_t* LIBFFFTP_CALLCONV ffftp_hostcontext_name(ffftp_hostcontext_t hc);
 LIBFFFTP_DECLSPEC int LIBFFFTP_CALLCONV ffftp_hostcontext_level(ffftp_hostcontext_t hc);
@@ -227,7 +227,7 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_connect(ffftp_hostcontext_t hc);
  *
  * @param[in] opt 初期化するffftp_optionへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* opt);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(struct ffftp_option* opt);
 
 /**
  * @brief ffftp_optionの後処理を行う。
@@ -237,21 +237,21 @@ LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_initialize(ffftp_option* o
  *
  * @param[in] opt 後処理するffftp_optionへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_finalize(ffftp_option* opt);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_option_finalize(struct ffftp_option* opt);
 
 /**
  * @brief 現在のオプションを上書きする。
  *
  * @param[in]  opt 上書きするオプションffftp_optionへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const ffftp_option* opt);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_setoption(const struct ffftp_option* opt);
 
 /**
  * @brief 現在のオプションを取得する。
  *
  * @param[out]  opt 結果を格納するオプションffftp_optionへのポインタ
  */
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(ffftp_option* opt);
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_getoption(struct ffftp_option* opt);
 
 /**
  * @brief サウンドの設定ダイアログを開く。

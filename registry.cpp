@@ -1128,7 +1128,7 @@ int ReadSettingsVersion() {
 	return Version;
 }
 
-#ifdef LIBFFFTP_REALLY_NOTUSE_QT
+#ifdef LIBFFFTP_USE_WIN32API
 // FileZilla XML形式エクスポート対応
 void SaveSettingsToFileZillaXml() {
 	static boost::wregex unix{ LR"([^/]+)" }, dos{ LR"([^/\\]+)" };

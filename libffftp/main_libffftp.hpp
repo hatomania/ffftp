@@ -1,7 +1,44 @@
 ﻿#ifdef LIBFFFTP_OTHER
 
-std::wstring GetWindowTitle() {
-  return std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
+#ifndef LIBFFFTP_USE_WIN32API
+
+// リソースIDである"notify"がQCoreApplicationのメソッド名とバッティングしている。悲しい
+#undef notify
+#include <QCoreApplication>
+#define notify 166
+
+namespace {
+constexpr const wchar_t* const kVersion{L"5.8"};
+}
+fs::path const& systemDirectory() {
+  static fs::path ret{};
+  return ret;
+}
+
+static fs::path const& moduleFileName() {
+  static fs::path ret{QCoreApplication::applicationFilePath().toStdWString()};
+	return ret;
+}
+
+fs::path const& tempDirectory() {
+	static auto const directory = [] {
+		auto const path = fs::temp_directory_path() / std::format(L"ffftp{:08x}"sv, QCoreApplication::applicationPid());
+		fs::create_directory(path);
+		return path;
+	}();
+	return directory;
+}
+
+static const auto& version() {
+  static std::wstring ret{kVersion};
+  return ret;
+}
+#endif
+
+const std::wstring& GetWindowTitle() {
+  static std::wstring ret{};
+  ret = std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
+  return ret;
 }
 
 
@@ -11,7 +48,7 @@ std::wstring GetWindowTitle() {
 
 namespace libffftp {
 
-#ifndef LIBFFFTP_DECL 
+#ifndef LIBFFFTP_DECL
 namespace{
 constexpr const wchar_t* const kModuleName = L"libffftp";
 constexpr const wchar_t* const kAppName = L"FFFTP";

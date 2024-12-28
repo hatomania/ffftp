@@ -120,6 +120,12 @@ static LONGLONG TransferSizeLeft = 0;
 static LONGLONG TransferSizeTotal = 0;
 static int TransferErrorDisplay = 0;
 
+#ifdef LIBFFFTP
+#define LIBFFFTP_OTHER
+#include "getput_libffftp.hpp"
+#undef LIBFFFTP_OTHER
+#endif
+
 
 static void SetErrorMsg(std::wstring&& msg) {
 	if (empty(ErrMsg))
@@ -127,6 +133,7 @@ static void SetErrorMsg(std::wstring&& msg) {
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // ファイル転送スレッドを起動する
 int MakeTransferThread() noexcept {
 	ClearAll = NO;
@@ -159,6 +166,7 @@ void CloseTransferThread() noexcept {
 		CloseHandle(completed[i]);
 	}
 }
+#endif
 
 
 // 同時接続対応
@@ -1731,6 +1739,8 @@ bool MarkFileAsDownloadedFromInternet(fs::path const& path) {
 	auto const result = (HRESULT)data.Run();
 	return result == S_OK;
 }
-#else
-#include "getput_libffftp.hpp"
 #endif // _WINDOWS
+
+#ifdef LIBFFFTP
+#include "getput_libffftp.hpp"
+#endif

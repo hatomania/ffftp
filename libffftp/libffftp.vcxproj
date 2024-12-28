@@ -114,6 +114,7 @@
     <ClInclude Include="..\OleDragDrop.h" />
     <ClInclude Include="..\Resource\resource.en-US.h" />
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
+    <ClInclude Include="common_libffftp.hpp" />
     <ClInclude Include="connect_libffftp.hpp" />
     <ClInclude Include="ffftp.h" />
     <ClInclude Include="ffftp_common.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="ras_libffftp.hpp" />
     <ClInclude Include="registry_libffftp.hpp" />
     <ClInclude Include="taskwin_libffftp.hpp" />
+    <QtMoc Include="transfer_libffftp.hpp" />
     <ClInclude Include="upnp_libffftp.hpp" />
   </ItemGroup>
   <ItemGroup>

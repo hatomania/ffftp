@@ -5,6 +5,8 @@
 
 #include "libffftp_windows.hpp"
 
+#include <QString>
+
 #include "common.h"
 
 #include "ffftp_common.h"
@@ -278,6 +280,30 @@ BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString) {
 void SetOption() {
   MAKEPARAM(ffftp_dialogid::OPTION_DLG, NULL, NULL, NULL);
   SHOWDIALOGBOX_CALLPROC();
+}
+
+INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROTOCOL_INFOW lpProtocolInfo, LPWSTR lpszAddressString, LPDWORD lpdwAddressStringLength) {
+  // エラー処理は実装していません。常に0(=成功)を返します。lpszAddressStringは十分なバッファを確保しておいてください
+  assert(lpsaAddress->sa_family == AF_INET || lpsaAddress->sa_family == AF_INET6);
+  char ipstr[INET6_ADDRSTRLEN]{};
+  uint16_t port{};
+  switch (lpsaAddress->sa_family) {
+    case AF_INET: {
+      const sockaddr_in* sin = reinterpret_cast<decltype(sin)>(lpsaAddress);
+      inet_ntop(AF_INET, &(sin->sin_addr), ipstr, sizeof ipstr);
+      port = htons(sin->sin_port);
+    } break;
+    case AF_INET6: {
+      const sockaddr_in6* sin6 = reinterpret_cast<decltype(sin6)>(lpsaAddress);
+      inet_ntop(AF_INET6, &(sin6->sin6_addr), ipstr, sizeof ipstr);
+      port = htons(sin6->sin6_port);
+    } break;
+  }
+  std::wstring outaddr{QString(ipstr).toStdWString()};
+  outaddr += L":" + std::to_wstring(port);
+  wcscpy_s(lpszAddressString, *lpdwAddressStringLength, outaddr.c_str());
+  *lpdwAddressStringLength = static_cast<DWORD>(outaddr.length() + 1);
+  return 0;
 }
 
 }  // namespace LIBFFFTP_WINDOWS

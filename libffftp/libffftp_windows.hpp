@@ -6,6 +6,7 @@
 #endif
 
 #include <windows.h>// TODO: 要削除
+#include <winsock2.h>
 
 namespace LIBFFFTP_WINDOWS {
 
@@ -13,6 +14,7 @@ extern int MessageBoxIndirectW(const MSGBOXPARAMSW* lpmbp);
 extern INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndParent, DLGPROC lpDialogFunc, LPARAM dwInitParam);
 extern BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString);
 extern void SetOption();
+extern INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROTOCOL_INFOW lpProtocolInfo, LPWSTR lpszAddressString, LPDWORD lpdwAddressStringLength);
 
 }  // namespace LIBFFFTP_WINDOWS
 

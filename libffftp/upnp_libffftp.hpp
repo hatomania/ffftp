@@ -1,4 +1,6 @@
-﻿#include <miniupnpc/miniupnpc.h>
+﻿#ifndef LIBFFFTP_USE_WIN32API
+
+#include <miniupnpc/miniupnpc.h>
 #include <miniupnpc/upnpcommands.h>
 
 // TODO: 今のところWin32 APIの使用を含んでいます。
@@ -9,8 +11,8 @@ UPNPDev* upnp_device{nullptr};
 UPNPUrls upnp_urls{};
 IGDdatas upnp_data{};
 int upnp_igd{-1};
-constexpr const char* const kUpnpDesc  = "FFFTP active mode";
-constexpr const char* const kUpnpProto = "TCP";
+constexpr const char* const kUpnpDesc  {"FFFTP active mode"};
+constexpr const char* const kUpnpProto {"TCP"};
 
 const wchar_t* convchar(const char* str) {
   const size_t wsize = mblen(str, MB_CUR_MAX) * (strlen(str) + 1);
@@ -106,3 +108,5 @@ bool RemovePortMapping(int port) {
   const auto result = (HRESULT)data.Run();
   return result == 0;
 }
+
+#endif

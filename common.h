@@ -33,12 +33,9 @@
 #define UMDF_USING_NTSTATUS
 
 #ifdef LIBFFFTP
-#ifdef LIBFFFTP_NOTUSE_QT
-#define LIBFFFTP_REALLY_NOTUSE_QT 
-#endif
 #include "libffftp_windows.hpp"
 #else
-#undef LIBFFFTP_REALLY_NOTUSE_QT
+#define LIBFFFTP_USE_WIN32API
 #define LIBFFFTP_WINDOWS
 #endif
 
@@ -1342,7 +1339,7 @@ static inline void SetText(HWND hdlg, int id, const std::wstring& text) noexcept
 static inline auto AddressPortToString(const SOCKADDR* sa, size_t salen) {
 	std::wstring string(sizeof "[ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff%4294967295]:65535" - 1, L'\0');
 	auto length = size_as<DWORD>(string) + 1;
-	auto const result = WSAAddressToStringW(const_cast<SOCKADDR*>(sa), gsl::narrow_cast<DWORD>(salen), nullptr, data(string), &length);
+	auto const result = LIBFFFTP_WINDOWS::WSAAddressToStringW(const_cast<SOCKADDR*>(sa), gsl::narrow_cast<DWORD>(salen), nullptr, data(string), &length);
 	assert(result == 0);
 	string.resize(length - 1);
 	return string;
@@ -1488,3 +1485,7 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
+
+#ifdef LIBFFFTP
+#include "common_libffftp.hpp"
+#endif

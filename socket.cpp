@@ -621,7 +621,7 @@ int SocketContext::Send(const char* buf, int len, int flags, int* CancelCheckWor
 }
 
 
-#ifdef LIBFFFTP_REALLY_NOTUSE_QT
+#ifdef LIBFFFTP_USE_WIN32API
 // UPnP対応
 static ComPtr<IUPnPNAT> upnpNAT;
 static ComPtr<IStaticPortMappingCollection> staticPortMappingCollection;
@@ -679,8 +679,6 @@ bool RemovePortMapping(int port) {
 	auto const result = (HRESULT)data.Run();
 	return result == S_OK;
 }
-#else
-#include "upnp_libffftp.hpp"
 #endif
 
 
@@ -696,3 +694,7 @@ int CheckClosedAndReconnectTrnSkt(std::shared_ptr<SocketContext>& Skt, int* Canc
 		return ReConnectTrnSkt(Skt, CancelCheckWork);
 	return FFFTP_SUCCESS;
 }
+
+#ifdef LIBFFFTP
+#include "upnp_libffftp.hpp"
+#endif

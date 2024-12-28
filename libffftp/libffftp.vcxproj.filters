@@ -95,13 +95,16 @@
     <ClInclude Include="upnp_libffftp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="getput_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="misc_libffftp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="registry_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="getput_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="common_libffftp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -219,5 +222,10 @@
     <None Include="..\Resource\ffftp.rcconfig">
       <Filter>Resource Files\ffftp</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="transfer_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
 </Project>

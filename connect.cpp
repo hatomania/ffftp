@@ -29,10 +29,6 @@
 
 #include "common.h"
 
-#define LIBFFFTP_OTHER
-#include "libffftp/connect_libffftp.hpp"
-#undef LIBFFFTP_OTHER
-
 /*===== プロトタイプ =====*/
 
 static int SendInitCommand(std::shared_ptr<SocketContext> Socket, std::wstring_view Cmd, int *CancelCheckWork);
@@ -53,6 +49,12 @@ static HOSTDATA CurHost;
 
 #if defined(HAVE_TANDEM)
 static int Oss = NO;  /* OSS ファイルシステムへアクセスしている場合は YES */
+#endif
+
+#ifdef LIBFFFTP
+#define LIBFFFTP_OTHER
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_OTHER
 #endif
 
 
@@ -1133,6 +1135,7 @@ static std::wstring CheckOneTimePassword(std::wstring&& pass, std::wstring const
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 namespace std {
 	template<>
 	struct default_delete<addrinfoW> {
@@ -1151,11 +1154,13 @@ static inline auto getaddrinfo(std::wstring const& host, std::wstring const& por
 	}
 	return std::unique_ptr<addrinfoW>{};
 }
+#endif
 
 static inline auto getaddrinfo(std::wstring const& host, int port, int family = AF_UNSPEC, int flags = AI_NUMERICHOST | AI_NUMERICSERV) {
 	return getaddrinfo(host, std::to_wstring(port), family, flags);
 }
 
+#ifdef LIBFFFTP_USE_WIN32API
 static std::unique_ptr<addrinfoW> getaddrinfo(std::wstring const& host, std::wstring const& port, int family, int* CancelCheckWork) {
 	auto future = std::async(std::launch::async, [host, port, family] { return getaddrinfo(IdnToAscii(host), port, family, AI_NUMERICSERV);	});
 	while (*CancelCheckWork == NO && future.wait_for(1ms) == std::future_status::timeout)
@@ -1165,6 +1170,7 @@ static std::unique_ptr<addrinfoW> getaddrinfo(std::wstring const& host, std::wst
 		return {};
 	return future.get();
 }
+#endif
 
 
 static inline auto getaddrinfo(std::wstring const& host, int port, int family, int* CancelCheckWork) {

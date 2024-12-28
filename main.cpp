@@ -126,6 +126,7 @@ static int NoopEnable = NO;
 #undef LIBFFFTP_OTHER
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 fs::path const& systemDirectory() {
 	static fs::path const directory = [] {
 		std::wstring directory(32768, L'\0');
@@ -175,6 +176,7 @@ static auto version() {
 	auto const format = build != 0 ? L"{}.{}.{}.{}"sv : patch != 0 ? L"{}.{}.{}"sv : L"{}.{}"sv;
 	return std::vformat(format, std::make_wformat_args(major, minor, patch, build));
 }
+#endif
 
 
 static auto isPortable() {

@@ -107,6 +107,12 @@
     <ClInclude Include="common_libffftp.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="socketcontext_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="socket_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\toolmenu.cpp">
@@ -181,6 +187,9 @@
     <ClCompile Include="libffftp_windows.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sockets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Resource\bitmap1.bmp">
@@ -225,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="transfer_libffftp.hpp">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="sockets.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

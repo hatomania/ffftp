@@ -553,6 +553,7 @@ inline int ListHeight;
 inline int CancelFlg;
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 template<class T>
 constexpr T CreateInvalidateHandle() {
 	T handle;
@@ -603,6 +604,9 @@ struct SocketContext : public WSAOVERLAPPED {
 	void ClearReadBuffer() noexcept;
 	int Send(const char* buf, int len, int flags, int* CancelCheckWork);
 };
+#else
+#include "socketcontext_libffftp.hpp"
+#endif // LIBFFFTP_USE_WIN32API
 
 
 struct HostExeptPassword {

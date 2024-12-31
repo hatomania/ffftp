@@ -39,7 +39,7 @@ WinMain関数の冒頭でインスタンスハンドルをhInstFtp変数に退�
 
 ## 使用しているWin32
 
-* Microsoft::WRL::ComPtr<T>
+* Microsoft::WRL::ComPtr\<T\>
 * HFONT
 * LOGFONTW
 * SIZE
@@ -51,4 +51,32 @@ WinMain関数の冒頭でインスタンスハンドルをhInstFtp変数に退�
 * SecPkgContext_StreamSizes
 * SECURITY_STATUS
 * ULONG
-* 
+
+## DoConnect関数のフロー
+
+connect.cpp: 1067行目
+
+Implicitモード、Explicit、暗号なしの順で接続を試みる（DoConnectCrypt関数を呼ぶ）。接続が成功した時点でループを抜ける。
+
+## DoConnectCrypt関数のフロー
+
+connect.cpp: 805行目
+
+connectsock関数
+
+* 名前解決が可能かどうか
+* 接続先はSOCKS(FireWall)サーバか直接接続か
+* ソケットコンテキストを作成して接続を試みる
+* 接続先がSOCKSサーバだったら認証やらなにやらも行う。
+
+戻り値は SocketContext
+
+ImplicitモードだったらSSLにアタッチ。
+
+ソケットオプション更新。
+
+切断対策にKeep Alive設定。
+
+認証が必要な接続である場合、認証を行う。
+
+ExplicitモードだったらここでSSLにアタッチ。

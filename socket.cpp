@@ -28,6 +28,8 @@
 /============================================================================*/
 
 #include "common.h"
+
+#ifdef LIBFFFTP_USE_WIN32API
 #pragma comment(lib, "Crypt32.lib")
 #pragma comment(lib, "Cryptui.lib")
 #pragma comment(lib, "Secur32.lib")
@@ -621,7 +623,6 @@ int SocketContext::Send(const char* buf, int len, int flags, int* CancelCheckWor
 }
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 // UPnP対応
 static ComPtr<IUPnPNAT> upnpNAT;
 static ComPtr<IStaticPortMappingCollection> staticPortMappingCollection;
@@ -679,7 +680,6 @@ bool RemovePortMapping(int port) {
 	auto const result = (HRESULT)data.Run();
 	return result == S_OK;
 }
-#endif
 
 
 int CheckClosedAndReconnect() {
@@ -694,7 +694,9 @@ int CheckClosedAndReconnectTrnSkt(std::shared_ptr<SocketContext>& Skt, int* Canc
 		return ReConnectTrnSkt(Skt, CancelCheckWork);
 	return FFFTP_SUCCESS;
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 #ifdef LIBFFFTP
+#include "socket_libffftp.hpp"
 #include "upnp_libffftp.hpp"
 #endif

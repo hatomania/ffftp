@@ -1367,6 +1367,7 @@ static std::optional<sockaddr_storage> SocksRequest(SocketContext& s, SocksComma
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 std::shared_ptr<SocketContext> connectsock(std::variant<std::wstring_view, std::reference_wrapper<const SocketContext>> originalTarget, std::wstring&& host, int port, int *CancelCheckWork) {
 	std::variant<sockaddr_storage, std::tuple<std::wstring, int>> target;
 	int const Fwall = CurHost.FireWall == YES ? FwallType : FWALL_NONE;
@@ -1508,6 +1509,7 @@ std::shared_ptr<SocketContext> GetFTPListenSocket(std::shared_ptr<SocketContext>
 	}
 	return listen_skt;
 }
+#endif
 
 
 // ホストへ接続処理中かどうかを返す

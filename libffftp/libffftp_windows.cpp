@@ -5,6 +5,9 @@
 
 #include "libffftp_windows.hpp"
 
+#include <QCoreApplication>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 #include <QString>
 
 #include "common.h"
@@ -304,6 +307,53 @@ INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROT
   wcscpy_s(lpszAddressString, *lpdwAddressStringLength, outaddr.c_str());
   *lpdwAddressStringLength = static_cast<DWORD>(outaddr.length() + 1);
   return 0;
+}
+
+class SoundPlayer {
+public:
+  enum class Type {
+    Connected,
+    Transferred,
+    Error,
+  };
+  inline explicit SoundPlayer()
+      : player_{std::make_unique<QMediaPlayer>()},
+        audioo_{std::make_unique<QAudioOutput>()},
+        urls_{
+          {Type::Connected,   QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/success.mp3")},
+          {Type::Transferred, QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/quickFixes.mp3")},
+          {Type::Error,       QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/foldedAreas.mp3")}, } {
+    player_->setAudioOutput(audioo_.get());
+  };
+  inline void play(const Type playtype) {
+    player_->setSource(urls_.value(playtype));
+  }
+private:
+  std::unique_ptr<QMediaPlayer> player_;
+  std::unique_ptr<QAudioOutput> audioo_;
+  const QMap<Type, QUrl> urls_;
+};
+BOOL PlaySoundW(LPCWSTR pszSound, HMODULE hmod, DWORD fdwSound) {
+  static SoundPlayer player{};
+  QMap<QString, SoundPlayer::Type> sm{
+    {"FFFTP_Connected",   SoundPlayer::Type::Connected},
+    {"FFFTP_Transferred", SoundPlayer::Type::Transferred},
+    {"FFFTP_Error",       SoundPlayer::Type::Error},
+  };
+  player.play(sm.value(QString(pszSound)));
+  return TRUE;
+}
+
+HMODULE GetModuleHandleW(LPCWSTR lpModuleName) {
+  return NULL;
+}
+
+DWORD GetCurrentThreadId() {
+  return static_cast<DWORD>(QCoreApplication::applicationPid());
+}
+
+HRESULT OleInitialize(LPVOID pvReserved) {
+  return S_OK;
 }
 
 }  // namespace LIBFFFTP_WINDOWS

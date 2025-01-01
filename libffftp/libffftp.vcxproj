@@ -36,13 +36,13 @@
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>6.8.0_msvc2022_64</QtInstall>
-    <QtModules>core;network</QtModules>
+    <QtInstall>6.8.1_msvc2022_64</QtInstall>
+    <QtModules>core;network;multimedia</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.8.0_msvc2022_64</QtInstall>
-    <QtModules>core;network</QtModules>
+    <QtInstall>6.8.1_msvc2022_64</QtInstall>
+    <QtModules>core;network;multimedia</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -116,6 +116,7 @@
     <ClInclude Include="..\Resource\resource.ja-JP.h" />
     <ClInclude Include="common_libffftp.hpp" />
     <ClInclude Include="connect_libffftp.hpp" />
+    <QtMoc Include="eventproc.hpp" />
     <ClInclude Include="ffftp.h" />
     <ClInclude Include="ffftp_common.h" />
     <ClInclude Include="ffftp_hostdata.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="..\toolmenu.cpp" />
     <ClCompile Include="common.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="eventproc.cpp" />
     <ClCompile Include="ffftp.cpp" />
     <ClCompile Include="libffftp_windows.cpp" />
     <ClCompile Include="sockets.cpp" />

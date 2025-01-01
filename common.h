@@ -552,6 +552,11 @@ inline int RemoteWidth;
 inline int ListHeight;
 inline int CancelFlg;
 
+#ifdef LIBFFFTP
+#define LIBFFFTP_OTHER
+#include "common_libffftp.hpp"
+#undef LIBFFFTP_OTHER
+#endif
 
 #ifdef LIBFFFTP_USE_WIN32API
 template<class T>
@@ -758,7 +763,7 @@ public:
 	static Sound Connected;
 	static Sound Transferred;
 	static Sound Error;
-	void Play() noexcept { PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
+	void Play() noexcept { LIBFFFTP_WINDOWS::PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
 	static void Register();
 };
 

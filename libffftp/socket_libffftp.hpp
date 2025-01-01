@@ -36,77 +36,18 @@ std::vector<char> SocketContext::Encrypt(std::string_view plain) {
 }
 
 BOOL LoadSSL() {
-  // 目的：
-  //   TLS 1.1以前を無効化する動きに対応しつつ、古いSSL 2.0にもできるだけ対応する
-  // 前提：
-  //   Windows 7以前はTLS 1.1、TLS 1.2が既定で無効化されている。 <https://docs.microsoft.com/en-us/windows/desktop/SecAuthN/protocols-in-tls-ssl--schannel-ssp->
-  //   それとは別にTLS 1.2とSSL 2.0は排他となる。
-  //   ドキュメントに記載されていないUNI; Multi-Protocol Unified Helloが存在し、Windows XPではUNIが既定で有効化されている。さらにTLS 1.2とUNIは排他となる。
-  //   TLS 1.3はWindows 10で実験的搭載されている。TLS 1.3を有効化するとTLS 1.3が使われなくてもセッション再開（TLS Resumption）が無効化される模様？
-  // 手順：
-  //   未指定でオープンすることで、レジストリ値に従った初期化をする。
-  //   有効になっているプロトコルを調べ、SSL 2.0が無効かつTLS 1.2が無効な場合は開き直す。
-  //   排他となるプロトコルがあるため、有効になっているプロトコルのうちSSL 3.0以降とTLS 1.2を指定してオープンする。
-  //   セッション再開が必要とされるため、TLS 1.3は明示的には有効化せず、レジストリ指定に従う。
-  static_assert(SP_PROT_TLS1_3PLUS_CLIENT == SP_PROT_TLS1_3_CLIENT, "new tls version detected.");
-  if (auto const ss = AcquireCredentialsHandleW(nullptr, __pragma(warning(suppress:26465)) const_cast<wchar_t*>(UNISP_NAME_W), SECPKG_CRED_OUTBOUND, nullptr, nullptr, nullptr, nullptr, &credential, nullptr); ss != SEC_E_OK) {
-    Error(L"AcquireCredentialsHandle()"sv, ss);
-    return FALSE;
-  }
-  SecPkgCred_SupportedProtocols sp;
-  if (__pragma(warning(suppress:6001)) auto const ss = QueryCredentialsAttributesW(&credential, SECPKG_ATTR_SUPPORTED_PROTOCOLS, &sp); ss != SEC_E_OK) {
-    Error(L"QueryCredentialsAttributes(SECPKG_ATTR_SUPPORTED_PROTOCOLS)"sv, ss);
-    return FALSE;
-  }
-  if ((sp.grbitProtocol & SP_PROT_SSL2_CLIENT) == 0 && (sp.grbitProtocol & SP_PROT_TLS1_2_CLIENT) == 0) {
-    FreeCredentialsHandle(&credential);
-    // pAuthDataはSCHANNEL_CREDからSCH_CREDENTIALSに変更されたが現状維持する。
-    // https://github.com/MicrosoftDocs/win32/commit/e9f333c14bad8fd65d89ccc64d42882bc5fa7d9c
-    SCHANNEL_CRED sc{ .dwVersion = SCHANNEL_CRED_VERSION, .grbitEnabledProtocols = sp.grbitProtocol & SP_PROT_SSL3TLS1_X_CLIENTS | SP_PROT_TLS1_2_CLIENT };
-    if (auto const ss = AcquireCredentialsHandleW(nullptr, __pragma(warning(suppress:26465)) const_cast<wchar_t*>(UNISP_NAME_W), SECPKG_CRED_OUTBOUND, nullptr, &sc, nullptr, nullptr, &credential, nullptr); ss != SEC_E_OK) {
-      Error(L"AcquireCredentialsHandle()"sv, ss);
-      return FALSE;
-    }
-  }
+  // SSLはQSslSocketを利用して実装するため、この関数では何もしない
   return TRUE;
 }
 
 void FreeSSL() noexcept {
-  assert(SecIsValidHandle(&credential));
-  FreeCredentialsHandle(&credential);
 }
 
-namespace std {
-  template<>
-  struct default_delete<CERT_CONTEXT> {
-    void operator()(CERT_CONTEXT* ptr) noexcept {
-      CertFreeCertificateContext(ptr);
-    }
-  };
-  template<>
-  struct default_delete<const CERT_CHAIN_CONTEXT> {
-    void operator()(const CERT_CHAIN_CONTEXT* ptr) noexcept {
-      CertFreeCertificateChain(ptr);
-    }
-  };
-}
-
-auto getCertContext(CtxtHandle& context) noexcept {
-  PCERT_CONTEXT certContext = nullptr;
-  [[maybe_unused]] auto const ss = QueryContextAttributesW(&context, SECPKG_ATTR_REMOTE_CERT_CONTEXT, &certContext);
-#ifdef _DEBUG
-  if (ss != SEC_E_OK)
-    _RPTWN(_CRT_WARN, L"QueryContextAttributes(SECPKG_ATTR_REMOTE_CERT_CONTEXT) error: %08X.\n", ss);
-#endif
-  return std::unique_ptr<CERT_CONTEXT>{ certContext };
+std::unique_ptr<CERT_CONTEXT> getCertContext(CtxtHandle& context) noexcept {
+  return {};
 }
 
 void ShowCertificate() {
-  if (auto const& sc = AskCmdCtrlSkt(); sc && sc->IsSSLAttached())
-    if (auto certContext = getCertContext(sc->sslContext)) {
-      CRYPTUI_VIEWCERTIFICATE_STRUCTW certViewInfo{ sizeof CRYPTUI_VIEWCERTIFICATE_STRUCTW, 0, CRYPTUI_DISABLE_EDITPROPERTIES | CRYPTUI_DISABLE_ADDTOSTORE, nullptr, certContext.get() };
-      __pragma(warning(suppress:6387)) CryptUIDlgViewCertificateW(&certViewInfo, nullptr);
-    }
 }
 
 enum class CertResult {
@@ -117,57 +58,9 @@ enum class CertResult {
 };
 
 struct CertDialog {
-  using result_t = int;
-  CERT_CONTEXT* const certContext;
-  void OnCommand(HWND hdlg, WORD commandId) noexcept {
-    switch (commandId) {
-    case IDYES:
-    case IDNO:
-      EndDialog(hdlg, commandId);
-      break;
-    case IDC_SHOWCERT:
-      CRYPTUI_VIEWCERTIFICATE_STRUCTW certViewInfo{ sizeof CRYPTUI_VIEWCERTIFICATE_STRUCTW, hdlg, CRYPTUI_DISABLE_EDITPROPERTIES | CRYPTUI_DISABLE_ADDTOSTORE, nullptr, certContext };
-      __pragma(warning(suppress:6387)) CryptUIDlgViewCertificateW(&certViewInfo, nullptr);
-      break;
-    }
-  }
 };
 
 static CertResult ConfirmSSLCertificate(CtxtHandle& context, wchar_t* serverName, BOOL* pbAborted) {
-  auto certContext = getCertContext(context);
-  if (!certContext)
-    return CertResult::Failed;
-
-  auto chainContext = [&certContext]() noexcept {
-    CERT_CHAIN_PARA chainPara{ sizeof(CERT_CHAIN_PARA) };
-    PCCERT_CHAIN_CONTEXT chainContext;
-    auto const result = CertGetCertificateChain(nullptr, certContext.get(), nullptr, nullptr, &chainPara, CERT_CHAIN_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT, nullptr, &chainContext);
-    return std::unique_ptr<const CERT_CHAIN_CONTEXT>{ result ? chainContext : nullptr };
-  }();
-  if (!chainContext)
-    return CertResult::Failed;
-  SSL_EXTRA_CERT_CHAIN_POLICY_PARA sslPolicy{ sizeof(SSL_EXTRA_CERT_CHAIN_POLICY_PARA), AUTHTYPE_SERVER, 0, serverName };
-  CERT_CHAIN_POLICY_PARA policyPara{ sizeof(CERT_CHAIN_POLICY_PARA), 0, &sslPolicy };
-  CERT_CHAIN_POLICY_STATUS policyStatus{ sizeof(CERT_CHAIN_POLICY_STATUS) };
-  if (!CertVerifyCertificateChainPolicy(CERT_CHAIN_POLICY_SSL, chainContext.get(), &policyPara, &policyStatus))
-    return CertResult::Failed;
-  if (policyStatus.dwError == 0)
-    return CertResult::Secure;
-  Notice(IDS_CERTERROR, policyStatus.dwError, GetErrorMessage(policyStatus.dwError));
-
-  // thumbprint比較
-  static std::vector<std::array<unsigned char, 20>> acceptedThumbprints;
-  std::array<unsigned char, 20> thumbprint;
-  if (auto size = size_as<DWORD>(thumbprint); !CertGetCertificateContextProperty(certContext.get(), CERT_HASH_PROP_ID, data(thumbprint), &size))
-    return CertResult::Failed;
-  if (std::find(begin(acceptedThumbprints), end(acceptedThumbprints), thumbprint) != end(acceptedThumbprints))
-    return CertResult::NotSecureAccepted;
-
-  if (Dialog(GetFtpInst(), certerr_dlg, GetMainHwnd(), CertDialog{ certContext.get() }) == IDYES) {
-    acceptedThumbprints.push_back(thumbprint);
-    return CertResult::NotSecureAccepted;
-  }
-  *pbAborted = YES;
   return CertResult::Declined;
 }
 

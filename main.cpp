@@ -176,7 +176,6 @@ static auto version() {
 	auto const format = build != 0 ? L"{}.{}.{}.{}"sv : patch != 0 ? L"{}.{}.{}"sv : L"{}.{}"sv;
 	return std::vformat(format, std::make_wformat_args(major, minor, patch, build));
 }
-#endif
 
 
 static auto isPortable() {
@@ -189,10 +188,12 @@ static auto const& helpPath() {
 	static auto const path = fs::path{ moduleFileName() }.replace_extension(L".chm"sv);
 	return path;
 }
+#endif
 
 Sound Sound::Connected{ L"FFFTP_Connected", L"Connected", IDS_SOUNDCONNECTED };
 Sound Sound::Transferred{ L"FFFTP_Transferred", L"Transferred", IDS_SOUNDTRANSFERRED };
 Sound Sound::Error{ L"FFFTP_Error", L"Error", IDS_SOUNDERROR };
+#ifdef LIBFFFTP_USE_WIN32API
 void Sound::Register() {
 	if (HKEY eventlabels; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\EventLabels)", 0, nullptr, 0, KEY_WRITE, nullptr, &eventlabels, nullptr) == ERROR_SUCCESS) {
 		if (HKEY apps; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\Schemes\Apps\ffftp)", 0, nullptr, 0, KEY_WRITE, nullptr, &apps, nullptr) == ERROR_SUCCESS) {
@@ -214,8 +215,10 @@ void Sound::Register() {
 		RegCloseKey(eventlabels);
 	}
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
+#ifndef LIBFFFTP
 // メインルーチン
 int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, __in LPWSTR lpCmdLine, __in int nShowCmd) {
 	hInstFtp = hInstance;
@@ -269,8 +272,11 @@ int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 	OleUninitialize();
 	return exitCode;
 }
+#endif // LIBFFFTP
 
 
+
+#ifdef LIBFFFTP_USE_WIN32API
 // アプリケーションの初期設定
 static int InitApp(int cmdShow)
 {
@@ -468,6 +474,8 @@ static int InitApp(int cmdShow)
 
 	return(sts);
 }
+#endif // LIBFFFTP_USE_WIN32API
+
 
 
 // ウインドウを作成する
@@ -2062,7 +2070,7 @@ int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
 
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
 BOOL IsMainThread() noexcept {
-	if(GetCurrentThreadId() != MainThreadId)
+	if(LIBFFFTP_WINDOWS::GetCurrentThreadId() != MainThreadId)
 		return FALSE;
 	return TRUE;
 }
@@ -2078,6 +2086,7 @@ void Terminate() noexcept {
 	exit(1);
 }
 
+#ifdef _WINDOWS
 // タスクバー進捗表示
 static ComPtr<ITaskbarList3> taskbarList;
 
@@ -2102,6 +2111,7 @@ void UpdateTaskbarProgress() {
 	} else
 		taskbarList->SetProgressState(GetMainHwnd(), TBPF_NOPROGRESS);
 }
+#endif
 
 // 高DPI対応
 int AskToolWinHeight() noexcept {

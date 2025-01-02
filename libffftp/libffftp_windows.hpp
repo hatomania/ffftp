@@ -1,6 +1,9 @@
 ﻿#ifndef LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_
 #define LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_
 
+extern int messageBox(int textId, int captionId = 0);
+extern int dialogBox(int dialogid, void* param);
+
 #ifndef _WIN32
 #include <arpa/inet.h>
 #include <netdb.h>
@@ -139,8 +142,6 @@ struct PROPSHEETHEADERW {
 };
 using LPCPROPSHEETHEADERW = const PROPSHEETHEADERW*;
 
-extern int messageBox(int textId, int captionId);
-extern int dialogBox(int dialogid, void* param);
 extern BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString);
 extern void SetOption();
 extern INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROTOCOL_INFOW lpProtocolInfo, LPWSTR lpszAddressString, LPDWORD lpdwAddressStringLength);

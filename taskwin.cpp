@@ -29,12 +29,6 @@
 
 #include "common.h"
 
-#ifdef LIBFFFTP
-#define LIBFFFTP_OTHER
-#include "taskwin_libffftp.hpp"
-#undef LIBFFFTP_OTHER
-#endif
-
 #define TASK_BUFSIZE	(16*1024)
 static HWND hWndTask = NULL;
 static Concurrency::concurrent_queue<std::wstring> queue;
@@ -117,6 +111,10 @@ void detail::Debug(std::wstring_view format, std::wformat_args args) {
 	message.insert(0, L"## "sv);
 	queue.push(std::move(message));
 }
+#else
+#define LIBFFFTP_INCLUDE_TASKWIN_Notice_Debug
+#include "taskwin_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_TASKWIN_Notice_Debug
 #endif // LIBFFFTP
 
 void Error(std::wstring_view functionName, int lastError) {
@@ -125,5 +123,7 @@ void Error(std::wstring_view functionName, int lastError) {
 }
 
 #ifdef LIBFFFTP
+#define LIBFFFTP_IMPL
 #include "taskwin_libffftp.hpp"
+#undef LIBFFFTP_IMPL
 #endif

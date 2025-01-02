@@ -165,7 +165,7 @@ namespace detail {
 template<class Data>
 static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent, Data&& data) noexcept {
 	using T = std::remove_reference_t<Data>;
-	return (typename T::result_t)LIBFFFTP_WINDOWS::DialogBoxParamW(instance, MAKEINTRESOURCEW(resourceId), parent, detail::Dialog<T>::Proc, (LPARAM)&data);
+	return (typename T::result_t)DialogBoxParamW(instance, MAKEINTRESOURCEW(resourceId), parent, detail::Dialog<T>::Proc, (LPARAM)&data);
 }
 
 static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent) noexcept {
@@ -185,9 +185,9 @@ static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent) noexc
 	return Dialog(instance, resourceId, parent, Data{});
 }
 #else
-#define LIBFFFTP_INCLUDE_DIALOG_DeletedDialog
+#define LIBFFFTP_INCLUDE_DIALOG_Dialog
 #include "dialog_libffftp.hpp"
-#undef LIBFFFTP_INCLUDE_DIALOG_DeletedDialog
+#undef LIBFFFTP_INCLUDE_DIALOG_Dialog
 #endif
 
 template<int first, int... rest>

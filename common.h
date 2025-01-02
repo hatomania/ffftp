@@ -89,7 +89,7 @@
 #include <type_traits>
 #include <variant>
 #include <vector>
-#ifdef _WIN32
+#ifdef _MSC_VER
 #include <concurrent_queue.h>
 #else
 #include <tbb/concurrent_queue.h>
@@ -132,9 +132,7 @@
 #include <comdef.h>
 #endif // _WIN32
 #include "config.h"
-#ifndef LIBFFFTP
 #include "dialog.h"
-#endif
 #include "helpid.h"
 #include "Resource/resource.ja-JP.h"
 #ifdef _WIN32
@@ -1340,11 +1338,17 @@ static inline auto replace(std::basic_string_view<Char> input, boost::basic_rege
 	replaced.append(last, data(input) + size(input));
 	return replaced;
 }
+#ifndef LIBFFFTP
 template<int captionId = IDS_APP>
 static inline auto Message(HWND owner, int textId, DWORD style) noexcept {
 	MSGBOXPARAMSW msgBoxParams{ sizeof(MSGBOXPARAMSW), owner, GetFtpInst(), MAKEINTRESOURCEW(textId), MAKEINTRESOURCEW(captionId), style, nullptr, 0, nullptr, LANG_NEUTRAL };
 	return MessageBoxIndirectW(&msgBoxParams);
 }
+#else
+#define LIBFFFTP_INCLUDE_COMMON_Message
+#include "common_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_COMMON_Message
+#endif
 template<int captionId = IDS_APP>
 static inline auto Message(int textId, DWORD style) noexcept {
 	return Message<captionId>(GetMainHwnd(), textId, style);
@@ -1413,6 +1417,7 @@ static inline auto NormalizeString(NORM_FORM form, std::wstring_view src) {
 		return std::wstring{ src };
 	return convert<wchar_t>([form](auto src, auto srclen, auto dst, auto dstlen) noexcept { return NormalizeString(form, src, srclen, dst, dstlen); }, src);
 }
+#ifndef LIBFFFTP
 static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) noexcept {
 	struct Data {
 		using result_t = bool;
@@ -1454,6 +1459,11 @@ static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wst
 	};
 	return Dialog(GetFtpInst(), dialogId, parent, Data{ titleId, text, maxlength, flag, helpTopicId });
 }
+#else
+#define LIBFFFTP_INCLUDE_COMMON_InputDialog
+#include "common_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_COMMON_InputDialog
+#endif
 struct ProcessInformation : PROCESS_INFORMATION {
 	ProcessInformation() noexcept : PROCESS_INFORMATION{ INVALID_HANDLE_VALUE, INVALID_HANDLE_VALUE } {}
 	~ProcessInformation() {
@@ -1527,7 +1537,3 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
-
-#ifdef LIBFFFTP
-#include "dialog.h"
-#endif

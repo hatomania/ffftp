@@ -12,9 +12,9 @@
 #endif
 
 #ifdef _WIN32
-#define LIBFFFTP_CALLCONV __attribute((stdcall))
+#define LIBFFFTP_CALLCONV __stdcall
 #else
-#define LIBFFFTP_CALLCONV __attribute((cdecl))
+#define LIBFFFTP_CALLCONV __cdecl
 #endif
 
 #ifndef __cplusplus

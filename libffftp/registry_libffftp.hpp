@@ -211,7 +211,7 @@ int ReadSettingsVersion() {
 #include <QXmlStreamWriter>
 void SaveSettingsToFileZillaXml() {
   static boost::wregex unix{ LR"([^/]+)" }, dos{ LR"([^/\\]+)" };
-  if (auto const path = SelectFile(false, IDS_SAVE_SETTING, L"FileZilla.xml", { FileType::Xml,FileType::All }); !std::empty(path)) {
+  if (auto const path = SelectFile(false, nullptr, IDS_SAVE_SETTING, L"FileZilla.xml", nullptr, { FileType::Xml,FileType::All }); !std::empty(path)) {
     if (QFile file{path}; file.open(QFile::WriteOnly | QFile::Text)) {
       int tz_bias = -(QTimeZone::systemTimeZone().offsetFromUtc(QDateTime()) / 60);
       QXmlStreamWriter writer{&file};
@@ -287,7 +287,7 @@ void SaveSettingsToFileZillaXml() {
       writer.writeEndDocument(); // Closes any open elements or attributes, then closes the current document.
       return;
     } else {
-      Message(SID_FAIL_TO_EXPORT);
+      Message(SID_FAIL_TO_EXPORT, 0);
     }
   }
 }

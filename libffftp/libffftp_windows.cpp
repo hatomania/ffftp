@@ -15,15 +15,20 @@
 #include "ffftp_common.h"
 #include "libffftp_common.hpp"
 
-namespace LIBFFFTP_WINDOWS {
-
 #define MAKEPARAM(P1, P2, P3, P4) ffftp_procparam _param{ const_cast<void*>(reinterpret_cast<const void*>(P1)), const_cast<void*>(reinterpret_cast<const void*>(P2)), const_cast<void*>(reinterpret_cast<const void*>(P3)), const_cast<void*>(reinterpret_cast<const void*>(P4)) }
 #define SHOWMESSAGEBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_MESSAGEBOX, &_param));
 #define SHOWDIALOGBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_DIALOGBOX, &_param))
 
-int messageBox(int textId, int captionId) {
-  MAKEPARAM(textId, captionId, NULL, NULL);
-  return SHOWMESSAGEBOX_CALLPROC();
+namespace {
+
+int inputDialog(int dialogid, void* param) {
+  struct Data {
+    UINT _;
+    std::wstring& text;
+  };
+  Data* p = reinterpret_cast<Data*>(param);
+  MAKEPARAM(dialogid, &p->text, NULL, NULL);
+  return SHOWDIALOGBOX_CALLPROC();
 }
 
 template <int>
@@ -169,6 +174,13 @@ template <> int Dialog<updown_as_with_ext_dlg>(int dialogid, void* param) { retu
 template <> int Dialog<uperr_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<username_dlg>(int dialogid, void* param) { return -1; }
 
+}  // namespace
+
+int messageBox(int textId, int captionId) {
+  MAKEPARAM(textId, captionId, NULL, NULL);
+  return SHOWMESSAGEBOX_CALLPROC();
+}
+
 int dialogBox(int dialogid, void* param) {
   int ret{-1};
   switch (dialogid) {
@@ -217,7 +229,7 @@ int dialogBox(int dialogid, void* param) {
   case hset_main_dlg: break;
   case ini_from_reg_dlg: break;
   case masterpasswd_dlg:
-    ret = Dialog<masterpasswd_dlg>(dialogid, param);
+    ret = inputDialog(masterpasswd_dlg, param);
     break;
   case mirror_down_dlg: break;
   case mirror_notify_dlg: break;
@@ -225,7 +237,9 @@ int dialogBox(int dialogid, void* param) {
   case mirrordown_notify_dlg: break;
   case mkdir_dlg: break;
   case move_notify_dlg: break;
-  case newmasterpasswd_dlg: break;
+  case newmasterpasswd_dlg:
+    ret = inputDialog(newmasterpasswd_dlg, param);
+    break;
   case noresume_dlg: break;
   case opt_connect_dlg: break;
   case opt_disp1_dlg: break;
@@ -354,5 +368,3 @@ DWORD GetCurrentThreadId() {
 HRESULT OleInitialize(LPVOID pvReserved) {
   return S_OK;
 }
-
-}  // namespace LIBFFFTP_WINDOWS

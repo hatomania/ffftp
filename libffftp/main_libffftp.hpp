@@ -1,4 +1,5 @@
-﻿#if LIBFFFTP_INCLUDE_MAIN == 100
+﻿//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_MAIN_version
 // リソースIDである"notify"がQCoreApplicationのメソッド名とバッティングしている。悲しい
 #undef notify
 #include <QCoreApplication>
@@ -36,19 +37,22 @@ const std::wstring& GetWindowTitle() {
   ret = std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
   return ret;
 }
-#endif
+#endif  // LIBFFFTP_INCLUDE_MAIN_version
 
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_MAIN_Sound_Register
+void Sound::Register() {}
+#endif //LIBFFFTP_INCLUDE_MAIN_Sound_Register
 
 
  LRESULT CallFtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
    return FtpWndProc(hWnd, message, wParam, lParam);
  }
 
-#if LIBFFFTP_INCLUDE_MAIN == 200
-void Sound::Register() {}
-#endif
 
-#if LIBFFFTP_INCLUDE_MAIN == 300
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_MAIN_InitApp
 v// アプリケーションの初期設定
 //static int InitApp(int cmdShow)
 //{
@@ -288,7 +292,7 @@ static int InitApp(int cmdShow)
     RegType = REGTYPE_INI;
     IniPath = fs::path{moduleFileName()}.replace_extension(L".ini"sv);  // ポータブル版のINIファイルはEXEがあるフォルダにある
     if (IsRegAvailable() == YES && IsIniAvailable() == NO) {
-      if (Dialog(ffftp_dialogid::INI_FROM_REG_DLG) >= ffftp_procresponse::OK) {  // OK以上の意味は、OKでもYESでもどちらでも（肯定的な回答）
+      if (Dialog(nullptr, ffftp_dialogid::INI_FROM_REG_DLG, nullptr) >= ffftp_procresponse::OK) {  // OK以上の意味は、OKでもYESでもどちらでも（肯定的な回答）
         ImportPortable = YES;
       }
     }
@@ -296,7 +300,7 @@ static int InitApp(int cmdShow)
     // レジストリから新しいバージョンがないか確認する
     if (ReadSettingsVersion() > VER_NUM) {
       if (IsRegAvailable() == YES && IsIniAvailable() == NO) {
-        switch (Message(ffftp_messageid::SID_FOUND_NEW_VERSION_INI)) { // インポートするかどうか
+        switch (Message(ffftp_messageid::SID_FOUND_NEW_VERSION_INI, 0)) { // インポートするかどうか
           case ffftp_procresponse::CANCEL:
             ReadOnlySettings = YES;
             break;
@@ -316,9 +320,6 @@ static int InitApp(int cmdShow)
     RegType = REGTYPE_REG;
   }
 
-  // 設定管理オブジェクトの初期化
-  initSettings();
-
   /* 2010.02.01 genta マスターパスワードを入力させる
     -z オプションがあるときは最初だけスキップ
     -z オプションがないときは，デフォルトパスワードをまず試す
@@ -326,7 +327,8 @@ static int InitApp(int cmdShow)
     パスワードが不一致なら再入力するか尋ねる．
     (破損していた場合はさせない)
   */
-  if (auto it = std::find_if(begin(args), end(args), [](auto const& arg) { return ieq(arg, L"-z"sv) || ieq(arg, L"--mpasswd"sv); }); it != end(args) && ++it != end(args)) {
+  if (auto it = std::find_if(begin(args), end(args), [](const auto& arg) { return ieq(arg, L"-z"sv) || ieq(arg, L"--mpasswd"sv); });
+      it != end(args) && ++it != end(args)) {
     SetMasterPassword(*it);
     useDefautPassword = 0;
   } else {
@@ -339,114 +341,112 @@ static int InitApp(int cmdShow)
   /* パスワードチェックのみ実施 */
   masterpass = 1;
   while (ValidateMasterPassword() == YES && GetMasterPasswordStatus() == PASSWORD_UNMATCH) {
-      
-    if( useDefautPassword != 2 ){
+    if (useDefautPassword != 2) {
       /* 再トライするか確認 */
-      if( Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDNO ){
+      if (Message(ffftp_messageid::SID_MASTER_PASSWORD_INCORRECT, 0) <= ffftp_procresponse::NO) {
         useDefautPassword = 0; /* 不一致なので，もはやデフォルトかどうかは分からない */
         break;
       }
     }
-      
-      /* 再入力させる*/
-      masterpass = EnterMasterPasswordAndSet(false, NULL);
-      if( masterpass == 2 ){
-        useDefautPassword = 1;
-      }
-      else if( masterpass == 0 ){
-        SaveExit = NO;
-        break;
-      }
-      else {
-        useDefautPassword = 0;
-      }
+
+    /* 再入力させる*/
+    masterpass = EnterMasterPasswordAndSet(false, NULL);
+    if (masterpass == 2) {
+      useDefautPassword = 1;
+    } else if (masterpass == 0) {
+      SaveExit = NO;
+      break;
+    } else {
+      useDefautPassword = 0;
     }
-    
-    if(masterpass != 0)
+  }
+
+  if (masterpass != 0) {
+    // ホスト共通設定機能
+    ResetDefaultHost();
+
+    // 1/3 ↓続きここから
+    // TODO: 設定破損の通知
+    LoadRegistry();
+
+    // ポータブル版判定
+    if (ImportPortable == YES) {
+      ForceIni = YES;
+      RegType = REGTYPE_INI;
+    }
+
+    //タイマの精度を改善
+    timeBeginPeriod(1);
+
+    if(MakeAllWindows(cmdShow))
     {
-      // ホスト共通設定機能
-      ResetDefaultHost();
+      hWndCurFocus = GetLocalHwnd();
 
-      LoadRegistry();
+      if (std::error_code ec; !empty(DefaultLocalPath))
+        fs::current_path(DefaultLocalPath, ec);
 
-      // ポータブル版判定
-      if(ImportPortable == YES)
+      SetSortTypeImm(Sort);
+      SetTransferTypeImm(TransMode);
+      DispTransferType();
+      SetHostKanaCnvImm(YES);
+      SetHostKanjiCodeImm(KANJI_NOCNV);
+      // UTF-8対応
+      SetLocalKanjiCodeImm(LocalKanjiCode);
+      DispListType();
+      DispDotFileMode();
+      DispSyncMoveMode();
+
+      if(MakeTransferThread() == FFFTP_SUCCESS)
       {
-        ForceIni = YES;
-        RegType = REGTYPE_INI;
-      }
+        Debug(L"DEBUG MESSAGE ON ! ##"sv);
 
-      //タイマの精度を改善
-      timeBeginPeriod(1);
+        DispWindowTitle();
+        UpdateStatusBar();
+        Notice(IDS_COPYRIGHT, version(), sizeof(void*) == 4 ? L"32bit"sv : L"64bit"sv);
 
-      if(MakeAllWindows(cmdShow))
-      {
-        hWndCurFocus = GetLocalHwnd();
+        if(ForceIni)
+          Notice(IDS_MSGJPN283, IniPath.native());
 
-        if (std::error_code ec; !empty(DefaultLocalPath))
-          fs::current_path(DefaultLocalPath, ec);
+        Debug(L"Help={}", helpPath().native());
 
-        SetSortTypeImm(Sort);
-        SetTransferTypeImm(TransMode);
-        DispTransferType();
-        SetHostKanaCnvImm(YES);
-        SetHostKanjiCodeImm(KANJI_NOCNV);
-        // UTF-8対応
-        SetLocalKanjiCodeImm(LocalKanjiCode);
-        DispListType();
-        DispDotFileMode();
-        DispSyncMoveMode();
+        DragAcceptFiles(GetRemoteHwnd(), TRUE);
+        DragAcceptFiles(GetLocalHwnd(), TRUE);
 
-        if(MakeTransferThread() == FFFTP_SUCCESS)
-        {
-          Debug(L"DEBUG MESSAGE ON ! ##"sv);
+        SetAllHistoryToMenu();
+        GetLocalDirForWnd();
+        MakeButtonsFocus();
+        DispTransferFiles();
 
-          DispWindowTitle();
-          UpdateStatusBar();
-          Notice(IDS_COPYRIGHT, version(), sizeof(void*) == 4 ? L"32bit"sv : L"64bit"sv);
+        StartupProc(args);
+        sts = FFFTP_SUCCESS;
 
-          if(ForceIni)
-            Notice(IDS_MSGJPN283, IniPath.native());
-
-          Debug(L"Help={}", helpPath().native());
-
-          DragAcceptFiles(GetRemoteHwnd(), TRUE);
-          DragAcceptFiles(GetLocalHwnd(), TRUE);
-
-          SetAllHistoryToMenu();
-          GetLocalDirForWnd();
-          MakeButtonsFocus();
-          DispTransferFiles();
-
-          StartupProc(args);
-          sts = FFFTP_SUCCESS;
-
-          /* セキュリティ警告文の表示 */
-          if( useDefautPassword ){
-            Notice(IDS_MSGJPN300);
-          }
+        /* セキュリティ警告文の表示 */
+        if( useDefautPassword ){
+          Notice(IDS_MSGJPN300);
+        }
           
-          /* パスワード不一致警告文の表示 */
-          switch( GetMasterPasswordStatus() ){
-          case PASSWORD_UNMATCH:
-            Notice(IDS_MSGJPN301);
-            break;
-          case BAD_PASSWORD_HASH:
-            Notice(IDS_MSGJPN302);
-            break;
-          default:
-            break;
-          }
+        /* パスワード不一致警告文の表示 */
+        switch( GetMasterPasswordStatus() ){
+        case PASSWORD_UNMATCH:
+          Notice(IDS_MSGJPN301);
+          break;
+        case BAD_PASSWORD_HASH:
+          Notice(IDS_MSGJPN302);
+          break;
+        default:
+          break;
         }
       }
     }
+  }
 
   if(sts == FFFTP_FAIL)
     DeleteAllObject();
 
   return(sts);
 }
-#endif
+#endif  // LIBFFFTP_INCLUDE_MAIN_InitApp
+
 
 //--------------------------------------------------------------------------------------------------
 #ifdef LIBFFFTP_INCLUDE_MAIN_DeletedTaskbarProgress
@@ -458,6 +458,9 @@ int IsTaskbarList3Loaded() noexcept { return YES; }
 void UpdateTaskbarProgress() {}
 #endif  // LIBFFFTP_INCLUDE_MAIN_DeletedTaskbarProgress
 
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_IMPL
 
 #include "libffftp_common.hpp"
 
@@ -473,14 +476,14 @@ constexpr const wchar_t* const kAppName = L"FFFTP";
 LIBFFFTP_FUNCTION(bool initialize())
 #ifndef LIBFFFTP_DECL
 {
-  hInstFtp = LIBFFFTP_WINDOWS::GetModuleHandleW(kModuleName);
+  hInstFtp = GetModuleHandleW(kModuleName);
   Sound::Register();
-  MainThreadId = LIBFFFTP_WINDOWS::GetCurrentThreadId();
+  MainThreadId = GetCurrentThreadId();
 
   // 戻り値S_FALSEはすでにOleInitialize関数呼び出し済みの意味
   // 他のプラットフォームがすでに呼び出してるだけかもしれないのでS_FALSEは失敗扱いにしない
-  if (HRESULT hres = LIBFFFTP_WINDOWS::OleInitialize(nullptr); hres != S_OK && hres != S_FALSE) {
-    Message(IDS_FAIL_TO_INIT_OLE, MB_OK | MB_ICONERROR);
+  if (HRESULT hres = OleInitialize(nullptr); hres != S_OK && hres != S_FALSE) {
+    Message(SID_FAIL_TO_INIT_OLE, 0);
     return false;
   }
 
@@ -489,7 +492,7 @@ LIBFFFTP_FUNCTION(bool initialize())
   LoadZoneID();
 
   if (!LoadSSL()) {
-    Message(IDS_ERR_SSL, MB_OK | MB_ICONERROR);
+    Message(SID_ERR_SSL, 0);
     return false;
   }
 
@@ -699,3 +702,5 @@ LIBFFFTP_FUNCTION(long long notifyEvent(int eventid, long long param1, long long
 #endif
 
 }  // namespace libffftp
+
+#endif  // LIBFFFTP_IMPL

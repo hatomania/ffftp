@@ -1,11 +1,6 @@
-﻿#ifdef LIBFFFTP_OTHER
-
+﻿//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_TASKWIN_Notice_Debug
 static Concurrency::concurrent_queue<std::wstring> libffftp_queue{};
-
-
-#else
-
-#ifndef LIBFFFTP_DECL
 void detail::Notice(UINT id, std::wformat_args args) {
   const auto format = GetString(id);
   auto message = std::vformat(format, args);
@@ -22,7 +17,11 @@ void detail::Debug(std::wstring_view format, std::wformat_args args) {
   libffftp_queue.push(message);
   queue.push(std::move(message));
 }
-#endif  // LIBFFFTP_DECL
+#endif  // LIBFFFTP_INCLUDE_TASKWIN_Notice_Debug
+
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_IMPL
 
 #include "libffftp_common.hpp"
 
@@ -43,4 +42,4 @@ LIBFFFTP_FUNCTION(const wchar_t* taskMessage())
 
 }  // namespace libffftp
 
-#endif
+#endif  // LIBFFFTP_IMPL

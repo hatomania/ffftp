@@ -1,36 +1,42 @@
-﻿#ifdef LIBFFFTP_INCLUDE_COMMON
+﻿//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_COMMON
 #include <QString>
 #include <QTimeZone>
 #include "ffftp_common.h"
 
 extern void initSettings();
-#endif
+#endif  // LIBFFFTP_INCLUDE_COMMON
 
 
 //--------------------------------------------------------------------------------------------------
 #ifdef LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
     static inline int DefaultTimeZone{static_cast<int>(-(QTimeZone::systemTimeZone().offsetFromUtc(QDateTime()) / 60))};
-#endif
+#endif  // LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
 
 
 //--------------------------------------------------------------------------------------------------
 #ifdef LIBFFFTP_INCLUDE_COMMON_Message
-static inline auto Message(int textId, int captionId = IDS_APP) noexcept {
-  return LIBFFFTP_WINDOWS::messageBox(textId, captionId);
+template<int captionId = IDS_APP>
+static inline auto Message(HWND owner, int textId, DWORD style) noexcept {
+  return messageBox(textId, captionId);
 }
-#endif
+#endif  // LIBFFFTP_INCLUDE_COMMON_Message
 
 
 //--------------------------------------------------------------------------------------------------
-#ifdef LIBFFFTP_INCLUDE_COMMON_u8
-static inline std::wstring u8(std::string_view utf8) {
-  return QString(utf8).toStdWString();
+#ifdef LIBFFFTP_INCLUDE_COMMON_InputDialog
+static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wstring& text, size_t maxlength = 0, int* flag = nullptr, int helpTopicId = IDH_HELP_TOPIC_0000001) noexcept {
+  struct Data {
+    using result_t = int;
+    UINT titleId;
+    std::wstring& text;
+    size_t maxlength;
+    int* flag;
+    int helpTopicId;
+  };
+  return Dialog(nullptr, dialogId, nullptr, Data{ titleId, text, maxlength, flag, helpTopicId });
 }
-static inline std::string u8(std::wstring_view wide) {
-  return QString(wide).toStdString();
-  return convert<char>([](auto src, auto srclen, auto dst, auto dstlen) noexcept { return WideCharToMultiByte(CP_UTF8, 0, src, srclen, dst, dstlen, nullptr, nullptr); }, wide);
-}
-#endif
+#endif  // LIBFFFTP_INCLUDE_COMMON_InputDialog
 
 #ifdef LIBFFFTP_OTHER
 

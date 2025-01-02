@@ -69,39 +69,29 @@
 static int InitApp(int cmdShow);
 static bool MakeAllWindows(int cmdShow);
 static void DeleteAllObject() noexcept;
-#ifdef LIBFFFTP_USE_WIN32API
 static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-#endif
 static void StartupProc(std::vector<std::wstring_view> const& args);
 static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& args, std::wstring& hostname, std::wstring& unc);
-#ifdef LIBFFFTP_USE_WIN32API
 static void ExitProc(HWND hWnd);
-#endif
 static void ChangeDir(int Win, std::wstring dir);
 static void ResizeWindowProc(void);
 static void CalcWinSize(void);
-#ifdef LIBFFFTP_USE_WIN32API
 static void CheckResizeFrame(WPARAM Keys, int x, int y);
-#endif
 static void DispDirInfo(void);
 static void DeleteAlltempFile();
-#ifdef LIBFFFTP_USE_WIN32API
 static void AboutDialog(HWND hWnd) noexcept;
 static int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd);
-#endif
 
 /*===== ローカルなワーク =====*/
 
 static const wchar_t FtpClass[] = L"FFFTPWin";
 static const wchar_t WebURL[] = L"https://github.com/ffftp/ffftp";
 
-#ifdef LIBFFFTP_USE_WIN32API
 static HINSTANCE hInstFtp;
 static HWND hWndFtp;
 static HWND hWndCurFocus = NULL;
 
 static HACCEL Accel;
-#endif
 
 static int Resizing = RESIZE_OFF;
 static int ResizePos;
@@ -118,25 +108,17 @@ TRANSPACKET MainTransPkt;		/* ファイル転送用パケット */
 								/* 中止ボタンで中止できる */
 std::wstring TitleHostName;
 std::wstring FilterStr = L"*"s;
-#ifdef LIBFFFTP_USE_WIN32API
 HANDLE initialized = CreateEventW(nullptr, true, false, nullptr);
-#endif
 
 int SuppressRefresh = 0;
 
-#ifdef LIBFFFTP_USE_WIN32API
 static DWORD dwCookie;
-#endif
 
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
-#ifdef LIBFFFTP_USE_WIN32API
 static DWORD MainThreadId;
 HANDLE ChangeNotification = INVALID_HANDLE_VALUE;
-#endif
 static int ToolWinHeight = 28;
-#ifdef LIBFFFTP_USE_WIN32API
 static HWND hHelpWin = NULL;
-#endif
 static int NoopEnable = NO;
 
 
@@ -191,9 +173,9 @@ static auto version() {
 	return std::vformat(format, std::make_wformat_args(major, minor, patch, build));
 }
 #else
-#define LIBFFFTP_INCLUDE_MAIN 100
+#define LIBFFFTP_INCLUDE_MAIN_version
 #include "libffftp/main_libffftp.hpp"
-#undef LIBFFFTP_INCLUDE_MAIN
+#undef LIBFFFTP_INCLUDE_MAIN_version
 #endif
 
 
@@ -211,7 +193,7 @@ static auto const& helpPath() {
 Sound Sound::Connected{ L"FFFTP_Connected", L"Connected", IDS_SOUNDCONNECTED };
 Sound Sound::Transferred{ L"FFFTP_Transferred", L"Transferred", IDS_SOUNDTRANSFERRED };
 Sound Sound::Error{ L"FFFTP_Error", L"Error", IDS_SOUNDERROR };
-#if defined(LIBFFFTP_USE_WIN32API) || defined(LIBFFFTP_USE_WINDOWS_SPECIFIC_FEATURE)
+#ifdef _WIN32
 void Sound::Register() {
 	if (HKEY eventlabels; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\EventLabels)", 0, nullptr, 0, KEY_WRITE, nullptr, &eventlabels, nullptr) == ERROR_SUCCESS) {
 		if (HKEY apps; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\Schemes\Apps\ffftp)", 0, nullptr, 0, KEY_WRITE, nullptr, &apps, nullptr) == ERROR_SUCCESS) {
@@ -234,9 +216,9 @@ void Sound::Register() {
 	}
 }
 #else
-#define LIBFFFTP_INCLUDE_MAIN 200
+#define LIBFFFTP_INCLUDE_MAIN_Sound_Register
 #include "libffftp/main_libffftp.hpp"
-#undef LIBFFFTP_INCLUDE_MAIN
+#undef LIBFFFTP_INCLUDE_MAIN_Sound_Register
 #endif
 
 
@@ -497,9 +479,9 @@ static int InitApp(int cmdShow)
 	return(sts);
 }
 #else
-#define LIBFFFTP_INCLUDE_MAIN 300
+#define LIBFFFTP_INCLUDE_MAIN_InitApp
 #include "libffftp/main_libffftp.hpp"
-#undef LIBFFFTP_INCLUDE_MAIN
+#undef LIBFFFTP_INCLUDE_MAIN_InitApp
 #endif // LIBFFFTP_USE_WIN32API
 
 
@@ -2081,7 +2063,6 @@ int AskAutoExit() noexcept {
 	return AutoExit;
 }
 
-#ifdef LIBFFFTP_USE_WIN32API
 // ユーザにパスワードを入力させ，それを設定する
 //   0/ユーザキャンセル, 1/設定した, 2/デフォルト設定
 int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
@@ -2127,7 +2108,6 @@ void Restart() noexcept {
 	ProcessInformation pi;
 	__pragma(warning(suppress:6335)) CreateProcessW(nullptr, GetCommandLineW(), nullptr, nullptr, false, 0, nullptr, nullptr, &si, &pi);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 void Terminate() noexcept {
 	exit(1);
@@ -2176,5 +2156,7 @@ int MainThreadRunner::Run() {
 #endif // LIBFFFTP_USE_WIN32API
 
 #ifdef LIBFFFTP
+#define LIBFFFTP_IMPL
 #include "main_libffftp.hpp"
+#undef LIBFFFTP_IMPL
 #endif

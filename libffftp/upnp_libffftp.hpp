@@ -38,12 +38,12 @@ const char* convchar(const wchar_t* wstr) {
 
 int LoadUPnP() {
   int ret{FFFTP_FAIL};
-#ifdef _WINDOWS
+#ifdef _WIN32
   WSAData wsadata{};
   if (WSAStartup(MAKEWORD(2, 2), &wsadata) != 0) {
     return FFFTP_FAIL;
   }
-#endif // _WINDOWS
+#endif // _WIN32
   if (IsMainThread()) {
     if (int err; upnp_devlist = upnpDiscover(2000, NULL, NULL, UPNP_LOCAL_PORT_ANY, 0, 2, &err)) {
       // デバイスが複数見つかった場合でも一番最初に見つかったデバイスを使用する（走査を行わない）

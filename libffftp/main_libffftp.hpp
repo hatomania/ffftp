@@ -1,7 +1,4 @@
-﻿#ifdef LIBFFFTP_OTHER
-
-#ifndef LIBFFFTP_USE_WIN32API
-
+﻿#if LIBFFFTP_INCLUDE_MAIN == 100
 // リソースIDである"notify"がQCoreApplicationのメソッド名とバッティングしている。悲しい
 #undef notify
 #include <QCoreApplication>
@@ -34,29 +31,25 @@ static const auto& version() {
   return ret;
 }
 
-static auto isPortable() {
-  static auto const isPortable = fs::is_regular_file(fs::path{ moduleFileName() }.replace_filename(L"portable"sv));
-  return isPortable;
-}
-
-static auto const& helpPath() {
-  static auto const path = fs::path{ moduleFileName() }.replace_extension(L".chm"sv);
-  return path;
-}
-
 const std::wstring& GetWindowTitle() {
   static std::wstring ret{};
   ret = std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
   return ret;
 }
+#endif
+
+
 
  LRESULT CallFtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
    return FtpWndProc(hWnd, message, wParam, lParam);
  }
 
+#if LIBFFFTP_INCLUDE_MAIN == 200
 void Sound::Register() {}
+#endif
 
-// アプリケーションの初期設定
+#if LIBFFFTP_INCLUDE_MAIN == 300
+v// アプリケーションの初期設定
 //static int InitApp(int cmdShow)
 //{
 //	int sts;
@@ -257,7 +250,9 @@ static int InitApp(int cmdShow)
 {
   int sts;
   int Err;
+#ifdef LIBFFFTP_USE_WIN32API
   WSADATA WSAData;
+#endif
   int useDefautPassword = 0; /* 警告文表示用 */
   int masterpass;
   // ポータブル版判定
@@ -265,45 +260,49 @@ static int InitApp(int cmdShow)
 
   sts = FFFTP_FAIL;
 
-#ifdef _WINDOWS
+#ifdef LIBFFFTP_USE_WIN32API
   if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0) { return FFFTP_FAIL; }
 #endif
 
-  std::copy(std::begin(LocalTabWidthDefault), std::end(LocalTabWidthDefault), std::begin(LocalTabWidth));
-  std::copy(std::begin(RemoteTabWidthDefault), std::end(RemoteTabWidthDefault), std::begin(RemoteTabWidth));
-
   // INIファイルモードかどうか
+  // オプション＋引数省略: INIファイルの入出力先は個人フォルダ（ファイル名は"モジュール名(=ffftp)"+".ini"）
+  // オプション＋引数指定: INIファイルの入出力先は指定したファイルパス
+  // ポータブル版であっても、ユーザによって指定されたこの値は優先される
   std::vector<std::wstring_view> args{ __wargv + 1, __wargv + __argc };
   if (auto it = std::find_if(begin(args), end(args), [](auto const& arg) { return ieq(arg, L"-n"sv) || ieq(arg, L"--ini"sv); }); it != end(args) && ++it != end(args)) {
     ForceIni = YES;
-    RegType = REGTYPE_INI;
-    IniPath = *it;
+    RegType  = REGTYPE_INI;
+    IniPath  = *it;
   } else {
-    IniPath = fs::path{ moduleFileName() }.replace_extension(L".ini"sv);
+    IniPath  = "////"; // これはINIファイルの入出力先は個人フォルダであることを意味するものとする
   }
+  // IniPath == ""     : 設定の入出力先はレジストリ
+  // IniPath == "////" : 設定の入出力先は個人フォルダ（AppData\Roaming）
+  // IniPath それ以外  : 設定の入出力先はIniPath
 
-  // ポータブル版かどうか
+  // ポータブル版かつレジストリに設定が存在した場合、設定をレジストリからインポートするかどうか
+  // ここで言うインポートとは、読み込みはレジストリから、書き込みはINIファイルに、ということ
   ImportPortable = NO;
   if (isPortable()) {
     ForceIni = YES;
     RegType = REGTYPE_INI;
-    if(IsRegAvailable() == YES && IsIniAvailable() == NO) {
-      if (Dialog(GetFtpInst(), ini_from_reg_dlg, GetMainHwnd()))
+    IniPath = fs::path{moduleFileName()}.replace_extension(L".ini"sv);  // ポータブル版のINIファイルはEXEがあるフォルダにある
+    if (IsRegAvailable() == YES && IsIniAvailable() == NO) {
+      if (Dialog(ffftp_dialogid::INI_FROM_REG_DLG) >= ffftp_procresponse::OK) {  // OK以上の意味は、OKでもYESでもどちらでも（肯定的な回答）
         ImportPortable = YES;
+      }
     }
   } else {
-    if(ReadSettingsVersion() > VER_NUM)
-    {
-      if(IsRegAvailable() == YES && IsIniAvailable() == NO)
-      {
-        switch(Message(IDS_FOUND_NEW_VERSION_INI, MB_YESNOCANCEL | MB_DEFBUTTON2))
-        {
-          case IDCANCEL:
+    // レジストリから新しいバージョンがないか確認する
+    if (ReadSettingsVersion() > VER_NUM) {
+      if (IsRegAvailable() == YES && IsIniAvailable() == NO) {
+        switch (Message(ffftp_messageid::SID_FOUND_NEW_VERSION_INI)) { // インポートするかどうか
+          case ffftp_procresponse::CANCEL:
             ReadOnlySettings = YES;
             break;
-          case IDYES:
+          case ffftp_procresponse::YES:
             break;
-          case IDNO:
+          case ffftp_procresponse::NO:
             ImportPortable = YES;
             break;
         }
@@ -312,43 +311,42 @@ static int InitApp(int cmdShow)
   }
 
   // ポータブル版判定
-    if(ImportPortable == YES)
-    {
-      ForceIni = NO;
-      RegType = REGTYPE_REG;
-    }
+  if (ImportPortable == YES) {
+    ForceIni = NO;
+    RegType = REGTYPE_REG;
+  }
 
-    /* 2010.02.01 genta マスターパスワードを入力させる
-      -z オプションがあるときは最初だけスキップ
-      -z オプションがないときは，デフォルトパスワードをまず試す
-      LoadRegistry()する
-      パスワードが不一致なら再入力するか尋ねる．
-      (破損していた場合はさせない)
-    */
-    if(auto it = std::find_if(begin(args), end(args), [](auto const& arg) { return ieq(arg, L"-z"sv) || ieq(arg, L"--mpasswd"sv); }); it != end(args) && ++it != end(args))
-    {
-      SetMasterPassword(*it);
-      useDefautPassword = 0;
-    }
-    else {
-      /* パスワード指定無し */
-      SetMasterPassword();
-      /* この場では表示できないのでフラグだけ立てておく*/
-      useDefautPassword = 2;
-    }
+  // 設定管理オブジェクトの初期化
+  initSettings();
 
-    /* パスワードチェックのみ実施 */
-    masterpass = 1;
-    while( ValidateMasterPassword() == YES &&
-        GetMasterPasswordStatus() == PASSWORD_UNMATCH ){
+  /* 2010.02.01 genta マスターパスワードを入力させる
+    -z オプションがあるときは最初だけスキップ
+    -z オプションがないときは，デフォルトパスワードをまず試す
+    LoadRegistry()する
+    パスワードが不一致なら再入力するか尋ねる．
+    (破損していた場合はさせない)
+  */
+  if (auto it = std::find_if(begin(args), end(args), [](auto const& arg) { return ieq(arg, L"-z"sv) || ieq(arg, L"--mpasswd"sv); }); it != end(args) && ++it != end(args)) {
+    SetMasterPassword(*it);
+    useDefautPassword = 0;
+  } else {
+    /* パスワード指定無し */
+    SetMasterPassword();
+    /* この場では表示できないのでフラグだけ立てておく*/
+    useDefautPassword = 2;
+  }
+
+  /* パスワードチェックのみ実施 */
+  masterpass = 1;
+  while (ValidateMasterPassword() == YES && GetMasterPasswordStatus() == PASSWORD_UNMATCH) {
       
-      if( useDefautPassword != 2 ){
-        /* 再トライするか確認 */
-        if( Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDNO ){
-          useDefautPassword = 0; /* 不一致なので，もはやデフォルトかどうかは分からない */
-          break;
-        }
+    if( useDefautPassword != 2 ){
+      /* 再トライするか確認 */
+      if( Message(IDS_MASTER_PASSWORD_INCORRECT, MB_YESNO | MB_ICONEXCLAMATION) == IDNO ){
+        useDefautPassword = 0; /* 不一致なので，もはやデフォルトかどうかは分からない */
+        break;
       }
+    }
       
       /* 再入力させる*/
       masterpass = EnterMasterPasswordAndSet(false, NULL);
@@ -442,38 +440,23 @@ static int InitApp(int cmdShow)
         }
       }
     }
-  }
 
   if(sts == FFFTP_FAIL)
     DeleteAllObject();
 
   return(sts);
 }
-
-#endif  // LIBFFFTP_USE_WIN32API
-
-
-#else  // LIBFFFTP_OTHER
-
-#ifndef _WINDOWS
-// タスクバー進捗表示
-// Windows版ではWindows固有の機能を利用する
-// 他のプラットフォームではQtを利用する
-// TODO: タスクバー進捗表示の実装
-int LoadTaskbarList3() noexcept {
-    return FFFTP_SUCCESS;
-}
-
-void FreeTaskbarList3() {
-}
-
-int IsTaskbarList3Loaded() noexcept {
-  return YES;
-}
-
-void UpdateTaskbarProgress() {
-}
 #endif
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_MAIN_DeletedTaskbarProgress
+// タスクバー進捗表示
+// UI関連の機能はlibffftp使用者側に委ねるため、本機能は削除される
+int LoadTaskbarList3() noexcept { return FFFTP_SUCCESS; }
+void FreeTaskbarList3() {}
+int IsTaskbarList3Loaded() noexcept { return YES; }
+void UpdateTaskbarProgress() {}
+#endif  // LIBFFFTP_INCLUDE_MAIN_DeletedTaskbarProgress
 
 
 #include "libffftp_common.hpp"
@@ -716,5 +699,3 @@ LIBFFFTP_FUNCTION(long long notifyEvent(int eventid, long long param1, long long
 #endif
 
 }  // namespace libffftp
-
-#endif  // LIBFFFTP_OTHER

@@ -69,29 +69,39 @@
 static int InitApp(int cmdShow);
 static bool MakeAllWindows(int cmdShow);
 static void DeleteAllObject() noexcept;
+#ifdef LIBFFFTP_USE_WIN32API
 static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+#endif
 static void StartupProc(std::vector<std::wstring_view> const& args);
 static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& args, std::wstring& hostname, std::wstring& unc);
+#ifdef LIBFFFTP_USE_WIN32API
 static void ExitProc(HWND hWnd);
+#endif
 static void ChangeDir(int Win, std::wstring dir);
 static void ResizeWindowProc(void);
 static void CalcWinSize(void);
+#ifdef LIBFFFTP_USE_WIN32API
 static void CheckResizeFrame(WPARAM Keys, int x, int y);
+#endif
 static void DispDirInfo(void);
 static void DeleteAlltempFile();
+#ifdef LIBFFFTP_USE_WIN32API
 static void AboutDialog(HWND hWnd) noexcept;
 static int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd);
+#endif
 
 /*===== ローカルなワーク =====*/
 
 static const wchar_t FtpClass[] = L"FFFTPWin";
 static const wchar_t WebURL[] = L"https://github.com/ffftp/ffftp";
 
+#ifdef LIBFFFTP_USE_WIN32API
 static HINSTANCE hInstFtp;
 static HWND hWndFtp;
 static HWND hWndCurFocus = NULL;
 
 static HACCEL Accel;
+#endif
 
 static int Resizing = RESIZE_OFF;
 static int ResizePos;
@@ -108,22 +118,26 @@ TRANSPACKET MainTransPkt;		/* ファイル転送用パケット */
 								/* 中止ボタンで中止できる */
 std::wstring TitleHostName;
 std::wstring FilterStr = L"*"s;
+#ifdef LIBFFFTP_USE_WIN32API
 HANDLE initialized = CreateEventW(nullptr, true, false, nullptr);
+#endif
 
 int SuppressRefresh = 0;
 
+#ifdef LIBFFFTP_USE_WIN32API
 static DWORD dwCookie;
+#endif
 
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
+#ifdef LIBFFFTP_USE_WIN32API
 static DWORD MainThreadId;
 HANDLE ChangeNotification = INVALID_HANDLE_VALUE;
+#endif
 static int ToolWinHeight = 28;
+#ifdef LIBFFFTP_USE_WIN32API
 static HWND hHelpWin = NULL;
+#endif
 static int NoopEnable = NO;
-
-#define LIBFFFTP_OTHER
-#include "libffftp/main_libffftp.hpp"
-#undef LIBFFFTP_OTHER
 
 
 #ifdef LIBFFFTP_USE_WIN32API
@@ -176,6 +190,11 @@ static auto version() {
 	auto const format = build != 0 ? L"{}.{}.{}.{}"sv : patch != 0 ? L"{}.{}.{}"sv : L"{}.{}"sv;
 	return std::vformat(format, std::make_wformat_args(major, minor, patch, build));
 }
+#else
+#define LIBFFFTP_INCLUDE_MAIN 100
+#include "libffftp/main_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_MAIN
+#endif
 
 
 static auto isPortable() {
@@ -188,12 +207,11 @@ static auto const& helpPath() {
 	static auto const path = fs::path{ moduleFileName() }.replace_extension(L".chm"sv);
 	return path;
 }
-#endif
 
 Sound Sound::Connected{ L"FFFTP_Connected", L"Connected", IDS_SOUNDCONNECTED };
 Sound Sound::Transferred{ L"FFFTP_Transferred", L"Transferred", IDS_SOUNDTRANSFERRED };
 Sound Sound::Error{ L"FFFTP_Error", L"Error", IDS_SOUNDERROR };
-#ifdef LIBFFFTP_USE_WIN32API
+#if defined(LIBFFFTP_USE_WIN32API) || defined(LIBFFFTP_USE_WINDOWS_SPECIFIC_FEATURE)
 void Sound::Register() {
 	if (HKEY eventlabels; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\EventLabels)", 0, nullptr, 0, KEY_WRITE, nullptr, &eventlabels, nullptr) == ERROR_SUCCESS) {
 		if (HKEY apps; RegCreateKeyExW(HKEY_CURRENT_USER, LR"(AppEvents\Schemes\Apps\ffftp)", 0, nullptr, 0, KEY_WRITE, nullptr, &apps, nullptr) == ERROR_SUCCESS) {
@@ -215,7 +233,11 @@ void Sound::Register() {
 		RegCloseKey(eventlabels);
 	}
 }
-#endif // LIBFFFTP_USE_WIN32API
+#else
+#define LIBFFFTP_INCLUDE_MAIN 200
+#include "libffftp/main_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_MAIN
+#endif
 
 
 #ifndef LIBFFFTP
@@ -474,10 +496,15 @@ static int InitApp(int cmdShow)
 
 	return(sts);
 }
+#else
+#define LIBFFFTP_INCLUDE_MAIN 300
+#include "libffftp/main_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_MAIN
 #endif // LIBFFFTP_USE_WIN32API
 
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // ウインドウを作成する
 static bool MakeAllWindows(int cmdShow) {
 	WNDCLASSEXW classEx{ sizeof(WNDCLASSEXW), 0, FtpWndProc, 0, 0, GetFtpInst(), LoadIconW(GetFtpInst(), MAKEINTRESOURCEW(ffftp)), 0, GetSysColorBrush(COLOR_3DFACE), MAKEINTRESOURCEW(main_menu), FtpClass };
@@ -523,7 +550,7 @@ static bool MakeAllWindows(int cmdShow) {
 // ウインドウのタイトルを表示する
 void DispWindowTitle() {
 	auto const text = std::vformat(AskConnecting() == YES ? L"{0} ({1}) - FFFTP"sv : L"FFFTP ({1})"sv, std::make_wformat_args(TitleHostName, FilterStr));
-	LIBFFFTP_WINDOWS::SetWindowTextW(GetMainHwnd(), text.c_str());
+	SetWindowTextW(GetMainHwnd(), text.c_str());
 }
 
 
@@ -599,8 +626,11 @@ static void TurnStatefulFTPFilter() {
 		if (PtrToInt(ShellExecuteW(NULL, L"runas", L"netsh", ID == IDYES ? L"advfirewall set global statefulftp enable" : L"advfirewall set global statefulftp disable", systemDirectory().c_str(), SW_SHOW)) <= 32)
 			Message(IDS_FAIL_TO_MANAGE_STATEFUL_FTP, MB_OK | MB_ICONERROR);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
+
+#ifdef LIBFFFTP_USE_WIN32API
 /*----- メインウインドウのメッセージ処理 --------------------------------------
 *
 *	Parameter
@@ -939,7 +969,7 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 					break;
 
 				case MENU_OPTION :
-					LIBFFFTP_WINDOWS::SetOption();
+					SetOption();
 					if(ListFont != NULL)
 					{
 						SendMessageW(GetLocalHwnd(), WM_SETFONT, (WPARAM)ListFont, MAKELPARAM(TRUE, 0));
@@ -1485,8 +1515,10 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 	}
 	return(0L);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // プログラム開始時の処理
 static void StartupProc(std::vector<std::wstring_view> const& args) {
 	std::wstring hostname;
@@ -1523,6 +1555,7 @@ static void StartupProc(std::vector<std::wstring_view> const& args) {
 	if (!initializeDeferred)
 		SetEvent(initialized);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // コマンドラインを解析
@@ -1583,6 +1616,7 @@ static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& a
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 /*----- プログラム終了時の処理 ------------------------------------------------
 *
 *	Parameter
@@ -1630,8 +1664,10 @@ static void ExitProc(HWND hWnd)
 	__pragma(warning(suppress:6387)) HtmlHelpW(NULL, NULL, HH_UNINITIALIZE, dwCookie);
 	return;
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // ファイル名をダブルクリックしたときの処理
 //   Win : ウインドウ番号 (WIN_xxx)
 //   Mode : 常に「開く」動作をするかどうか (YES/NO)
@@ -1703,6 +1739,7 @@ void DoubleClickProc(int Win, int Mode, int App) {
 		MakeButtonsFocus();
 	}
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // フォルダの移動
@@ -1731,6 +1768,7 @@ static void ChangeDir(int Win, std::wstring dir) {
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 /*----- ウインドウのサイズ変更の処理 ------------------------------------------
 *
 *	Parameter
@@ -1888,6 +1926,7 @@ static void CheckResizeFrame(WPARAM Keys, int x, int y)
 	}
 	return;
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // ファイル一覧情報をビューワで表示
@@ -1896,6 +1935,7 @@ static void DispDirInfo() {
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // ビューワを起動
 void ExecViewer(fs::path const& path, int App) {
 	/* FindExecutable()は関連付けられたプログラムのパス名にスペースが	*/
@@ -1937,6 +1977,7 @@ void ExecViewer2(fs::path const& path1, fs::path const& path2, int App) {
 		Notice(IDS_LOCALCMD, commandLine);
 	}
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // テンポラリファイル名をテンポラリファイルリストに追加
@@ -1953,6 +1994,7 @@ static void DeleteAlltempFile() {
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // Ａｂｏｕｔダイアログボックス
 static void AboutDialog(HWND hWnd) noexcept {
 	struct About {
@@ -1978,6 +2020,7 @@ static void AboutDialog(HWND hWnd) noexcept {
 void ShowHelp(DWORD_PTR helpTopicId) {
 	hHelpWin = HtmlHelpW(NULL, helpPath().c_str(), HH_HELP_CONTEXT, helpTopicId);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // INIファイルのパス名を返す
@@ -1992,6 +2035,7 @@ int AskForceIni() noexcept {
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // メッセージ処理
 int BackgrndMessageProc() noexcept {
 	MSG Msg;
@@ -2023,6 +2067,7 @@ int BackgrndMessageProc() noexcept {
 	}
 	return(Ret);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // 自動終了フラグをクリアする
@@ -2036,6 +2081,7 @@ int AskAutoExit() noexcept {
 	return AutoExit;
 }
 
+#ifdef LIBFFFTP_USE_WIN32API
 // ユーザにパスワードを入力させ，それを設定する
 //   0/ユーザキャンセル, 1/設定した, 2/デフォルト設定
 int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
@@ -2070,7 +2116,7 @@ int EnterMasterPasswordAndSet(bool newpassword, HWND hWnd) {
 
 // マルチコアCPUの特定環境下でファイル通信中にクラッシュするバグ対策
 BOOL IsMainThread() noexcept {
-	if(LIBFFFTP_WINDOWS::GetCurrentThreadId() != MainThreadId)
+	if(GetCurrentThreadId() != MainThreadId)
 		return FALSE;
 	return TRUE;
 }
@@ -2081,12 +2127,13 @@ void Restart() noexcept {
 	ProcessInformation pi;
 	__pragma(warning(suppress:6335)) CreateProcessW(nullptr, GetCommandLineW(), nullptr, nullptr, false, 0, nullptr, nullptr, &si, &pi);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 void Terminate() noexcept {
 	exit(1);
 }
 
-#ifdef _WINDOWS
+#ifndef LIBFFFTP
 // タスクバー進捗表示
 static ComPtr<ITaskbarList3> taskbarList;
 
@@ -2111,6 +2158,10 @@ void UpdateTaskbarProgress() {
 	} else
 		taskbarList->SetProgressState(GetMainHwnd(), TBPF_NOPROGRESS);
 }
+#else
+#define LIBFFFTP_INCLUDE_MAIN_DeletedTaskbarProgress
+#include "main_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_MAIN_DeletedTaskbarProgress
 #endif
 
 // 高DPI対応
@@ -2118,9 +2169,11 @@ int AskToolWinHeight() noexcept {
 	return(ToolWinHeight);
 }
 
+#ifdef LIBFFFTP_USE_WIN32API
 int MainThreadRunner::Run() {
 	return IsMainThread() ? DoWork() : (int)SendMessageW(GetMainHwnd(), WM_MAINTHREADRUNNER, 0, (LPARAM)this);
 }
+#endif // LIBFFFTP_USE_WIN32API
 
 #ifdef LIBFFFTP
 #include "main_libffftp.hpp"

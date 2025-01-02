@@ -32,12 +32,12 @@ void CloseTransferThread() noexcept {
 
 #else  // LIBFFFTP_OTHER
 
-#ifndef _WINDOWS
+#ifndef _WIN32
 // Windows以外のプラットフォームでは、ゾーン関連の関数は何もしない
 int LoadZoneID() { return FFFTP_SUCCESS; }
 void FreeZoneID() {}
 int IsZoneIDLoaded() noexcept { return YES; }
 bool MarkFileAsDownloadedFromInternet([[maybe_unused]] const fs::path &path) { return true; }
-#endif  //_WINDOWS
+#endif  //_WIN32
 
 #endif  // LIBFFFTP_OTHER

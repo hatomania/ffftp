@@ -33,11 +33,14 @@
 #define UMDF_USING_NTSTATUS
 
 #ifdef LIBFFFTP
+#ifdef _WIN32
+#define LIBFFFTP_USE_WINDOWS_SPECIFIC_FEATURE
+#endif
 #include "libffftp_windows.hpp"
 #else
 #define LIBFFFTP_USE_WIN32API
 #define LIBFFFTP_WINDOWS
-#endif
+#endif // LIBFFFTP
 
 #pragma warning(disable: 26426)		// error C26426: Global initializer calls a non-constexpr function 'XXX' (i.22).
 #pragma warning(disable: 26429)		// error C26429: Symbol 'XXX' is never tested for nullness, it can be marked as not_null (f.23).
@@ -96,6 +99,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#ifdef _WIN32
 #include <Windows.h>
 #include <ObjBase.h>			// for COM interface, define `interface` macro.
 #include <bcrypt.h>
@@ -119,16 +123,24 @@
 #include <wrl/client.h>
 #include <wrl/implements.h>
 #include <comdef.h>
+#endif // _WIN32
 #include "config.h"
 #include "dialog.h"
 #include "helpid.h"
 #include "Resource/resource.ja-JP.h"
+#ifdef _WIN32
 #pragma comment(lib, "bcrypt.lib")
 #pragma comment(lib, "Comctl32.lib")
 #pragma comment(lib, "normaliz.lib")
 #pragma comment(lib, "Shlwapi.lib")
 #pragma comment(lib, "Winmm.lib")
 #pragma comment(lib, "Ws2_32.lib")
+#endif // _WIN32
+#ifndef LIBFFFTP_USE_WIN32API
+#define LIBFFFTP_INCLUDE_COMMON
+#include "common_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_COMMON
+#endif // LIBFFFTP_USE_WIN32API
 namespace fs = std::filesystem;
 using namespace std::literals;
 template<class T>
@@ -617,11 +629,17 @@ struct SocketContext : public WSAOVERLAPPED {
 struct HostExeptPassword {
 	static inline auto DefaultChmod = L"SITE CHMOD"s;	/* 属性変更コマンド */
 	static inline auto DefaultLsOption = L"-alL"s;		/* NLSTに付けるもの */
+#ifdef LIBFFFTP_USE_WIN32API
 	static inline int DefaultTimeZone = []() noexcept {
 		TIME_ZONE_INFORMATION tzi;
 		GetTimeZoneInformation(&tzi);
 		return tzi.Bias / -60;
 	}();
+#else
+#define LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
+#include "common_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
+#endif
 	std::wstring HostAdrs;								/* ホスト名 */
 	std::wstring UserName;								/* ユーザ名 */
 	std::wstring Account;								/* アカウント */
@@ -763,7 +781,9 @@ public:
 	static Sound Connected;
 	static Sound Transferred;
 	static Sound Error;
-	void Play() noexcept { LIBFFFTP_WINDOWS::PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
+#ifdef LIBFFFTP_USE_WIN32API
+	void Play() noexcept { PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
+#endif
 	static void Register();
 };
 
@@ -924,10 +944,12 @@ namespace detail {
 	void Debug(std::wstring_view format, std::wformat_args args);
 }
 // メッセージを表示する
+#ifdef LIBFFFTP_USE_WIN32API
 template<class... Args>
 static inline void Notice(UINT id, const Args&... args) {
 	detail::Notice(id, std::make_wformat_args(args...));
 }
+#endif
 // デバッグメッセージを表示する
 template<class... Args>
 static inline void Debug(std::wstring_view format, const Args&... args) {
@@ -1310,7 +1332,7 @@ static inline auto replace(std::basic_string_view<Char> input, boost::basic_rege
 template<int captionId = IDS_APP>
 static inline auto Message(HWND owner, int textId, DWORD style) noexcept {
 	MSGBOXPARAMSW msgBoxParams{ sizeof(MSGBOXPARAMSW), owner, GetFtpInst(), MAKEINTRESOURCEW(textId), MAKEINTRESOURCEW(captionId), style, nullptr, 0, nullptr, LANG_NEUTRAL };
-	return LIBFFFTP_WINDOWS::MessageBoxIndirectW(&msgBoxParams);
+	return MessageBoxIndirectW(&msgBoxParams);
 }
 template<int captionId = IDS_APP>
 static inline auto Message(int textId, DWORD style) noexcept {
@@ -1348,7 +1370,7 @@ static inline void SetText(HWND hdlg, int id, const std::wstring& text) noexcept
 static inline auto AddressPortToString(const SOCKADDR* sa, size_t salen) {
 	std::wstring string(sizeof "[ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff%4294967295]:65535" - 1, L'\0');
 	auto length = size_as<DWORD>(string) + 1;
-	auto const result = LIBFFFTP_WINDOWS::WSAAddressToStringW(const_cast<SOCKADDR*>(sa), gsl::narrow_cast<DWORD>(salen), nullptr, data(string), &length);
+	auto const result = WSAAddressToStringW(const_cast<SOCKADDR*>(sa), gsl::narrow_cast<DWORD>(salen), nullptr, data(string), &length);
 	assert(result == 0);
 	string.resize(length - 1);
 	return string;
@@ -1494,7 +1516,4 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
-
-#ifdef LIBFFFTP
-#include "common_libffftp.hpp"
 #endif

@@ -28,15 +28,30 @@
 /============================================================================*/
 
 #include "common.h"
+#ifdef _WIN32
 #include <xmllite.h>
 #pragma comment(lib, "xmllite.lib")
 static int EncryptSettings = NO;
+#endif
+
+#ifndef _WIN32
+// Qt(ver6.8.1)はREG_BINARYタイプの読み書きに対応していないため、Windows版であればWin32 APIを利用する
+// 他のプラットフォームであれば、Qtを利用しbase64で文字列化して入出力する
+#define LIBFFFTP_INCLUDE_REGISTRY
+#include "registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY
+#endif
 
 static inline auto a2w(std::string_view text) {
 	return convert<wchar_t>([](auto src, auto srclen, auto dst, auto dstlen) noexcept { return MultiByteToWideChar(CP_ACP, MB_ERR_INVALID_CHARS, src, srclen, dst, dstlen); }, text);
 }
 
 class Config {
+#ifndef _WIN32
+#define LIBFFFTP_INCLUDE_REGISTRY_Config
+#include "registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY_Config
+#endif
 	void Xor(std::string_view name, void* bin, DWORD len, bool preserveZero) const;
 	std::optional<std::string> ReadStringCore(std::string_view name) const {
 		if (std::string value; ReadStringImpl(name, value)) {
@@ -164,6 +179,7 @@ public:
 	}
 	virtual void DeleteValue(std::string_view name) noexcept(false) {
 	}
+#ifdef _WIN32
 	bool ReadFont(std::string_view name, HFONT& hfont, LOGFONTW& logfont) {
 		if (std::wstring value; ReadValue(name, value)) {
 			int offset;
@@ -191,6 +207,7 @@ public:
 			);
 		WriteValue(name, value);
 	}
+#endif
 	void ReadHost(Host& host, int version, bool readPassword);
 	void WriteHost(Host const& host, Host const& defaultHost, bool writePassword);
 };
@@ -211,6 +228,7 @@ static int IniKanjiCode = KANJI_NOCNV;
 static int EncryptSettingsError = NO;
 
 
+#ifdef _WIN32
 // マスタパスワードの設定
 void SetMasterPassword(std::wstring_view password) {
 	ZeroMemory(SecretKey, MAX_PASSWORD_LEN + 12);
@@ -220,6 +238,11 @@ void SetMasterPassword(std::wstring_view password) {
 	/* 未検証なので，初期状態はOKにする (強制再設定→保存にを可能にする)*/
 	IsMasterPasswordError = PASSWORD_OK;
 }
+#else
+#define LIBFFFTP_INCLUDE_REGISTRY_SetMasterPassword
+#include "registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY_SetMasterPassword
+#endif
 
 std::wstring GetMasterPassword() {
 	return u8(SecretKey);
@@ -916,6 +939,7 @@ struct IniConfig : Config {
 	}
 };
 
+#ifdef _WIN32
 struct RegConfig : Config {
 	HKEY hKey;
 	RegConfig(std::string const& keyName, HKEY hkey) : Config{ keyName }, hKey{ hkey } {}
@@ -973,8 +997,14 @@ struct RegConfig : Config {
 		RegDeleteValueW(hKey, u8(name).c_str());
 	}
 };
+#else
+#define LIBFFFTP_INCLUDE_REGISTRY_RegConfig
+#include "libffftp/registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY_RegConfig
+#endif // _WIN32
 
 
+#ifdef _WIN32
 // レジストリ/INIファイルをオープンする（読み込み）
 static std::unique_ptr<Config> OpenReg(int type) {
 	auto name = "FFFTP"s;
@@ -999,6 +1029,11 @@ static std::unique_ptr<Config> OpenReg(int type) {
 	}
 	return {};
 }
+#else
+#define LIBFFFTP_INCLUDE_REGISTRY_OpenReg
+#include "libffftp/registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY_OpenReg
+#endif // _WIN32
 
 
 // レジストリ/INIファイルを作成する（書き込み）
@@ -1108,6 +1143,7 @@ void Config::Xor(std::string_view name, void* bin, DWORD len, bool preserveZero)
 	assert(result);
 }
 
+#ifdef _WIN32
 // ポータブル版判定
 int IsRegAvailable() {
 	return OpenReg(REGTYPE_REG) ? YES : NO;
@@ -1127,6 +1163,11 @@ int ReadSettingsVersion() {
 		hKey3->ReadValue("Version", Version);
 	return Version;
 }
+#else
+#define LIBFFFTP_INCLUDE_REGISTRY_IsAvailable
+#include "libffftp/registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY_IsAvailable
+#endif // _WIN32
 
 #ifdef LIBFFFTP_USE_WIN32API
 // FileZilla XML形式エクスポート対応
@@ -1215,6 +1256,10 @@ void SaveSettingsToFileZillaXml() {
 		Message(IDS_FAIL_TO_EXPORT, MB_OK | MB_ICONERROR);
 	}
 }
+#else
+#define LIBFFFTP_INCLUDE_REGISTRY_SaveSettingsToFileZillaXml
+#include "registry_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_REGISTRY_SaveSettingsToFileZillaXml
 #endif
 
 void SaveSettingsToWinSCPIni() {
@@ -1294,7 +1339,3 @@ void SaveSettingsToWinSCPIni() {
 			Message(IDS_FAIL_TO_EXPORT, MB_OK | MB_ICONERROR);
 	}
 }
-
-#ifdef LIBFFFTP
-#include "registry_libffftp.hpp"
-#endif

@@ -19,51 +19,51 @@ namespace LIBFFFTP_WINDOWS {
 
 #define MAKEPARAM(P1, P2, P3, P4) ffftp_procparam _param{ const_cast<void*>(reinterpret_cast<const void*>(P1)), const_cast<void*>(reinterpret_cast<const void*>(P2)), const_cast<void*>(reinterpret_cast<const void*>(P3)), const_cast<void*>(reinterpret_cast<const void*>(P4)) }
 #define SHOWMESSAGEBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_MESSAGEBOX, &_param));
-#define SHOWDIALOGBOX_CALLPROC() static_cast<INT_PTR>(ffftp_proc(SHOW_DIALOGBOX, &_param))
+#define SHOWDIALOGBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_DIALOGBOX, &_param))
 
-int MessageBoxIndirectW(const MSGBOXPARAMSW *lpmbp) {
-  MAKEPARAM(lpmbp->lpszText, lpmbp->lpszCaption, NULL, NULL);
+int messageBox(int textId, int captionId) {
+  MAKEPARAM(textId, captionId, NULL, NULL);
   return SHOWMESSAGEBOX_CALLPROC();
 }
 
-template <unsigned long long>
-INT_PTR Dialog(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<about_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<account_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<bmark_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<bmark_edit_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<certerr_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<chdir_br_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<chdir_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<chmod_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<corruptsettings_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<cwderr_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<def_attr_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<delete_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<diskfull_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<down_exist_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<downerr_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<downname_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<exit_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<filesize_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<filesize_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<filter_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<find_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<fname_in_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<forcepasschange_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<forcerename_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<group_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<groupdel_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hostconnect_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+template <int>
+int Dialog(int dialogid, void* param) { return -1; }
+template <> int Dialog<about_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<account_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<bmark_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<bmark_edit_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<certerr_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<chdir_br_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<chdir_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<chmod_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<corruptsettings_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<cwderr_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<def_attr_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<delete_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<diskfull_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<down_exist_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<downerr_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<downname_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<exit_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<filesize_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<filesize_notify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<filter_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<find_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<fname_in_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<forcepasschange_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<forcerename_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<group_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<groupdel_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hostconnect_dlg>(int dialogid, void* param) {
   MAKEPARAM(dialogid, NULL, NULL, NULL);
   return SHOWDIALOGBOX_CALLPROC();
 }
-template <> INT_PTR Dialog<hostdel_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hostlist_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+template <> int Dialog<hostdel_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hostlist_dlg>(int dialogid, void* param) {
   MAKEPARAM(dialogid, NULL, NULL, NULL);
   return SHOWDIALOGBOX_CALLPROC();
 }
-template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+template <> int Dialog<hostname_dlg>(int dialogid, void* param) {
   struct QuickCon {
     std::wstring hostname;
     std::wstring username;
@@ -71,7 +71,7 @@ template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwI
     bool firewall;
     bool passive;
   };
-  QuickCon* in_out_param = reinterpret_cast<QuickCon*>(dwInitParam);
+  QuickCon* in_out_param = reinterpret_cast<QuickCon*>(param);
   in_out_param->hostname = L"";
   if (QuickAnonymous == YES) {
     in_out_param->username = L"anonymous";
@@ -95,7 +95,7 @@ template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwI
   in_param.use_passive   = in_out_param->passive;
   ffftp_procparam_quickconnect out_param;
   MAKEPARAM(dialogid, &in_param, &out_param, NULL);
-  const INT_PTR ret{SHOWDIALOGBOX_CALLPROC()};
+  const int ret{SHOWDIALOGBOX_CALLPROC()};
   if (ret) {
     in_out_param->hostname = out_param.hostname;
     in_out_param->username = out_param.username;
@@ -105,73 +105,72 @@ template <> INT_PTR Dialog<hostname_dlg>(unsigned long long dialogid, LPARAM dwI
   }
   return ret;
 }
-template <> INT_PTR Dialog<hset_adv_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hset_adv2_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hset_adv3_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hset_code_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hset_crypt_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hset_dialup_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<hset_main_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<ini_from_reg_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<masterpasswd_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+template <> int Dialog<hset_adv_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hset_adv2_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hset_adv3_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hset_code_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hset_crypt_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hset_dialup_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<hset_main_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<ini_from_reg_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<masterpasswd_dlg>(int dialogid, void* param) {
   struct Data {
     UINT _;
     std::wstring& text;
   };
-  Data* p = reinterpret_cast<Data*>(dwInitParam);
+  Data* p = reinterpret_cast<Data*>(param);
   MAKEPARAM(dialogid, &p->text, NULL, NULL);
   return SHOWDIALOGBOX_CALLPROC();
 }
-template <> INT_PTR Dialog<mirror_down_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<mirror_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<mirror_up_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<mirrordown_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<mkdir_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<move_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<newmasterpasswd_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<noresume_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_connect_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_disp1_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_disp2_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_fire_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_mirror_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_misc_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_tool_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_trmode1_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_trmode2_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_trmode3_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_trmode4_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<opt_user_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<otp_calc_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<otp_notify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<passwd_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<rasnotify_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<rasreconnect_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<re_passwd_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<reginit_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<rename_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<savecrypt_dlg>(unsigned long long dialogid, LPARAM dwInitParam) {
+template <> int Dialog<mirror_down_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<mirror_notify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<mirror_up_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<mirrordown_notify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<mkdir_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<move_notify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<newmasterpasswd_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<noresume_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_connect_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_disp1_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_disp2_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_fire_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_mirror_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_misc_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_notify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_tool_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_trmode1_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_trmode2_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_trmode3_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_trmode4_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<opt_user_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<otp_calc_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<otp_notify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<passwd_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<rasnotify_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<rasreconnect_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<re_passwd_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<reginit_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<rename_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<savecrypt_dlg>(int dialogid, void* param) {
   // TODO: たぶん特殊化不要
   MAKEPARAM(dialogid, NULL, NULL, NULL);
     return SHOWDIALOGBOX_CALLPROC();
 }
-template <> INT_PTR Dialog<savepass_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<sel_local_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<sel_remote_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<somecmd_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<sort_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<transfer_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<up_exist_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<updatesslroot_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<updown_as_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<updown_as_with_ext_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<uperr_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
-template <> INT_PTR Dialog<username_dlg>(unsigned long long dialogid, LPARAM dwInitParam) { return -1; }
+template <> int Dialog<savepass_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<sel_local_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<sel_remote_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<somecmd_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<sort_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<transfer_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<up_exist_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<updatesslroot_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<updown_as_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<updown_as_with_ext_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<uperr_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<username_dlg>(int dialogid, void* param) { return -1; }
 
-INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndParent, DLGPROC lpDialogFunc, LPARAM dwInitParam) {
-  INT_PTR ret{-1};
-  const unsigned long long dialogid = reinterpret_cast<const unsigned long long>(lpTemplateName);
+int dialogBox(int dialogid, void* param) {
+  int ret{-1};
   switch (dialogid) {
   case about_dlg: break;
   case account_dlg: break;
@@ -200,14 +199,14 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   case group_dlg: break;
   case groupdel_dlg: break;
   case hostconnect_dlg:
-    ret = Dialog<hostconnect_dlg>(dialogid, dwInitParam);
+    ret = Dialog<hostconnect_dlg>(dialogid, param);
     break;
   case hostdel_dlg: break;
   case hostlist_dlg:
-    ret = Dialog<hostlist_dlg>(dialogid, dwInitParam);
+    ret = Dialog<hostlist_dlg>(dialogid, param);
     break;
   case hostname_dlg:
-    ret = Dialog<hostname_dlg>(dialogid, dwInitParam);
+    ret = Dialog<hostname_dlg>(dialogid, param);
     break;
   case hset_adv_dlg: break;
   case hset_adv2_dlg: break;
@@ -218,7 +217,7 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   case hset_main_dlg: break;
   case ini_from_reg_dlg: break;
   case masterpasswd_dlg:
-    ret = Dialog<masterpasswd_dlg>(dialogid, dwInitParam);
+    ret = Dialog<masterpasswd_dlg>(dialogid, param);
     break;
   case mirror_down_dlg: break;
   case mirror_notify_dlg: break;
@@ -250,7 +249,7 @@ INT_PTR DialogBoxParamW(HINSTANCE hInstance, LPCWSTR lpTemplateName, HWND hWndPa
   case reginit_dlg: break;
   case rename_dlg: break;
   case savecrypt_dlg:
-    ret = Dialog<savecrypt_dlg>(dialogid, dwInitParam);
+    ret = Dialog<savecrypt_dlg>(dialogid, param);
     break;
   case savepass_dlg: break;
   case sel_local_dlg: break;

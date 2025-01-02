@@ -142,6 +142,7 @@ namespace detail {
 	};
 }
 
+#ifndef LIBFFFTP
 // DialogBoxを表示します。
 // 次の要件を満たした型を受け入れます。
 // struct Data {
@@ -181,6 +182,11 @@ static inline auto Dialog(HINSTANCE instance, int resourceId, HWND parent) noexc
 	};
 	return Dialog(instance, resourceId, parent, Data{});
 }
+#else
+#define LIBFFFTP_INCLUDE_DIALOG_DeletedDialog
+#include "dialog_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_DIALOG_DeletedDialog
+#endif
 
 template<int first, int... rest>
 class RadioButton {

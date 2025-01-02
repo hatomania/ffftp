@@ -117,6 +117,7 @@
     <ClInclude Include="common_libffftp.hpp" />
     <ClInclude Include="connect_libffftp.hpp" />
     <QtMoc Include="eventproc.hpp" />
+    <ClInclude Include="dialog_libffftp.hpp" />
     <ClInclude Include="ffftp.h" />
     <ClInclude Include="ffftp_common.h" />
     <ClInclude Include="ffftp_hostdata.h" />

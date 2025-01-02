@@ -1,4 +1,38 @@
-﻿#ifdef LIBFFFTP_OTHER
+﻿#ifdef LIBFFFTP_INCLUDE_COMMON
+#include <QString>
+#include <QTimeZone>
+#include "ffftp_common.h"
+
+extern void initSettings();
+#endif
+
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
+    static inline int DefaultTimeZone{static_cast<int>(-(QTimeZone::systemTimeZone().offsetFromUtc(QDateTime()) / 60))};
+#endif
+
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_COMMON_Message
+static inline auto Message(int textId, int captionId = IDS_APP) noexcept {
+  return LIBFFFTP_WINDOWS::messageBox(textId, captionId);
+}
+#endif
+
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_COMMON_u8
+static inline std::wstring u8(std::string_view utf8) {
+  return QString(utf8).toStdWString();
+}
+static inline std::string u8(std::wstring_view wide) {
+  return QString(wide).toStdString();
+  return convert<char>([](auto src, auto srclen, auto dst, auto dstlen) noexcept { return WideCharToMultiByte(CP_UTF8, 0, src, srclen, dst, dstlen, nullptr, nullptr); }, wide);
+}
+#endif
+
+#ifdef LIBFFFTP_OTHER
 
 #ifndef LIBFFFTP_USE_WIN32API
 

@@ -143,6 +143,10 @@ fs::path SelectFile(bool open, HWND hWnd, UINT titleId, const wchar_t* initialFi
 		return {};
 	return buffer;
 }
+#else
+#define LIBFFFTP_INCLUDE_MISC_SelectFile
+#include "misc_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_MISC_SelectFile
 #endif
 
 

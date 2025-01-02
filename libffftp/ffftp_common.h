@@ -315,6 +315,13 @@ enum ffftp_information {
   FOR_LOADSETTING  = 215,
 };
 
+enum ffftp_procresponse {
+  CANCEL  = 8,
+  NO      = 9,
+  OK      = 10,
+  YES     = 11,
+};
+
 #ifdef __cplusplus
 }
 #endif

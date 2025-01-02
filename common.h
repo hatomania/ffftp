@@ -39,9 +39,9 @@
 #include "libffftp_windows.hpp"
 #else
 #define LIBFFFTP_USE_WIN32API
-#define LIBFFFTP_WINDOWS
 #endif // LIBFFFTP
 
+#ifdef _WIN32
 #pragma warning(disable: 26426)		// error C26426: Global initializer calls a non-constexpr function 'XXX' (i.22).
 #pragma warning(disable: 26429)		// error C26429: Symbol 'XXX' is never tested for nullness, it can be marked as not_null (f.23).
 #pragma warning(disable: 26432)		// error C26432: If you define or delete any default operation in the type 'XXX', define or delete them all (c.21).
@@ -65,6 +65,7 @@
 #pragma warning(disable: 26496)		// error C26496 : The variable 'XXX' does not change after construction, mark it as const (con.4).
 #pragma warning(disable: 26818)		// error C26818: Switch statement does not cover all cases. Consider adding a 'default' label (es.79).
 #pragma warning(disable: 26821)		// error C26821: For 'XXX', consider using gsl::span instead of std::span to guarantee runtime bounds safety (gsl.view).
+#endif
 #include <algorithm>
 #include <array>
 #include <bit>
@@ -88,13 +89,19 @@
 #include <type_traits>
 #include <variant>
 #include <vector>
+#ifdef _WIN32
 #include <concurrent_queue.h>
+#else
+#include <tbb/concurrent_queue.h>
+#endif
 #include <boost/regex.hpp>
 #include <gsl/gsl>
 #include <cassert>
 #include <cwctype>
+#ifdef _WIN32
 #include <crtdbg.h>
 #include <mbstring.h>
+#endif
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -125,7 +132,9 @@
 #include <comdef.h>
 #endif // _WIN32
 #include "config.h"
+#ifndef LIBFFFTP
 #include "dialog.h"
+#endif
 #include "helpid.h"
 #include "Resource/resource.ja-JP.h"
 #ifdef _WIN32
@@ -143,8 +152,10 @@
 #endif // LIBFFFTP_USE_WIN32API
 namespace fs = std::filesystem;
 using namespace std::literals;
+#ifdef _WIN32
 template<class T>
 using ComPtr = Microsoft::WRL::ComPtr<T>;
+#endif
 template<class...>
 constexpr bool false_v = false;
 
@@ -1516,4 +1527,7 @@ static inline auto HashData(BCRYPT_ALG_HANDLE alg, std::vector<UCHAR>& obj, std:
 }
 
 FILELIST::FILELIST(std::string_view original, char node, char link, int64_t size, int attr, FILETIME time, std::string_view owner, char infoExist) : Original{ original }, Node{ node }, Link{ link }, Size{ size }, Attr{ attr }, Time{ time }, Owner{ u8(owner) }, InfoExist{ infoExist } {}
+
+#ifdef LIBFFFTP
+#include "dialog.h"
 #endif

@@ -1,8 +1,10 @@
 ﻿// Copyright(C) Kurata Sayuri. All rights reserved.
 #pragma once
 #include <type_traits>
+#ifdef _WIN32
 #include <Windows.h>
 #include <windowsx.h>
+#endif
 
 template<int... controls>
 struct Controls;

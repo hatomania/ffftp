@@ -11,7 +11,11 @@
 #define LIBFFFTP_DECLSPEC __declspec(dllimport)
 #endif
 
-#define LIBFFFTP_CALLCONV __stdcall
+#ifdef _WIN32
+#define LIBFFFTP_CALLCONV __attribute((stdcall))
+#else
+#define LIBFFFTP_CALLCONV __attribute((cdecl))
+#endif
 
 #ifndef __cplusplus
 #include <wchar.h>

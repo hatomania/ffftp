@@ -6,8 +6,6 @@
 #include "libffftp_windows.hpp"
 
 #include <QCoreApplication>
-#include <QMediaPlayer>
-#include <QAudioOutput>
 #include <QString>
 
 #include "common.h"
@@ -15,7 +13,10 @@
 #include "ffftp_common.h"
 #include "libffftp_common.hpp"
 
-#define MAKEPARAM(P1, P2, P3, P4) ffftp_procparam _param{ const_cast<void*>(reinterpret_cast<const void*>(P1)), const_cast<void*>(reinterpret_cast<const void*>(P2)), const_cast<void*>(reinterpret_cast<const void*>(P3)), const_cast<void*>(reinterpret_cast<const void*>(P4)) }
+#define MAKEPARAM1(ID)             ffftp_procparam _param{ reinterpret_cast<void*>(static_cast<uintptr_t>(ID)) }
+#define MAKEPARAM2(ID, P2)         ffftp_procparam _param{ reinterpret_cast<void*>(static_cast<uintptr_t>(ID)), reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(P2)) }
+#define MAKEPARAM3(ID, P2, P3)     ffftp_procparam _param{ reinterpret_cast<void*>(static_cast<uintptr_t>(ID)), reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(P2)), reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(P3)) }
+#define MAKEPARAM4(ID, P2, P3, P4) ffftp_procparam _param{ reinterpret_cast<void*>(static_cast<uintptr_t>(ID)), reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(P2)), reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(P3)), reinterpret_cast<void*>(reinterpret_cast<uintptr_t>(P4)) }
 #define SHOWMESSAGEBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_MESSAGEBOX, &_param));
 #define SHOWDIALOGBOX_CALLPROC() static_cast<int>(ffftp_proc(SHOW_DIALOGBOX, &_param))
 
@@ -27,7 +28,7 @@ int inputDialog(int dialogid, void* param) {
     std::wstring& text;
   };
   Data* p = reinterpret_cast<Data*>(param);
-  MAKEPARAM(dialogid, &p->text, NULL, NULL);
+  MAKEPARAM2(dialogid, &p->text);
   return SHOWDIALOGBOX_CALLPROC();
 }
 
@@ -41,7 +42,10 @@ template <> int Dialog<certerr_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<chdir_br_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<chdir_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<chmod_dlg>(int dialogid, void* param) { return -1; }
-template <> int Dialog<corruptsettings_dlg>(int dialogid, void* param) { return -1; }
+template <> int Dialog<corruptsettings_dlg>(int dialogid, void* param) {
+  MAKEPARAM1(dialogid);
+  return SHOWDIALOGBOX_CALLPROC();
+}
 template <> int Dialog<cwderr_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<def_attr_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<delete_dlg>(int dialogid, void* param) { return -1; }
@@ -60,12 +64,12 @@ template <> int Dialog<forcerename_dlg>(int dialogid, void* param) { return -1; 
 template <> int Dialog<group_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<groupdel_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<hostconnect_dlg>(int dialogid, void* param) {
-  MAKEPARAM(dialogid, NULL, NULL, NULL);
+  MAKEPARAM1(dialogid);
   return SHOWDIALOGBOX_CALLPROC();
 }
 template <> int Dialog<hostdel_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<hostlist_dlg>(int dialogid, void* param) {
-  MAKEPARAM(dialogid, NULL, NULL, NULL);
+  MAKEPARAM1(dialogid);
   return SHOWDIALOGBOX_CALLPROC();
 }
 template <> int Dialog<hostname_dlg>(int dialogid, void* param) {
@@ -99,7 +103,7 @@ template <> int Dialog<hostname_dlg>(int dialogid, void* param) {
   in_param.use_firewall  = in_out_param->firewall;
   in_param.use_passive   = in_out_param->passive;
   ffftp_procparam_quickconnect out_param;
-  MAKEPARAM(dialogid, &in_param, &out_param, NULL);
+  MAKEPARAM3(dialogid, &in_param, &out_param);
   const int ret{SHOWDIALOGBOX_CALLPROC()};
   if (ret) {
     in_out_param->hostname = out_param.hostname;
@@ -124,7 +128,7 @@ template <> int Dialog<masterpasswd_dlg>(int dialogid, void* param) {
     std::wstring& text;
   };
   Data* p = reinterpret_cast<Data*>(param);
-  MAKEPARAM(dialogid, &p->text, NULL, NULL);
+  MAKEPARAM2(dialogid, &p->text);
   return SHOWDIALOGBOX_CALLPROC();
 }
 template <> int Dialog<mirror_down_dlg>(int dialogid, void* param) { return -1; }
@@ -158,8 +162,8 @@ template <> int Dialog<reginit_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<rename_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<savecrypt_dlg>(int dialogid, void* param) {
   // TODO: たぶん特殊化不要
-  MAKEPARAM(dialogid, NULL, NULL, NULL);
-    return SHOWDIALOGBOX_CALLPROC();
+  MAKEPARAM1(dialogid);
+  return SHOWDIALOGBOX_CALLPROC();
 }
 template <> int Dialog<savepass_dlg>(int dialogid, void* param) { return -1; }
 template <> int Dialog<sel_local_dlg>(int dialogid, void* param) { return -1; }
@@ -176,8 +180,12 @@ template <> int Dialog<username_dlg>(int dialogid, void* param) { return -1; }
 
 }  // namespace
 
+
+//--------------------------------------------------------------------------------------------------
 int messageBox(int textId, int captionId) {
-  MAKEPARAM(textId, captionId, NULL, NULL);
+  ffftp_procparam _param{
+    reinterpret_cast<void*>(static_cast<uintptr_t>(textId)),
+    reinterpret_cast<void*>(static_cast<uintptr_t>(captionId)) };
   return SHOWMESSAGEBOX_CALLPROC();
 }
 
@@ -192,7 +200,9 @@ int dialogBox(int dialogid, void* param) {
   case chdir_br_dlg: break;
   case chdir_dlg: break;
   case chmod_dlg: break;
-  case corruptsettings_dlg: break;
+  case corruptsettings_dlg:
+    ret = Dialog<hostconnect_dlg>(dialogid, param);
+    break;
   case cwderr_dlg: break;
   case def_attr_dlg: break;
   case delete_dlg: break;
@@ -285,17 +295,20 @@ int dialogBox(int dialogid, void* param) {
   return ret;
 }
 
+void setOption() {
+  MAKEPARAM1(ffftp_dialogid::OPTION_DLG);
+  SHOWDIALOGBOX_CALLPROC();
+}
+
+
+//--------------------------------------------------------------------------------------------------
+#ifndef _WIN32
 BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString) {
   if (hWnd == GetMainHwnd()) {
     MAKEPARAM(lpString, NULL, NULL, NULL);
     ffftp_proc(ffftp_procmsg::SETWINDOWTITLE, &_param);
   }
   return TRUE;
-}
-
-void SetOption() {
-  MAKEPARAM(ffftp_dialogid::OPTION_DLG, NULL, NULL, NULL);
-  SHOWDIALOGBOX_CALLPROC();
 }
 
 INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROTOCOL_INFOW lpProtocolInfo, LPWSTR lpszAddressString, LPDWORD lpdwAddressStringLength) {
@@ -322,41 +335,6 @@ INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROT
   return 0;
 }
 
-class SoundPlayer {
-public:
-  enum class Type {
-    Connected,
-    Transferred,
-    Error,
-  };
-  inline explicit SoundPlayer()
-      : player_{std::make_unique<QMediaPlayer>()},
-        audioo_{std::make_unique<QAudioOutput>()},
-        urls_{
-          {Type::Connected,   QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/success.mp3")},
-          {Type::Transferred, QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/quickFixes.mp3")},
-          {Type::Error,       QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/foldedAreas.mp3")}, } {
-    player_->setAudioOutput(audioo_.get());
-  };
-  inline void play(const Type playtype) {
-    player_->setSource(urls_.value(playtype));
-  }
-private:
-  std::unique_ptr<QMediaPlayer> player_;
-  std::unique_ptr<QAudioOutput> audioo_;
-  const QMap<Type, QUrl> urls_;
-};
-BOOL PlaySoundW(LPCWSTR pszSound, HMODULE hmod, DWORD fdwSound) {
-  static SoundPlayer player{};
-  QMap<QString, SoundPlayer::Type> sm{
-    {"FFFTP_Connected",   SoundPlayer::Type::Connected},
-    {"FFFTP_Transferred", SoundPlayer::Type::Transferred},
-    {"FFFTP_Error",       SoundPlayer::Type::Error},
-  };
-  player.play(sm.value(QString(pszSound)));
-  return TRUE;
-}
-
 HMODULE GetModuleHandleW(LPCWSTR lpModuleName) {
   return NULL;
 }
@@ -368,3 +346,4 @@ DWORD GetCurrentThreadId() {
 HRESULT OleInitialize(LPVOID pvReserved) {
   return S_OK;
 }
+#endif  // _WIN32

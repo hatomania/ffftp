@@ -4,7 +4,9 @@
 
 #include "common.h"
 
+namespace libffftp {
 extern LRESULT CallFtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+}
 
 EventProc::EventProc()
     : QObject{Q_NULLPTR},
@@ -17,6 +19,8 @@ EventProc::EventProc()
 }
 
 EventProc::~EventProc() {
+  if (timer1id_) { killTimer(timer1id_); }
+  if (timer2id_) { killTimer(timer2id_); }
   thread_.exit();
   thread_.wait();
 }
@@ -29,8 +33,8 @@ void EventProc::setupTimer() {
 void EventProc::timerEvent(QTimerEvent* e) {
   const auto timerid{e->timerId()};
   if (timerid == timer1id_) {
-    CallFtpWndProc(0, WM_TIMER, 1, 0);
+    libffftp::CallFtpWndProc(0, WM_TIMER, 1, 0);
   } else if (timerid == timer2id_) {
-    CallFtpWndProc(0, WM_TIMER, 2, 0);
+    libffftp::CallFtpWndProc(0, WM_TIMER, 2, 0);
   }
 }

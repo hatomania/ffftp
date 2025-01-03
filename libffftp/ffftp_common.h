@@ -320,10 +320,14 @@ enum ffftp_information {
 };
 
 enum ffftp_procresponse {
-  CANCEL  = 8,
-  NO      = 9,
-  OK      = 10,
-  YES     = 11,
+  CANCEL  = 2,
+  ABORT   = 3,
+  RETRY   = 4,
+  IGNORE_ = 5,
+  NO_     = 10,
+  EXIT    = 20,
+  OK_     = 100,
+  YES_    = 101,
 };
 
 #ifdef __cplusplus

@@ -1,8 +1,12 @@
-﻿#ifdef LIBFFFTP_OTHER
+﻿//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_OPTION_SetOption
+void SetOption() {
+}
+#endif  // LIBFFFTP_INCLUDE_OPTION_SetOption
 
 
-#else
-
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_IMPL
 #include "ffftp_option.h"
 #include "libffftp_common.hpp"
 

@@ -792,6 +792,10 @@ public:
 	static Sound Error;
 #ifdef LIBFFFTP_USE_WIN32API
 	void Play() noexcept { PlaySoundW(keyName, 0, SND_ASYNC | SND_NODEFAULT | SND_APPLICATION); }
+#else
+#define LIBFFFTP_INCLUDE_COMMON_Sound_Play
+#include "common_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_COMMON_Sound_Play
 #endif
 	static void Register();
 };
@@ -953,12 +957,10 @@ namespace detail {
 	void Debug(std::wstring_view format, std::wformat_args args);
 }
 // メッセージを表示する
-#ifdef LIBFFFTP_USE_WIN32API
 template<class... Args>
 static inline void Notice(UINT id, const Args&... args) {
 	detail::Notice(id, std::make_wformat_args(args...));
 }
-#endif
 // デバッグメッセージを表示する
 template<class... Args>
 static inline void Debug(std::wstring_view format, const Args&... args) {

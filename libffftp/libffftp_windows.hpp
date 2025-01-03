@@ -1,8 +1,11 @@
 ﻿#ifndef LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_
 #define LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_
 
+#include "ffftp_common.h"
+
 extern int messageBox(int textId, int captionId = 0);
 extern int dialogBox(int dialogid, void* param);
+extern void setOption();
 
 #ifndef _WIN32
 #include <arpa/inet.h>
@@ -143,7 +146,6 @@ struct PROPSHEETHEADERW {
 using LPCPROPSHEETHEADERW = const PROPSHEETHEADERW*;
 
 extern BOOL SetWindowTextW(HWND hWnd, LPCWSTR lpString);
-extern void SetOption();
 extern INT WSAAddressToStringW(LPSOCKADDR lpsaAddress, DWORD dwAddressLength, LPWSAPROTOCOL_INFOW lpProtocolInfo, LPWSTR lpszAddressString, LPDWORD lpdwAddressStringLength);
 extern BOOL PlaySoundW(LPCWSTR pszSound, HMODULE hmod, DWORD fdwSound);
 extern HMODULE GetModuleHandleW(LPCWSTR lpModuleName);
@@ -160,6 +162,10 @@ extern LONG_PTR GetWindowLongPtrW(HWND hWnd, int nIndex);
 extern LRESULT SendDlgItemMessageW(HWND hDlg, int nIDDlgItem, UINT Msg, WPARAM wParam, LPARAM lParam);
 extern LRESULT SendMessageW(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 extern INT_PTR PropertySheetW(LPCPROPSHEETHEADERW*);
+extern BOOL PostMessageW(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
+extern BOOL SetEvent(HANDLE hEvent);
+
+
 #endif  // _WIN32
 
 #endif  // LIBFFFTP_WINDOWS_58FEC587_5CD0_4046_AEF2_2E9E3A745449_HPP_

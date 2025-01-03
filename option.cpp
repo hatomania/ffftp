@@ -684,10 +684,16 @@ struct Other {
 	}
 };
 
+#ifndef LIBFFFTP
 // オプションのプロパティシート
 void SetOption() {
 	PropSheet<User, Transfer1, Transfer2, Transfer3, Transfer4, Mirroring, Operation, View1, View2, Connecting, Firewall, Tool, Other>(GetMainHwnd(), GetFtpInst(), IDS_OPTION, PSH_NOAPPLYNOW | PSH_NOCONTEXTHELP);
 }
+#else
+#define LIBFFFTP_INCLUDE_OPTION_SetOption
+#include "option_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_OPTION_SetOption
+#endif
 
 
 // ソート設定
@@ -751,5 +757,7 @@ int GetDecimalText(HWND hDlg, int Ctrl) {
 }
 
 #ifdef LIBFFFTP
+#define LIBFFFTP_IMPL
 #include "option_libffftp.hpp"
+#undef LIBFFFTP_IMPL
 #endif

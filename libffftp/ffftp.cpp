@@ -32,6 +32,7 @@
 #include <string>
 #include <vector>
 
+#define LIBFFFTP_IMPL
 #define LIBFFFTP_DECL
 #include "libffftp_common.hpp"
 #include "main_libffftp.hpp"
@@ -41,6 +42,7 @@
 #include "ras_libffftp.hpp"
 #include "taskwin_libffftp.hpp"
 #undef LIBFFFTP_DECL
+#undef LIBFFFTP_IMPL
 
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback proc) {
   ffftp_proc = proc;

@@ -279,8 +279,6 @@ int WINAPI wWinMain(__in HINSTANCE hInstance, __in_opt HINSTANCE hPrevInstance, 
 #endif // LIBFFFTP
 
 
-
-#ifdef LIBFFFTP_USE_WIN32API
 // アプリケーションの初期設定
 static int InitApp(int cmdShow)
 {
@@ -478,15 +476,8 @@ static int InitApp(int cmdShow)
 
 	return(sts);
 }
-#else
-#define LIBFFFTP_INCLUDE_MAIN_InitApp
-#include "libffftp/main_libffftp.hpp"
-#undef LIBFFFTP_INCLUDE_MAIN_InitApp
-#endif // LIBFFFTP_USE_WIN32API
 
 
-
-#ifdef LIBFFFTP_USE_WIN32API
 // ウインドウを作成する
 static bool MakeAllWindows(int cmdShow) {
 	WNDCLASSEXW classEx{ sizeof(WNDCLASSEXW), 0, FtpWndProc, 0, 0, GetFtpInst(), LoadIconW(GetFtpInst(), MAKEINTRESOURCEW(ffftp)), 0, GetSysColorBrush(COLOR_3DFACE), MAKEINTRESOURCEW(main_menu), FtpClass };
@@ -608,11 +599,8 @@ static void TurnStatefulFTPFilter() {
 		if (PtrToInt(ShellExecuteW(NULL, L"runas", L"netsh", ID == IDYES ? L"advfirewall set global statefulftp enable" : L"advfirewall set global statefulftp disable", systemDirectory().c_str(), SW_SHOW)) <= 32)
 			Message(IDS_FAIL_TO_MANAGE_STATEFUL_FTP, MB_OK | MB_ICONERROR);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
-
-#ifdef LIBFFFTP_USE_WIN32API
 /*----- メインウインドウのメッセージ処理 --------------------------------------
 *
 *	Parameter
@@ -1497,10 +1485,8 @@ static LRESULT CALLBACK FtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARA
 	}
 	return(0L);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 // プログラム開始時の処理
 static void StartupProc(std::vector<std::wstring_view> const& args) {
 	std::wstring hostname;
@@ -1537,7 +1523,6 @@ static void StartupProc(std::vector<std::wstring_view> const& args) {
 	if (!initializeDeferred)
 		SetEvent(initialized);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
 // コマンドラインを解析
@@ -1598,7 +1583,6 @@ static std::optional<int> AnalyzeComLine(std::vector<std::wstring_view> const& a
 }
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 /*----- プログラム終了時の処理 ------------------------------------------------
 *
 *	Parameter
@@ -1646,10 +1630,8 @@ static void ExitProc(HWND hWnd)
 	__pragma(warning(suppress:6387)) HtmlHelpW(NULL, NULL, HH_UNINITIALIZE, dwCookie);
 	return;
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 // ファイル名をダブルクリックしたときの処理
 //   Win : ウインドウ番号 (WIN_xxx)
 //   Mode : 常に「開く」動作をするかどうか (YES/NO)
@@ -1721,7 +1703,6 @@ void DoubleClickProc(int Win, int Mode, int App) {
 		MakeButtonsFocus();
 	}
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
 // フォルダの移動
@@ -1750,7 +1731,6 @@ static void ChangeDir(int Win, std::wstring dir) {
 }
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 /*----- ウインドウのサイズ変更の処理 ------------------------------------------
 *
 *	Parameter
@@ -1908,7 +1888,6 @@ static void CheckResizeFrame(WPARAM Keys, int x, int y)
 	}
 	return;
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
 // ファイル一覧情報をビューワで表示
@@ -1917,7 +1896,6 @@ static void DispDirInfo() {
 }
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 // ビューワを起動
 void ExecViewer(fs::path const& path, int App) {
 	/* FindExecutable()は関連付けられたプログラムのパス名にスペースが	*/
@@ -1959,7 +1937,6 @@ void ExecViewer2(fs::path const& path1, fs::path const& path2, int App) {
 		Notice(IDS_LOCALCMD, commandLine);
 	}
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
 // テンポラリファイル名をテンポラリファイルリストに追加
@@ -1976,7 +1953,6 @@ static void DeleteAlltempFile() {
 }
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 // Ａｂｏｕｔダイアログボックス
 static void AboutDialog(HWND hWnd) noexcept {
 	struct About {
@@ -2002,7 +1978,6 @@ static void AboutDialog(HWND hWnd) noexcept {
 void ShowHelp(DWORD_PTR helpTopicId) {
 	hHelpWin = HtmlHelpW(NULL, helpPath().c_str(), HH_HELP_CONTEXT, helpTopicId);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
 // INIファイルのパス名を返す
@@ -2017,7 +1992,6 @@ int AskForceIni() noexcept {
 }
 
 
-#ifdef LIBFFFTP_USE_WIN32API
 // メッセージ処理
 int BackgrndMessageProc() noexcept {
 	MSG Msg;
@@ -2049,7 +2023,6 @@ int BackgrndMessageProc() noexcept {
 	}
 	return(Ret);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 
 // 自動終了フラグをクリアする
@@ -2149,11 +2122,9 @@ int AskToolWinHeight() noexcept {
 	return(ToolWinHeight);
 }
 
-#ifdef LIBFFFTP_USE_WIN32API
 int MainThreadRunner::Run() {
 	return IsMainThread() ? DoWork() : (int)SendMessageW(GetMainHwnd(), WM_MAINTHREADRUNNER, 0, (LPARAM)this);
 }
-#endif // LIBFFFTP_USE_WIN32API
 
 #ifdef LIBFFFTP
 #define LIBFFFTP_IMPL

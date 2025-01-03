@@ -1,5 +1,7 @@
 ﻿//--------------------------------------------------------------------------------------------------
 #ifdef LIBFFFTP_INCLUDE_COMMON
+#include <QAudioOutput>
+#include <QMediaPlayer>
 #include <QString>
 #include <QTimeZone>
 #include "ffftp_common.h"
@@ -12,6 +14,44 @@ extern void initSettings();
 #ifdef LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
     static inline int DefaultTimeZone{static_cast<int>(-(QTimeZone::systemTimeZone().offsetFromUtc(QDateTime()) / 60))};
 #endif  // LIBFFFTP_INCLUDE_COMMON_DefaultTimeZone
+
+
+//--------------------------------------------------------------------------------------------------
+#ifdef LIBFFFTP_INCLUDE_COMMON_Sound_Play
+class SoundPlayer {
+public:
+  enum class Type {
+    Connected,
+    Transferred,
+    Error,
+  };
+  inline explicit SoundPlayer()
+      : player_{std::make_unique<QMediaPlayer>()},
+        audioo_{std::make_unique<QAudioOutput>()},
+        urls_{
+          {Type::Connected,   QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/success.mp3")},
+          {Type::Transferred, QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/quickFixes.mp3")},
+          {Type::Error,       QUrl::fromLocalFile("C:/Users/takayuki/AppData/Local/Programs/Microsoft VS Code/resources/app/out/vs/platform/accessibilitySignal/browser/media/foldedAreas.mp3")}, } {
+    player_->setAudioOutput(audioo_.get());
+  };
+  inline void play(const Type playtype) {
+    player_->setSource(urls_.value(playtype));
+  }
+private:
+  std::unique_ptr<QMediaPlayer> player_;
+  std::unique_ptr<QAudioOutput> audioo_;
+  const QMap<Type, QUrl> urls_;
+};
+void Play() noexcept {
+  static SoundPlayer player{};
+  QMap<QString, SoundPlayer::Type> sm{
+    {"FFFTP_Connected",   SoundPlayer::Type::Connected},
+    {"FFFTP_Transferred", SoundPlayer::Type::Transferred},
+    {"FFFTP_Error",       SoundPlayer::Type::Error},
+  };
+  player.play(sm.value(QString(keyName)));
+}
+#endif  // LIBFFFTP_INCLUDE_COMMON_Sound_Play
 
 
 //--------------------------------------------------------------------------------------------------
@@ -38,13 +78,10 @@ static inline auto InputDialog(int dialogId, HWND parent, UINT titleId, std::wst
 }
 #endif  // LIBFFFTP_INCLUDE_COMMON_InputDialog
 
+
+//--------------------------------------------------------------------------------------------------
 #ifdef LIBFFFTP_OTHER
-
 #ifndef LIBFFFTP_USE_WIN32API
-
-#include "eventproc.hpp"
-
-inline std::unique_ptr<EventProc> eventproc{};
 
 #define SOCKET_PROXY_ERROR (SOCKET_ERROR - 1)
 
@@ -74,8 +111,4 @@ inline const std::tuple<std::string, uint16_t> sockaddr2AddressPort(const sockad
 }
 
 #endif  // LIBFFFTP_USE_WIN32API
-
-
-#else  // LIBFFFTP_OTHER
-
 #endif  // LIBFFFTP_OTHER

@@ -166,6 +166,10 @@ void CloseTransferThread() noexcept {
 		CloseHandle(completed[i]);
 	}
 }
+#else
+#define LIBFFFTP_INCLUDE_GETPUT_TransferThread
+#include "getput_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_GETPUT_TransferThread
 #endif
 
 

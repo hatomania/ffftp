@@ -51,6 +51,7 @@ using WPARAM    = UINT_PTR;
 using LPARAM    = LONG_PTR;
 using LRESULT   = LONG_PTR;
 using HRESULT   = long;
+using HANDLE    = void*;
 using HINSTANCE = void*;
 using HMODULE   = void*;
 using HWND      = void*;
@@ -114,11 +115,11 @@ struct NMHDR {};
 #define WM_SIZE            (0x0005)
 #define WM_NOTIFY          (0x004E)
 #define PSH_PROPSHEETPAGE  (0x00000008)
-#define MAKEWPARAM(l, h)
-#define MAKELPARAM(l, h)
-#define GET_WM_COMMAND_ID(wp, lp)
-#define GET_WM_COMMAND_CMD(wp, lp)
-#define MAKEINTRESOURCEW(i)
+#define MAKEWPARAM(l, h)           (0)
+#define MAKELPARAM(l, h)           (0)
+#define GET_WM_COMMAND_ID(wp, lp)  (0)
+#define GET_WM_COMMAND_CMD(wp, lp) (0)
+#define MAKEINTRESOURCEW(i)        (0)
 
 using DLGPROC = INT_PTR (CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
 
@@ -161,10 +162,9 @@ extern LONG_PTR SetWindowLongPtrW(HWND hWnd, int nIndex, LONG_PTR dwNewLong);
 extern LONG_PTR GetWindowLongPtrW(HWND hWnd, int nIndex);
 extern LRESULT SendDlgItemMessageW(HWND hDlg, int nIDDlgItem, UINT Msg, WPARAM wParam, LPARAM lParam);
 extern LRESULT SendMessageW(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
-extern INT_PTR PropertySheetW(LPCPROPSHEETHEADERW*);
+extern INT_PTR PropertySheetW(LPCPROPSHEETHEADERW pcp);
 extern BOOL PostMessageW(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
 extern BOOL SetEvent(HANDLE hEvent);
-
 
 #endif  // _WIN32
 

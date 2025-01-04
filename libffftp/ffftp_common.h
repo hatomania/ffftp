@@ -18,7 +18,10 @@
 #endif
 
 #ifndef __cplusplus
+#include <stddef.h> // for size_t
 #include <wchar.h>
+#else
+#include <cstddef>
 #endif
 
 #ifdef __cplusplus

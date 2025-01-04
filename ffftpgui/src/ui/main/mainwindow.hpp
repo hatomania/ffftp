@@ -12,7 +12,7 @@ class MainWindow : public QMainWindow {
   explicit MainWindow(QWidget* parent = Q_NULLPTR);
   virtual ~MainWindow();
 
-  static unsigned long long ffftp_proc(unsigned long long msg, ffftp_procparam* param);
+  static uintptr_t ffftp_proc(uintptr_t msg, ffftp_procparam* param);
 
  private Q_SLOTS:
   // [接続]メニュー
@@ -108,6 +108,7 @@ class MainWindow : public QMainWindow {
   bool showOptionDialog();
 
   // メッセージボックスの表示系
+  int messageBox(uintptr_t msgid, uintptr_t capid);
   bool askMasterPassword(QString& passwd);
   bool askRetryMasterPassword();
   bool askSaveCryptFunc();
@@ -119,7 +120,6 @@ class MainWindow : public QMainWindow {
   void showEvent(QShowEvent* event) override;
   void timerEvent(QTimerEvent* event) override;
   void closeEvent(QCloseEvent* event) override;
-  static int messageBox(unsigned long long msgid, unsigned long long capid);
 
  private:
   class Private;

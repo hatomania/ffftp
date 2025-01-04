@@ -1,8 +1,6 @@
-﻿#include "eventproc.hpp"
+﻿#include "common.h"
 
-#include <QTimerEvent>
-
-#include "common.h"
+#include "eventproc.hpp"
 
 namespace libffftp {
 extern LRESULT CallFtpWndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);

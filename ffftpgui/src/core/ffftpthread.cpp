@@ -12,7 +12,7 @@ FFFTPThread::FFFTPThread() : QThread(Q_NULLPTR) {
 }
 
 void FFFTPThread::initFFFTP() {
-  qDebug() << __FUNCTION__ << " pid=" << QThread::currentThreadId();
+  qDebug() << __FUNCTION__ << "pid=" << QThread::currentThreadId();
   bool ret{ffftp_initialize(MainWindow::ffftp_proc)};
   emit inited(ret);
 }

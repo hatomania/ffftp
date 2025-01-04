@@ -259,9 +259,9 @@ static int InitApp(int cmdShow) {
 #endif
 
   // コマンドライン引数を先頭のEXEを除いて、std::vector<std::wstring_view>という型に格納する
-  QStringList qargs{QCoreApplication::arguments()}; // 別スレッドからなのか、__wargvが機能しないのでQtを使う
+  QStringList&& qargs{QCoreApplication::arguments()}; // 別スレッドからなのか、__wargvが機能しないのでQtを使う
   qargs.pop_front(); // 先頭のEXEを消去
-  // うまくやればパイプライン演算子という手法を使って一行で実現できるらしい。以下はGemini2.0が提案してくれたコード。しかしコンパイルエラー
+  // うまくやればパイプライン演算子という手法を使って一行で実現できるらしい。以下はGemini2.0が提案してくれたコード（要C++20以上）。しかしコンパイルエラー。
   //std::vector<std::wstring> args_ = qargs | std::views::transform([](const QString& s){ return s.toStdWString(); }) | std::ranges::to<std::vector>();
   //const std::vector<std::wstring_view> args = args_ | std::views::transform([](const std::wstring& s){ return std::wstring_view(s); }) | std::ranges::to<std::vector>();
   const std::vector<std::wstring>&& args_{[&qargs](){
@@ -276,9 +276,6 @@ static int InitApp(int cmdShow) {
     for (const auto& s : args_) { t.push_back(s); }
     return t;
   }()};
-  for (const auto& s: args) {
-    qDebug() << s;
-  }
 
   // INIファイルモードかどうか
   // オプション＋引数省略: INIファイルの入出力先は個人フォルダ（ファイル名は"モジュール名(=ffftp)"+".ini"）

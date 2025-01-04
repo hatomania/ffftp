@@ -51,7 +51,7 @@ enum ffftp_procmsg {
   GIVE_A_DIRPATH,
 };
 
-typedef unsigned long long (LIBFFFTP_CALLCONV *ffftp_proc_callback)(unsigned long long msg, ffftp_procparam* param);
+typedef uintptr_t (LIBFFFTP_CALLCONV *ffftp_proc_callback)(uintptr_t msg, ffftp_procparam* param);
 
 enum ffftp_dialogid {
   ABOUT_DLG =                       104,

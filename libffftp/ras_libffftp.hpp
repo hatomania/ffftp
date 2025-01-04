@@ -11,17 +11,17 @@ namespace libffftp {
 namespace {
 
 void dialupEntryList(std::vector<std::wstring>& entries) {
-	// ほぼSetRasEntryToComboBox関数のコピー
-	entries.clear();
-	if (DWORD size = 0, count = 0, result = RasEnumEntriesW(nullptr, nullptr, nullptr, &size, &count); result == ERROR_BUFFER_TOO_SMALL) {
-		std::vector<RASENTRYNAMEW> entries_{ size / sizeof(RASENTRYNAMEW) };
-		for (auto& e : entries_) e = { .dwSize = sizeof(RASENTRYNAMEW), .dwFlags = REN_User };
-		size = sizeof(RASENTRYNAMEW) * size_as<DWORD>(entries_);
-		if (result = RasEnumEntriesW(nullptr, nullptr, data(entries_), &size, &count); result == ERROR_SUCCESS) {
-			for (DWORD i = 0; i < count; i++)
-				entries.push_back(entries_[i].szEntryName);
-		}
-	}
+  // ほぼSetRasEntryToComboBox関数のコピー
+  entries.clear();
+  if (DWORD size = 0, count = 0, result = RasEnumEntriesW(nullptr, nullptr, nullptr, &size, &count); result == ERROR_BUFFER_TOO_SMALL) {
+    std::vector<RASENTRYNAMEW> entries_{ size / sizeof(RASENTRYNAMEW) };
+    for (auto& e : entries_) e = { .dwSize = sizeof(RASENTRYNAMEW), .dwFlags = REN_User };
+    size = sizeof(RASENTRYNAMEW) * size_as<DWORD>(entries_);
+    if (result = RasEnumEntriesW(nullptr, nullptr, data(entries_), &size, &count); result == ERROR_SUCCESS) {
+      for (DWORD i = 0; i < count; i++)
+        entries.push_back(entries_[i].szEntryName);
+    }
+  }
 }
 
 }  // namespace

@@ -2,23 +2,25 @@
 #define LIBFFFTP_EVENTPROC_HPP_
 
 #include <QThread>
+#include <QTimer>
 
-class EventProc : public QObject {
+class EventProc : public QThread {
   Q_OBJECT
 
  public:
   explicit EventProc();
   virtual ~EventProc();
 
-  void setupTimer();
-
- protected:
-  void timerEvent(QTimerEvent* e);
-
  private:
-  QThread thread_;
-  int timer1id_;
-  int timer2id_;
+  std::unique_ptr<QTimer> timer_;
+
+Q_SIGNALS:
+  void finising();
+
+private Q_SLOTS:
+  void threadStarted();
+  void threadFinished();
+  void timerWorks();
 
  private:
   Q_DISABLE_COPY_MOVE(EventProc)

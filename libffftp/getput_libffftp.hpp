@@ -20,7 +20,6 @@ int MakeTransferThread() noexcept {
 //    QMetaObject::invokeMethod(transferThread[i].get(), "transfer", Qt::QueuedConnection);
   }
   completed[MAX_DATA_CONNECTION] = nullptr;
-  eventproc->setupTimer();
   return FFFTP_SUCCESS;
 }
 
@@ -29,7 +28,11 @@ void CloseTransferThread() noexcept {
   for (int i = 0; i < MAX_DATA_CONNECTION; i++) {
     transferThread[i].reset();
   }
-  eventproc.reset();
+  if (eventproc) {
+    eventproc->exit();
+    eventproc->wait();
+    eventproc.reset();
+  }
 }
 #endif  // LIBFFFTP_INCLUDE_GETPUT_TransferThread
 

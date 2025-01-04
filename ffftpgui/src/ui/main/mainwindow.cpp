@@ -438,7 +438,9 @@ bool MainWindow::showOptionDialog() {
 // メッセージボックスの表示系
 bool MainWindow::askMasterPassword(QString& passwd) {
   bool ok{false};
-  passwd = QInputDialog::getText(this, QString(ffftp_applicationname()), kPlzInputYourMasterPwd, QLineEdit::Password, kEmptyString, &ok);
+  // TODO: ヘルプID
+  // Qt::MSWindowsFixedSizeDialogHintを指定しないと警告が出る
+  passwd = QInputDialog::getText(this, QString(ffftp_applicationname()), kPlzInputYourMasterPwd, QLineEdit::Password, kEmptyString, &ok, Qt::MSWindowsFixedSizeDialogHint);
   return ok;
 }
 
@@ -488,11 +490,11 @@ int MainWindow::messageBox(unsigned long long msgid, unsigned long long capid) {
     QMessageBox::StandardButtons buttons;
     QMessageBox::StandardButton defaultButton;
   };
-  static QMap<QMessageBox::StandardButton, int> ret_table{
-    { QMessageBox::Ok,     1 }, // means IDOK
-    { QMessageBox::Cancel, 2 }, // means IDCANCEL
-    { QMessageBox::Yes,    6 }, // means IDYES
-    { QMessageBox::No,     7 }, // means IDNO
+  static QMap<QMessageBox::StandardButton, ffftp_procresponse> ret_table{
+    { QMessageBox::Ok,     ffftp_procresponse::OK_    },
+    { QMessageBox::Cancel, ffftp_procresponse::CANCEL },
+    { QMessageBox::Yes,    ffftp_procresponse::YES_   },
+    { QMessageBox::No,     ffftp_procresponse::NO_    },
   };
   static constexpr QMessageBox::StandardButtons kOk          = QMessageBox::Ok;
   static constexpr QMessageBox::StandardButtons kYesNo       = QMessageBox::Yes | QMessageBox::No;

@@ -33,9 +33,6 @@
 #define UMDF_USING_NTSTATUS
 
 #ifdef LIBFFFTP
-#ifdef _WIN32
-#define LIBFFFTP_USE_WINDOWS_SPECIFIC_FEATURE
-#endif
 #include "libffftp_windows.hpp"
 #else
 #define LIBFFFTP_USE_WIN32API

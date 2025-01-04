@@ -30,6 +30,9 @@
     <Filter Include="Source Files\ffftp">
       <UniqueIdentifier>{9aa8c72e-fe24-4a04-a5d0-5efe8f93c65d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\replacement">
+      <UniqueIdentifier>{5aa37767-8038-40b8-a618-9c9e099d740f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common.h">
@@ -56,9 +59,6 @@
     <ClInclude Include="..\Resource\resource.ja-JP.h">
       <Filter>Header Files\ffftp</Filter>
     </ClInclude>
-    <ClInclude Include="connect_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ffftp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -71,50 +71,53 @@
     <ClInclude Include="ffftp_option.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hostman_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="libffftp_common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="libffftp_windows.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="main_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="option_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ras_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="taskwin_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="upnp_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="misc_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="registry_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="getput_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="common_libffftp.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\replacement</Filter>
     </ClInclude>
-    <ClInclude Include="socketcontext_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="socket_libffftp.hpp">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="connect_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
     </ClInclude>
     <ClInclude Include="dialog_libffftp.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="getput_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="hostman_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="main_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="misc_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="option_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="ras_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="registry_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="socket_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="socketcontext_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="taskwin_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="upnp_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -239,14 +242,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="transfer_libffftp.hpp">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="sockets.hpp">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="eventproc.hpp">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="transfer_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
     </QtMoc>
   </ItemGroup>
 </Project>

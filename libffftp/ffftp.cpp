@@ -49,10 +49,6 @@ LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback pr
   return libffftp::initialize();
 }
 
-LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_startup() {
-  libffftp::startupProc();
-}
-
 LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_finalize() {
   libffftp::finalize();
 }

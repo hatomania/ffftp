@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_CORE_FFFTPTHREAD_HPP_
+#define FFFTPGUI_CORE_FFFTPTHREAD_HPP_
 
 #include <QThread>
 
@@ -6,13 +7,17 @@ class FFFTPThread : public QThread {
   Q_OBJECT
 
  public:
-  explicit FFFTPThread(QObject* parent = Q_NULLPTR);
+  explicit FFFTPThread();
 
- public slots:
+ Q_SIGNALS:
+  void inited(bool);
+
+ public Q_SLOTS:
+  void initFFFTP();
   void connect(const void* hc);
 
  private:
-  class Private;
-  Private* d_;
   Q_DISABLE_COPY(FFFTPThread)
 };
+
+#endif  // FFFTPGUI_CORE_FFFTPTHREAD_HPP_

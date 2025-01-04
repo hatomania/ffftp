@@ -54,6 +54,13 @@ extern "C" {
 LIBFFFTP_DECLSPEC bool LIBFFFTP_CALLCONV ffftp_initialize(ffftp_proc_callback proc);
 
 /**
+ * @brief libffftpの初期化後に行う最初の処理を実行する。
+ *
+ * コマンドライン引数に応じた処理を実行します。ffftp_initialize関数を呼び出した後に1回だけ本関数を呼び出してください。
+ */
+LIBFFFTP_DECLSPEC void LIBFFFTP_CALLCONV ffftp_startup();
+
+/**
  * @brief libffftpの後処理を行う。
  *
  * アプリケーション終了時に1度だけ呼び出さなければならない。@n

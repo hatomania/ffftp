@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef FFFTPGUI_UI_MAIN_MAINWINDOW_HPP_
+#define FFFTPGUI_UI_MAIN_MAINWINDOW_HPP_
 
 #include <QMainWindow>
 
@@ -111,7 +112,11 @@ class MainWindow : public QMainWindow {
   bool askRetryMasterPassword();
   bool askSaveCryptFunc();
 
+  void initFFFTP();
+  void inited(bool);
+
  private:
+  void showEvent(QShowEvent* event) override;
   void timerEvent(QTimerEvent* event) override;
   void closeEvent(QCloseEvent* event) override;
   static int messageBox(unsigned long long msgid, unsigned long long capid);
@@ -121,3 +126,5 @@ class MainWindow : public QMainWindow {
   std::unique_ptr<Private> d_;
   Q_DISABLE_COPY_MOVE(MainWindow);
 };
+
+#endif  // FFFTPGUI_UI_MAIN_MAINWINDOW_HPP_

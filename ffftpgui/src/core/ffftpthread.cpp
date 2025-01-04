@@ -4,16 +4,21 @@
 #include <QThread>
 
 #include "ffftp.h"
+#include "ui/main/mainwindow.hpp"
 
-// D-Pointer(PImplメカニズム)による隠ぺいの実装
-class FFFTPThread::Private {
- public:
-  Private() {}
-  ~Private() {}
-};
+FFFTPThread::FFFTPThread() : QThread(Q_NULLPTR) {
+  moveToThread(this);
+  start();
+}
 
-FFFTPThread::FFFTPThread(QObject* parent)
-    : QThread(parent), d_(new FFFTPThread::Private()) {}
+void FFFTPThread::initFFFTP() {
+  qDebug() << __FUNCTION__ << " pid=" << QThread::currentThreadId();
+  bool ret{ffftp_initialize(MainWindow::ffftp_proc)};
+  if (ret) {
+    ffftp_startup();
+  }
+  emit inited(ret);
+}
 
 void FFFTPThread::connect(const void* hc) {
   qDebug() << __FUNCTION__ << " called. " << hc;

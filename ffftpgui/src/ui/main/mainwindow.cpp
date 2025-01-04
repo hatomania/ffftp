@@ -22,7 +22,7 @@ class MainWindow::Private {
   Private() : ffftpt(nullptr) {}
   ~Private() {}
   Ui::MainWindow ui;
-  FFFTPThread* ffftpt;
+  std::unique_ptr<FFFTPThread> ffftpt;
 };
 
 namespace {
@@ -79,7 +79,7 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     const QString filter{fileFilter(reinterpret_cast<unsigned long long>(param->param3))};
     const QString caption{fileCaption(reinterpret_cast<unsigned long long>(param->param4))};
     QString filepath{};
-    QMetaObject::invokeMethod(_mainwindow, msg == GIVE_A_OPENFILEPATH ? "openFileName" : "saveFileName", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, filepath), Q_ARG(const QString&, path), Q_ARG(const QString&, filter), Q_ARG(const QString&, caption));
+    QMetaObject::invokeMethod(_mainwindow, msg == GIVE_A_OPENFILEPATH ? "openFileName" : "saveFileName", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, filepath), Q_ARG(const QString&, path), Q_ARG(const QString&, filter), Q_ARG(const QString&, caption));
     static std::wstring out_filepath{};
     out_filepath.clear();
     param->param1 = nullptr;
@@ -96,19 +96,19 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     switch (msgid) {
     case ffftp_dialogid::HOSTLIST_DLG:
       // ホスト設定ダイアログを表示する
-      QMetaObject::invokeMethod(_mainwindow, "showHostListDialog", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool));
+      QMetaObject::invokeMethod(_mainwindow, "showHostListDialog", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::HOSTCONNECT_DLG:
       // ホスト設定ダイアログ（簡易版）を表示する
-      QMetaObject::invokeMethod(_mainwindow, "showHostConnectDialog", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool));
+      QMetaObject::invokeMethod(_mainwindow, "showHostConnectDialog", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::HOSTNAME_DLG: {
       // クイック接続ダイアログを表示する
       const ffftp_procparam_quickconnect* param2 = static_cast<decltype(param2)>(param->param2);
       ffftp_procparam_quickconnect* param3 = static_cast<decltype(param3)>(param->param3);
-      QMetaObject::invokeMethod(_mainwindow, "showHostQuickConnectDialog", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(const ffftp_procparam_quickconnect&, *param2), Q_ARG(ffftp_procparam_quickconnect&, *param3));
+      QMetaObject::invokeMethod(_mainwindow, "showHostQuickConnectDialog", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(const ffftp_procparam_quickconnect&, *param2), Q_ARG(ffftp_procparam_quickconnect&, *param3));
       ret = ret_bool;
       } break;
     case ffftp_dialogid::ABOUT_DLG: break;
@@ -188,19 +188,19 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     case ffftp_dialogid::MOVE_NOTIFY_DLG: break;
     case ffftp_dialogid::FORCEPASSCHANGE_DLG: break;
     case ffftp_dialogid::NEWMASTERPASSWD_DLG:
-      QMetaObject::invokeMethod(_mainwindow, "askRetryMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool));
+      QMetaObject::invokeMethod(_mainwindow, "askRetryMasterPassword", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::MASTERPASSWD_DLG: {
       QString passwd_{};
-      QMetaObject::invokeMethod(_mainwindow, "askMasterPassword", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, passwd_));
+      QMetaObject::invokeMethod(_mainwindow, "askMasterPassword", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, passwd_));
       *reinterpret_cast<std::wstring*>(param->param2) = passwd_.toStdWString();
       ret = ret_bool;
     } break;
     case ffftp_dialogid::HSET_CRYPT_DLG: break;
     case ffftp_dialogid::HSET_ADV3_DLG: break;
     case ffftp_dialogid::SAVECRYPT_DLG:
-      QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool));
+      QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::UPDATESSLROOT_DLG: break;
@@ -211,7 +211,7 @@ unsigned long long MainWindow::ffftp_proc(unsigned long long msg, ffftp_procpara
     case ffftp_dialogid::CORRUPTSETTINGS_DLG: break;
     case ffftp_dialogid::CERTERR_DLG: break;
     case ffftp_dialogid::OPTION_DLG:
-      QMetaObject::invokeMethod(_mainwindow, "showOptionDialog", Qt::AutoConnection, Q_RETURN_ARG(bool, ret_bool));
+      QMetaObject::invokeMethod(_mainwindow, "showOptionDialog", Qt::BlockingQueuedConnection, Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     }
@@ -256,10 +256,9 @@ MainWindow::MainWindow(QWidget* parent)
 
   startTimer(500);
 
-  d_->ffftpt = new FFFTPThread();  // スレッド化するためにはコンストラクタにparentを渡してはいけない
-  //d_->ffftpt = new FFFTPThread(this); // これはNG
-  d_->ffftpt->moveToThread(d_->ffftpt);
-  d_->ffftpt->start();
+  d_->ffftpt = std::make_unique<FFFTPThread>();  // スレッド化するためにはコンストラクタにparentを渡してはいけない
+  //d_->ffftpt = std::make_unique<FFFTPThread>(this); // これはNG
+  QObject::connect(d_->ffftpt.get(), SIGNAL(inited(bool)), this, SLOT(inited(bool)));
 
   _mainwindow = this;
 
@@ -274,8 +273,6 @@ MainWindow::MainWindow(QWidget* parent)
 }
 
 MainWindow::~MainWindow() {
-  d_->ffftpt->terminate();
-  delete d_->ffftpt;
 }
 
 // [接続]メニュー
@@ -283,7 +280,7 @@ void MainWindow::actionConnect() { ffftp_notify_event(ffftp_eventid::EID_MENU_CO
 void MainWindow::actionQuickConnect() { ffftp_notify_event(ffftp_eventid::EID_MENU_QUICK); }
 void MainWindow::actionDisconnect() { ffftp_notify_event(ffftp_eventid::EID_MENU_DISCONNECT); }
 void MainWindow::actionHostSettings() { ffftp_notify_event(ffftp_eventid::EID_MENU_SET_CONNECT); }
-void MainWindow::actionExit() { ffftp_notify_event(ffftp_eventid::EID_MENU_EXIT); }
+void MainWindow::actionExit() { close(); }
 void MainWindow::actionImportFromWS_FTP() {}
 void MainWindow::actionSaveSettingsToFile() {}
 void MainWindow::actionLoadSettingsFromFile() {}
@@ -452,6 +449,30 @@ bool MainWindow::askSaveCryptFunc() {
   return QMessageBox::question(this, kAskSaveCryptTitle, kAskSaveCryptBody) == QMessageBox::Yes;
 }
 
+void MainWindow::initFFFTP() {
+  setEnabled(false);
+  QMetaObject::invokeMethod(d_->ffftpt.get(), "initFFFTP", Qt::QueuedConnection);
+}
+
+void MainWindow::inited(bool ret) {
+  qDebug() << __FUNCTION__ << " pid=" << QThread::currentThreadId();
+  if (ret) {
+    setEnabled(true);
+  } else {
+    close();
+  }
+}
+
+// ウィンドウが表示された時の処理
+void MainWindow::showEvent(QShowEvent* event) {
+  static bool init{false};
+  if (!init) {
+    qDebug() << __FUNCTION__ << " pid=" << QThread::currentThreadId();
+    initFFFTP();
+    init = true;
+  }
+}
+
 // タイマーイベント
 void MainWindow::timerEvent(QTimerEvent* event) {
   QString msg = QString(ffftp_taskmessage());
@@ -462,7 +483,11 @@ void MainWindow::timerEvent(QTimerEvent* event) {
 
 // ウィンドウを[閉じる]したときの処理
 void MainWindow::closeEvent(QCloseEvent* event) {
-  actionExit();
+  qDebug() << __FUNCTION__ << " pid=" << QThread::currentThreadId();
+  ffftp_notify_event(ffftp_eventid::EID_MENU_EXIT);
+  d_->ffftpt->exit();
+  d_->ffftpt->wait();
+  ffftp_finalize();
 }
 
 // ffftpからメッセージボックスの表示依頼の通知が来た時に行う処理

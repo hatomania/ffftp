@@ -258,11 +258,32 @@ static int InitApp(int cmdShow) {
   if (WSAStartup(MAKEWORD(2, 2), &WSAData) != 0) { return FFFTP_FAIL; }
 #endif
 
+  // コマンドライン引数を先頭のEXEを除いて、std::vector<std::wstring_view>という型に格納する
+  QStringList qargs{QCoreApplication::arguments()}; // 別スレッドからなのか、__wargvが機能しないのでQtを使う
+  qargs.pop_front(); // 先頭のEXEを消去
+  // うまくやればパイプライン演算子という手法を使って一行で実現できるらしい。以下はGemini2.0が提案してくれたコード。しかしコンパイルエラー
+  //std::vector<std::wstring> args_ = qargs | std::views::transform([](const QString& s){ return s.toStdWString(); }) | std::ranges::to<std::vector>();
+  //const std::vector<std::wstring_view> args = args_ | std::views::transform([](const std::wstring& s){ return std::wstring_view(s); }) | std::ranges::to<std::vector>();
+  const std::vector<std::wstring>&& args_{[&qargs](){
+    std::vector<std::wstring> t{};
+    t.reserve(qargs.size());
+    for (const auto& s : qargs) { t.push_back(s.toStdWString()); }
+    return t;
+  }()};
+  const std::vector<std::wstring_view>&& args{[&args_](){
+    std::vector<std::wstring_view> t{};
+    t.reserve(args_.size());
+    for (const auto& s : args_) { t.push_back(s); }
+    return t;
+  }()};
+  for (const auto& s: args) {
+    qDebug() << s;
+  }
+
   // INIファイルモードかどうか
   // オプション＋引数省略: INIファイルの入出力先は個人フォルダ（ファイル名は"モジュール名(=ffftp)"+".ini"）
   // オプション＋引数指定: INIファイルの入出力先は指定したファイルパス
   // ポータブル版であっても、ユーザによって指定されたこの値は優先される
-  std::vector<std::wstring_view> args{ __wargv + 1, __wargv + __argc };
   if (auto it = std::find_if(begin(args), end(args), [](auto const& arg) { return ieq(arg, L"-n"sv) || ieq(arg, L"--ini"sv); }); it != end(args) && ++it != end(args)) {
     ForceIni = YES;
     RegType  = REGTYPE_INI;

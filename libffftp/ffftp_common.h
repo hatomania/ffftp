@@ -19,9 +19,11 @@
 
 #ifndef __cplusplus
 #include <stddef.h> // for size_t
+#include <stdint.h> // for uintptr_t
 #include <wchar.h>
 #else
 #include <cstddef>
+#include <cstdint>
 #endif
 
 #ifdef __cplusplus

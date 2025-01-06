@@ -119,6 +119,9 @@
     <ClInclude Include="upnp_libffftp.hpp">
       <Filter>Header Files\replacement</Filter>
     </ClInclude>
+    <ClInclude Include="history_libffftp.hpp">
+      <Filter>Header Files\replacement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\toolmenu.cpp">

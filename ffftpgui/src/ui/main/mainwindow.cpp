@@ -61,7 +61,9 @@ inline Qt::ConnectionType autoBlockingConnection(const QObject* target) {
 }
 }  // namespace
 
+#define MAINWINDOW_INVOKEMETHOD(METHOD, RETURN, ...) QMetaObject::invokeMethod(_mainwindow, METHOD, autoBlockingConnection(_mainwindow), RETURN, __VA_ARGS__)
 uintptr_t MainWindow::ffftp_proc(uintptr_t msg, ffftp_procparam* param) {
+  /* MainWindowのイベントループとは別のスレッドから呼ばれる可能性があるため、メソッドはすべてinvokeMethod関数で呼び出します */
   uintptr_t ret{0};
   bool ret_bool{false};
   switch (msg) {
@@ -70,7 +72,7 @@ uintptr_t MainWindow::ffftp_proc(uintptr_t msg, ffftp_procparam* param) {
     int ret_{};
     auto p1{reinterpret_cast<uintptr_t>(param->param1)};
     auto p2{reinterpret_cast<uintptr_t>(param->param2)};
-    QMetaObject::invokeMethod(_mainwindow, "messageBox", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(int, ret_), Q_ARG(uintptr_t, p1), Q_ARG(uintptr_t, p2));
+    MAINWINDOW_INVOKEMETHOD("messageBox", Q_RETURN_ARG(int, ret_), Q_ARG(uintptr_t, p1), Q_ARG(uintptr_t, p2));
     ret = ret_;
   } break;
 
@@ -86,7 +88,7 @@ uintptr_t MainWindow::ffftp_proc(uintptr_t msg, ffftp_procparam* param) {
     const QString filter{fileFilter(reinterpret_cast<uintptr_t>(param->param3))};
     const QString caption{fileCaption(reinterpret_cast<uintptr_t>(param->param4))};
     QString filepath{};
-    QMetaObject::invokeMethod(_mainwindow, msg == GIVE_A_OPENFILEPATH ? "openFileName" : "saveFileName", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, filepath), Q_ARG(const QString&, path), Q_ARG(const QString&, filter), Q_ARG(const QString&, caption));
+    MAINWINDOW_INVOKEMETHOD(msg == GIVE_A_OPENFILEPATH ? "openFileName" : "saveFileName", Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, filepath), Q_ARG(const QString&, path), Q_ARG(const QString&, filter), Q_ARG(const QString&, caption));
     static std::wstring out_filepath{};
     out_filepath.clear();
     param->param1 = nullptr;
@@ -103,19 +105,19 @@ uintptr_t MainWindow::ffftp_proc(uintptr_t msg, ffftp_procparam* param) {
     switch (msgid) {
     case ffftp_dialogid::HOSTLIST_DLG:
       // ホスト設定ダイアログを表示する
-      QMetaObject::invokeMethod(_mainwindow, "showHostListDialog", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool));
+      MAINWINDOW_INVOKEMETHOD("showHostListDialog", Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::HOSTCONNECT_DLG:
       // ホスト設定ダイアログ（簡易版）を表示する
-      QMetaObject::invokeMethod(_mainwindow, "showHostConnectDialog", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool));
+      MAINWINDOW_INVOKEMETHOD("showHostConnectDialog", Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::HOSTNAME_DLG: {
       // クイック接続ダイアログを表示する
       const ffftp_procparam_quickconnect* param2 = static_cast<decltype(param2)>(param->param2);
       ffftp_procparam_quickconnect* param3 = static_cast<decltype(param3)>(param->param3);
-      QMetaObject::invokeMethod(_mainwindow, "showHostQuickConnectDialog", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool), Q_ARG(const ffftp_procparam_quickconnect&, *param2), Q_ARG(ffftp_procparam_quickconnect&, *param3));
+      MAINWINDOW_INVOKEMETHOD("showHostQuickConnectDialog", Q_RETURN_ARG(bool, ret_bool), Q_ARG(const ffftp_procparam_quickconnect&, *param2), Q_ARG(ffftp_procparam_quickconnect&, *param3));
       ret = ret_bool;
       } break;
     case ffftp_dialogid::ABOUT_DLG: break;
@@ -195,19 +197,19 @@ uintptr_t MainWindow::ffftp_proc(uintptr_t msg, ffftp_procparam* param) {
     case ffftp_dialogid::MOVE_NOTIFY_DLG: break;
     case ffftp_dialogid::FORCEPASSCHANGE_DLG: break;
     case ffftp_dialogid::NEWMASTERPASSWD_DLG:
-      QMetaObject::invokeMethod(_mainwindow, "askRetryMasterPassword", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool));
+      MAINWINDOW_INVOKEMETHOD("askRetryMasterPassword", Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::MASTERPASSWD_DLG: {
       QString passwd_{};
-      QMetaObject::invokeMethod(_mainwindow, "askMasterPassword", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, passwd_));
+      MAINWINDOW_INVOKEMETHOD("askMasterPassword", Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, passwd_));
       *reinterpret_cast<std::wstring*>(param->param2) = passwd_.toStdWString();
       ret = ret_bool;
     } break;
     case ffftp_dialogid::HSET_CRYPT_DLG: break;
     case ffftp_dialogid::HSET_ADV3_DLG: break;
     case ffftp_dialogid::SAVECRYPT_DLG:
-      QMetaObject::invokeMethod(_mainwindow, "askSaveCryptFunc", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool));
+      MAINWINDOW_INVOKEMETHOD("askSaveCryptFunc", Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     case ffftp_dialogid::UPDATESSLROOT_DLG: break;
@@ -218,22 +220,30 @@ uintptr_t MainWindow::ffftp_proc(uintptr_t msg, ffftp_procparam* param) {
     case ffftp_dialogid::CORRUPTSETTINGS_DLG: break;
     case ffftp_dialogid::CERTERR_DLG: break;
     case ffftp_dialogid::OPTION_DLG:
-      QMetaObject::invokeMethod(_mainwindow, "showOptionDialog", autoBlockingConnection(_mainwindow), Q_RETURN_ARG(bool, ret_bool));
+      MAINWINDOW_INVOKEMETHOD("showOptionDialog", Q_RETURN_ARG(bool, ret_bool));
       ret = ret_bool;
       break;
     }
   } break; // case ffftp_procmsg::SHOW_DIALOGBOX
 
   // ffftpからキャプション変更依頼の通知が来た
-  case ffftp_procmsg::SETWINDOWTITLE:
-    _mainwindow->setWindowTitle(QString(reinterpret_cast<const wchar_t*>(param->param1)));
-    break;
+  case ffftp_procmsg::SETWINDOWTITLE: {
+    QString title{QString(reinterpret_cast<const wchar_t*>(param->param1))};
+    MAINWINDOW_INVOKEMETHOD("updateTitle", Q_RETURN_ARG(bool, ret_bool), Q_ARG(QString&, title));
+    ret = ret_bool;
+  } break;
+
+  case ffftp_procmsg::HISTORY_UPDATED: {
+    const ffftp_histories* histories{reinterpret_cast<decltype(histories)>(param->param1)};
+    MAINWINDOW_INVOKEMETHOD("updateHistory", Q_RETURN_ARG(bool, ret_bool), Q_ARG(const ffftp_histories&, *histories));
+    ret = ret_bool;
+  } break;
   }
   return ret;
 }
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), d_(new MainWindow::Private()) {
+    : QMainWindow(parent), d_(std::make_unique<Private>()) {
   d_->ui.setupUi(this);
   // QActionGroupをDesignerから編集する方法が分からなかったので手動で実装
   QActionGroup* ag1 = new QActionGroup(this);
@@ -509,6 +519,7 @@ bool MainWindow::askSaveCryptFunc() {
   return QMessageBox::question(this, kAskSaveCryptTitle, kAskSaveCryptBody) == QMessageBox::Yes;
 }
 
+// 初期化系
 void MainWindow::initFFFTP() {
   setEnabled(false);
   QMetaObject::invokeMethod(d_->ffftpt.get(), "initFFFTP", Qt::QueuedConnection);
@@ -521,6 +532,50 @@ void MainWindow::inited(bool ret) {
   } else {
     close();
   }
+}
+
+bool MainWindow::updateTitle(const QString& title) {
+  setWindowTitle(title);
+  return true;
+}
+
+bool MainWindow::updateHistory(const ffftp_histories& histories) {
+  qDebug() << __FUNCTION__;
+  static QAction* histsep{}; // セパレータ
+  static QVector<QAction*> histmenus{};
+  static QActionGroup* g{new QActionGroup{this}};
+  static QMenu& menu{*d_->ui.menu_Connect}; 
+  // 既存のヒストリを削除
+  menu.removeAction(histsep);
+  for (const auto& m : histmenus) {
+    menu.removeAction(m);
+    g->removeAction(m);
+    // Qtが管理しているため勝手にdeleteしてはいけない
+    //delete m;
+  }
+  QObject::disconnect(g, SIGNAL(triggered(QAction*)), this, SLOT(actionHistory(QAction*)));
+  // 新たなヒストリでメニューを再構築
+  histmenus.clear();
+  histmenus.resize(histories.history_cnt);
+  if (histories.history_cnt) { histsep = menu.addSeparator(); }
+  for (int i{0}; i < histories.history_cnt; ++i) {
+    const int number{i+1};
+    histmenus[i] = menu.addAction(
+      QString("%1 %2 (%3) %4").
+        arg(QString::number(i+1),
+            QString(histories.histories[i].hostaddr),
+            QString(histories.histories[i].username),
+            QString(histories.histories[i].remote_initdir)));
+    histmenus[i]->setData(number);
+    g->addAction(histmenus[i]);
+  }
+  QObject::connect(g, SIGNAL(triggered(QAction*)), this, SLOT(actionHistory(QAction*)));
+  return true;
+}
+
+void MainWindow::actionHistory(QAction* a) {
+  qDebug() << __FUNCTION__ << "number=" << a->data();
+  // TODO: ヒストリをクリックした時の処理
 }
 
 // ウィンドウが表示された時の処理

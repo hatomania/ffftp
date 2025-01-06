@@ -3,9 +3,13 @@
 
 #include "ffftp_common.h"
 
+#include <vector>
+
+struct HISTORYDATA;
 extern int messageBox(int textId, int captionId = 0);
 extern int dialogBox(int dialogid, void* param);
 extern void setOption();
+extern void historyUpdated(const std::vector<HISTORYDATA>& histories);
 
 #ifndef _WIN32
 #include <arpa/inet.h>

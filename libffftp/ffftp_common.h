@@ -51,6 +51,7 @@ enum ffftp_procmsg {
   GIVE_A_OPENFILEPATH,
   GIVE_A_SAVEFILEPATH,
   GIVE_A_DIRPATH,
+  HISTORY_UPDATED,
 };
 
 typedef uintptr_t (LIBFFFTP_CALLCONV *ffftp_proc_callback)(uintptr_t msg, ffftp_procparam* param);
@@ -333,6 +334,17 @@ enum ffftp_procresponse {
   EXIT    = 20,
   OK_     = 100,
   YES_    = 101,
+};
+
+struct ffftp_history {
+  const wchar_t* hostaddr;
+  const wchar_t* username;
+  const wchar_t* remote_initdir;
+};
+
+struct ffftp_histories {
+  const ffftp_history* histories;
+  size_t history_cnt;
 };
 
 #ifdef __cplusplus

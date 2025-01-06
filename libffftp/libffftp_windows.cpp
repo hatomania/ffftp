@@ -300,6 +300,16 @@ void setOption() {
   SHOWDIALOGBOX_CALLPROC();
 }
 
+void historyUpdated(const std::vector<HISTORYDATA>& histories) {
+  std::unique_ptr<ffftp_history[]> history{std::make_unique<ffftp_history[]>(histories.size())};
+  for (int i{0}; const auto& h : histories) {
+    history[i++] = {h.HostAdrs.c_str(), h.UserName.c_str(), h.RemoteInitDir.c_str()};
+  }
+  ffftp_histories ref_history{history.get(), histories.size()};
+  ffftp_procparam param{&ref_history};
+  ffftp_proc(ffftp_procmsg::HISTORY_UPDATED, &param);
+}
+
 
 //--------------------------------------------------------------------------------------------------
 #ifndef _WIN32

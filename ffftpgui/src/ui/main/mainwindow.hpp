@@ -113,8 +113,13 @@ class MainWindow : public QMainWindow {
   bool askRetryMasterPassword();
   bool askSaveCryptFunc();
 
+  // 初期化系
   void initFFFTP();
   void inited(bool);
+
+  bool updateTitle(const QString& title);
+  bool updateHistory(const ffftp_histories& histories);
+  void actionHistory(QAction* a);
 
  private:
   void showEvent(QShowEvent* event) override;

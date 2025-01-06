@@ -1,6 +1,7 @@
 ﻿//--------------------------------------------------------------------------------------------------
 #ifdef LIBFFFTP_INCLUDE_OPTION_SetOption
 void SetOption() {
+  setOption();
 }
 #endif  // LIBFFFTP_INCLUDE_OPTION_SetOption
 
@@ -27,10 +28,10 @@ LIBFFFTP_FUNCTION(void setOption(const ffftp_option& opt))
   // [ユーザー]タブ
   UserMailAdrs = opt.user.user_mail_adrs;
   // [転送1]タブ
-  SetTransferTypeImm(
+  TransMode =
     opt.transfer1.trans_mode == modes::ASCII  ? TYPE_A :
     opt.transfer1.trans_mode == modes::BINARY ? TYPE_I :
-    opt.transfer1.trans_mode == modes::AUTO   ? TYPE_X : -1);
+    opt.transfer1.trans_mode == modes::AUTO   ? TYPE_X : -1;
   RmEOF = opt.transfer1.rm_eof ? YES : NO;
   SaveTimeStamp = opt.transfer1.save_timestamp ? YES : NO;
   VaxSemicolon = opt.transfer1.vax_semicolon ? YES : NO;
@@ -147,15 +148,16 @@ LIBFFFTP_FUNCTION(void option(ffftp_option& opt))
   // [転送1]タブ
   opt.transfer1 = {
       .trans_mode =
-          AskTransferType() == TYPE_A ? modes::ASCII  :
-          AskTransferType() == TYPE_I ? modes::BINARY :
-          AskTransferType() == TYPE_X ? modes::AUTO   : -1,
+          TransMode == TYPE_A ? modes::ASCII  :
+          TransMode == TYPE_I ? modes::BINARY :
+          TransMode == TYPE_X ? modes::AUTO   : -1,
       .rm_eof = RmEOF == YES,
       .save_timestamp = SaveTimeStamp == YES,
       .vax_semicolon = VaxSemicolon == YES,
       .make_all_dir = MakeAllDir == YES,
       .abort_on_list_error = AbortOnListError == YES,
   };
+  assert(opt.transfer1.trans_mode != -1);
   vectorWstr2Wchar(opt.transfer1.ascii_ext, opt.transfer1.ascii_ext_cnt, AsciiExt);
   // [転送2]タブ
   opt.transfer2 = {
@@ -166,6 +168,7 @@ LIBFFFTP_FUNCTION(void option(ffftp_option& opt))
       .timeout = TimeOut,
       .default_local_path = DefaultLocalPath.c_str(),
   };
+  assert(opt.transfer2.fname_cnv != -1);
   // [転送3]タブ
   delete[] opt.transfer3.attrlist_fname;
   delete[] opt.transfer3.attrlist_attr;

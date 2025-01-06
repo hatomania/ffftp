@@ -51,12 +51,6 @@ static HOSTDATA CurHost;
 static int Oss = NO;  /* OSS ファイルシステムへアクセスしている場合は YES */
 #endif
 
-#ifdef LIBFFFTP
-#define LIBFFFTP_OTHER
-#include "connect_libffftp.hpp"
-#undef LIBFFFTP_OTHER
-#endif
-
 
 // 接続しているホストを返す
 //   TODO: GetConnectingHost()との違いがよくわからない
@@ -298,6 +292,7 @@ void QuickConnectProc() {
 }
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 /*----- 指定したホスト名でホストへ接続 ----------------------------------------
 *
 *	Parameter
@@ -391,6 +386,11 @@ void DirectConnectProc(std::wstring&& unc, int Kanji, int Kana, int Fkanji, int 
 	}
 	return;
 }
+#else
+#define LIBFFFTP_INCLUDE_CONNECT_DirectConnectProc
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_CONNECT_DirectConnectProc
+#endif // LIBFFFTP_USE_WIN32API
 
 
 /*----- ホストのヒストリで指定されたホストへ接続 ------------------------------
@@ -769,6 +769,7 @@ int AskOSS() noexcept {
 #endif /* HAVE_TANDEM */
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 /*----- ホストへ接続する ------------------------------------------------------
 *
 *	Parameter
@@ -1063,6 +1064,11 @@ static std::shared_ptr<SocketContext> DoConnectCrypt(int CryptMode, HOSTDATA* Ho
 
 	return(ContSock);
 }
+#else
+#define LIBFFFTP_INCLUDE_CONNECT_DoConnectCrypt
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_CONNECT_DoConnectCrypt
+#endif // LIBFFFTP_USE_WIN32API
 
 static std::shared_ptr<SocketContext> DoConnect(HOSTDATA* HostData, std::wstring const& Host, std::wstring& User, std::wstring& Pass, std::wstring& Acct, int Port, int Fwall, int SavePass, int Security, int* CancelCheckWork) {
 	constexpr struct {
@@ -1154,7 +1160,11 @@ static inline auto getaddrinfo(std::wstring const& host, std::wstring const& por
 	}
 	return std::unique_ptr<addrinfoW>{};
 }
-#endif
+#else
+#define LIBFFFTP_INCLUDE_CONNECT_getaddrinfo1
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_CONNECT_getaddrinfo1
+#endif // LIBFFFTP_USE_WIN32API
 
 static inline auto getaddrinfo(std::wstring const& host, int port, int family = AF_UNSPEC, int flags = AI_NUMERICHOST | AI_NUMERICSERV) {
 	return getaddrinfo(host, std::to_wstring(port), family, flags);
@@ -1170,7 +1180,11 @@ static std::unique_ptr<addrinfoW> getaddrinfo(std::wstring const& host, std::wst
 		return {};
 	return future.get();
 }
-#endif
+#else
+#define LIBFFFTP_INCLUDE_CONNECT_getaddrinfo2
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_CONNECT_getaddrinfo2
+#endif // LIBFFFTP_USE_WIN32API
 
 
 static inline auto getaddrinfo(std::wstring const& host, int port, int family, int* CancelCheckWork) {
@@ -1427,8 +1441,14 @@ std::shared_ptr<SocketContext> connectsock(std::variant<std::wstring_view, std::
 	Notice(IDS_MSGJPN025);
 	return s;
 }
+#else
+#define LIBFFFTP_INCLUDE_CONNECT_connectsock
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_CONNECT_connectsock
+#endif // LIBFFFTP_USE_WIN32API
 
 
+#ifdef LIBFFFTP_USE_WIN32API
 // リッスンソケットを取得
 std::shared_ptr<SocketContext> GetFTPListenSocket(std::shared_ptr<SocketContext> ctrl_skt, int *CancelCheckWork) {
 	sockaddr_storage saListen;
@@ -1509,7 +1529,11 @@ std::shared_ptr<SocketContext> GetFTPListenSocket(std::shared_ptr<SocketContext>
 	}
 	return listen_skt;
 }
-#endif
+#else
+#define LIBFFFTP_INCLUDE_CONNECT_GetFTPListenSocket
+#include "connect_libffftp.hpp"
+#undef LIBFFFTP_INCLUDE_CONNECT_GetFTPListenSocket
+#endif // LIBFFFTP_USE_WIN32API
 
 
 // ホストへ接続処理中かどうかを返す
@@ -1518,5 +1542,7 @@ int AskTryingConnect() noexcept {
 }
 
 #ifdef LIBFFFTP
+#define LIBFFFTP_IMPL
 #include "connect_libffftp.hpp"
+#undef LIBFFFTP_IMPL
 #endif
